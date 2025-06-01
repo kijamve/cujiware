@@ -40,6 +40,16 @@ export const POST: APIRoute = async ({ request }) => {
           throw new Error('Metadata incompleta en la sesión');
         }
 
+        // Obtener el plan para saber su intervalo
+        const plan = await prisma.plan.findUnique({
+          where: { id: planId }
+        });
+
+        if (!plan) {
+          throw new Error('Plan no encontrado');
+        }
+
+
         // Crear la membresía
         const membership = await prisma.membership.create({
           data: {
@@ -47,16 +57,100 @@ export const POST: APIRoute = async ({ request }) => {
             plan_id: planId,
             status: 'active',
             start_date: new Date(),
-            end_date: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 días
+            end_date: new Date(),
             stripe_subscription_id: session.subscription as string,
             payment_method: 'stripe',
             licenses: {
               create: {
                 status: 'active'
               }
-            }
+            },
           }
         });
+        break;
+      }
+      case 'invoice.paid': {
+        const invoice = event.data.object as Stripe.Invoice;
+        
+        const subId = invoice.lines.data[0].parent?.subscription_item_details?.subscription || null;
+        if (subId) {
+          // Diferir el procesamiento por 10 segundos
+          await new Promise(resolve => setTimeout(resolve, 10000));
+
+          const membership = await prisma.membership.findFirst({
+            where: { stripe_subscription_id: subId },
+            include: {
+              plan: true
+            }
+          });
+
+          if (membership) {
+            // Crear el registro de pago
+            await prisma.payment.create({
+              data: {
+                membership_id: membership.id,
+                amount: invoice.amount_paid / 100,
+                currency: invoice.currency.toUpperCase(),
+                status: 'completed',
+                payment_method: 'stripe',
+                stripe_invoice_id: invoice.id,
+                invoice_url: invoice.hosted_invoice_url || undefined
+              }
+            });
+
+            // Calcular la nueva fecha de finalización
+            const now = new Date();
+            let endDate = membership.end_date || new Date(now);
+            
+            switch (membership.plan.interval) {
+              case 'month':
+                endDate.setMonth(endDate.getMonth() + 1);
+                break;
+              case 'semester':
+                endDate.setMonth(endDate.getMonth() + 6);
+                break;
+              case 'year':
+                endDate.setFullYear(endDate.getFullYear() + 1);
+                break;
+              default:
+                throw new Error('Intervalo de plan no válido');
+            }
+
+            await prisma.membership.update({
+              where: { id: membership.id },
+              data: {
+                last_check_with_gateway: new Date(),
+                end_date: endDate
+              }
+            });
+          }
+        }
+        break;
+      }
+
+      case 'invoice.payment_failed': {
+        const invoice = event.data.object as Stripe.Invoice;
+        
+        if (invoice.subscription) {
+          const membership = await prisma.membership.findFirst({
+            where: { stripe_subscription_id: invoice.subscription as string }
+          });
+
+          if (membership) {
+            // Crear el registro de pago fallido
+            await prisma.payment.create({
+              data: {
+                membership_id: membership.id,
+                amount: invoice.amount_due / 100,
+                currency: invoice.currency.toUpperCase(),
+                status: 'failed',
+                payment_method: 'stripe',
+                stripe_invoice_id: invoice.id,
+                invoice_url: invoice.hosted_invoice_url || undefined
+              }
+            });
+          }
+        }
         break;
       }
 
@@ -65,28 +159,21 @@ export const POST: APIRoute = async ({ request }) => {
         const subscription = event.data.object as Stripe.Subscription;
         const membership = await prisma.membership.findFirst({
           where: { stripe_subscription_id: subscription.id },
-          include: { licenses: true }
         });
 
         if (membership) {
-          // Asegurarnos de que la fecha sea válida
-          const endDate = subscription.current_period_end 
-            ? new Date(subscription.current_period_end * 1000)
-            : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 días por defecto
-
-          await prisma.membership.update({
-            where: { id: membership.id },
-            data: {
-              status: subscription.status === 'active' ? 'active' : 'cancelled',
-              end_date: endDate,
-              licenses: {
-                updateMany: {
-                  where: { status: 'active' },
-                  data: { status: 'inactive' }
-                }
+          const newStatus = subscription.status === 'active' ? 'active' : 'cancelled';
+          
+          // Solo actualizar si hay cambios en el estado
+          if (membership.status !== newStatus) {
+            await prisma.membership.update({
+              where: { id: membership.id },
+              data: {
+                status: newStatus,
+                last_check_with_gateway: new Date()
               }
-            }
-          });
+            });
+          }
         }
         break;
       }

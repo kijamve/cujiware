@@ -35,6 +35,7 @@ export interface License {
   id: string;
   membership_id: string;
   status: 'active' | 'inactive' | 'revoked';
+  last_reset: Date | null;
   created_at: Date;
   updated_at: Date;
   usages: LicenseUsage[];
@@ -69,6 +70,7 @@ export interface Membership {
   updated_at: Date;
   licenses: License[];
   payments: Payment[];
+  plan: Plan;
 }
 
 export interface Plan {
@@ -91,4 +93,25 @@ export interface Plugin {
   download_file_path: string;
   created_at: Date;
   updated_at: Date;
+}
+
+export interface UserWithMemberships extends Omit<User, 'memberships'> {
+  memberships: Array<Omit<Membership, 'user_id' | 'plan_id'> & {
+    plan: Plan;
+    licenses: {
+      id: string;
+      status: string;
+      last_reset: Date | null;
+      created_at: Date;
+      updated_at: Date;
+      membership_id: string;
+      usages: {
+        id: string;
+        domain: string;
+        first_used_at: Date;
+        last_used_at: Date;
+      }[];
+    }[];
+    payments: Payment[];
+  }>;
 } 

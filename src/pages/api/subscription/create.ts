@@ -15,11 +15,12 @@ async function getOrCreateStripePrice(plan: any) {
 
   // Crear el producto en Stripe si no existe
   const product = await stripe.products.create({
-    name: plan.name,
+    name: `Cujiware - Plan ${plan.name}`,
     description: plan.description,
     metadata: {
       plan_id: plan.id
-    }
+    },
+    statement_descriptor: 'CUJIWARE'
   });
 
   // Crear el precio en Stripe
@@ -140,7 +141,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         }
       ],
       mode: 'subscription',
-      success_url: `${url.origin}/dashboard?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${url.origin}/dashboard?session_id={CHECKOUT_SESSION_ID}&token=${cookies.get('token')?.value}`,
       cancel_url: `${url.origin}/suscripcion`,
       metadata: {
         userId: user.id,

@@ -1,0 +1,224 @@
+---
+import type { Membership, Payment } from '../../types/auth';
+
+interface Props {
+  membership: Omit<Membership, 'payments'> & {
+    licenses: {
+      id: string;
+      status: string;
+      last_reset: Date | null;
+      created_at: Date;
+      updated_at: Date;
+      membership_id: string;
+      usages: {
+        id: string;
+        domain: string;
+        first_used_at: Date;
+        last_used_at: Date;
+      }[];
+    }[];
+    payments: Payment[];
+  };
+  showCancelButton?: boolean;
+}
+
+const { membership, showCancelButton = false } = Astro.props;
+
+const canResetLicense = (lastReset: Date | null) => {
+  if (!lastReset) return true;
+  const fifteenDaysAgo = new Date();
+  fifteenDaysAgo.setDate(fifteenDaysAgo.getDate() - 15);
+  return lastReset < fifteenDaysAgo;
+};
+---
+
+<div class="border rounded-lg p-4">
+  <dl class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2">
+    <div>
+      <dt class="text-sm font-medium text-gray-500">Plan</dt>
+      <dd class="mt-1 text-sm text-gray-900">{membership.plan.name}</dd>
+    </div>
+    <div>
+      <dt class="text-sm font-medium text-gray-500">Estado</dt>
+      <dd class="mt-1 text-sm text-gray-900">
+        <span class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+          membership.status === 'active' 
+            ? 'bg-green-100 text-green-800' 
+            : 'bg-red-100 text-red-800'
+        }`}>
+          {membership.status === 'active' ? 'Activa' : 'Cancelada'}
+        </span>
+      </dd>
+    </div>
+    <div>
+      <dt class="text-sm font-medium text-gray-500">Fecha de inicio</dt>
+      <dd class="mt-1 text-sm text-gray-900">
+        {new Date(membership.start_date).toLocaleDateString()}
+      </dd>
+    </div>
+    <div>
+      <dt class="text-sm font-medium text-gray-500">Fecha de vencimiento</dt>
+      <dd class="mt-1 text-sm text-gray-900">
+        {new Date(membership.end_date).toLocaleDateString()}
+      </dd>
+    </div>
+  </dl>
+
+  <div class="mt-6 flex gap-4">
+    <button
+      class="view-transactions-btn inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-cuji-blue hover:bg-cuji-dark-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cuji-blue"
+      data-membership-id={membership.id}
+    >
+      Ver Transacciones & Facturas
+    </button>
+
+    {showCancelButton && (
+      <a
+        href={`/suscripcion/cancelar?membership_id=${membership.id}`}
+        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+      >
+        Cancelar Suscripción
+      </a>
+    )}
+  </div>
+
+  {membership.licenses && membership.licenses.length > 0 && (
+    <div class="mt-6">
+      <h3 class="text-sm font-medium text-gray-900 mb-2">Códigos de Licencia</h3>
+      <div class="space-y-4">
+        {membership.licenses.map(license => (
+          <div class="border rounded-lg p-4">
+            <div class="flex items-center justify-between bg-gray-50 p-3 rounded-md mb-4">
+              <span class="font-mono text-sm">{license.id}</span>
+              <button
+                class="copy-btn text-cuji-blue hover:text-cuji-dark-blue text-sm font-medium"
+                data-code={license.id}
+              >
+                Copiar
+              </button>
+            </div>
+
+            <div class="mt-4">
+              <div class="flex items-center justify-between mb-2">
+                <h4 class="text-sm font-medium text-gray-900">Últimos usos</h4>
+                { license.status === 'active' && canResetLicense(license.last_reset) ? (
+                  <button
+                    class="reset-btn inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                    data-license-id={license.id}
+                  >
+                    Resetear Licencia
+                  </button>
+                ) : license.status === 'active' && license.last_reset ? (
+                  <div class="text-xs text-gray-500">
+                    Podrás resetear nuevamente el {new Date(new Date(license.last_reset).getTime() + (15 * 24 * 60 * 60 * 1000)).toLocaleDateString()}
+                  </div>
+                ) : null}
+              </div>
+              
+              {license.usages && license.usages.length > 0 ? (
+                <div class="space-y-2">
+                  {license.usages.map(usage => (
+                    <div class="flex items-center justify-between bg-gray-50 p-2 rounded-md text-sm">
+                      <span>{usage.domain}</span>
+                      <span class="text-gray-500">
+                        Último uso: {new Date(usage.last_used_at).toLocaleDateString()}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p class="text-sm text-gray-500">No hay usos registrados</p>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+
+  <!-- Modal de Transacciones -->
+  <div id="transactions-modal" class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
+    <div class="bg-white rounded-lg p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-medium text-gray-900">Transacciones & Facturas</h3>
+        <button class="close-modal text-gray-400 hover:text-gray-500">
+          <span class="sr-only">Cerrar</span>
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      
+      <div class="space-y-4">
+        {membership.payments && membership.payments.length > 0 ? (
+          membership.payments.map(payment => (
+            <div class="border rounded-lg p-4">
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="text-sm font-medium text-gray-900">
+                    {payment.amount} {payment.currency}
+                  </p>
+                  <p class="text-sm text-gray-500">
+                    {new Date(payment.created_at).toLocaleDateString()}
+                  </p>
+                </div>
+                <span class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                  payment.status === 'completed' 
+                    ? 'bg-green-100 text-green-800'
+                    : payment.status === 'pending'
+                    ? 'bg-yellow-100 text-yellow-800'
+                    : 'bg-red-100 text-red-800'
+                }`}>
+                  {payment.status === 'completed' ? 'Completado' : payment.status === 'pending' ? 'Pendiente' : 'Fallido'}
+                </span>
+              </div>
+              
+              <div class="mt-2 text-sm text-gray-500">
+                <p>Método: {payment.payment_method === 'stripe' ? 'Tarjeta' : 'Transferencia'}</p>
+                {payment.bank_name && <p>Banco: {payment.bank_name}</p>}
+                {payment.reference && <p>Referencia: {payment.reference}</p>}
+              </div>
+
+              {payment.invoice_url && (
+                <div class="mt-2">
+                  <a
+                    href={payment.invoice_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-cuji-blue hover:text-cuji-dark-blue text-sm font-medium"
+                  >
+                    Ver Factura
+                  </a>
+                </div>
+              )}
+            </div>
+          ))
+        ) : (
+          <p class="text-sm text-gray-500">No hay transacciones registradas</p>
+        )}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Funcionalidad del modal
+  const modal = document.getElementById('transactions-modal');
+  const viewTransactionsBtn = document.querySelector('.view-transactions-btn');
+  const closeModalBtn = document.querySelector('.close-modal');
+
+  viewTransactionsBtn?.addEventListener('click', () => {
+    modal?.classList.remove('hidden');
+  });
+
+  closeModalBtn?.addEventListener('click', () => {
+    modal?.classList.add('hidden');
+  });
+
+  // Cerrar modal al hacer clic fuera
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.add('hidden');
+    }
+  });
+</script> 

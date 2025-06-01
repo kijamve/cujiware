@@ -36,6 +36,7 @@ model Membership {
   end_date             DateTime
   stripe_subscription_id String?
   payment_method       String   // stripe, venezuela
+  last_check_with_gateway DateTime?
   created_at           DateTime @default(now())
   updated_at           DateTime @updatedAt
   user                 User     @relation(fields: [user_id], references: [id])
@@ -53,10 +54,12 @@ model License {
   id            String     @id @default(uuid())
   membership_id String
   status        String     // active, inactive, revoked
+  last_reset    DateTime?  // Fecha del último reset
   created_at    DateTime   @default(now())
   updated_at    DateTime   @updatedAt
   membership    Membership @relation(fields: [membership_id], references: [id])
   usages        LicenseUsage[]
+  plugins       LicensePlugin[]
 
   @@index([membership_id])
   @@index([status])
@@ -75,6 +78,21 @@ model LicenseUsage {
   @@index([license_id])
   @@index([domain])
   @@unique([license_id, domain])
+}
+
+model LicensePlugin {
+  id           String   @id @default(cuid())
+  license_id   String
+  plugin_slug  String
+  domain       String
+  last_usage   DateTime?
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+  license      License  @relation(fields: [license_id], references: [id])
+
+  @@unique([license_id, plugin_slug])
+  @@index([license_id])
+  @@index([plugin_slug])
 }
 
 model Plan {

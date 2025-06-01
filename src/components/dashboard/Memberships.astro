@@ -1,0 +1,166 @@
+---
+import type { Membership } from '../../types/auth';
+import MembershipCard from './MembershipCard.astro';
+
+interface Props {
+  memberships: (Omit<Membership, 'payments'> & {
+    licenses: {
+      id: string;
+      status: string;
+      last_reset: Date | null;
+      created_at: Date;
+      updated_at: Date;
+      membership_id: string;
+      usages: {
+        id: string;
+        domain: string;
+        first_used_at: Date;
+        last_used_at: Date;
+      }[];
+    }[];
+  })[];
+}
+
+const { memberships } = Astro.props;
+
+const activeMemberships = memberships.filter(m => m.status === 'active');
+const cancelledMemberships = memberships.filter(m => m.status === 'cancelled');
+
+const canResetLicense = (lastReset: Date | null) => {
+  if (!lastReset) return true;
+  const fifteenDaysAgo = new Date();
+  fifteenDaysAgo.setDate(fifteenDaysAgo.getDate() - 15);
+  return lastReset < fifteenDaysAgo;
+};
+---
+
+<div class="bg-gray-50 rounded-lg p-6 mb-8">
+  <h2 class="text-lg font-medium text-gray-900 mb-4">Membresías</h2>
+  
+  <div class="border-b border-gray-200">
+    <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+      <button
+        class="tab-button border-cuji-blue text-cuji-blue whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
+        data-tab="active"
+      >
+        Activas ({activeMemberships.length})
+      </button>
+      <button
+        class="tab-button border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
+        data-tab="cancelled"
+      >
+        Canceladas ({cancelledMemberships.length})
+      </button>
+    </nav>
+  </div>
+
+  <div class="mt-6">
+    <div id="active-tab" class="tab-content">
+      {activeMemberships.length > 0 ? (
+        <div class="space-y-6">
+          {activeMemberships.map(membership => (
+            <MembershipCard membership={membership} showCancelButton={true} />
+          ))}
+        </div>
+      ) : (
+        <div class="text-center">
+          <p class="text-gray-500 mb-4">No tienes membresías activas</p>
+          <a
+            href="/suscripcion"
+            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-cuji-blue hover:bg-cuji-dark-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cuji-blue"
+          >
+            Suscribirse
+          </a>
+        </div>
+      )}
+    </div>
+
+    <div id="cancelled-tab" class="tab-content hidden">
+      {cancelledMemberships.length > 0 ? (
+        <div class="space-y-6">
+          {cancelledMemberships.map(membership => (
+            <MembershipCard membership={membership} showCancelButton={false} />
+          ))}
+        </div>
+      ) : (
+        <div class="text-center">
+          <p class="text-gray-500">No tienes membresías canceladas</p>
+        </div>
+      )}
+    </div>
+  </div>
+</div>
+
+<script>
+  const tabButtons = document.querySelectorAll('.tab-button');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const tabId = button.getAttribute('data-tab');
+      
+      // Actualizar botones
+      tabButtons.forEach(btn => {
+        btn.classList.remove('border-cuji-blue', 'text-cuji-blue');
+        btn.classList.add('border-transparent', 'text-gray-500');
+      });
+      button.classList.remove('border-transparent', 'text-gray-500');
+      button.classList.add('border-cuji-blue', 'text-cuji-blue');
+
+      // Mostrar contenido
+      tabContents.forEach(content => {
+        content.classList.add('hidden');
+      });
+      document.getElementById(`${tabId}-tab`)?.classList.remove('hidden');
+    });
+  });
+
+  // Manejar copia de códigos
+  const copyButtons = document.querySelectorAll('.copy-btn');
+  copyButtons.forEach(button => {
+    button.addEventListener('click', async () => {
+      const code = button.getAttribute('data-code');
+      if (code) {
+        try {
+          await navigator.clipboard.writeText(code);
+          const originalText = button.textContent;
+          button.textContent = '¡Copiado!';
+          setTimeout(() => {
+            button.textContent = originalText;
+          }, 2000);
+        } catch (err) {
+          console.error('Error al copiar:', err);
+        }
+      }
+    });
+  });
+
+  // Manejar reset de licencias
+  const resetButtons = document.querySelectorAll('.reset-btn');
+  resetButtons.forEach(button => {
+    button.addEventListener('click', async () => {
+      const licenseId = button.getAttribute('data-license-id');
+      if (!licenseId) return;
+
+      if (!confirm('¿Estás seguro de que quieres resetear esta licencia? Se eliminarán todos los usos registrados.')) {
+        return;
+      }
+
+      try {
+        const response = await fetch(`/api/licenses/${licenseId}/reset`, {
+          method: 'POST'
+        });
+
+        if (response.ok) {
+          window.location.reload();
+        } else {
+          const data = await response.json();
+          alert(data.message || 'Error al resetear la licencia');
+        }
+      } catch (err) {
+        console.error('Error al resetear:', err);
+        alert('Error al resetear la licencia');
+      }
+    });
+  });
+</script> 
