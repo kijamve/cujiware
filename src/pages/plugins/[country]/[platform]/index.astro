@@ -1,0 +1,38 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+import plugins from '../../../../data/plugins.json';
+import { PluginCatalog } from '../../../../components/PluginCatalog';
+
+export function getStaticPaths() {
+  const countries = ['all', 'venezuela', 'argentina'];
+  const platforms = ['woocommerce', 'prestashop'];
+  
+  return countries.flatMap(country => 
+    platforms.map(platform => ({
+      params: { country, platform }
+    }))
+  );
+}
+
+const { country, platform } = Astro.params;
+
+const filteredPlugins = plugins.filter(plugin => {
+  const matchesPlatform = plugin.platform.includes(platform);
+  const matchesCountry = country === 'all' ? true : plugin.countries.includes(country);
+  const isExcluded = plugin.countrie_exclude?.includes(country);
+  
+  return matchesPlatform && matchesCountry && !isExcluded;
+});
+
+const categories = [...new Set(filteredPlugins.map(plugin => plugin.category))];
+---
+
+<Layout title={`Plugins para ${platform} - Cujiware`}>
+  <PluginCatalog 
+    client:load
+    plugins={filteredPlugins}
+    categories={categories}
+    country={country}
+    platform={platform}
+  />
+</Layout>

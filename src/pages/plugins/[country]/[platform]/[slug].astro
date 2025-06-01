@@ -1,0 +1,64 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+import plugins from '../../../../data/plugins.json';
+import { PluginDetail } from '../../../../components/PluginDetail';
+import fs from 'fs';
+import path from 'path';
+
+export function getStaticPaths() {
+  const paths = [];
+  const countries = ['all', 'venezuela', 'argentina'];
+  
+  for (const plugin of plugins) {
+    for (const platform of plugin.platform) {
+      for (const country of countries) {
+        // Verificar si el plugin está disponible para este país
+        const isAvailable = country === 'all' ? true : plugin.countries.includes(country);
+        const isExcluded = plugin.countrie_exclude?.includes(country);
+        
+        if (isAvailable && !isExcluded) {
+          paths.push({
+            params: {
+              slug: plugin.slug,
+              country,
+              platform
+            }
+          });
+        }
+      }
+    }
+  }
+  
+  return paths;
+}
+
+const { slug, country, platform } = Astro.params;
+const plugin = plugins.find(p => p.slug === slug);
+
+if (!plugin) {
+  return Astro.redirect('/404');
+}
+
+// Cargar el contenido HTML del plugin
+const contentPath = path.join(process.cwd(), 'src', 'content', 'plugins', `${slug}.html`);
+let content = '';
+let screenshots = plugin.screenshots ?? [];
+
+try {
+  content = fs.readFileSync(contentPath, 'utf-8');
+} catch (error) {
+  console.warn(`No se encontró el archivo de contenido para el plugin ${slug}`);
+  content = '<p>Estamos trabajando en este contenido, por favor regresa más tarde.</p>';
+}
+---
+
+<Layout title={`${plugin.name} - Cujiware`}>
+  <PluginDetail 
+    client:load
+    plugin={plugin}
+    country={country}
+    platform={platform}
+    content={content}
+    screenshots={screenshots}
+  />
+</Layout>

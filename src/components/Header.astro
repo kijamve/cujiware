@@ -1,0 +1,92 @@
+---
+import Logo from './Logo.astro';
+---
+
+<header class="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+        <a href="/" class="flex-shrink-0">
+          <Logo class="h-10 w-auto" />
+        </a>
+      </div>
+      <nav class="hidden md:flex space-x-8">
+        <a href="/#features" class="text-gray-700 hover:text-cuji-blue transition-colors duration-200 font-medium">Características</a>
+        <a href="/#pricing" class="text-gray-700 hover:text-cuji-blue transition-colors duration-200 font-medium">Precios</a>
+        <a href="/plugins/all/woocommerce" class="text-gray-700 hover:text-cuji-blue transition-colors duration-200 font-medium">Catálogo</a>
+        <a href="/#faq" class="text-gray-700 hover:text-cuji-blue transition-colors duration-200 font-medium">FAQ</a>
+      </nav>
+      <div class="flex items-center">
+        <a href="/mi-cuenta" class="inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-cuji-blue hover:bg-cuji-dark-blue transition-colors duration-200 shadow-sm">
+          Mi Cuenta
+        </a>
+        <button class="md:hidden ml-4 inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-cuji-blue focus:outline-none" aria-expanded="false" id="mobile-menu-button">
+          <span class="sr-only">Abrir menú principal</span>
+          <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Mobile menu -->
+  <div class="hidden md:hidden" id="mobile-menu">
+    <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+      <a href="/#features" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-cuji-blue hover:bg-gray-50">Características</a>
+      <a href="/#pricing" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-cuji-blue hover:bg-gray-50">Precios</a>
+      <a href="/plugins/all/woocommerce" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-cuji-blue hover:bg-gray-50">Catálogo</a>
+      <a href="/#faq" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-cuji-blue hover:bg-gray-50">FAQ</a>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Mobile menu toggle
+  const button = document.getElementById('mobile-menu-button');
+  const menu = document.getElementById('mobile-menu');
+  
+  if (button && menu) {
+    button.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+      button.setAttribute('aria-expanded', menu.classList.contains('hidden') ? 'false' : 'true');
+    });
+    
+    // Close mobile menu when clicking on a link
+    const mobileLinks = menu.querySelectorAll('a');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        menu.classList.add('hidden');
+        button.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const links = document.querySelectorAll('a[href^="/#"]');
+    
+    links.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const href = link.getAttribute('href');
+        if (!href) return;
+        
+        const targetId = href.replace('/#', '');
+        
+        // Si estamos en la página principal
+        if (window.location.pathname === '/') {
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            targetElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        } else {
+          // Si estamos en otra página, redirigimos a la página principal con el hash
+          window.location.href = href;
+        }
+      });
+    });
+  });
+</script>

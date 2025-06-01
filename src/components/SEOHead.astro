@@ -1,0 +1,86 @@
+---
+import { SEO } from 'astro-seo';
+import SchemaOrg from './SchemaOrg.astro';
+
+export interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  canonicalURL?: string;
+}
+
+const { 
+  title, 
+  description, 
+  image = '/images/cujiware-social-image.jpg',
+  canonicalURL = Astro.url.href
+} = Astro.props;
+
+const imageURL = new URL(image, Astro.site);
+---
+
+<SEO
+  title={title}
+  description={description}
+  canonical={canonicalURL}
+  openGraph={{
+    basic: {
+      title: title,
+      type: 'website',
+      image: imageURL.toString(),
+      url: canonicalURL,
+    },
+    optional: {
+      description: description,
+      siteName: 'Cujiware',
+    },
+    image: {
+      alt: 'Cujiware Membership - Premium WooCommerce & PrestaShop Plugins',
+    }
+  }}
+  twitter={{
+    card: 'summary_large_image',
+    site: '@cujiware',
+    title: title,
+    description: description,
+    image: imageURL.toString(),
+    imageAlt: 'Cujiware Membership - Premium WooCommerce & PrestaShop Plugins',
+  }}
+/>
+
+<SchemaOrg
+  organization={{
+    name: "Cujiware",
+    url: Astro.site?.toString() || "https://cujiware.com",
+    logo: new URL("/images/logo.png", Astro.site).toString(),
+    sameAs: [
+      "https://twitter.com/cujiware",
+      "https://facebook.com/cujiware",
+      "https://instagram.com/cujiware"
+    ]
+  }}
+  product={{
+    name: "Cujiware Membership",
+    description: "Premium WooCommerce & PrestaShop plugins without domain restrictions",
+    offers: [
+      {
+        name: "Monthly Plan",
+        price: "12",
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock"
+      },
+      {
+        name: "Semi-Annual Plan",
+        price: "65",
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock"
+      },
+      {
+        name: "Annual Plan",
+        price: "120",
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock"
+      }
+    ]
+  }}
+/>

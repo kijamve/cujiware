@@ -1,0 +1,51 @@
+---
+export interface Props {
+  organization: {
+    name: string;
+    url: string;
+    logo: string;
+    sameAs: string[];
+  };
+  product: {
+    name: string;
+    description: string;
+    offers: {
+      name: string;
+      price: string;
+      priceCurrency: string;
+      availability: string;
+    }[];
+  };
+}
+
+const { organization, product } = Astro.props;
+---
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": organization.name,
+  "url": organization.url,
+  "logo": organization.logo,
+  "sameAs": organization.sameAs
+})}>
+</script>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": product.name,
+  "description": product.description,
+  "brand": {
+    "@type": "Brand",
+    "name": organization.name
+  },
+  "offers": product.offers.map(offer => ({
+    "@type": "Offer",
+    "name": offer.name,
+    "price": offer.price,
+    "priceCurrency": offer.priceCurrency,
+    "availability": offer.availability
+  }))
+})}>
+</script>

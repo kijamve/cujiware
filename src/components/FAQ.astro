@@ -1,0 +1,51 @@
+---
+const faqs = [
+  {
+    question: "¿Puedo usar los plugins en múltiples dominios?",
+    answer: "Cada dominio requiere su propia membresía."
+  },
+  {
+    question: "¿Puedo usar los plugins en subdominios?",
+    answer: "Los subdominios que comienzan con dev*, test*, staging* o debug* están permitidos bajo la misma membresía del dominio principal. Cualquier otro subdominio se considera un sitio adicional y requiere una membresía independiente."
+  },
+  {
+    question: "¿Cómo se renuevan las suscripciones?",
+    answer: "Renovación automática o manual, cancelable en cualquier momento, sin contrato ni fidelización."
+  },
+  {
+    question: "¿Qué sucede si dejo de pagar la membresía?",
+    answer: "Los plugins dejarán de funcionar y se desactivarán. También perderás acceso al soporte técnico y las actualizaciones de mantenimiento."
+  },
+  {
+    question: "¿Hay prueba gratuita?",
+    answer: "No"
+  }
+];
+---
+
+<section id="faq" class="py-20 bg-gray-50">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h2 class="text-3xl font-bold font-heading text-gray-900 mb-4">Preguntas Frecuentes</h2>
+      <p class="text-lg text-gray-600">Encuentra respuestas a las dudas más comunes sobre nuestra membresía</p>
+    </div>
+    
+    <div class="max-w-3xl mx-auto">
+      <dl class="space-y-6">
+        {faqs.map((faq, index) => (
+          <div class="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
+            <dt class="text-lg font-bold font-heading text-gray-900">{faq.question}</dt>
+            <dd class="mt-3 text-gray-600">{faq.answer}</dd>
+          </div>
+        ))}
+      </dl>
+      
+      <div class="mt-12 text-center">
+        <p class="text-gray-600 mb-4">¿Tienes más preguntas? Estamos aquí para ayudarte</p>
+        <a href="#contact" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-cuji-blue hover:bg-cuji-dark-blue transition-colors duration-200 shadow-sm">
+          Contactar Soporte
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

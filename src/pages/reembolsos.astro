@@ -1,0 +1,101 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = "Política de Reembolsos - Cujiware";
+const description = "Política de reembolsos de Cujiware. Conoce nuestras condiciones y proceso de devolución.";
+---
+
+<Layout title={title} description={description}>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <a href="/" class="inline-flex items-center text-cuji-blue hover:text-cuji-dark-blue mb-8">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+      </svg>
+      Volver al inicio
+    </a>
+
+    <div class="prose max-w-none">
+      <h1 class="text-3xl font-bold mb-8">Política de Reembolsos</h1>
+
+      <div class="bg-blue-50 border-l-4 border-cuji-blue p-6 mb-8">
+        <p class="text-lg mb-4">
+          Aceptamos solicitudes de reembolso dentro de los <strong>30 días naturales</strong> posteriores a tu compra.
+        </p>
+      </div>
+
+      <h2 class="text-2xl font-semibold mb-4">Para solicitar un reembolso:</h2>
+      <ul class="list-disc pl-6 mb-8">
+        <li class="mb-2">Envía un email a soporte@cujiware.com</li>
+        <li class="mb-2">Incluye tu número de pedido y nombre del producto</li>
+      </ul>
+
+      <h2 class="text-2xl font-semibold mb-4">Proceso de Reembolso</h2>
+      <div class="space-y-6">
+        <div class="flex items-start gap-4">
+          <div class="bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">
+            <span class="font-semibold">1</span>
+          </div>
+          <div>
+            <h3 class="font-medium mb-1">Confirmación de Compra</h3>
+            <p class="text-gray-600">Verificaremos tu compra (máximo 48 horas)</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <div class="bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">
+            <span class="font-semibold">2</span>
+          </div>
+          <div>
+            <h3 class="font-medium mb-1">Procesamiento</h3>
+            <p class="text-gray-600">Si cumples los requisitos, procesaremos el reembolso</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <div class="bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">
+            <span class="font-semibold">3</span>
+          </div>
+          <div>
+            <h3 class="font-medium mb-1">Reembolso</h3>
+            <p class="text-gray-600">El dinero llegará a tu cuenta en <strong>5 días hábiles</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 p-6 bg-gray-50 rounded-lg">
+        <p class="font-medium mb-2">Nota Importante:</p>
+        <p>El reembolso siempre se realizará por el mismo método de pago usado originalmente y a la tasa de cambio del día del pago inicial.</p>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .prose {
+    max-width: 65ch;
+    color: #374151;
+  }
+  
+  .prose h2 {
+    color: #111827;
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .prose p {
+    margin-bottom: 1.5rem;
+    line-height: 1.75;
+  }
+  
+  .prose ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .prose li {
+    margin-bottom: 0.5rem;
+  }
+</style>

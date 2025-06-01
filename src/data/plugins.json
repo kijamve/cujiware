@@ -1,0 +1,374 @@
+[
+  {
+    "name": "MercadoPago Tools Pro para Gravity Forms con Suscripciones",
+    "slug": "mercadopago-tools-pro-para-gravity-forms-con-suscripciones",
+    "short_description": "Integra MercadoPago con Gravity Forms incluyendo soporte para suscripciones recurrentes",
+    "icon": "CreditCard", 
+    "category": "payment_method",
+    "countries": ["all", "argentina"],
+    "countrie_exclude": ["venezuela"],
+    "last_version": "1.0",
+    "platform": ["woocommerce"],
+    "screenshots": [
+      {
+        "src": "/images/plugins/mercadopago-gravity-forms/captura1.png",
+        "alt": "Configuración del plugin",
+        "caption": "Panel de configuración del plugin"
+      },
+      {
+        "src": "/images/plugins/mercadopago-gravity-forms/captura2.png",
+        "alt": "Configuración del plugin", 
+        "caption": "Panel de configuración del plugin"
+      },
+      {
+        "src": "/images/plugins/mercadopago-gravity-forms/captura3.png",
+        "alt": "Configuración del plugin",
+        "caption": "Panel de configuración del plugin"
+      },
+      {
+        "src": "/images/plugins/mercadopago-gravity-forms/captura4.png",
+        "alt": "Configuración del plugin",
+        "caption": "Panel de configuración del plugin"
+      },
+      {
+        "src": "/images/plugins/mercadopago-gravity-forms/captura5.png",
+        "alt": "Configuración del plugin",
+        "caption": "Panel de configuración del plugin"
+      },
+      {
+        "src": "/images/plugins/mercadopago-gravity-forms/captura6.png",
+        "alt": "Resumen de un pago",
+        "caption": "Resumen de un pago"
+      },
+      {
+        "src": "/images/plugins/mercadopago-gravity-forms/captura7.png",
+        "alt": "Resumen de un pago de una suscripción",
+        "caption": "Resumen de un pago de una suscripción recurrente"
+      }
+    ]
+  },
+  {
+    "name": "Botón de Integración de Megasoft con PrestaShop",
+    "slug": "boton-de-integracion-de-megasoft-con-prestashop",
+    "short_description": "Conecta tu tienda PrestaShop con el sistema Megasoft para sincronización de inventario y pedidos",
+    "icon": "CreditCard",
+    "category": "payment_method",
+    "large_description": "Integración completa con el sistema Megasoft para gestionar tu inventario y pedidos de forma automatizada. Incluye sincronización bidireccional de productos, precios y stock.",
+    "countries": ["venezuela"],
+    "last_version": "1.0",
+    "platform": ["prestashop"]
+  },
+  {
+    "name": "Zoom Transportista de Envíos en Venezuela para PrestaShop",
+    "slug": "zoom-transportista-de-envios-en-venezuela-para-prestashop",
+    "short_description": "Integra Zoom como método de envío en PrestaShop con cálculo automático de tarifas",
+    "icon": "Truck",
+    "category": "shipping",
+    "countries": ["venezuela"],
+    "last_version": "1.0",
+    "platform": ["prestashop"]
+  },
+  {
+    "name": "Crear Cupones para la Primera Compra en PrestaShop",
+    "slug": "crear-cupones-para-la-primera-compra-en-prestashop",
+    "short_description": "Genera cupones de descuento automáticamente para nuevos clientes",
+    "icon": "Ticket",
+    "category": "utils",
+    "countries": ["all"],
+    "last_version": "1.0",
+    "platform": ["prestashop"],
+    "screenshots": [
+      {
+        "src": "/images/plugins/crear-cupones-para-la-primera-compra-en-prestashop/captura1.jpg",
+        "alt": "Configuración del plugin",
+        "caption": "Panel de configuración del plugin"
+      },
+      {
+        "src": "/images/plugins/crear-cupones-para-la-primera-compra-en-prestashop/captura2.jpg",
+        "alt": "Configuración del plugin",
+        "caption": "Panel de configuración del plugin"
+      },
+      {
+        "src": "/images/plugins/crear-cupones-para-la-primera-compra-en-prestashop/captura3.jpg",
+        "alt": "Aplicar cupón",
+        "caption": "Aplicar cupón"
+      },
+      {
+        "src": "/images/plugins/crear-cupones-para-la-primera-compra-en-prestashop/captura4.jpg",
+        "alt": "Error al aplicar cupón si ya no es la primera compra",
+        "caption": "Error al aplicar cupón si ya no es la primera compra"
+      }
+    ]
+  },
+  {
+    "name": "Delivery y Rastreo de Paquetes para PrestaShop en Tiempo Real",
+    "slug": "delivery-y-rastreo-de-paquetes-para-prestashop-en-tiempo-real",
+    "short_description": "Sistema avanzado de seguimiento de envíos con actualizaciones en tiempo real",
+    "icon": "PackageSearch",
+    "category": "shipping",
+    "countries": ["all"],
+    "last_version": "1.0",
+    "platform": ["prestashop"]
+  },
+  {
+    "name": "Notificaciones por Telegram para PrestaShop",
+    "slug": "notificaciones-por-telegram-para-prestashop",
+    "short_description": "Recibe notificaciones instantáneas de pedidos y eventos importantes en Telegram",
+    "icon": "Bell",
+    "category": "utils",
+    "countries": ["all"],
+    "last_version": "1.0",
+    "platform": ["prestashop"]
+  },
+  {
+    "name": "Binance Pay para PrestaShop",
+    "slug": "binance-pay-para-prestashop",
+    "short_description": "Acepta pagos en criptomonedas a través de Binance Pay",
+    "icon": "Bitcoin",
+    "category": "payment_method",
+    "countries": ["all"],
+    "last_version": "1.0",
+    "platform": ["prestashop"]
+  },
+  {
+    "name": "Botón de Integración de Megasoft con WooCommerce",
+    "slug": "boton-de-integracion-de-megasoft-con-woocommerce",
+    "short_description": "Conecta tu tienda WooCommerce con el sistema Megasoft",
+    "icon": "Database",
+    "category": "payment_method",
+    "countries": ["venezuela"],
+    "last_version": "1.0",
+    "platform": ["woocommerce"]
+  },
+  {
+    "name": "Tasa BCV Automática para WooCommerce (Curcy, WOOCS, Fox)",
+    "slug": "tasa-bcv-automatica-para-woocommerce-curcy-woocs-fox",
+    "short_description": "Actualización automática de tasas de cambio según el BCV",
+    "icon": "RefreshCw",
+    "category": "utils",
+    "countries": ["venezuela"],
+    "last_version": "1.0",
+    "platform": ["woocommerce"]
+  },
+  {
+    "name": "Biopago y Tarjetas de Débito del Banco de Venezuela para WooCommerce",
+    "slug": "biopago-y-tarjetas-de-debito-del-banco-de-venezuela-para-woocommerce",
+    "short_description": "Acepta pagos con Biopago y tarjetas de débito del Banco de Venezuela",
+    "icon": "CreditCard",
+    "category": "payment_method",
+    "countries": ["venezuela"],
+    "last_version": "1.0",
+    "platform": ["woocommerce"]
+  },
+  {
+    "name": "Biopago y Tarjetas de Débito del Banco de Venezuela para PrestaShop",
+    "slug": "biopago-y-tarjetas-de-debito-del-banco-de-venezuela-para-prestashop",
+    "short_description": "Integración con Biopago y tarjetas de débito del Banco de Venezuela",
+    "icon": "CreditCard",
+    "category": "payment_method",
+    "countries": ["venezuela"],
+    "last_version": "1.0",
+    "platform": ["prestashop"]
+  },
+  {
+    "name": "OCA para WooCommerce",
+    "slug": "oca-para-woocommerce",
+    "short_description": "Integración completa con el servicio de envíos OCA",
+    "icon": "Truck",
+    "category": "shipping",
+    "countries": ["argentina"],
+    "last_version": "1.0",
+    "platform": ["woocommerce"]
+  },
+  {
+    "name": "Andreani para WooCommerce",
+    "slug": "andreani-para-woocommerce",
+    "short_description": "Calcula costos de envío con Andreani en tiempo real",
+    "icon": "Truck",
+    "category": "shipping",
+    "countries": ["argentina"],
+    "last_version": "1.0",
+    "platform": ["woocommerce"]
+  },
+  {
+    "name": "Botón de Integración de Bancamiga con WooCommerce",
+    "slug": "boton-de-integracion-de-bancamiga-con-woocommerce-woocommerce",
+    "short_description": "Acepta pagos a través de Bancamiga en tu tienda WooCommerce",
+    "icon": "CreditCard",
+    "category": "payment_method",
+    "countries": ["venezuela"],
+    "last_version": "1.0",
+    "platform": ["woocommerce"]
+  },
+  {
+    "name": "Botón de Pago Móvil del Banco de Venezuela para PrestaShop",
+    "slug": "boton-de-integracion-de-pago-movil-del-banco-de-venezuela-con-prestashop",
+    "short_description": "Integra Pago Móvil del Banco de Venezuela en PrestaShop",
+    "icon": "Smartphone",
+    "category": "payment_method",
+    "countries": ["venezuela"],
+    "last_version": "1.0",
+    "platform": ["prestashop"]
+  },
+  {
+    "name": "Venezolano de Crédito para WooCommerce (C2P y Pago Móvil)",
+    "slug": "venezolano-de-credito-para-woocommerce-con-c2p-y-pago-movil",
+    "short_description": "Acepta pagos del Venezolano de Crédito con C2P y Pago Móvil",
+    "icon": "CreditCard",
+    "category": "payment_method",
+    "countries": ["venezuela"],
+    "last_version": "1.0",
+    "platform": ["woocommerce"]
+  },
+  {
+    "name": "Pasarela de Pago Banco Mercantil para PrestaShop",
+    "slug": "pasarela-de-pago-banco-mercantil-para-prestashop-acepta-tarjetas-de-debito",
+    "short_description": "Integración con la pasarela de pago del Banco Mercantil",
+    "icon": "CreditCard",
+    "category": "payment_method",
+    "countries": ["venezuela"],
+    "last_version": "1.0",
+    "platform": ["prestashop"]
+  },
+  {
+    "name": "Zippin Argentina para PrestaShop",
+    "slug": "zippin-argentina-para-prestashop",
+    "short_description": "Integra el servicio de envíos Zippin en tu tienda PrestaShop",
+    "icon": "Truck",
+    "category": "shipping",
+    "countries": ["argentina"],
+    "last_version": "1.0",
+    "platform": ["prestashop"]
+  },
+  {
+    "name": "OCA para PrestaShop",
+    "slug": "oca-para-prestashop-cotizacion-generacion-de-guias-y-rastreo-de-paquetes",
+    "short_description": "Cotización, generación de guías y rastreo de paquetes OCA",
+    "icon": "Truck",
+    "category": "shipping",
+    "countries": ["argentina"],
+    "last_version": "1.0",
+    "platform": ["prestashop"]
+  },
+  {
+    "name": "Contactar Clientes por WhatsApp desde WooCommerce",
+    "slug": "contactar-clientes-por-whatsapp-desde-el-administrador-de-woocommerce",
+    "short_description": "Envía mensajes de WhatsApp directamente desde el panel de administración",
+    "icon": "MessageCircle",
+    "category": "utils",
+    "countries": ["all"],
+    "last_version": "1.0",
+    "platform": ["woocommerce"]
+  },
+  {
+    "name": "Mercantil Banco Venezuela para WooCommerce",
+    "slug": "mercantil-banco-venezuela-para-woocommerce",
+    "short_description": "Integración completa con Mercantil Banco para pagos en línea",
+    "icon": "CreditCard",
+    "category": "payment_method",
+    "countries": ["venezuela"],
+    "last_version": "1.0",
+    "platform": ["woocommerce"]
+  },
+  {
+    "name": "MRW y Menssajero Venezuela para WooCommerce",
+    "slug": "mrw-y-menssajero-venezuela-para-woocommerce",
+    "short_description": "Calcula costos de envío con MRW y Menssajero Venezuela",
+    "icon": "Truck",
+    "category": "payment_method",
+    "countries": ["venezuela"],
+    "last_version": "1.0",
+    "platform": ["woocommerce"]
+  },
+  {
+    "name": "Zoom Transportista de Envíos en Venezuela para WooCommerce",
+    "slug": "zoom-transportista-de-envios-en-venezuela-para-woocommerce",
+    "short_description": "Integración completa con el servicio de envíos Zoom",
+    "icon": "Truck",
+    "category": "payment_method",
+    "countries": ["venezuela"],
+    "last_version": "1.0",
+    "platform": ["woocommerce"]
+  },
+  {
+    "name": "Binance Pay para WooCommerce",
+    "slug": "binance-pay-para-woocommerce-woocommerce-pasarela-de-pago-boton-de-pago",
+    "short_description": "Acepta pagos en criptomonedas con Binance Pay",
+    "icon": "Bitcoin",
+    "category": "payment_method",
+    "countries": ["all"],
+    "last_version": "1.0",
+    "platform": ["woocommerce"]
+  },
+  {
+    "name": "Pagos Offline para WooCommerce",
+    "slug": "pagos-offline-para-woocommerce-zelle-binance-p2p-transferencia-pago-movil-y-otros",
+    "short_description": "Acepta pagos por Zelle, Binance P2P y transferencias bancarias",
+    "icon": "Wallet",
+    "category": "payment_method",
+    "countries": ["all"],
+    "last_version": "1.0",
+    "platform": ["woocommerce"]
+  },
+  {
+    "name": "Botón de Pago Móvil del Banco de Venezuela para WooCommerce",
+    "slug": "boton-de-pago-movil-del-banco-de-venezuela-para-woocommerce",
+    "short_description": "Integra Pago Móvil del Banco de Venezuela en WooCommerce",
+    "icon": "Smartphone",
+    "category": "payment_method",
+    "countries": ["venezuela"],
+    "last_version": "1.0",
+    "platform": ["woocommerce"]
+  },
+  {
+    "name": "MercadoPago para WooCommerce",
+    "slug": "mercadopago-para-woocommerce",
+    "short_description": "Integración avanzada con MercadoPago para WooCommerce",
+    "icon": "CreditCard",
+    "category": "payment_method",
+    "countries": ["all"],
+    "last_version": "1.0",
+    "platform": ["woocommerce"]
+  },
+  {
+    "name": "Andreani para PrestaShop",
+    "slug": "andreani-para-prestashop-cotizacion-generacion-de-guias-y-rastreo-de-paquetes",
+    "short_description": "Cotización, generación de guías y rastreo con Andreani",
+    "icon": "Truck",
+    "category": "payment_method",
+    "countries": ["argentina"],
+    "last_version": "1.0",
+    "platform": ["prestashop"]
+  },
+  {
+    "name": "MercadoPago Tools Pro para PrestaShop",
+    "slug": "mercadopago-tools-pro-para-prestashop",
+    "short_description": "Herramientas avanzadas de MercadoPago para PrestaShop",
+    "icon": "CreditCard",
+    "category": "payment_method",
+    "countries": ["all", "argentina"],
+    "countrie_exclude": ["venezuela"],
+    "last_version": "1.0",
+    "platform": ["prestashop"]
+  },
+  {
+    "name": "Botón de Pago del Banco BNC para WooCommerce",
+    "slug": "boton-de-pago-del-banco-bnc-para-plugin-woocommerce-woocommerce",
+    "short_description": "Integra pagos del Banco BNC en tu tienda WooCommerce",
+    "icon": "CreditCard",
+    "category": "payment_method",
+    "countries": ["venezuela"],
+    "last_version": "1.0",
+    "platform": ["woocommerce"]
+  },
+  {
+    "name": "Notificaciones por Telegram para WooCommerce",
+    "slug": "notificaciones-por-telegram-para-woocommerce",
+    "short_description": "Recibe notificaciones de pedidos en Telegram",
+    "icon": "Bell",
+    "category": "utils",
+    "countries": ["all"],
+    "last_version": "1.0",
+    "platform": ["woocommerce"]
+  }
+]
