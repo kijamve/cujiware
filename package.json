@@ -1,27 +1,43 @@
 {
-  "name": "cujiware-membership",
+  "name": "cujiware-astro",
   "type": "module",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
+    "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev"
   },
   "dependencies": {
-    "@astrojs/react": "^3.6.3",
-    "@astrojs/sitemap": "^3.1.1",
+    "@astrojs/react": "^4.3.0",
+    "@astrojs/sitemap": "^3.4.0",
     "@astrojs/tailwind": "^5.1.0",
-    "@types/react": "^18.2.55",
-    "@types/react-dom": "^18.2.19",
-    "astro": "^5.2.5",
-    "astro-seo": "^0.8.3",
-    "jsdom": "^26.1.0",
+    "@astrojs/vercel": "^6.0.0",
+    "@prisma/client": "^5.10.0",
+    "astro": "^4.4.0",
+    "astro-seo": "^0.8.4",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.330.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.22.0",
-    "tailwindcss": "^3.4.1"
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "stripe": "^18.2.0",
+    "tailwindcss": "^3.4.0",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/node": "^22.15.29",
+    "@types/uuid": "^9.0.8",
+    "prisma": "^5.10.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
   }
 }

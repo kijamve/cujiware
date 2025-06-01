@@ -1,0 +1,136 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { requireAuth } from '../middleware/auth.ts';
+
+const user = await requireAuth(Astro);
+const activeMembership = user.memberships.find(m => m.status === 'active');
+---
+
+<Layout title="Dashboard - Cujiware" description="Gestiona tu cuenta y membresía de Cujiware">
+  <div class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white shadow rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+          <h1 class="text-2xl font-bold text-gray-900 mb-8">Mi Cuenta</h1>
+
+          <!-- Información del Usuario -->
+          <div class="bg-gray-50 rounded-lg p-6 mb-8">
+            <h2 class="text-lg font-medium text-gray-900 mb-4">Información Personal</h2>
+            <dl class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2">
+              <div>
+                <dt class="text-sm font-medium text-gray-500">Nombre</dt>
+                <dd class="mt-1 text-sm text-gray-900">{user.name}</dd>
+              </div>
+              <div>
+                <dt class="text-sm font-medium text-gray-500">Email</dt>
+                <dd class="mt-1 text-sm text-gray-900">{user.email}</dd>
+              </div>
+              <div>
+                <dt class="text-sm font-medium text-gray-500">País</dt>
+                <dd class="mt-1 text-sm text-gray-900">{user.country}</dd>
+              </div>
+              <div>
+                <dt class="text-sm font-medium text-gray-500">ID de Licencia</dt>
+                <dd class="mt-1 text-sm text-gray-900">{user.licenseId}</dd>
+              </div>
+            </dl>
+          </div>
+
+          <!-- Membresía -->
+          <div class="bg-gray-50 rounded-lg p-6 mb-8">
+            <h2 class="text-lg font-medium text-gray-900 mb-4">Membresía</h2>
+            {activeMembership ? (
+              <div>
+                <dl class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2">
+                  <div>
+                    <dt class="text-sm font-medium text-gray-500">Plan</dt>
+                    <dd class="mt-1 text-sm text-gray-900">{activeMembership.plan.name}</dd>
+                  </div>
+                  <div>
+                    <dt class="text-sm font-medium text-gray-500">Estado</dt>
+                    <dd class="mt-1 text-sm text-gray-900">
+                      <span class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                        activeMembership.status === 'active' 
+                          ? 'bg-green-100 text-green-800'
+                          : activeMembership.status === 'cancelled'
+                          ? 'bg-red-100 text-red-800'
+                          : 'bg-yellow-100 text-yellow-800'
+                      }`}>
+                        {activeMembership.status === 'active' 
+                          ? 'Activa'
+                          : activeMembership.status === 'cancelled'
+                          ? 'Cancelada'
+                          : 'Inactiva'}
+                      </span>
+                    </dd>
+                  </div>
+                  <div>
+                    <dt class="text-sm font-medium text-gray-500">Fecha de inicio</dt>
+                    <dd class="mt-1 text-sm text-gray-900">
+                      {new Date(activeMembership.start_date).toLocaleDateString()}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt class="text-sm font-medium text-gray-500">Fecha de vencimiento</dt>
+                    <dd class="mt-1 text-sm text-gray-900">
+                      {new Date(activeMembership.end_date).toLocaleDateString()}
+                    </dd>
+                  </div>
+                </dl>
+
+                {activeMembership.status === 'active' && (
+                  <div class="mt-6">
+                    <a
+                      href="/suscripcion/cancelar"
+                      class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                    >
+                      Cancelar Suscripción
+                    </a>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div class="text-center">
+                <p class="text-gray-500 mb-4">No tienes una membresía activa</p>
+                <a
+                  href="/suscripcion"
+                  class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-cuji-blue hover:bg-cuji-dark-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cuji-blue"
+                >
+                  Suscribirse
+                </a>
+              </div>
+            )}
+          </div>
+
+          <!-- Plugins -->
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h2 class="text-lg font-medium text-gray-900 mb-4">Mis Plugins</h2>
+            {activeMembership?.status === 'active' ? (
+              <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <!-- Aquí irá la lista de plugins disponibles -->
+                <div class="bg-white p-4 rounded-lg shadow">
+                  <h3 class="text-lg font-medium text-gray-900">Plugin 1</h3>
+                  <p class="mt-1 text-sm text-gray-500">Descripción del plugin</p>
+                  <div class="mt-4">
+                    <a
+                      href="#"
+                      class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-cuji-blue hover:bg-cuji-dark-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cuji-blue"
+                    >
+                      Descargar
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div class="text-center">
+                <p class="text-gray-500">
+                  Necesitas una membresía activa para acceder a los plugins
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout> 

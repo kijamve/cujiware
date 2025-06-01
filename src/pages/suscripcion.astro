@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { isAuthenticated } from '../middleware/auth';
+import PricingCards from '../components/PricingCards.astro';
+
+const user = await isAuthenticated(Astro);
+---
+
+<Layout title="Suscripción - Cujiware" description="Elige el plan que mejor se adapte a tus necesidades">
+  <div class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <PricingCards />
+
+      <div class="mt-12 text-center">
+        <p class="text-base text-gray-600">
+          ¿Necesitas un plan personalizado?{' '}
+          <a href="#contact" class="font-medium text-cuji-blue hover:text-cuji-dark-blue">
+            Contáctanos
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</Layout> 

@@ -1,0 +1,130 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                    String       @id @default(cuid())
+  email                 String       @unique
+  password              String
+  name                  String
+  country               String
+  billing_full_name     String?
+  billing_phone         String?
+  billing_tax_id        String?
+  created_at            DateTime     @default(now())
+  updated_at            DateTime     @updatedAt
+  memberships           Membership[]
+
+  @@index([email])
+}
+
+model Membership {
+  id                    String   @id @default(cuid())
+  user_id              String
+  plan_id              String
+  status               String   // active, inactive, cancelled
+  start_date           DateTime
+  end_date             DateTime
+  stripe_subscription_id String?
+  payment_method       String   // stripe, venezuela
+  created_at           DateTime @default(now())
+  updated_at           DateTime @updatedAt
+  user                 User     @relation(fields: [user_id], references: [id])
+  plan                 Plan     @relation(fields: [plan_id], references: [id])
+  licenses             License[]
+  payments             Payment[]
+
+  @@index([user_id])
+  @@index([plan_id])
+  @@index([stripe_subscription_id])
+  @@index([status])
+}
+
+model License {
+  id            String     @id @default(uuid())
+  membership_id String
+  status        String     // active, inactive, revoked
+  created_at    DateTime   @default(now())
+  updated_at    DateTime   @updatedAt
+  membership    Membership @relation(fields: [membership_id], references: [id])
+  usages        LicenseUsage[]
+
+  @@index([membership_id])
+  @@index([status])
+}
+
+model LicenseUsage {
+  id            String   @id @default(cuid())
+  license_id    String
+  domain        String
+  first_used_at DateTime @default(now())
+  last_used_at  DateTime @updatedAt
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+  license       License  @relation(fields: [license_id], references: [id])
+
+  @@index([license_id])
+  @@index([domain])
+  @@unique([license_id, domain])
+}
+
+model Plan {
+  id              String       @id @default(cuid())
+  name            String
+  description     String
+  price           Float
+  currency        String
+  interval        String      // month, semester, year
+  features        Json        // Array de strings almacenado como JSON
+  stripe_price_id String?     @unique
+  is_highlighted  Boolean     @default(false)
+  savings_text    String?
+  is_visible      Boolean     @default(true)
+  created_at      DateTime    @default(now())
+  updated_at      DateTime    @updatedAt
+  memberships     Membership[]
+
+  @@index([interval])
+}
+
+model Plugin {
+  id                String   @id @default(cuid())
+  slug              String   @unique
+  version           String
+  download_file_path String
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
+
+  @@index([slug])
+}
+
+model Payment {
+  id              String     @id @default(cuid())
+  membership_id   String
+  amount          Float
+  currency        String
+  status          String     // pending, completed, failed
+  payment_method  String     // stripe, venezuela
+  stripe_invoice_id String?
+  bank_name       String?
+  currency_rate   Float?
+  reference       String?
+  invoice_url     String?
+  created_at      DateTime   @default(now())
+  updated_at      DateTime   @updatedAt
+  membership      Membership @relation(fields: [membership_id], references: [id])
+
+  @@index([membership_id])
+  @@index([status])
+  @@index([payment_method])
+  @@index([stripe_invoice_id])
+  @@index([reference])
+} 
