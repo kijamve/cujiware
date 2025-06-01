@@ -19,6 +19,7 @@ model User {
   billing_full_name     String?
   billing_phone         String?
   billing_tax_id        String?
+  billing_address       String?
   created_at            DateTime     @default(now())
   updated_at            DateTime     @updatedAt
   memberships           Membership[]

@@ -1,0 +1,90 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { requireAuth } from '../../middleware/auth.ts';
+
+const user = await requireAuth(Astro);
+if (user instanceof Response) {
+  return user;
+}
+
+const membershipId = Astro.url.searchParams.get('membership_id');
+if (!membershipId) {
+  return Astro.redirect('/dashboard');
+}
+
+const membership = user.memberships.find(m => m.id === membershipId && m.status === 'active');
+if (!membership) {
+  return Astro.redirect('/dashboard');
+}
+---
+
+<Layout title="Cancelar Suscripción - Cujiware" description="Cancela tu suscripción de Cujiware">
+  <div class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto">
+        <div class="bg-white shadow sm:rounded-lg">
+          <div class="px-4 py-5 sm:p-6">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">
+              Cancelar Suscripción
+            </h3>
+            <div class="mt-2 max-w-xl text-sm text-gray-500">
+              <p>
+                ¿Estás seguro de que deseas cancelar tu suscripción al plan {membership.plan.name}? Ten en cuenta que:
+              </p>
+              <ul class="list-disc pl-5 mt-2 space-y-1">
+                <li>Tu suscripción seguirá activa hasta el final del período actual ({new Date(membership.end_date).toLocaleDateString()})</li>
+                <li>No se realizarán más cargos después de la cancelación</li>
+                <li>Perderás acceso a las actualizaciones y soporte técnico al finalizar el período</li>
+              </ul>
+            </div>
+            <div class="mt-5">
+              <button
+                type="button"
+                id="confirm-cancel"
+                class="inline-flex items-center justify-center px-4 py-2 border border-transparent font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm"
+              >
+                Sí, cancelar mi suscripción
+              </button>
+              <a
+                href="/dashboard"
+                class="ml-3 inline-flex items-center justify-center px-4 py-2 border border-gray-300 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cuji-blue sm:text-sm"
+              >
+                No, volver al dashboard
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  const confirmButton = document.getElementById('confirm-cancel');
+  
+  confirmButton?.addEventListener('click', async () => {
+    if (!confirm('¿Estás completamente seguro de que deseas cancelar esta suscripción?')) {
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/subscription/cancel', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ membership_id: new URLSearchParams(window.location.search).get('membership_id') })
+      });
+
+      if (response.ok) {
+        alert('Tu suscripción ha sido cancelada exitosamente');
+        window.location.href = '/dashboard';
+      } else {
+        const data = await response.json();
+        throw new Error(data.error || 'Error al cancelar la suscripción');
+      }
+    } catch (error) {
+      alert(error instanceof Error ? error.message : 'Error al cancelar la suscripción');
+    }
+  });
+</script> 

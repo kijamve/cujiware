@@ -1,51 +1,29 @@
 ---
-const plans = [
-  {
-    name: "Mensual",
-    price: "$12",
-    duration: "mes",
-    description: "Perfecto para probar nuestros plugins o proyectos cortos.",
-    features: [
-      "Todos los plugins",
-      "Actualizaciones",
-      "Soporte técnico"
-    ],
-    cta: "Seleccionar Plan",
-    ctaLink: "#",
-    highlight: false,
-    savings: null
+import { prisma } from '../lib/prisma';
+import type { Plan } from '@prisma/client';
+import PricingCard from './PricingCard.astro';
+import type { VenezuelaPaymentData } from './PricingTypes';
+
+const plans = await prisma.plan.findMany({
+  where: {
+    is_visible: true
   },
-  {
-    name: "Semestral",
-    price: "$60",
-    duration: "6 meses",
-    description: "Nuestro plan más popular para negocios en crecimiento.",
-    features: [
-      "Todos los plugins",
-      "Actualizaciones",
-      "Soporte técnico"
-    ],
-    cta: "Seleccionar Plan",
-    ctaLink: "#",
-    highlight: true,
-    savings: "17% DE DESCUENTO"
-  },
-  {
-    name: "Anual",
-    price: "$115",
-    duration: "año",
-    description: "Mejor valor para dueños de tiendas serios.",
-    features: [
-      "Todos los plugins",
-      "Actualizaciones",
-      "Soporte técnico"
-    ],
-    cta: "Seleccionar Plan",
-    ctaLink: "#",
-    highlight: false,
-    savings: "20% DE DESCUENTO"
+  orderBy: {
+    price: 'asc'
   }
-];
+});
+
+let showVenezuelaModal = false;
+let venezuelaModalData: VenezuelaPaymentData | null = null;
+
+function openVenezuelaModal(data: VenezuelaPaymentData) {
+  showVenezuelaModal = true;
+  venezuelaModalData = data;
+}
+function closeVenezuelaModal() {
+  showVenezuelaModal = false;
+  venezuelaModalData = null;
+}
 ---
 
 <section id="pricing" class="py-20 bg-gray-50">
@@ -56,49 +34,15 @@ const plans = [
     </div>
     
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-      {plans.map((plan) => (
-        <div class={`bg-white rounded-xl overflow-hidden transition-all duration-300 ${plan.highlight ? 'shadow-xl relative scale-105 border-2 border-cuji-blue z-10 mt-4' : 'shadow-md hover:shadow-lg border border-gray-100'}`}>
-          {plan.highlight && (
-            <div class="absolute top-0 left-1/2 transform -translate-x-1/2 bg-cuji-blue text-white text-xs font-bold px-4 py-1  shadow-sm">
-              POPULAR
-            </div>
-          )}
-          <div class="p-6 bg-gradient-to-br from-gray-50 to-white">
-            <h3 class="text-xl font-bold font-heading text-gray-900 mb-1">{plan.name}</h3>
-            <div class="flex items-baseline mb-4">
-              <span class="text-4xl font-bold text-gray-900">{plan.price}</span>
-              <span class="text-gray-500 ml-2">/{plan.duration}</span>
-            </div>
-            <p class="text-gray-600 mb-4">{plan.description}</p>
-            {plan.savings && (
-              <div class="bg-green-50 text-green-700 text-sm px-3 py-1 rounded-md inline-block mb-4">
-                {plan.savings}
-              </div>
-            )}
-          </div>
-          <div class="p-6 border-t border-gray-100">
-            <ul class="space-y-3 mb-6">
-              {plan.features.map((feature) => (
-                <li class="flex items-start">
-                  <svg class="h-5 w-5 text-cuji-green mt-0.5 mr-2 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                  </svg>
-                  <span class="text-gray-600">{feature}</span>
-                </li>
-              ))}
-            </ul>
-            <a href={plan.ctaLink} class={`block w-full text-center py-3 px-4 rounded-md font-medium transition-colors duration-200 ${plan.highlight ? 'bg-cuji-blue text-white hover:bg-cuji-dark-blue' : 'bg-white text-cuji-blue border border-cuji-blue hover:bg-cuji-blue/5'}`}>
-              {plan.cta}
-            </a>
-          </div>
-        </div>
+      {plans.map((plan: Plan) => (
+        <PricingCard plan={plan} />
       ))}
     </div>
     
     <div class="mt-16 text-center max-w-3xl mx-auto">
       <div class="bg-blue-50 rounded-lg p-6 border border-blue-100">
         <h3 class="text-xl font-bold font-heading text-gray-900 mb-2">¿Necesitas múltiples dominios?</h3>
-        <p class="text-gray-600 mb-4">Si administras múltiples tiendas, cada dominio requiere una membresía independiente. Contáctanos para descuentos por volumen.</p>
+        <p class="text-gray-600 mb-4">Si administras múltiples tiendas, cada dominio requiere una membresía independiente. Contáctanos para descuentos por volumen a partir de 5 dominios.</p>
         <a href="#contact" class="inline-flex items-center text-cuji-blue hover:text-cuji-dark-blue font-medium">
           Contacta a nuestro equipo de ventas
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
@@ -108,4 +52,111 @@ const plans = [
       </div>
     </div>
   </div>
+  <div id="modal-root"></div>
 </section>
+
+<script>
+  import type { VenezuelaPaymentData } from './PricingTypes';
+  import './VenezuelaPaymentModal';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('[data-plan-id]') as NodeListOf<HTMLButtonElement>;
+    
+    buttons.forEach(button => {
+      button.addEventListener('click', async (e) => {
+        const clickedButton = e.currentTarget as HTMLButtonElement;
+        const planId = clickedButton.dataset.planId;
+        
+        if (!planId) {
+          console.error('No se encontró el ID del plan');
+          return;
+        }
+
+        // Desactivar todos los botones y mostrar estado de carga
+        buttons.forEach(btn => {
+          btn.disabled = true;
+          btn.classList.add('opacity-50', 'cursor-not-allowed');
+        });
+        clickedButton.innerHTML = `
+          <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          Procesando...
+        `;
+
+        try {
+          const response = await fetch('/api/subscription/create', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ plan: planId })
+          });
+          
+          const data = await response.json();
+          console.log('Datos recibidos del servidor:', data);
+
+          if (response.status === 401) {
+            window.location.href = '/mi-cuenta';
+            return;
+          }
+
+          if (data.url) {
+            window.location.href = data.url;
+          } else if (data.payment_method === 'venezuela') {
+            console.log('Creando modal con datos:', data);
+            const modalRoot = document.getElementById('modal-root');
+            if (modalRoot) {
+              const modal = document.createElement('venezuela-payment-modal');
+              const modalData = {
+                payment_method: data.payment_method,
+                plan_id: data.plan_id,
+                price_usd: data.price_usd,
+                price_bs: data.price_bs,
+                bcv_rate: data.bcv_rate
+              };
+              console.log('Datos a pasar al modal:', modalData);
+              modal.setAttribute('data', JSON.stringify(modalData));
+              modalRoot.appendChild(modal);
+            }
+          } else {
+            alert('Error al procesar la suscripción');
+          }
+        } catch (error) {
+          alert('Error al procesar la suscripción');
+        } finally {
+          // Restaurar todos los botones
+          buttons.forEach(btn => {
+            btn.disabled = false;
+            btn.classList.remove('opacity-50', 'cursor-not-allowed');
+          });
+          clickedButton.innerHTML = 'Seleccionar Plan';
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+  // Script para manejar el modal
+  let modalInstance: any = null;
+
+  window.addEventListener('show-venezuela-modal', ((event: CustomEvent) => {
+    const modalRoot = document.getElementById('modal-root');
+    if (!modalRoot) return;
+
+    // Crear el componente modal
+    const modal = document.createElement('venezuela-payment-modal');
+    modal.setAttribute('data', JSON.stringify(event.detail));
+    modalRoot.appendChild(modal);
+    modalInstance = modal;
+  }) as EventListener);
+
+  window.addEventListener('close-venezuela-modal', () => {
+    if (modalInstance) {
+      modalInstance.remove();
+      modalInstance = null;
+    }
+  });
+</script>

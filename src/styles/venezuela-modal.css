@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.venezuela-modal-fixed {
+  @apply fixed inset-0 bg-black/50 flex items-center justify-center z-50 overflow-y-auto p-4;
+}
+
+.venezuela-modal {
+  @apply bg-white rounded-lg p-6 w-full mx-auto max-h-[calc(100vh-2rem)] overflow-y-auto relative;
+}
+
+@media (min-width: 768px) {
+  .venezuela-modal {
+    @apply w-3/4 max-w-[900px];
+  }
+}
+
+@media (max-width: 767px) {
+  .venezuela-modal {
+    @apply w-full m-0 rounded-none h-screen max-h-screen;
+  }
+  .venezuela-modal-fixed {
+    @apply p-0;
+  }
+}
+
+.venezuela-modal-section {
+  @apply hidden w-full;
+}
+
+.venezuela-modal-section.active {
+  @apply block;
+}
+
+.venezuela-modal-btn {
+  @apply px-3 py-2 rounded border border-blue-500 text-blue-500 font-semibold bg-transparent transition-all duration-200;
+}
+
+.venezuela-modal-btn.active {
+  @apply bg-blue-500 text-white;
+}
+
+.venezuela-modal-btn:hover {
+  @apply bg-blue-500 text-white;
+}
+
+.venezuela-modal-btn:focus {
+  @apply outline-none ring-2 ring-blue-500/20;
+}
+
+.venezuela-modal-form-group {
+  @apply mb-4;
+}
+
+.venezuela-modal-label {
+  @apply block text-sm font-medium text-gray-700 mb-1;
+}
+
+.venezuela-modal-input {
+  @apply w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500;
+}
+
+.venezuela-modal-qr-container {
+  @apply flex justify-center items-center w-full my-4;
+}
+
+.venezuela-modal-qr-container.invisible {
+  @apply hidden;
+}
+
+.venezuela-modal-qr-img {
+  @apply max-w-full h-auto object-contain rounded border border-gray-200 shadow-sm;
+}
+
+.venezuela-modal-submit-btn {
+  @apply px-4 py-2 rounded-md font-medium;
+}
+
+.venezuela-modal-submit-btn-primary {
+  @apply bg-blue-500 text-white hover:bg-blue-600;
+}
+
+.venezuela-modal-submit-btn-secondary {
+  @apply border border-gray-300 text-gray-700 hover:bg-gray-50;
+} 

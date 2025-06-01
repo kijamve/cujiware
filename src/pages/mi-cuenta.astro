@@ -1,6 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { ArrowLeft } from 'lucide-react';
+import { requireAuth } from '../middleware/auth.ts';
+
+// Verificar si el usuario está autenticado
+const authResult = await requireAuth(Astro);
+if (!(authResult instanceof Response)) {
+  return Astro.redirect('/dashboard');
+}
 
 const title = "Mi Cuenta - Cujiware";
 const description = "Accede a tu cuenta de Cujiware para gestionar tu membresía y plugins.";

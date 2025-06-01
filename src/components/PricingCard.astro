@@ -1,0 +1,50 @@
+---
+import type { Plan } from './PricingTypes';
+import type { JSX } from 'astro/jsx-runtime';
+
+interface Props {
+  plan: Plan;
+}
+
+const { plan } = Astro.props;
+const features = Array.isArray(plan.features) ? plan.features : [];
+---
+
+<div class={`bg-white rounded-xl overflow-hidden transition-all duration-300 ${plan.is_highlighted ? 'shadow-xl relative scale-105 border-2 border-cuji-blue z-10 mt-4' : 'shadow-md hover:shadow-lg border border-gray-100'}`}>
+  {plan.is_highlighted && (
+    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 bg-cuji-blue text-white text-xs font-bold px-4 py-1 shadow-sm">
+      POPULAR
+    </div>
+  )}
+  <div class="p-6 bg-gradient-to-br from-gray-50 to-white">
+    <h3 class="text-xl font-bold font-heading text-gray-900 mb-1">{plan.name}</h3>
+    <div class="flex items-baseline mb-4">
+      <span class="text-4xl font-bold text-gray-900">${plan.price}</span>
+      <span class="text-gray-500 ml-2">/{plan.interval}</span>
+    </div>
+    <p class="text-gray-600 mb-4">{plan.description}</p>
+    {plan.savings_text && (
+      <div class="bg-green-50 text-green-700 text-sm px-3 py-1 rounded-md inline-block mb-4">
+        {plan.savings_text}
+      </div>
+    )}
+  </div>
+  <div class="p-6 border-t border-gray-100">
+    <ul class="space-y-3 mb-6">
+      {features.map((feature) => (
+        <li class="flex items-start">
+          <svg class="h-5 w-5 text-cuji-green mt-0.5 mr-2 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg>
+          <span class="text-gray-600">{feature}</span>
+        </li>
+      ))}
+    </ul>
+    <button 
+      data-plan-id={plan.id}
+      class={`w-full text-center py-3 px-4 rounded-md font-medium transition-colors duration-200 ${plan.is_highlighted ? 'bg-cuji-blue text-white hover:bg-cuji-dark-blue' : 'bg-white text-cuji-blue border border-cuji-blue hover:bg-cuji-blue/5'}`}
+    >
+      Seleccionar Plan
+    </button>
+  </div>
+</div> 

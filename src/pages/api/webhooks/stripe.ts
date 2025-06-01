@@ -8,7 +8,7 @@ const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY, {
 
 const webhookSecret = import.meta.env.STRIPE_WEBHOOK_SECRET;
 
-export const post: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request }) => {
   try {
     const body = await request.text();
     const signature = request.headers.get('stripe-signature');
@@ -69,11 +69,16 @@ export const post: APIRoute = async ({ request }) => {
         });
 
         if (membership) {
+          // Asegurarnos de que la fecha sea válida
+          const endDate = subscription.current_period_end 
+            ? new Date(subscription.current_period_end * 1000)
+            : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 días por defecto
+
           await prisma.membership.update({
             where: { id: membership.id },
             data: {
               status: subscription.status === 'active' ? 'active' : 'cancelled',
-              end_date: new Date(subscription.current_period_end * 1000),
+              end_date: endDate,
               licenses: {
                 updateMany: {
                   where: { status: 'active' },

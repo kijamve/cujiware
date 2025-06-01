@@ -5,6 +5,7 @@ import react from '@astrojs/react';
 
 export default defineConfig({
   site: 'https://cujiware.com',
+  output: 'server',
   integrations: [
     tailwind(),
     sitemap(),
