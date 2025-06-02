@@ -1,24 +1,21 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '@/lib/prisma';
+import type { APIRoute } from 'astro';
+import { prisma } from '../../../lib/prisma';
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2023-10-16'
 });
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
+export const POST: APIRoute = async ({ request }) => {
   try {
-    const { license_id, domain, plugin_slug } = req.body;
+    const body = await request.json();
+    const { license_id, domain, plugin_slug } = body;
 
     if (!license_id || !domain || !plugin_slug) {
-      return res.status(400).json({ error: 'Missing required fields' });
+      return new Response(
+        JSON.stringify({ error: 'Missing required fields' }),
+        { status: 400 }
+      );
     }
 
     // Buscar la licencia
@@ -30,11 +27,17 @@ export default async function handler(
     });
 
     if (!license) {
-      return res.status(404).json({ error: 'License not found' });
+      return new Response(
+        JSON.stringify({ error: 'License not found' }),
+        { status: 404 }
+      );
     }
 
     if (license.status !== 'active') {
-      return res.status(403).json({ error: 'License is not active' });
+      return new Response(
+        JSON.stringify({ error: 'License is not active' }),
+        { status: 403 }
+      );
     }
 
     // Verificar si la membresía ha expirado (más de 5 días desde end_date)
@@ -54,7 +57,10 @@ export default async function handler(
         })
       ]);
 
-      return res.status(403).json({ error: 'Membership has expired' });
+      return new Response(
+        JSON.stringify({ error: 'Membership has expired' }),
+        { status: 403 }
+      );
     }
 
     // Verificar si hay un uso reciente con otro dominio
@@ -71,10 +77,13 @@ export default async function handler(
     });
 
     if (lastUsage && lastUsage.domain !== domain) {
-      return res.status(403).json({ 
-        error: 'This license was used with another domain in the last 72 hours',
-        lastUsage
-      });
+      return new Response(
+        JSON.stringify({ 
+          error: 'This license was used with another domain in the last 72 hours',
+          lastUsage
+        }),
+        { status: 403 }
+      );
     }
 
     // Crear o actualizar el uso de la licencia
@@ -90,22 +99,23 @@ export default async function handler(
       },
       create: {
         license_id: license_id,
-        plugin_slug: plugin_slug,
-        domain: domain
+        domain: domain,
+        last_used_at: new Date()
       }
     });
 
     // Crear o actualizar el registro de uso del plugin
     await prisma.licensePlugin.upsert({
       where: {
-        license_id_plugin_slug: {
+        license_id_plugin_slug_domain: {
           license_id: license_id,
           plugin_slug: plugin_slug,
           domain: domain
         }
       },
       update: {
-        last_usage: new Date()
+        last_usage: new Date(),
+        domain: domain
       },
       create: {
         license_id: license_id,
@@ -115,16 +125,22 @@ export default async function handler(
       }
     });
 
-    return res.status(200).json({
-      valid: true,
-      license: {
-        ...license,
-        usages: license.usages
-      }
-    });
+    return new Response(
+      JSON.stringify({
+        valid: true,
+        license: {
+          ...license,
+          usages: license.usages
+        }
+      }),
+      { status: 200 }
+    );
 
   } catch (error) {
     console.error('Error validating license:', error);
-    return res.status(500).json({ error: 'Internal server error' });
+    return new Response(
+      JSON.stringify({ error: 'Internal server error' }),
+      { status: 500 }
+    );
   }
 } 

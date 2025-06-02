@@ -62,14 +62,17 @@ const isVenezuelan = userWithMemberships.country === 'VE';
       const response = await fetch('/api/auth/logout', {
         method: 'POST'
       });
-
       if (response.ok) {
         window.location.href = '/mi-cuenta';
-      } else {
-        alert('Error al cerrar sesión');
       }
     } catch (error) {
-      alert('Error al cerrar sesión');
+      console.error('Error al cerrar sesión:', error);
     }
   });
+
+  // Abrir modal de facturación si el hash es #show-form-billing
+  if (window.location.hash === '#show-form-billing') {
+    const editBillingBtn = document.getElementById('edit-billing-btn');
+    editBillingBtn?.click();
+  }
 </script> 

@@ -46,13 +46,25 @@ const { user } = Astro.props;
   const closeBillingModalBtn = document.getElementById('close-billing-modal');
   const editBillingForm = document.getElementById('edit-billing-form');
 
-  editBillingBtn?.addEventListener('click', () => {
+  // Función para abrir el modal
+  const openBillingModal = () => {
     editBillingModal?.classList.remove('hidden');
-  });
+  };
 
-  closeBillingModalBtn?.addEventListener('click', () => {
+  // Función para cerrar el modal
+  const closeBillingModal = () => {
     editBillingModal?.classList.add('hidden');
-  });
+  };
+
+  editBillingBtn?.addEventListener('click', openBillingModal);
+  closeBillingModalBtn?.addEventListener('click', closeBillingModal);
+
+  // Abrir modal automáticamente si el hash es #show-form-billing
+  if (window.location.hash === '#show-form-billing') {
+    openBillingModal();
+    // Eliminar el hash de la URL sin recargar la página
+    history.pushState("", document.title, window.location.pathname + window.location.search);
+  }
 
   editBillingForm?.addEventListener('submit', async (e) => {
     e.preventDefault();

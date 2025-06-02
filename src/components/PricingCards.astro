@@ -114,7 +114,12 @@ function closeVenezuelaModal() {
                 plan_id: data.plan_id,
                 price_usd: data.price_usd,
                 price_bs: data.price_bs,
-                bcv_rate: data.bcv_rate
+                bcv_rate: data.bcv_rate,
+                name: data.name,
+                billing_full_name: data.billing_full_name,
+                billing_tax_id: data.billing_tax_id,
+                billing_address: data.billing_address,
+                billing_phone: data.billing_phone
               };
               console.log('Datos a pasar al modal:', modalData);
               modal.setAttribute('data', JSON.stringify(modalData));

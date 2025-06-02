@@ -90,7 +90,7 @@ model LicensePlugin {
   updated_at   DateTime @updatedAt
   license      License  @relation(fields: [license_id], references: [id])
 
-  @@unique([license_id, plugin_slug])
+  @@unique([license_id, plugin_slug, domain])
   @@index([license_id])
   @@index([plugin_slug])
 }

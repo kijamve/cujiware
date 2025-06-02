@@ -8,6 +8,11 @@ export interface VenezuelaPaymentData {
   price_usd: number;
   price_bs: string;
   bcv_rate: number;
+  name?: string;
+  billing_full_name?: string;
+  billing_tax_id?: string;
+  billing_address?: string;
+  billing_phone?: string;
 }
 
 export interface PaymentFormData {

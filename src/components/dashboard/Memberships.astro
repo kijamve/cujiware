@@ -1,9 +1,24 @@
 ---
-import type { Membership } from '../../types/auth';
+import type { Membership, Payment } from '../../types/auth';
 import MembershipCard from './MembershipCard.astro';
 
 interface Props {
-  memberships: (Omit<Membership, 'payments'> & {
+  memberships: Array<Omit<Membership, 'user_id' | 'plan_id'> & {
+    plan: {
+      id: string;
+      name: string;
+      description: string;
+      price: number;
+      currency: string;
+      interval: string;
+      features: any;
+      stripe_price_id: string | null;
+      is_highlighted: boolean;
+      savings_text: string | null;
+      is_visible: boolean;
+      created_at: Date;
+      updated_at: Date;
+    };
     licenses: {
       id: string;
       status: string;
@@ -18,7 +33,8 @@ interface Props {
         last_used_at: Date;
       }[];
     }[];
-  })[];
+    payments: Payment[];
+  }>;
 }
 
 const { memberships } = Astro.props;

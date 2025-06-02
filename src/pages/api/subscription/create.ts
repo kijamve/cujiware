@@ -80,26 +80,12 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       });
     }
 
-    // Verificar si el usuario ya tiene una suscripción activa
-    const existingMembership = await prisma.membership.findFirst({
-      where: {
-        user_id: user.id,
-        status: 'active'
-      }
-    });
-
-    if (existingMembership) {
-      return new Response(JSON.stringify({ error: 'Ya tienes una suscripción activa' }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' }
-      });
-    }
 
     // Si el usuario es de Venezuela, devolver información para pago móvil
     if (user.country === 'VE') {
       // Obtener tasa BCV
       const bcvRate = await getBCVRate();
-      const priceInBs = plan.price * bcvRate;
+      const priceInBs = Number((plan.price * bcvRate).toFixed(2));
 
       // Formatear precio en bolívares (1.2345,98)
       const formattedPriceBs = new Intl.NumberFormat('es-VE', {
@@ -107,12 +93,27 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         maximumFractionDigits: 2
       }).format(priceInBs);
 
+      console.log('Datos del usuario:', {
+        id: user.id,
+        name: user.name,
+        billing_full_name: user.billing_full_name,
+        billing_tax_id: user.billing_tax_id,
+        billing_address: user.billing_address,
+        billing_city: user.billing_city,
+        billing_state: user.billing_state,
+        billing_postal_code: user.billing_postal_code
+      });
+
       console.log('Datos de pago Venezuela:', {
         payment_method: 'venezuela',
         plan_id: plan.id,
         price_usd: plan.price,
         price_bs: formattedPriceBs,
-        bcv_rate: bcvRate
+        bcv_rate: bcvRate,
+        name: user.name,
+        billing_full_name: user.billing_full_name,
+        billing_tax_id: user.billing_tax_id,
+        billing_address: user.billing_address
       });
 
       return new Response(JSON.stringify({
@@ -120,7 +121,11 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         plan_id: plan.id,
         price_usd: plan.price,
         price_bs: formattedPriceBs,
-        bcv_rate: bcvRate
+        bcv_rate: bcvRate,
+        name: user.name,
+        billing_full_name: user.billing_full_name,
+        billing_tax_id: user.billing_tax_id,
+        billing_address: user.billing_address
       }), {
         status: 200,
         headers: { 'Content-Type': 'application/json' }

@@ -74,6 +74,9 @@ export class VenezuelaPaymentModal extends HTMLElement {
     styleSheet.replaceSync(`
       :host {
         display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 50;
       }
       .venezuela-modal-fixed {
         position: fixed;
@@ -250,32 +253,29 @@ export class VenezuelaPaymentModal extends HTMLElement {
       .space-y-4 > * + * {
         margin-top: 1rem;
       }
-      .card-fields-container {
+      .venezuela-modal-header {
+        margin-bottom: 1rem;
         display: flex;
-        gap: 2rem;
-        width: 100%;
+        justify-content: space-between;
+        align-items: flex-start;
       }
-      .card-field {
-        flex: 1;
-        min-width: 0;
-      }
-      .card-field label {
-        display: block;
+      .venezuela-modal-billing {
+        text-align: right;
         font-size: 0.875rem;
+        color: #6b7280;
+      }
+      .venezuela-modal-billing-title {
         font-weight: 500;
         color: #374151;
-        margin-bottom: 0.25rem;
       }
-      .card-field input {
-        width: 100%;
-        padding: 0.5rem;
-        border: 1px solid #d1d5db;
-        border-radius: 0.375rem;
+      .venezuela-modal-billing-link {
+        color: #3b82f6;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-decoration: none;
       }
-      .card-field input:focus {
-        outline: none;
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+      .venezuela-modal-billing-link:hover {
+        color: #2563eb;
       }
     `);
 
@@ -283,12 +283,15 @@ export class VenezuelaPaymentModal extends HTMLElement {
     this.shadowRoot!.innerHTML = `
       <div class="venezuela-modal-fixed">
         <div class="venezuela-modal">
-          <h3 class="text-xl font-bold mb-4">Selecciona método de pago</h3>
-          <div class="mb-4 flex space-x-2">
-            <button type="button" id="btn-movil" class="venezuela-modal-btn active">Pago Móvil</button>
-            <button type="button" id="btn-tdc" class="venezuela-modal-btn">Tarjeta Visa/Mastercard</button>
+          <h3 class="text-xl font-bold mb-4">Pago Móvil</h3>
+          <div class="venezuela-modal-header">
+            <div class="venezuela-modal-billing">
+              <p class="venezuela-modal-billing-title"><b>Datos de facturación:</b> 
+              ${this.data.billing_full_name || this.data.name} ${this.data.billing_tax_id || ''} - ${this.data.billing_address || ''}
+              <a href="/dashboard#show-form-billing" class="venezuela-modal-billing-link">Editar</a></p>
+            </div>
           </div>
-          <div id="movil-section" class="venezuela-modal-section active">
+          <div class="venezuela-modal-section active">
             <h4 class="font-semibold mb-2">Pago Móvil</h4>
             <p class="mb-1 text-sm">RIF: <span class="font-mono">J-50392719-4</span></p>
             <p class="mb-1 text-sm">Teléfono: <span class="font-mono">04144741641</span></p>
@@ -321,7 +324,11 @@ export class VenezuelaPaymentModal extends HTMLElement {
               </div>
               <div class="venezuela-modal-form-group">
                 <label class="venezuela-modal-label">Cédula de Identidad</label>
-                <input type="text" name="tax_id" required class="venezuela-modal-input" placeholder="V-12345678">
+                <input type="text" name="tax_id" required class="venezuela-modal-input" placeholder="V12345678">
+              </div>
+              <div class="venezuela-modal-form-group">
+                <label class="venezuela-modal-label">Teléfono vinculado a tu pago móvil</label>
+                <input type="text" name="phone" required class="venezuela-modal-input" placeholder="04120001122">
               </div>
               <div class="venezuela-modal-form-group">
                 <label class="venezuela-modal-label">Últimos 6 dígitos de la referencia</label>
@@ -337,58 +344,10 @@ export class VenezuelaPaymentModal extends HTMLElement {
               </div>
             </form>
           </div>
-          <div id="tdc-section" class="venezuela-modal-section">
-            <h4 class="font-semibold mb-2">Tarjeta Visa/Mastercard</h4>
-            <p class="mb-1 text-sm">Monto a pagar: <span class="font-mono font-bold">USD ${this.data.price_usd}</span></p>
-            <p class="mb-4 text-sm">Equivalente en Bs: <span class="font-mono font-bold">Bs. ${this.data.price_bs}</span></p>
-            <form id="tdcPaymentForm" class="space-y-4">
-              <div class="venezuela-modal-form-group">
-                <label class="venezuela-modal-label">Nombre en la tarjeta</label>
-                <input type="text" name="card_name" required class="venezuela-modal-input" placeholder="Como aparece en la tarjeta">
-              </div>
-              <div class="venezuela-modal-form-group">
-                <label class="venezuela-modal-label">Cédula de Identidad</label>
-                <input type="text" name="tax_id" required class="venezuela-modal-input" placeholder="V-12345678">
-              </div>
-              <div class="venezuela-modal-form-group">
-                <label class="venezuela-modal-label">Dirección de domicilio asociada a la tarjeta</label>
-                <input type="text" name="address" required class="venezuela-modal-input" placeholder="Dirección completa">
-              </div>
-              <div class="venezuela-modal-form-group">
-                <label class="venezuela-modal-label">Ciudad</label>
-                <input type="text" name="city" required class="venezuela-modal-input" placeholder="Ciudad">
-              </div>
-              <div class="venezuela-modal-form-group">
-                <label class="venezuela-modal-label">Estado</label>
-                <input type="text" name="state" required class="venezuela-modal-input" placeholder="Estado">
-              </div>
-              <div class="venezuela-modal-form-group">
-                <label class="venezuela-modal-label">Código Postal</label>
-                <input type="text" name="postal_code" required class="venezuela-modal-input" placeholder="Código Postal">
-              </div>
-              <div class="venezuela-modal-form-group">
-                <label class="venezuela-modal-label">Número de tarjeta</label>
-                <input type="text" name="card_number" required maxlength="19" minlength="13" pattern="[0-9 ]+" class="venezuela-modal-input" placeholder="0000 0000 0000 0000">
-              </div>
-              <div class="card-fields-container">
-                <div class="card-field">
-                  <label>Vencimiento (MM/AA)</label>
-                  <input type="text" name="card_expiry" required maxlength="5" pattern="\\d{2}/\\d{2}" placeholder="MM/AA">
-                </div>
-                <div class="card-field">
-                  <label>CVV</label>
-                  <input type="text" name="card_cvv" required maxlength="4" minlength="3" pattern="\\d{3,4}" placeholder="123">
-                </div>
-              </div>
-              <div class="flex justify-end space-x-3 mt-6">
-                <button type="button" id="close-modal-tdc" class="venezuela-modal-submit-btn venezuela-modal-submit-btn-secondary">
-                  Cancelar
-                </button>
-                <button type="submit" class="venezuela-modal-submit-btn venezuela-modal-submit-btn-primary">
-                  Enviar
-                </button>
-              </div>
-            </form>
+          <div class="mt-4 text-center">
+            <a href="/dashboard" class="text-cuji-blue hover:text-cuji-dark-blue text-sm font-medium">
+              Editar datos de facturación
+            </a>
           </div>
         </div>
       </div>
@@ -398,37 +357,6 @@ export class VenezuelaPaymentModal extends HTMLElement {
   private setupEventListeners() {
     const shadowRoot = this.shadowRoot!;
     
-    // Cambio de secciones
-    const btnMovil = shadowRoot.querySelector('#btn-movil') as HTMLButtonElement;
-    const btnTdc = shadowRoot.querySelector('#btn-tdc') as HTMLButtonElement;
-    const movilSection = shadowRoot.querySelector('#movil-section') as HTMLDivElement;
-    const tdcSection = shadowRoot.querySelector('#tdc-section') as HTMLDivElement;
-
-    // Formateador de fecha de vencimiento
-    const expiryInput = shadowRoot.querySelector('input[name="card_expiry"]') as HTMLInputElement;
-    expiryInput.addEventListener('input', (e) => {
-      const input = e.target as HTMLInputElement;
-      let value = input.value.replace(/\D/g, '');
-      
-      if (value.length >= 2) {
-        value = value.slice(0, 2) + '/' + value.slice(2, 4);
-      }
-      
-      input.value = value;
-    });
-
-    // Formateador de número de tarjeta
-    const cardNumberInput = shadowRoot.querySelector('input[name="card_number"]') as HTMLInputElement;
-    cardNumberInput.addEventListener('input', (e) => {
-      const input = e.target as HTMLInputElement;
-      let value = input.value.replace(/\D/g, '');
-      
-      // Agregar espacios cada 4 dígitos
-      value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
-      
-      input.value = value;
-    });
-
     // QR dinámico
     const bankDest = shadowRoot.querySelector('#bank-dest') as HTMLSelectElement;
     const qrContainer = shadowRoot.querySelector('#qr-container') as HTMLDivElement;
@@ -449,20 +377,6 @@ export class VenezuelaPaymentModal extends HTMLElement {
         qrContainer.classList.add('invisible');
         qrImg.src = '';
       }
-    });
-
-    btnMovil.addEventListener('click', () => {
-      movilSection.classList.add('active');
-      tdcSection.classList.remove('active');
-      btnMovil.classList.add('active');
-      btnTdc.classList.remove('active');
-    });
-
-    btnTdc.addEventListener('click', () => {
-      movilSection.classList.remove('active');
-      tdcSection.classList.add('active');
-      btnTdc.classList.add('active');
-      btnMovil.classList.remove('active');
     });
 
     // Pago móvil submit
@@ -495,74 +409,9 @@ export class VenezuelaPaymentModal extends HTMLElement {
       }
     });
 
-    // TDC submit
-    const tdcForm = shadowRoot.querySelector('#tdcPaymentForm') as HTMLFormElement;
-    tdcForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(tdcForm);
-      const cardName = (formData.get('card_name') || '').toString().trim();
-      const taxId = (formData.get('tax_id') || '').toString().trim();
-      const address = (formData.get('address') || '').toString().trim();
-      const city = (formData.get('city') || '').toString().trim();
-      const state = (formData.get('state') || '').toString().trim();
-      const postalCode = (formData.get('postal_code') || '').toString().trim();
-      const cardNumber = (formData.get('card_number') || '').toString().replace(/\s+/g, '');
-      const cardExpiry = (formData.get('card_expiry') || '').toString();
-      const cardCVV = (formData.get('card_cvv') || '').toString();
-
-      let error = '';
-      if (!cardName) error = 'El nombre es requerido';
-      else if (!taxId) error = 'La cédula es requerida';
-      else if (!address) error = 'La dirección es requerida';
-      else if (!city) error = 'La ciudad es requerida';
-      else if (!state) error = 'El estado es requerido';
-      else if (!postalCode) error = 'El código postal es requerido';
-      else if (!this.validateCardNumber(cardNumber)) error = 'Número de tarjeta inválido';
-      else if (!this.validateExpiry(cardExpiry)) error = 'Fecha de vencimiento inválida o expirada';
-      else if (!/^\d{3,4}$/.test(cardCVV)) error = 'CVV inválido';
-
-      if (error) {
-        alert(error);
-        return;
-      }
-
-      try {
-        const response = await fetch('/api/subscription/venezuela-payment', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            plan_id: this.data.plan_id,
-            payment_method: 'tdc',
-            card_name: cardName,
-            tax_id: taxId,
-            address: address,
-            city: city,
-            state: state,
-            postal_code: postalCode,
-            card_number: cardNumber,
-            card_expiry: cardExpiry,
-            card_cvv: cardCVV
-          })
-        });
-        const result = await response.json();
-        if (result.success) {
-          alert(result.message);
-          window.location.href = '/dashboard';
-        } else {
-          alert(result.error || 'Error al procesar el pago');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        alert('Error al procesar el pago');
-      }
-    });
-
     // Botones de cerrar
     const closeButton = shadowRoot.querySelector('#close-modal');
-    const closeButtonTdc = shadowRoot.querySelector('#close-modal-tdc');
-
     closeButton?.addEventListener('click', () => this.remove());
-    closeButtonTdc?.addEventListener('click', () => this.remove());
   }
 
   private validateCardNumber(number: string): boolean {
