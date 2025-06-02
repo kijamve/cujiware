@@ -277,6 +277,18 @@ export class VenezuelaPaymentModal extends HTMLElement {
       .venezuela-modal-billing-link:hover {
         color: #2563eb;
       }
+      .line-through {
+        text-decoration: line-through;
+      }
+      .text-gray-500 {
+        color: #6b7280;
+      }
+      .text-green-600 {
+        color: #059669;
+      }
+      .ml-2 {
+        margin-left: 0.5rem;
+      }
     `);
 
     this.shadowRoot!.adoptedStyleSheets = [styleSheet];
@@ -288,14 +300,25 @@ export class VenezuelaPaymentModal extends HTMLElement {
             <div class="venezuela-modal-billing">
               <p class="venezuela-modal-billing-title"><b>Datos de facturación:</b> 
               ${this.data.billing_full_name || this.data.name} ${this.data.billing_tax_id || ''} - ${this.data.billing_address || ''}
-              <a href="/dashboard#show-form-billing" class="venezuela-modal-billing-link">Editar</a></p>
+              <a href="/dashboard#show-form-billing" class="venezuela-modal-billing-link">Editar datos de facturación</a></p>
             </div>
           </div>
           <div class="venezuela-modal-section active">
             <h4 class="font-semibold mb-2">Pago Móvil</h4>
             <p class="mb-1 text-sm">RIF: <span class="font-mono">J-50392719-4</span></p>
             <p class="mb-1 text-sm">Teléfono: <span class="font-mono">04144741641</span></p>
-            <p class="mb-4 text-sm">Monto a pagar: <span class="font-mono font-bold">Bs. ${this.data.price_bs}</span></p>
+            <p class="mb-4 text-sm"></p>
+              Monto a pagar: 
+              ${this.data.discounted_price_bs ? (`
+                <span>
+                  <span class="line-through text-gray-500">Bs. ${this.data.price_bs}</span>
+                  <span class="ml-2 font-mono font-bold text-green-600">Bs. ${this.data.discounted_price_bs}</span>
+                  <span class="ml-2 text-sm text-gray-500">(Descuento solo por el primer mes)</span>
+                </span>
+              `) : (`
+                <span class="font-mono font-bold">Bs. ${this.data.price_bs}</span>
+              `)}
+            </p>
             <form id="venezuelaPaymentForm" class="space-y-4" data-plan-id="${this.data.plan_id}">
               <div class="venezuela-modal-form-group">
                 <label class="venezuela-modal-label">Banco destino</label>
@@ -343,11 +366,6 @@ export class VenezuelaPaymentModal extends HTMLElement {
                 </button>
               </div>
             </form>
-          </div>
-          <div class="mt-4 text-center">
-            <a href="/dashboard" class="text-cuji-blue hover:text-cuji-dark-blue text-sm font-medium">
-              Editar datos de facturación
-            </a>
           </div>
         </div>
       </div>

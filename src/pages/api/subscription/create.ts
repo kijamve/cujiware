@@ -47,6 +47,32 @@ async function getOrCreateStripePrice(plan: any) {
   return price.id;
 }
 
+// Verificar si el usuario ha tenido alguna membresía anterior
+async function hasPreviousMembership(userId: string) {
+  const previousMembership = await prisma.membership.findFirst({
+    where: {
+      user_id: userId
+    }
+  });
+  return !!previousMembership;
+}
+
+// Crear o obtener el cupón de descuento del 50% para el primer mes
+async function getOrCreateFirstMonthDiscountCoupon() {
+  const couponId = 'FIRST_MONTH_50';
+  try {
+    return (await stripe.coupons.retrieve(couponId)).id;
+  } catch {
+    return (await stripe.coupons.create({
+      id: couponId,
+      percent_off: 50,
+      duration: 'repeating',
+      duration_in_months: 1,
+      name: '50% OFF Primer Mes'
+    })).id;
+  }
+}
+
 export const POST: APIRoute = async ({ request, cookies }) => {
   try {
     const user = await isAuthenticated({ request, cookies });
@@ -80,6 +106,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       });
     }
 
+    const hasPrevious = await hasPreviousMembership(user.id);
 
     // Si el usuario es de Venezuela, devolver información para pago móvil
     if (user.country === 'VE') {
@@ -99,16 +126,24 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         billing_full_name: user.billing_full_name,
         billing_tax_id: user.billing_tax_id,
         billing_address: user.billing_address,
-        billing_city: user.billing_city,
-        billing_state: user.billing_state,
-        billing_postal_code: user.billing_postal_code
       });
-
+      let discountedPriceBs = 0
+      let discountedFormattedPriceBs = ''
+      if (!hasPrevious && plan.interval === 'month') {
+        discountedPriceBs = priceInBs / 2;
+        discountedFormattedPriceBs = new Intl.NumberFormat('es-VE', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }).format(discountedPriceBs);
+      }
       console.log('Datos de pago Venezuela:', {
         payment_method: 'venezuela',
         plan_id: plan.id,
         price_usd: plan.price,
         price_bs: formattedPriceBs,
+        price_bs_discounted: discountedFormattedPriceBs,
+        discounted_price_bs: discountedPriceBs,
+        has_previous: hasPrevious,
         bcv_rate: bcvRate,
         name: user.name,
         billing_full_name: user.billing_full_name,
@@ -121,6 +156,8 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         plan_id: plan.id,
         price_usd: plan.price,
         price_bs: formattedPriceBs,
+        discounted_price_bs: discountedFormattedPriceBs,
+        has_previous: hasPrevious,
         bcv_rate: bcvRate,
         name: user.name,
         billing_full_name: user.billing_full_name,
@@ -134,9 +171,9 @@ export const POST: APIRoute = async ({ request, cookies }) => {
 
     // Para otros países, continuar con Stripe
     const stripePriceId = await getOrCreateStripePrice(plan);
-
-    // Crear sesión de checkout de Stripe
-    const session = await stripe.checkout.sessions.create({
+    
+    // Configuración base de la sesión
+    const sessionConfig: Stripe.Checkout.SessionCreateParams = {
       customer_email: user.email,
       payment_method_types: ['card'],
       line_items: [
@@ -155,7 +192,20 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       automatic_tax: {
         enabled: true
       }
-    });
+    };
+
+    // Aplicar descuento solo para planes mensuales y usuarios nuevos
+    if (plan.interval === 'month') {
+      if (!hasPrevious) {
+        const discountCouponId = await getOrCreateFirstMonthDiscountCoupon();
+        sessionConfig.discounts = [{
+          coupon: discountCouponId
+        }];
+      }
+    }
+
+    // Crear sesión de checkout de Stripe
+    const session = await stripe.checkout.sessions.create(sessionConfig);
 
     return new Response(JSON.stringify({ url: session.url }), {
       status: 200,

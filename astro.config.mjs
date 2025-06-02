@@ -8,7 +8,15 @@ export default defineConfig({
   output: 'server',
   integrations: [
     tailwind(),
-    sitemap(),
+    sitemap({
+      filter: (page) => !page.includes('api/'),
+      i18n: {
+        defaultLocale: 'es',
+        locales: {
+          es: 'es'
+        }
+      }
+    }),
     react()
   ]
 });

@@ -21,7 +21,7 @@ export function PluginDetail({ plugin, country, platform, content, screenshots }
   };
 
   const handleSubscribe = () => {
-    window.location.href = '/subscribe';
+    window.location.href = '/suscripcion';
   };
 
   return (
@@ -84,7 +84,7 @@ export function PluginDetail({ plugin, country, platform, content, screenshots }
                 <div className="bg-gray-50 p-6 rounded-lg">
                   <h3 className="text-xl font-semibold mb-4">Accede a este plugin</h3>
                   <p className="text-gray-600 mb-6">
-                    Obtén acceso a todos nuestros plugins con una única membresía
+                    Obtén acceso a todos nuestros plugins con una única membresía por dominio.
                   </p>
                   <button 
                     onClick={handleSubscribe}

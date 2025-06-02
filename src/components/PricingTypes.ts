@@ -7,11 +7,14 @@ export interface VenezuelaPaymentData {
   plan_id: string;
   price_usd: number;
   price_bs: string;
+  price_bs_discounted?: number;
+  discounted_price_bs?: string;
+  has_previous: boolean;
   bcv_rate: number;
-  name?: string;
-  billing_full_name?: string;
-  billing_tax_id?: string;
-  billing_address?: string;
+  name: string;
+  billing_full_name: string;
+  billing_tax_id: string;
+  billing_address: string;
   billing_phone?: string;
 }
 
