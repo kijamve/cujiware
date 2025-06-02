@@ -89,10 +89,23 @@ export interface Plan {
 export interface Plugin {
   id: string;
   slug: string;
-  version: string;
-  download_file_path: string;
+  name: string;
+  description: string;
   created_at: Date;
   updated_at: Date;
+  versions: PluginVersion[];
+}
+
+export interface PluginVersion {
+  id: string;
+  plugin_slug: string;
+  version: string;
+  file_name: string;
+  file_path_server: string;
+  download_token: string;
+  created_at: Date;
+  updated_at: Date;
+  plugin: Plugin;
 }
 
 export interface UserWithMemberships extends Omit<User, 'memberships'> {

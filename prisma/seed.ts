@@ -15,7 +15,7 @@ async function main() {
       is_highlighted: false,
       savings_text: null,
       is_visible: true,
-      stripe_price_id: 'price_monthly'
+      stripe_price_id: null
     },
     {
       name: 'Semestral',
@@ -27,7 +27,7 @@ async function main() {
       is_highlighted: true,
       savings_text: '17% DE DESCUENTO',
       is_visible: true,
-      stripe_price_id: 'price_semester'
+      stripe_price_id: null
     },
     {
       name: 'Anual',
@@ -39,7 +39,7 @@ async function main() {
       is_highlighted: false,
       savings_text: '20% DE DESCUENTO',
       is_visible: true,
-      stripe_price_id: 'price_yearly'
+      stripe_price_id: null
     }
   ];
 

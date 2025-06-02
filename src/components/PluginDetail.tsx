@@ -1,7 +1,16 @@
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ChevronDown, ChevronUp } from 'lucide-react';
 import { PluginIcon } from './PluginIcon';
 import PluginScreenshots from './PluginScreenshots';
 import type { Plugin } from './types';
+import { useState, useEffect } from 'react';
+
+interface PluginVersion {
+  id: string;
+  version: string;
+  file_name: string;
+  download_token: string;
+  created_at: string;
+}
 
 interface PluginDetailProps {
   plugin: Plugin;
@@ -16,6 +25,34 @@ interface PluginDetailProps {
 }
 
 export function PluginDetail({ plugin, country, platform, content, screenshots }: PluginDetailProps) {
+  const [versions, setVersions] = useState<PluginVersion[]>([]);
+  const [showVersions, setShowVersions] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchVersions = async () => {
+      try {
+        const response = await fetch(`/api/plugins/${plugin.slug}/versions`);
+        if (!response.ok) {
+          throw new Error('Error al cargar las versiones');
+        }
+        const data = await response.json();
+        // Si el usuario no está autenticado, removemos el token de descarga
+        const versionsWithoutToken = data.map((version: PluginVersion) => ({
+          ...version,
+          download_token: response.status === 401 ? null : version.download_token
+        }));
+        setVersions(versionsWithoutToken);
+      } catch (err) {
+        setError('No se pudieron cargar las versiones del plugin');
+        console.error(err);
+      }
+    };
+
+    fetchVersions();
+  }, [plugin.slug]);
+
   const handleBack = () => {
     window.location.href = `/plugins/${country}/${platform}`;
   };
@@ -23,6 +60,52 @@ export function PluginDetail({ plugin, country, platform, content, screenshots }
   const handleSubscribe = () => {
     window.location.href = '/suscripcion';
   };
+
+  const handleDownload = async (version: PluginVersion) => {
+    if (!version.download_token) {
+      window.location.href = '/mi-cuenta';
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      setError(null);
+      
+      const response = await fetch(`/api/plugins/${plugin.slug}/${version.download_token}/${version.id}`);
+      
+      if (!response.ok) {
+        if (response.status === 401) {
+          window.location.href = '/mi-cuenta';
+          return;
+        }
+        if (response.status === 403) {
+          window.location.href = '/suscripcion';
+          return;
+        }
+        throw new Error('Error al descargar el plugin');
+      }
+
+      // Crear un blob con la respuesta
+      const blob = await response.blob();
+      
+      // Crear un enlace temporal y hacer clic en él
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = version.file_name;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (err) {
+      setError('Error al descargar el plugin');
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const latestVersion = versions[0];
 
   return (
     <div className="py-12">
@@ -46,9 +129,11 @@ export function PluginDetail({ plugin, country, platform, content, screenshots }
                   <h1 className="text-3xl font-bold text-gray-900">{plugin.name}</h1>
                 </div>
                 <div className="flex flex-wrap gap-2 mb-6">
-                  <span className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-medium bg-gray-100 text-cuji-blue">
-                    Última versión: v{plugin.last_version}
-                  </span>
+                  {latestVersion && (
+                    <span className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-medium bg-gray-100 text-cuji-blue">
+                      Última versión: v{latestVersion.version}
+                    </span>
+                  )}
                   <span className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-medium bg-gray-100 text-cuji-blue">
                     {plugin.platform[0] === 'prestashop' ? 'PrestaShop' : 'WooCommerce'}
                   </span>
@@ -95,20 +180,72 @@ export function PluginDetail({ plugin, country, platform, content, screenshots }
                 </div>
 
                 <div className="bg-gray-50 p-6 rounded-lg">
-                  <h3 className="text-xl font-semibold mb-4">Descargar Plugin <span className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-medium bg-gray-100 text-cuji-blue">
-                      v{plugin.last_version}
-                    </span></h3>
-                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
-                    <p className="text-yellow-800 text-sm">
-                      Necesitas una membresía activa para descargar este plugin
-                    </p>
-                  </div>
-                  <button 
-                    disabled
-                    className="w-full bg-gray-200 text-gray-500 px-6 py-3 rounded-lg cursor-not-allowed font-semibold border border-gray-300 shadow-sm"
-                  >
+                  <h3 className="text-xl font-semibold mb-4">
                     Descargar Plugin
+                    {latestVersion && (
+                      <span className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-medium bg-gray-100 text-cuji-blue ml-2">
+                        v{latestVersion.version}
+                      </span>
+                    )}
+                  </h3>
+                  {error && (
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+                      <p className="text-red-800 text-sm">{error}</p>
+                    </div>
+                  )}
+                  {!latestVersion?.download_token && (
+                    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+                      <p className="text-yellow-800 text-sm">
+                        Necesitas una membresía activa para descargar este plugin
+                      </p>
+                    </div>
+                  )}
+                  <button 
+                    onClick={() => latestVersion && handleDownload(latestVersion)}
+                    disabled={isLoading || !latestVersion || !latestVersion.download_token}
+                    className={`w-full px-6 py-3 rounded-lg font-semibold border shadow-sm ${
+                      isLoading || !latestVersion || !latestVersion.download_token
+                        ? 'bg-gray-200 text-gray-500 cursor-not-allowed border-gray-300'
+                        : 'bg-cuji-blue text-white hover:bg-cuji-dark-blue border-cuji-blue'
+                    }`}
+                  >
+                    {isLoading ? 'Descargando...' : `Descargar Plugin${latestVersion ? ` v${latestVersion.version}` : ''}`}
                   </button>
+
+                  {versions.length > 1 && (
+                    <div className="mt-4">
+                      <button
+                        onClick={() => setShowVersions(!showVersions)}
+                        className="w-full flex items-center justify-between text-sm text-gray-600 hover:text-gray-900"
+                      >
+                        <span>Versiones anteriores</span>
+                        {showVersions ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                      </button>
+                      
+                      {showVersions && (
+                        <div className="mt-2 space-y-2">
+                          {versions.slice(1).map((version) => (
+                            <div key={version.id} className="flex items-center justify-between text-sm">
+                              <span className="text-gray-600">
+                                v{version.version} ({new Date(version.created_at).toLocaleDateString()})
+                              </span>
+                              {version.download_token ? (
+                                <button
+                                  onClick={() => handleDownload(version)}
+                                  disabled={isLoading}
+                                  className="text-cuji-blue hover:text-cuji-dark-blue disabled:text-gray-400"
+                                >
+                                  Descargar
+                                </button>
+                              ) : (
+                                <span className="text-gray-400"></span>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

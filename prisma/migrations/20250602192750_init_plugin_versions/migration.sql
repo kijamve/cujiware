@@ -8,6 +8,7 @@ CREATE TABLE `User` (
     `billing_full_name` VARCHAR(191) NULL,
     `billing_phone` VARCHAR(191) NULL,
     `billing_tax_id` VARCHAR(191) NULL,
+    `billing_address` VARCHAR(191) NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
 
@@ -26,6 +27,7 @@ CREATE TABLE `Membership` (
     `end_date` DATETIME(3) NOT NULL,
     `stripe_subscription_id` VARCHAR(191) NULL,
     `payment_method` VARCHAR(191) NOT NULL,
+    `last_check_with_gateway` DATETIME(3) NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
 
@@ -41,6 +43,7 @@ CREATE TABLE `License` (
     `id` VARCHAR(191) NOT NULL,
     `membership_id` VARCHAR(191) NOT NULL,
     `status` VARCHAR(191) NOT NULL,
+    `last_reset` DATETIME(3) NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
 
@@ -66,6 +69,22 @@ CREATE TABLE `LicenseUsage` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
+CREATE TABLE `LicensePlugin` (
+    `id` VARCHAR(191) NOT NULL,
+    `license_id` VARCHAR(191) NOT NULL,
+    `plugin_slug` VARCHAR(191) NOT NULL,
+    `domain` VARCHAR(191) NOT NULL,
+    `last_usage` DATETIME(3) NULL,
+    `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updated_at` DATETIME(3) NOT NULL,
+
+    INDEX `LicensePlugin_license_id_idx`(`license_id`),
+    INDEX `LicensePlugin_plugin_slug_idx`(`plugin_slug`),
+    UNIQUE INDEX `LicensePlugin_license_id_plugin_slug_domain_key`(`license_id`, `plugin_slug`, `domain`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
 CREATE TABLE `Plan` (
     `id` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
@@ -75,25 +94,29 @@ CREATE TABLE `Plan` (
     `interval` VARCHAR(191) NOT NULL,
     `features` JSON NOT NULL,
     `stripe_price_id` VARCHAR(191) NULL,
+    `is_highlighted` BOOLEAN NOT NULL DEFAULT false,
+    `savings_text` VARCHAR(191) NULL,
+    `is_visible` BOOLEAN NOT NULL DEFAULT true,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
 
-    INDEX `Plan_stripe_price_id_idx`(`stripe_price_id`),
+    UNIQUE INDEX `Plan_stripe_price_id_key`(`stripe_price_id`),
     INDEX `Plan_interval_idx`(`interval`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `Plugin` (
+CREATE TABLE `PluginVersion` (
     `id` VARCHAR(191) NOT NULL,
-    `slug` VARCHAR(191) NOT NULL,
+    `plugin_slug` VARCHAR(191) NOT NULL,
     `version` VARCHAR(191) NOT NULL,
-    `download_file_path` VARCHAR(191) NOT NULL,
+    `file_name` VARCHAR(191) NOT NULL,
+    `file_path_server` VARCHAR(191) NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
 
-    UNIQUE INDEX `Plugin_slug_key`(`slug`),
-    INDEX `Plugin_slug_idx`(`slug`),
+    INDEX `PluginVersion_plugin_slug_idx`(`plugin_slug`),
+    UNIQUE INDEX `PluginVersion_plugin_slug_version_key`(`plugin_slug`, `version`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -132,6 +155,9 @@ ALTER TABLE `License` ADD CONSTRAINT `License_membership_id_fkey` FOREIGN KEY (`
 
 -- AddForeignKey
 ALTER TABLE `LicenseUsage` ADD CONSTRAINT `LicenseUsage_license_id_fkey` FOREIGN KEY (`license_id`) REFERENCES `License`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `LicensePlugin` ADD CONSTRAINT `LicensePlugin_license_id_fkey` FOREIGN KEY (`license_id`) REFERENCES `License`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Payment` ADD CONSTRAINT `Payment_membership_id_fkey` FOREIGN KEY (`membership_id`) REFERENCES `Membership`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

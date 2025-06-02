@@ -114,15 +114,17 @@ model Plan {
   @@index([interval])
 }
 
-model Plugin {
+model PluginVersion {
   id                String   @id @default(cuid())
-  slug              String   @unique
+  plugin_slug       String
   version           String
-  download_file_path String
+  file_name         String
+  file_path_server  String
   created_at        DateTime @default(now())
   updated_at        DateTime @updatedAt
 
-  @@index([slug])
+  @@unique([plugin_slug, version])
+  @@index([plugin_slug])
 }
 
 model Payment {

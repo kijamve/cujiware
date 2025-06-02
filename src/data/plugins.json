@@ -7,7 +7,6 @@
     "category": "payment_method",
     "countries": ["all", "argentina"],
     "countrie_exclude": ["venezuela"],
-    "last_version": "1.0",
     "platform": ["woocommerce"],
     "screenshots": [
       {
@@ -55,7 +54,6 @@
     "category": "payment_method",
     "large_description": "Integración completa con el sistema Megasoft para gestionar tu inventario y pedidos de forma automatizada. Incluye sincronización bidireccional de productos, precios y stock.",
     "countries": ["venezuela"],
-    "last_version": "1.0",
     "platform": ["prestashop"]
   },
   {
@@ -65,7 +63,6 @@
     "icon": "Truck",
     "category": "shipping",
     "countries": ["venezuela"],
-    "last_version": "1.0",
     "platform": ["prestashop"]
   },
   {
@@ -75,7 +72,6 @@
     "icon": "Ticket",
     "category": "utils",
     "countries": ["all"],
-    "last_version": "1.0",
     "platform": ["prestashop"],
     "screenshots": [
       {
@@ -107,7 +103,6 @@
     "icon": "PackageSearch",
     "category": "shipping",
     "countries": ["all"],
-    "last_version": "1.0",
     "platform": ["prestashop"]
   },
   {
@@ -117,7 +112,6 @@
     "icon": "Bell",
     "category": "utils",
     "countries": ["all"],
-    "last_version": "1.0",
     "platform": ["prestashop"]
   },
   {
@@ -127,17 +121,15 @@
     "icon": "Bitcoin",
     "category": "payment_method",
     "countries": ["all"],
-    "last_version": "1.0",
     "platform": ["prestashop"]
   },
   {
     "name": "Botón de Integración de Megasoft con WooCommerce",
     "slug": "boton-de-integracion-de-megasoft-con-woocommerce",
     "short_description": "Conecta tu tienda WooCommerce con el sistema Megasoft",
-    "icon": "Database",
+    "icon": "CreditCard",
     "category": "payment_method",
     "countries": ["venezuela"],
-    "last_version": "1.0",
     "platform": ["woocommerce"]
   },
   {
@@ -147,7 +139,6 @@
     "icon": "RefreshCw",
     "category": "utils",
     "countries": ["venezuela"],
-    "last_version": "1.0",
     "platform": ["woocommerce"]
   },
   {
@@ -157,7 +148,6 @@
     "icon": "CreditCard",
     "category": "payment_method",
     "countries": ["venezuela"],
-    "last_version": "1.0",
     "platform": ["woocommerce"]
   },
   {
@@ -167,7 +157,6 @@
     "icon": "CreditCard",
     "category": "payment_method",
     "countries": ["venezuela"],
-    "last_version": "1.0",
     "platform": ["prestashop"]
   },
   {
@@ -177,7 +166,6 @@
     "icon": "Truck",
     "category": "shipping",
     "countries": ["argentina"],
-    "last_version": "1.0",
     "platform": ["woocommerce"]
   },
   {
@@ -187,7 +175,6 @@
     "icon": "Truck",
     "category": "shipping",
     "countries": ["argentina"],
-    "last_version": "1.0",
     "platform": ["woocommerce"]
   },
   {
@@ -197,7 +184,6 @@
     "icon": "CreditCard",
     "category": "payment_method",
     "countries": ["venezuela"],
-    "last_version": "1.0",
     "platform": ["woocommerce"]
   },
   {
@@ -207,7 +193,6 @@
     "icon": "Smartphone",
     "category": "payment_method",
     "countries": ["venezuela"],
-    "last_version": "1.0",
     "platform": ["prestashop"]
   },
   {
@@ -217,7 +202,6 @@
     "icon": "CreditCard",
     "category": "payment_method",
     "countries": ["venezuela"],
-    "last_version": "1.0",
     "platform": ["woocommerce"]
   },
   {
@@ -227,7 +211,6 @@
     "icon": "CreditCard",
     "category": "payment_method",
     "countries": ["venezuela"],
-    "last_version": "1.0",
     "platform": ["prestashop"]
   },
   {
@@ -237,7 +220,6 @@
     "icon": "Truck",
     "category": "shipping",
     "countries": ["argentina"],
-    "last_version": "1.0",
     "platform": ["prestashop"]
   },
   {
@@ -247,7 +229,6 @@
     "icon": "Truck",
     "category": "shipping",
     "countries": ["argentina"],
-    "last_version": "1.0",
     "platform": ["prestashop"]
   },
   {
@@ -257,7 +238,6 @@
     "icon": "MessageCircle",
     "category": "utils",
     "countries": ["all"],
-    "last_version": "1.0",
     "platform": ["woocommerce"]
   },
   {
@@ -267,7 +247,6 @@
     "icon": "CreditCard",
     "category": "payment_method",
     "countries": ["venezuela"],
-    "last_version": "1.0",
     "platform": ["woocommerce"]
   },
   {
@@ -277,7 +256,6 @@
     "icon": "Truck",
     "category": "payment_method",
     "countries": ["venezuela"],
-    "last_version": "1.0",
     "platform": ["woocommerce"]
   },
   {
@@ -287,7 +265,6 @@
     "icon": "Truck",
     "category": "payment_method",
     "countries": ["venezuela"],
-    "last_version": "1.0",
     "platform": ["woocommerce"]
   },
   {
@@ -297,7 +274,6 @@
     "icon": "Bitcoin",
     "category": "payment_method",
     "countries": ["all"],
-    "last_version": "1.0",
     "platform": ["woocommerce"]
   },
   {
@@ -307,7 +283,6 @@
     "icon": "Wallet",
     "category": "payment_method",
     "countries": ["all"],
-    "last_version": "1.0",
     "platform": ["woocommerce"]
   },
   {
@@ -317,7 +292,6 @@
     "icon": "Smartphone",
     "category": "payment_method",
     "countries": ["venezuela"],
-    "last_version": "1.0",
     "platform": ["woocommerce"]
   },
   {
@@ -327,7 +301,6 @@
     "icon": "CreditCard",
     "category": "payment_method",
     "countries": ["all"],
-    "last_version": "1.0",
     "platform": ["woocommerce"]
   },
   {
@@ -337,7 +310,6 @@
     "icon": "Truck",
     "category": "payment_method",
     "countries": ["argentina"],
-    "last_version": "1.0",
     "platform": ["prestashop"]
   },
   {
@@ -348,7 +320,6 @@
     "category": "payment_method",
     "countries": ["all", "argentina"],
     "countrie_exclude": ["venezuela"],
-    "last_version": "1.0",
     "platform": ["prestashop"]
   },
   {
@@ -358,7 +329,6 @@
     "icon": "CreditCard",
     "category": "payment_method",
     "countries": ["venezuela"],
-    "last_version": "1.0",
     "platform": ["woocommerce"]
   },
   {
@@ -368,7 +338,6 @@
     "icon": "Bell",
     "category": "utils",
     "countries": ["all"],
-    "last_version": "1.0",
     "platform": ["woocommerce"]
   }
 ]
