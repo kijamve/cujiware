@@ -10,16 +10,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+/// Modelo que representa a los usuarios del sistema
+/// Almacena información personal y de facturación
 model User {
   id                    String       @id @default(cuid())
   email                 String       @unique
-  password              String
+  password              String       // Contraseña hasheada
   name                  String
   country               String
-  billing_full_name     String?
-  billing_phone         String?
-  billing_tax_id        String?
-  billing_address       String?
+  billing_full_name     String?      // Nombre completo para facturación
+  billing_phone         String?      // Teléfono para facturación
+  billing_tax_id        String?      // Número de identificación fiscal
+  billing_address       String?      // Dirección de facturación
   created_at            DateTime     @default(now())
   updated_at            DateTime     @updatedAt
   memberships           Membership[]
@@ -27,15 +29,17 @@ model User {
   @@index([email])
 }
 
+/// Modelo que representa las membresías de los usuarios
+/// Gestiona las suscripciones y planes de los usuarios
 model Membership {
   id                    String   @id @default(cuid())
   user_id              String
   plan_id              String
-  status               String   // active, inactive, cancelled
+  status               MembershipStatus
   start_date           DateTime
   end_date             DateTime
   stripe_subscription_id String?
-  payment_method       String   // stripe, venezuela
+  payment_method       PaymentMethod
   last_check_with_gateway DateTime?
   created_at           DateTime @default(now())
   updated_at           DateTime @updatedAt
@@ -50,11 +54,13 @@ model Membership {
   @@index([status])
 }
 
+/// Modelo que representa las licencias de software
+/// Gestiona el acceso y uso de los plugins
 model License {
   id            String     @id @default(uuid())
   membership_id String
-  status        String     // active, inactive, revoked
-  last_reset    DateTime?  // Fecha del último reset
+  status        LicenseStatus
+  last_reset    DateTime?  // Fecha del último reset de la licencia
   created_at    DateTime   @default(now())
   updated_at    DateTime   @updatedAt
   membership    Membership @relation(fields: [membership_id], references: [id])
@@ -65,6 +71,8 @@ model License {
   @@index([status])
 }
 
+/// Modelo que registra el uso de licencias por dominio
+/// Permite el seguimiento de dónde se está utilizando cada licencia
 model LicenseUsage {
   id            String   @id @default(cuid())
   license_id    String
@@ -80,6 +88,8 @@ model LicenseUsage {
   @@unique([license_id, domain])
 }
 
+/// Modelo que asocia plugins específicos a una licencia
+/// Permite el control granular de qué plugins puede usar cada licencia
 model LicensePlugin {
   id           String   @id @default(cuid())
   license_id   String
@@ -95,13 +105,15 @@ model LicensePlugin {
   @@index([plugin_slug])
 }
 
+/// Modelo que define los planes de suscripción disponibles
+/// Incluye precios, características y configuraciones de Stripe
 model Plan {
   id              String       @id @default(cuid())
   name            String
   description     String
   price           Float
   currency        String
-  interval        String      // month, semester, year
+  interval        PlanInterval
   features        Json        // Array de strings almacenado como JSON
   stripe_price_id String?     @unique
   is_highlighted  Boolean     @default(false)
@@ -114,6 +126,8 @@ model Plan {
   @@index([interval])
 }
 
+/// Modelo que gestiona las versiones de los plugins
+/// Almacena información sobre archivos y versiones disponibles
 model PluginVersion {
   id                String   @id @default(cuid())
   plugin_slug       String
@@ -127,13 +141,15 @@ model PluginVersion {
   @@index([plugin_slug])
 }
 
+/// Modelo que registra los pagos realizados
+/// Incluye información de transacciones y estados de pago
 model Payment {
   id              String     @id @default(cuid())
   membership_id   String
   amount          Float
   currency        String
-  status          String     // pending, completed, failed
-  payment_method  String     // stripe, venezuela
+  status          PaymentStatus
+  payment_method  PaymentMethod
   stripe_invoice_id String?
   bank_name       String?
   currency_rate   Float?
@@ -148,4 +164,34 @@ model Payment {
   @@index([payment_method])
   @@index([stripe_invoice_id])
   @@index([reference])
+}
+
+/// Enums para mejorar la consistencia de los datos
+enum MembershipStatus {
+  ACTIVE
+  INACTIVE
+  CANCELLED
+}
+
+enum LicenseStatus {
+  ACTIVE
+  INACTIVE
+  REVOKED
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+enum PaymentMethod {
+  STRIPE
+  VENEZUELA
+}
+
+enum PlanInterval {
+  MONTH
+  SEMESTER
+  YEAR
 } 

@@ -6,7 +6,6 @@ export interface Plugin {
   category: string;
   countries: string[];
   countrie_exclude?: string[];
-  last_version: string;
   platform: string[];
   large_description?: string;
 }

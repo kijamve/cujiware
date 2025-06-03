@@ -68,7 +68,7 @@ export const GET: APIRoute = async ({ params, request }) => {
     const pluginVersion = versions[0];
 
     // Verificar si el archivo existe
-    const filePath = path.join(process.cwd(), pluginVersion.file_path_server);
+    const filePath = path.join(process.cwd(), 'zip_plugins', pluginVersion.file_path_server);
     if (!fs.existsSync(filePath)) {
       return new Response('Archivo no encontrado', { status: 404 });
     }
