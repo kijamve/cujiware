@@ -198,7 +198,8 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       cancel_url: `http://${request.headers.get('host')}/suscripcion`,
       metadata: {
         userId: user.id,
-        planId: planData.id
+        planId: planData.id,
+        licenseCount: planData.license_count.toString()
       },
       automatic_tax: {
         enabled: true

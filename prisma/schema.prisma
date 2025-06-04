@@ -121,6 +121,7 @@ model Plan {
   is_highlighted  Boolean     @default(false)
   savings_text    String?
   is_visible      Boolean     @default(true)
+  license_count   Int         @default(1)  // Número de licencias a generar por defecto
   created_at      DateTime    @default(now())
   updated_at      DateTime    @updatedAt
   memberships     Membership[]

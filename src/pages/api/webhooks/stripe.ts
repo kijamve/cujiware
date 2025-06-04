@@ -62,9 +62,9 @@ export const POST: APIRoute = async ({ request }) => {
             stripe_subscription_id: session.subscription as string,
             payment_method: PAYMENT_METHOD.STRIPE,
             licenses: {
-              create: {
+              create: Array(plan.license_count).fill({
                 status: MEMBERSHIP_STATUS.ACTIVE
-              }
+              })
             },
           }
         });

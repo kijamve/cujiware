@@ -1,16 +1,17 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { isAuthenticated } from '../middleware/auth';
+import { requireAuth } from '../middleware/auth';
 import PricingCards from '../components/PricingCards.astro';
 
-const user = await isAuthenticated(Astro);
+const user = await requireAuth(Astro);
+const planId = Astro.url.searchParams.get('planId');
 ---
 
 <Layout title="Suscripción - Cujiware" description="Elige el plan que mejor se adapte a tus necesidades. Recuerda que es una membresía por dominio.">
   <div class="min-h-screen bg-gray-50 py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-      <PricingCards />
+      <PricingCards planId={planId} />
 
       <div class="mt-12 text-center">
         <p class="text-base text-gray-600">

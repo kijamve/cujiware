@@ -5,14 +5,27 @@ import PricingCard from './PricingCard.astro';
 import type { VenezuelaPaymentData } from './PricingTypes';
 import AuthModal from './AuthModal.astro';
 
-const plans = await prisma.plan.findMany({
-  where: {
-    is_visible: true
-  },
-  orderBy: {
-    price: 'asc'
-  }
-});
+interface Props {
+  planId?: string | null;
+}
+
+const { planId } = Astro.props;
+
+let plans: Plan[];
+
+if (planId) {
+  // Si hay un planId específico, obtener solo ese plan
+  const plan = await prisma.plan.findUnique({
+    where: { id: planId }
+  });
+  plans = plan ? [plan] : [];
+} else {
+  // Si no hay planId, obtener todos los planes visibles
+  plans = await prisma.plan.findMany({
+    where: { is_visible: true },
+    orderBy: { price: 'asc' }
+  });
+}
 
 let showVenezuelaModal = false;
 let venezuelaModalData: VenezuelaPaymentData | null = null;

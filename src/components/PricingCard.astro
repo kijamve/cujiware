@@ -1,6 +1,7 @@
 ---
 import type { Plan } from './PricingTypes';
 import type { JSX } from 'astro/jsx-runtime';
+import { PLAN_INTERVAL } from '../constants/status';
 
 interface Props {
   plan: Plan;
@@ -21,8 +22,8 @@ const features = Array.isArray(plan.features) ? plan.features : [];
     <h3 class="text-xl font-bold font-heading text-gray-900 mb-1">{plan.name}</h3>
     <div class="flex items-baseline mb-4">
       <span class="text-4xl font-bold text-gray-900">${plan.price}</span>
-      <span class="text-gray-500 ml-2"> x {plan.interval === 'month' ? 'mes' : 
-                                      plan.interval === 'semester' ? 'semestre' : 
+      <span class="text-gray-500 ml-2"> x {plan.interval === PLAN_INTERVAL.MONTH ? 'mes' : 
+                                      plan.interval === PLAN_INTERVAL.SEMESTER ? 'semestre' : 
                                       'año'}</span>
     </div>
     <p class="text-gray-600 mb-4">{plan.description}</p>
