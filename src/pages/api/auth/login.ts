@@ -120,12 +120,14 @@ export const POST: APIRoute = async ({ request, cookies }) => {
           email: user.email,
           name: user.name,
           country: user.country
-        }
+        },
+        token: token
       }),
       { 
         status: 200,
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Set-Cookie': `token=${token}; Path=/; Max-Age=604800; SameSite=Lax` // 7 días
         }
       }
     );

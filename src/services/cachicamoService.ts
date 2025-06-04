@@ -36,9 +36,7 @@ interface CustomerUpdateData {
   company_vat?: string;
   phone?: string;
   address?: string;
-  state?: string;
-  city?: string;
-  postcode?: string;
+  country?: string;
 }
 
 interface InvoiceProduct {
@@ -58,10 +56,11 @@ interface InvoicePayment {
 
 interface CreateInvoiceData {
   customer_uuid: string;
+  async_payment_uuid: string;
   plan_name: string;
   price_bs: number;
   payment_reference: string;
-  payment_type: 'mobile' | 'card';
+  payment_type: 'bdv' | 'bvc';
 }
 
 interface InvoiceResponse {
@@ -127,8 +126,8 @@ export class CachicamoService {
   private taxUuid: string;
   private printerUuid: string;
   private taxPercent: number;
-  private mobilePaymentUuid: string;
-  private cardPaymentUuid: string;
+  public mobileBDVPaymentUuid: string;
+  public mobileBVCPaymentUuid: string;
 
   constructor() {
     this.baseUrl = 'https://api.cachicamo.app';
@@ -138,9 +137,9 @@ export class CachicamoService {
     this.printerUuid = process.env.CACHICAMO_PRINTER_UUID || '';
     this.taxPercent = Number(process.env.CACHICAMO_TAX_PERCENT) || 16;
     this.mobileBDVPaymentUuid = process.env.CACHICAMO_MOBILE_BDV_PAYMENT_UUID || '';
-    this.mobileBCVPaymentUuid = process.env.CACHICAMO_MOBILE_BVC_PAYMENT_UUID || '';
+    this.mobileBVCPaymentUuid = process.env.CACHICAMO_MOBILE_BVC_PAYMENT_UUID || '';
 
-    if (!this.token || !this.storeUuid || !this.taxUuid || !this.printerUuid || !this.mobileBDVPaymentUuid || !this.mobileBCVPaymentUuid) {
+    if (!this.token || !this.storeUuid || !this.taxUuid || !this.printerUuid || !this.mobileBDVPaymentUuid || !this.mobileBVCPaymentUuid) {
       throw new Error('CACHICAMO_TOKEN, CACHICAMO_STORE_UUID, CACHICAMO_TAX_UUID, CACHICAMO_PRINTER_UUID, CACHICAMO_MOBILE_BDV_PAYMENT_UUID, CACHICAMO_MOBILE_BCV_PAYMENT_UUID y CACHICAMO_CARD_PAYMENT_UUID son requeridos en el archivo .env');
     }
   }
@@ -179,29 +178,22 @@ export class CachicamoService {
     }
   }
 
-  async updateCustomer(customerUuid: string, updateData: CustomerUpdateData): Promise<Customer> {
+  async updateCustomer(customerUuid: string, customerData: {
+    email: string;
+    name: string;
+    dni: string;
+    phone: string;
+    address: string;
+  }): Promise<Customer> {
     try {
-      // Primero obtenemos el cliente actual para mantener los campos existentes
-      const currentCustomer = await this.searchCustomer(updateData.email || '');
-      
-      if (!currentCustomer) {
-        throw new Error('Cliente no encontrado');
-      }
-
-      // Combinamos los datos actuales con las actualizaciones
-      const updatedCustomer: Customer = {
-        ...currentCustomer,
-        ...updateData,
-        updated_at: new Date().toISOString()
-      };
-
-      const response = await fetch(`${this.baseUrl}/customers/${customerUuid}`, {
+      const response = await fetch(`${this.baseUrl}/customers/uuid/${customerUuid}`, {
         method: 'PUT',
         headers: this.getHeaders(),
-        body: JSON.stringify(updatedCustomer),
+        body: JSON.stringify(customerData),
       });
 
       if (!response.ok) {
+        console.log(`${this.baseUrl}/customers/uuid/${customerUuid}`, await response.text());
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
@@ -223,35 +215,43 @@ export class CachicamoService {
       // Buscar el cliente existente
       const existingCustomer = await this.searchCustomer(customerData.email);
 
-      if (existingCustomer) {
-        // Actualizar el cliente existente
-        const updateData: CustomerUpdateData = {
-          name: customerData.name,
-          company: customerData.name, // company = name
-          company_vat: customerData.dni, // company_vat = dni
-          dni: customerData.dni,
-          phone: customerData.phone,
-          address: customerData.address,
-        };
-
-        return await this.updateCustomer(existingCustomer.uuid, updateData);
+      // Validar y formatear el número de teléfono al formato E.164
+      let formattedPhone = customerData.phone.replace(/\D/g, '');
+      if (!formattedPhone.startsWith('+')) {
+        // Asumimos que es un número de Venezuela si no tiene código de país
+        formattedPhone = formattedPhone.replace(/\D/g, ''); // Eliminar no-dígitos
+        formattedPhone = '+58' + (formattedPhone.startsWith('0') ? formattedPhone.slice(1) : formattedPhone);
       }
 
-      // Si no existe, crear nuevo cliente
-      const newCustomerData = {
-        ...customerData,
-        company: customerData.name,
-        company_vat: customerData.dni,
+      // Actualizar el teléfono con el formato correcto
+      customerData.phone = formattedPhone;
+      const data = {
+        email: customerData.email,
+        name: customerData.name,
+        dni: customerData.dni,
+        phone: customerData.phone,
+        address: customerData.address,
         country: 'VE',
+        ...(!/^[VEP]/.test(customerData.dni) ? { company: customerData.name, company_vat: customerData.dni } : {}),
       };
+
+      if (existingCustomer) {
+        // Actualizar el cliente existente
+        this.updateCustomer(existingCustomer.uuid, data).catch(error => {
+          console.error('Error updating customer:', error);
+          throw error;
+        });
+        return existingCustomer 
+      }
 
       const response = await fetch(`${this.baseUrl}/customers`, {
         method: 'POST',
         headers: this.getHeaders(),
-        body: JSON.stringify(newCustomerData),
+        body: JSON.stringify(data),
       });
 
       if (!response.ok) {
+        console.log(await response.text());
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
@@ -268,9 +268,9 @@ export class CachicamoService {
       const requestReference = Math.random().toString(36).substring(2, 15);
 
       // Seleccionar el UUID del método de pago según el tipo
-      const paymentMethodUuid = data.payment_type === 'mobile' 
-        ? this.mobilePaymentUuid 
-        : this.cardPaymentUuid;
+      const paymentMethodUuid = data.payment_type === 'bdv' 
+        ? this.mobileBDVPaymentUuid 
+        : this.mobileBVCPaymentUuid;
 
       const taxRate = this.taxPercent / 100;
       
@@ -278,26 +278,26 @@ export class CachicamoService {
       const roundAmount = (amount: number): number => {
         const decimal = amount - Math.floor(amount);
         if (decimal >= 0.005) {
-          return Math.ceil(amount * 100) / 100; 
+          return Math.ceil(amount * 10000) / 10000; 
         }
-        return Math.floor(amount * 100) / 100;
+        return Math.floor(amount * 10000) / 10000;
       };
 
       const amountWithoutTax = roundAmount(data.price_bs / (1 + taxRate));
-      const amountWithTax = roundAmount(amountWithoutTax * (1 + taxRate));
 
       const invoiceData = {
         invoice_type: "INVOICE",
         customer_uuid: data.customer_uuid,
         printer_document_uuid: this.printerUuid,
         extra_taxes: [],
+        pending_reason: 'Error de precisión de decimales en el cálculo de la tasa del BCV o del IVA',
         payments: [{
           payment_method_uuid: paymentMethodUuid,
-          total_payment: parseInt((amountWithTax*10000).toString()),
+          async_payment_uuid: data.async_payment_uuid,
           payment_reference: data.payment_reference
         }],
         products: [{
-          custom_product_name: data.plan_name,
+          custom_product_name: 'Cujiware - Plan '+data.plan_name,
           custom_unit_price: parseInt((amountWithoutTax*10000).toString()),
           custom_currency_uuid: "00000000-0000-0000-0000-000000000002", // Bolívares
           qty: 1,
@@ -308,6 +308,8 @@ export class CachicamoService {
         retained_taxes: []
       };
 
+      console.log(invoiceData, JSON.stringify(invoiceData));
+
       const response = await fetch(`${this.baseUrl}/invoices/save_preview`, {
         method: 'POST',
         headers: this.getHeaders(),
@@ -315,6 +317,7 @@ export class CachicamoService {
       });
 
       if (!response.ok) {
+        console.log(`${this.baseUrl}/invoices/save_preview`, response.status, await response.text());
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
@@ -324,7 +327,7 @@ export class CachicamoService {
       let consultUrl = '';
       try {
         const metadata = JSON.parse(result.invoice.metadata);
-        const digitalResult = JSON.parse(metadata.digital_the_factory_result);
+        const digitalResult = metadata.digital_the_factory_result;
         consultUrl = digitalResult.resultado.urlConsulta;
       } catch (error) {
         console.error('Error parsing metadata:', error);
@@ -347,7 +350,6 @@ export class CachicamoService {
   }
 
   async createAsyncPayment(data: CreateAsyncPaymentData): Promise<AsyncPayment> {
-    try {
       const response = await fetch(`${this.baseUrl}/async_payments/`, {
         method: 'POST',
         headers: this.getHeaders(),
@@ -361,9 +363,5 @@ export class CachicamoService {
       }
 
       return await response.json();
-    } catch (error) {
-      console.error('Error creating async payment:', error);
-      throw error;
-    }
   }
 } 

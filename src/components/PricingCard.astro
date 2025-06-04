@@ -1,7 +1,6 @@
 ---
 import type { Plan } from './PricingTypes';
 import type { JSX } from 'astro/jsx-runtime';
-import { PLAN_INTERVAL } from '../constants/status';
 
 interface Props {
   plan: Plan;
@@ -22,8 +21,8 @@ const features = Array.isArray(plan.features) ? plan.features : [];
     <h3 class="text-xl font-bold font-heading text-gray-900 mb-1">{plan.name}</h3>
     <div class="flex items-baseline mb-4">
       <span class="text-4xl font-bold text-gray-900">${plan.price}</span>
-      <span class="text-gray-500 ml-2"> x {plan.interval === PLAN_INTERVAL.MONTH ? 'mes' : 
-                                      plan.interval === PLAN_INTERVAL.SEMESTER ? 'semestre' : 
+      <span class="text-gray-500 ml-2"> x {plan.interval === 'month' ? 'mes' : 
+                                      plan.interval === 'semester' ? 'semestre' : 
                                       'año'}</span>
     </div>
     <p class="text-gray-600 mb-4">{plan.description}</p>
@@ -48,26 +47,8 @@ const features = Array.isArray(plan.features) ? plan.features : [];
       data-plan-id={plan.id}
       data-is-account-page={isAccountPage}
       class={`w-full text-center py-3 px-4 rounded-md font-medium transition-colors duration-200 ${plan.is_highlighted ? 'bg-cuji-blue text-white hover:bg-cuji-dark-blue' : 'bg-white text-cuji-blue border border-cuji-blue hover:bg-cuji-blue/5'}`}
-      onclick="handlePlanSelection(this)"
     >
       {isAccountPage ? 'Registrarse' : 'Seleccionar Plan'}
     </button>
   </div>
 </div>
-
-<script>
-  function handlePlanSelection(button: HTMLButtonElement) {
-    const planId = button.dataset.planId;
-    const isAccountPage = button.dataset.isAccountPage === 'true';
-    
-    if (!planId) {
-      console.error('No se encontró el ID del plan');
-      return;
-    }
-    
-    console.log('Botón clickeado, plan:', planId, 'desde cuenta:', isAccountPage);
-    
-    // Usar el mismo flujo de registro en ambos casos
-    window.openAuthModal(planId);
-  }
-</script> 

@@ -426,18 +426,40 @@ export class VenezuelaPaymentModal extends HTMLElement {
 
     // Pago móvil submit
     const form = shadowRoot.querySelector('#venezuelaPaymentForm') as HTMLFormElement;
+    const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const formData = new FormData(form);
+
+      // Deshabilitar el botón y mostrar estado de carga
+      submitButton.disabled = true;
+      submitButton.textContent = 'Enviando...';
+
+      // Obtener el token de las cookies
+      const cookies = document.cookie.split(';');
+      const tokenCookie = cookies.find(cookie => cookie.trim().startsWith('token='));
+      const token = tokenCookie ? tokenCookie.split('=')[1] : null;
+
+      if (!token) {
+        alert('No hay sesión activa. Por favor, inicia sesión nuevamente.');
+        window.location.href = '/mi-cuenta';
+        return;
+      }
+
       try {
         const response = await fetch('/api/subscription/venezuela-payment', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
           body: JSON.stringify({
             plan_id: form.dataset.planId,
             bank_origin: formData.get('bank_origin'),
             bank_dest: formData.get('bank_dest'),
             tax_id: formData.get('tax_id'),
+            phone: formData.get('phone'),
             reference: formData.get('reference')
           })
         });
@@ -447,10 +469,16 @@ export class VenezuelaPaymentModal extends HTMLElement {
           window.location.href = '/dashboard';
         } else {
           alert(result.error || 'Error al procesar el pago');
+          // Restaurar el botón en caso de error
+          submitButton.disabled = false;
+          submitButton.textContent = 'Enviar';
         }
       } catch (error) {
         console.error('Error:', error);
         alert('Error al procesar el pago');
+        // Restaurar el botón en caso de error
+        submitButton.disabled = false;
+        submitButton.textContent = 'Enviar';
       }
     });
 

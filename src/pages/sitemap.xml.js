@@ -1,7 +1,7 @@
 import { getCollection } from 'astro:content';
 
 export async function GET() {
-  const baseUrl = import.meta.env.SITE || 'https://cujiware.com';
+  const baseUrl = import.meta.env.PUBLIC_APP_URL || 'https://cujiware.com';
   const currentDate = new Date();
 
   const staticPages = [

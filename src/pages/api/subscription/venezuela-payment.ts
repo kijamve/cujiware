@@ -1,24 +1,22 @@
 import type { APIRoute } from 'astro';
-import { isAuthenticated } from '../../../middleware/auth';
+import { requireAuth } from '../../../middleware/auth';
 import prisma from '../../../lib/db';
 import { getBCVRate } from '../../../lib/bcv';
 import { CachicamoService } from '../../../services/cachicamoService';
 import { MEMBERSHIP_STATUS, PAYMENT_STATUS, PAYMENT_METHOD, PLAN_INTERVAL } from '../../../constants/status';
+import crypto from 'crypto';
 
-export const POST: APIRoute = async ({ request, cookies }) => {
+export const POST: APIRoute = async (context) => {
   try {
-    const user = await isAuthenticated({ request, cookies });
-    if (!user) {
-      return new Response(JSON.stringify({ error: 'No autorizado' }), {
-        status: 401,
-        headers: { 'Content-Type': 'application/json' }
-      });
+    const user = await requireAuth(context);
+    if (user instanceof Response) {
+      return user;
     }
 
-    const body = await request.json();
-    const { plan_id, bank_origin, bank_dest, tax_id, reference } = body;
+    const body = await context.request.json();
+    const { plan_id, bank_origin, bank_dest, phone, tax_id: originalTaxId, reference } = body;
 
-    if (!plan_id || !bank_origin || !bank_dest || !tax_id || !reference) {
+    if (!plan_id || !bank_origin || !bank_dest || !phone || !originalTaxId || !reference) {
       return new Response(JSON.stringify({ 
         error: 'Faltan datos requeridos',
         details: 'Se requieren: plan_id, bank_origin, bank_dest, tax_id y reference'
@@ -28,8 +26,14 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       });
     }
 
+    // Limpiar y formatear la cédula
+    let cleanTaxId = originalTaxId.replace(/[^A-Za-z0-9]/g, ''); // Eliminar caracteres especiales
+    if (/^\d+$/.test(cleanTaxId)) { // Si solo contiene números
+      cleanTaxId = 'V' + cleanTaxId; // Agregar V al principio
+    }
+
     // Validar formato de la cédula
-    if (!/^[VEP]\d{7,8}$/.test(tax_id)) {
+    if (!/^[VEP]\d{6,8}$/.test(cleanTaxId)) {
       return new Response(JSON.stringify({ 
         error: 'Formato de cédula inválido',
         details: 'La cédula debe tener el formato V1234567, V12345678 o P12345678'
@@ -38,6 +42,9 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         headers: { 'Content-Type': 'application/json' }
       });
     }
+
+    // Actualizar tax_id con el valor limpio y formateado
+    const tax_id = cleanTaxId;
 
     // Validar formato de la referencia
     if (!/^\d{6}$/.test(reference)) {
@@ -68,32 +75,94 @@ export const POST: APIRoute = async ({ request, cookies }) => {
 
     // Crear instancia del servicio Cachicamo
     const cachicamoService = new CachicamoService();
+    let customerUuid: string;
+    try {
+      const customer = await cachicamoService.createOrUpdateCustomer({
+        email: user.email,
+        name: user.billing_full_name || user.name,
+        dni: user.billing_tax_id || tax_id,
+        phone: user.billing_phone || phone,
+        address: user.billing_address || 'No se proporcionó dirección'
+      });
+      if (!customer || !customer.uuid) {
+        return new Response(JSON.stringify({ 
+          error: 'Error al crear o actualizar el cliente',
+          details: 'El cliente no fue creado o actualizado correctamente'
+        }), {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' }
+        });
+      }
+      customerUuid = customer.uuid;
+    } catch (error) {
+      return new Response(JSON.stringify({ 
+        error: 'Error al crear o actualizar el cliente',
+        details: error instanceof Error ? error.message : 'Error desconocido'
+      }), {
+        status: 500, 
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
 
     // Crear pago asíncrono para verificar
-    const asyncPayment = await cachicamoService.createAsyncPayment({
-      payment_method_uuid: cachicamoService.mobilePaymentUuid,
-      payment_reference: reference,
-      origin_total_payment: amountInBs*10000,
-      extra_fields: {
-        nationality: tax_id.charAt(0),
-        dni: tax_id.substring(1),
-        phone: user.phone || '',
-        bank: bank_dest,
-        reference: reference,
-        payment_date: new Date().toISOString()
-      }
-    });
+    let asyncPaymentUuid: string;
+    try {
+      const asyncPayment = await cachicamoService.createAsyncPayment({
+        payment_method_uuid: bank_dest === 'BDV' ? cachicamoService.mobileBDVPaymentUuid : cachicamoService.mobileBVCPaymentUuid,
+        payment_reference: reference,
+        async_payment_uuid: crypto.randomUUID(),
+        origin_total_payment: amountInBs*10000,
+        extra_fields: {
+          nationality: tax_id.charAt(0),
+          dni: tax_id.substring(1),
+          phone: phone,
+          bank: bank_origin,
+          reference: reference,
+          payment_date: new Date().toISOString()
+        }
+      });
 
-    // Verificar el estado del pago
-    if (!asyncPayment || !asyncPayment.uuid) {
+      // Verificar el estado del pago
+      if (!asyncPayment || !asyncPayment.uuid) {
+        return new Response(JSON.stringify({ 
+          error: 'El pago móvil no ha sido verificado. Por favor, asegúrese de que el pago se haya realizado correctamente y que haya ingresado datos correctos en el formulario.'
+        }), {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' }
+        });
+      }
+      asyncPaymentUuid = asyncPayment.uuid;
+    } catch (error) {
       return new Response(JSON.stringify({ 
-        error: 'Pago no verificado',
-        details: 'El pago móvil no ha sido verificado. Por favor, asegúrese de que el pago se haya realizado correctamente.'
+        error: 'El pago móvil no ha sido verificado. Por favor, asegúrese de que el pago se haya realizado correctamente y que haya ingresado datos correctos en el formulario.'
       }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' }
       });
     }
+
+    let invoiceUrl = '';
+    try {
+      const invoice = await cachicamoService.createInvoice({
+        customer_uuid: customerUuid,
+        async_payment_uuid: asyncPaymentUuid,
+        plan_name: plan.name,
+        price_bs: amountInBs,
+        payment_reference: reference,
+        payment_type: bank_dest === 'BDV' ? 'bdv' : 'bvc'
+      });
+      invoiceUrl = invoice.consult_url;
+    } catch (error) {
+      console.log(error, {
+        customer_uuid: customerUuid,
+        async_payment_uuid: asyncPaymentUuid,
+        plan_name: plan.name,
+        price_bs: amountInBs,
+        payment_reference: reference,
+        payment_type: bank_dest === 'BDV' ? 'bdv' : 'bvc'
+      });
+    }
+
 
     // Calcular la fecha de finalización basada en el intervalo del plan
     const startDate = new Date();
@@ -138,7 +207,8 @@ export const POST: APIRoute = async ({ request, cookies }) => {
             payment_method: PAYMENT_METHOD.VENEZUELA,
             bank_name: bank_dest,
             reference: reference,
-            currency_rate: bcvRate
+            currency_rate: bcvRate,
+            invoice_url: invoiceUrl
           }
         }
       }
