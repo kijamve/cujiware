@@ -3,6 +3,7 @@ import { prisma } from '../lib/prisma';
 import type { Plan } from '@prisma/client';
 import PricingCard from './PricingCard.astro';
 import type { VenezuelaPaymentData } from './PricingTypes';
+import AuthModal from './AuthModal.astro';
 
 const plans = await prisma.plan.findMany({
   where: {
@@ -53,6 +54,7 @@ function closeVenezuelaModal() {
     </div>
   </div>
   <div id="modal-root"></div>
+  <AuthModal />
 </section>
 
 <script>
@@ -86,21 +88,34 @@ function closeVenezuelaModal() {
         `;
 
         try {
+          // Obtener el token de las cookies
+          const cookies = document.cookie.split(';').reduce((acc, cookie) => {
+            const [key, value] = cookie.trim().split('=');
+            acc[key] = value;
+            return acc;
+          }, {} as Record<string, string>);
+
+          const token = cookies['token'];
+          console.log('Token encontrado:', token ? 'Sí' : 'No');
+
+          if (!token) {
+            console.log('No hay token, abriendo modal de autenticación');
+            window.openAuthModal(planId);
+            return;
+          }
+
           const response = await fetch('/api/subscription/create', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+              'Accept': 'application/json'
             },
             body: JSON.stringify({ plan: planId })
           });
           
           const data = await response.json();
           console.log('Datos recibidos del servidor:', data);
-
-          if (response.status === 401) {
-            window.location.href = '/mi-cuenta';
-            return;
-          }
 
           if (data.url) {
             window.location.href = data.url;
@@ -131,6 +146,7 @@ function closeVenezuelaModal() {
             alert('Error al procesar la suscripción');
           }
         } catch (error) {
+          console.error('Error:', error);
           alert('Error al procesar la suscripción');
         } finally {
           // Restaurar todos los botones

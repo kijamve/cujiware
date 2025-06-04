@@ -3,6 +3,7 @@ import { prisma } from '../../../../../lib/prisma';
 import { isAuthenticated } from '../../../../../middleware/auth';
 import fs from 'fs';
 import path from 'path';
+import { LICENSE_STATUS } from '../../../../../constants/status';
 
 // Importar el mapa de tokens desde el archivo de versiones
 import { userTokens } from '../versions';
@@ -34,7 +35,7 @@ export const GET: APIRoute = async ({ params, request }) => {
         membership: {
           user_id: user.id,
         },
-        status: 'active'
+        status: LICENSE_STATUS.ACTIVE
       }
     });
 

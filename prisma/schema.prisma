@@ -25,6 +25,8 @@ model User {
   created_at            DateTime     @default(now())
   updated_at            DateTime     @updatedAt
   memberships           Membership[]
+  reset_token           String?      @db.Text
+  reset_token_expires   DateTime?
 
   @@index([email])
 }

@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro';
 import { requireAuth } from '../../../middleware/auth.ts';
 import { prisma } from '../../../lib/prisma';
 import Stripe from 'stripe';
+import { MEMBERSHIP_STATUS } from '../../../constants/status';
 
 const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY, {
   apiVersion: '2023-10-16'
@@ -28,7 +29,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       where: {
         id: membership_id,
         user_id: user.id,
-        status: 'active'
+        status: MEMBERSHIP_STATUS.ACTIVE
       }
     });
 
@@ -48,7 +49,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     await prisma.membership.update({
       where: { id: membership_id },
       data: {
-        status: 'cancelled'
+        status: MEMBERSHIP_STATUS.CANCELLED
       }
     });
 

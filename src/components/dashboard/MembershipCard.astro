@@ -1,5 +1,6 @@
 ---
 import type { Membership, Payment } from '../../types/auth';
+import { MEMBERSHIP_STATUS, LICENSE_STATUS, PAYMENT_STATUS, PAYMENT_METHOD } from '../../constants/status';
 
 interface Props {
   membership: Omit<Membership, 'user_id' | 'plan_id'> & {
@@ -57,11 +58,11 @@ const canResetLicense = (lastReset: Date | null) => {
       <dt class="text-sm font-medium text-gray-500">Estado</dt>
       <dd class="mt-1 text-sm text-gray-900">
         <span class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-          membership.status === 'active' 
+          membership.status === MEMBERSHIP_STATUS.ACTIVE 
             ? 'bg-green-100 text-green-800' 
             : 'bg-red-100 text-red-800'
         }`}>
-          {membership.status === 'active' ? 'Activa' : 'Cancelada'}
+          {membership.status === MEMBERSHIP_STATUS.ACTIVE ? 'Activa' : 'Cancelada'}
         </span>
       </dd>
     </div>
@@ -116,14 +117,14 @@ const canResetLicense = (lastReset: Date | null) => {
             <div class="mt-4">
               <div class="flex items-center justify-between mb-2">
                 <h4 class="text-sm font-medium text-gray-900">Últimos usos</h4>
-                { license.status === 'active' && canResetLicense(license.last_reset) ? (
+                { license.status === LICENSE_STATUS.ACTIVE && canResetLicense(license.last_reset) ? (
                   <button
                     class="reset-btn inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                     data-license-id={license.id}
                   >
                     Resetear Licencia
                   </button>
-                ) : license.status === 'active' && license.last_reset ? (
+                ) : license.status === LICENSE_STATUS.ACTIVE && license.last_reset ? (
                   <div class="text-xs text-gray-500">
                     Podrás resetear nuevamente el {new Date(new Date(license.last_reset).getTime() + (15 * 24 * 60 * 60 * 1000)).toLocaleDateString()}
                   </div>
@@ -178,18 +179,18 @@ const canResetLicense = (lastReset: Date | null) => {
                   </p>
                 </div>
                 <span class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                  payment.status === 'completed' 
+                  payment.status === PAYMENT_STATUS.COMPLETED 
                     ? 'bg-green-100 text-green-800'
-                    : payment.status === 'pending'
+                    : payment.status === PAYMENT_STATUS.PENDING
                     ? 'bg-yellow-100 text-yellow-800'
                     : 'bg-red-100 text-red-800'
                 }`}>
-                  {payment.status === 'completed' ? 'Completado' : payment.status === 'pending' ? 'Pendiente' : 'Fallido'}
+                  {payment.status === PAYMENT_STATUS.COMPLETED ? 'Completado' : payment.status === PAYMENT_STATUS.PENDING ? 'Pendiente' : 'Fallido'}
                 </span>
               </div>
               
               <div class="mt-2 text-sm text-gray-500">
-                <p>Método: {payment.payment_method === 'stripe' ? 'Tarjeta' : 'Transferencia'}</p>
+                <p>Método: {payment.payment_method === PAYMENT_METHOD.STRIPE ? 'Tarjeta' : 'Transferencia'}</p>
                 {payment.bank_name && <p>Banco: {payment.bank_name}</p>}
                 {payment.reference && <p>Referencia: {payment.reference}</p>}
               </div>

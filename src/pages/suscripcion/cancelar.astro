@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { requireAuth } from '../../middleware/auth.ts';
+import { MEMBERSHIP_STATUS } from '../../constants/status';
 
 const user = await requireAuth(Astro);
 if (user instanceof Response) {
@@ -12,7 +13,7 @@ if (!membershipId) {
   return Astro.redirect('/dashboard');
 }
 
-const membership = user.memberships.find(m => m.id === membershipId && m.status === 'active');
+const membership = user.memberships.find(m => m.id === membershipId && m.status === MEMBERSHIP_STATUS.ACTIVE);
 if (!membership) {
   return Astro.redirect('/dashboard');
 }

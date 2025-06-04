@@ -3,9 +3,10 @@ import { isAuthenticated } from '../../../middleware/auth';
 import prisma from '../../../lib/db';
 import Stripe from 'stripe';
 import { getBCVRate } from '../../../lib/bcv';
+import { PLAN_INTERVAL } from '../../../constants/status';
 
 const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2023-10-16'
+  apiVersion: '2025-05-28.basil'
 });
 
 async function getOrCreateStripePrice(plan: any) {
@@ -29,9 +30,9 @@ async function getOrCreateStripePrice(plan: any) {
     unit_amount: Math.round(plan.price * 100), // Stripe usa centavos
     currency: plan.currency.toLowerCase(),
     recurring: {
-      interval: plan.interval === 'month' ? 'month' : 
-                plan.interval === 'semester' ? 'month' : 'year',
-      interval_count: plan.interval === 'semester' ? 6 : 1
+      interval: plan.interval === PLAN_INTERVAL.MONTH ? 'month' : 
+                plan.interval === PLAN_INTERVAL.SEMESTER ? 'month' : 'year',
+      interval_count: plan.interval === PLAN_INTERVAL.SEMESTER ? 6 : 1
     },
     metadata: {
       plan_id: plan.id
@@ -75,31 +76,41 @@ async function getOrCreateFirstMonthDiscountCoupon() {
 
 export const POST: APIRoute = async ({ request, cookies }) => {
   try {
-    const user = await isAuthenticated({ request, cookies });
+    // Verificar autenticación
+    const user = await isAuthenticated(request);
+    
     if (!user) {
-      return new Response(JSON.stringify({ error: 'No autorizado' }), {
-        status: 401,
-        headers: { 'Content-Type': 'application/json' }
-      });
+      return new Response(
+        JSON.stringify({ error: 'No autorizado' }),
+        { 
+          status: 401,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
     }
 
-    const url = new URL(request.url);
-    const body = await request.json();
-    const planId = url.searchParams.get('plan') || body.plan;
+    const { plan } = await request.json();
 
-    if (!planId) {
-      return new Response(JSON.stringify({ error: 'Plan no especificado' }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' }
-      });
+    if (!plan) {
+      return new Response(
+        JSON.stringify({ error: 'El ID del plan es requerido' }),
+        { 
+          status: 400,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
     }
 
     // Obtener el plan de la base de datos
-    const plan = await prisma.plan.findUnique({
-      where: { id: planId }
+    const planData = await prisma.plan.findUnique({
+      where: { id: plan }
     });
 
-    if (!plan) {
+    if (!planData) {
       return new Response(JSON.stringify({ error: 'Plan no encontrado' }), {
         status: 404,
         headers: { 'Content-Type': 'application/json' }
@@ -112,7 +123,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     if (user.country === 'VE') {
       // Obtener tasa BCV
       const bcvRate = await getBCVRate();
-      const priceInBs = Number((plan.price * bcvRate).toFixed(2));
+      const priceInBs = Number((planData.price * bcvRate).toFixed(2));
 
       // Formatear precio en bolívares (1.2345,98)
       const formattedPriceBs = new Intl.NumberFormat('es-VE', {
@@ -129,7 +140,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       });
       let discountedPriceBs = 0
       let discountedFormattedPriceBs = ''
-      if (!hasPrevious && plan.interval === 'month') {
+      if (!hasPrevious && planData.interval === PLAN_INTERVAL.MONTH) {
         discountedPriceBs = priceInBs / 2;
         discountedFormattedPriceBs = new Intl.NumberFormat('es-VE', {
           minimumFractionDigits: 2,
@@ -138,8 +149,8 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       }
       console.log('Datos de pago Venezuela:', {
         payment_method: 'venezuela',
-        plan_id: plan.id,
-        price_usd: plan.price,
+        plan_id: planData.id,
+        price_usd: planData.price,
         price_bs: formattedPriceBs,
         price_bs_discounted: discountedFormattedPriceBs,
         discounted_price_bs: discountedPriceBs,
@@ -153,8 +164,8 @@ export const POST: APIRoute = async ({ request, cookies }) => {
 
       return new Response(JSON.stringify({
         payment_method: 'venezuela',
-        plan_id: plan.id,
-        price_usd: plan.price,
+        plan_id: planData.id,
+        price_usd: planData.price,
         price_bs: formattedPriceBs,
         discounted_price_bs: discountedFormattedPriceBs,
         has_previous: hasPrevious,
@@ -170,7 +181,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     }
 
     // Para otros países, continuar con Stripe
-    const stripePriceId = await getOrCreateStripePrice(plan);
+    const stripePriceId = await getOrCreateStripePrice(planData);
     
     // Configuración base de la sesión
     const sessionConfig: Stripe.Checkout.SessionCreateParams = {
@@ -183,11 +194,11 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         }
       ],
       mode: 'subscription',
-      success_url: `${url.origin}/dashboard?session_id={CHECKOUT_SESSION_ID}&token=${cookies.get('token')?.value}`,
-      cancel_url: `${url.origin}/suscripcion`,
+      success_url: `http://${request.headers.get('host')}/dashboard?session_id={CHECKOUT_SESSION_ID}&token=${cookies.get('token')?.value}`,
+      cancel_url: `http://${request.headers.get('host')}/suscripcion`,
       metadata: {
         userId: user.id,
-        planId: plan.id
+        planId: planData.id
       },
       automatic_tax: {
         enabled: true
@@ -195,7 +206,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     };
 
     // Aplicar descuento solo para planes mensuales y usuarios nuevos
-    if (plan.interval === 'month') {
+    if (planData.interval === PLAN_INTERVAL.MONTH) {
       if (!hasPrevious) {
         const discountCouponId = await getOrCreateFirstMonthDiscountCoupon();
         sessionConfig.discounts = [{
@@ -213,9 +224,14 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     });
   } catch (error) {
     console.error('Error al crear suscripción:', error);
-    return new Response(JSON.stringify({ error: 'Error interno del servidor' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' }
-    });
+    return new Response(
+      JSON.stringify({ error: 'Error interno del servidor' }),
+      { 
+        status: 500,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
   }
 }; 

@@ -1,3 +1,5 @@
+import { MEMBERSHIP_STATUS, LICENSE_STATUS, PAYMENT_STATUS, PAYMENT_METHOD, PLAN_INTERVAL, type MembershipStatus, type LicenseStatus, type PaymentStatus, type PaymentMethod, type PlanInterval } from '../constants/status';
+
 export interface User {
   id: string;
   email: string;
@@ -15,7 +17,7 @@ export interface User {
     plan: {
       name: string;
     };
-    status: 'active' | 'inactive' | 'cancelled';
+    status: MembershipStatus;
     start_date: Date;
     end_date: Date;
   }[];
@@ -34,7 +36,7 @@ export interface LicenseUsage {
 export interface License {
   id: string;
   membership_id: string;
-  status: 'active' | 'inactive' | 'revoked';
+  status: LicenseStatus;
   last_reset: Date | null;
   created_at: Date;
   updated_at: Date;
@@ -46,8 +48,8 @@ export interface Payment {
   membership_id: string;
   amount: number;
   currency: string;
-  status: 'pending' | 'completed' | 'failed';
-  payment_method: 'stripe' | 'venezuela';
+  status: PaymentStatus;
+  payment_method: PaymentMethod;
   stripe_invoice_id?: string;
   bank_name?: string;
   currency_rate?: number;
@@ -61,11 +63,11 @@ export interface Membership {
   id: string;
   user_id: string;
   plan_id: string;
-  status: 'active' | 'inactive' | 'cancelled';
+  status: MembershipStatus;
   start_date: Date;
   end_date: Date;
   stripe_subscription_id?: string;
-  payment_method: 'stripe' | 'venezuela';
+  payment_method: PaymentMethod;
   created_at: Date;
   updated_at: Date;
   licenses: License[];
@@ -79,7 +81,7 @@ export interface Plan {
   description: string;
   price: number;
   currency: string;
-  interval: 'month' | 'semester' | 'year';
+  interval: PlanInterval;
   features: string[]; // En la base de datos se almacena como JSON
   stripe_price_id?: string;
   created_at: Date;

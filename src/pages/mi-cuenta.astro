@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import { ArrowLeft } from 'lucide-react';
 import { requireAuth } from '../middleware/auth.ts';
+import AuthModal from '../components/AuthModal.astro';
 
 // Verificar si el usuario está autenticado
 const authResult = await requireAuth(Astro);
@@ -33,8 +34,7 @@ const description = "Accede a tu cuenta de Cujiware para gestionar tu membresía
           </button>
           <button
             class="flex-1 py-4 px-1 text-center border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300"
-            data-tab="register"
-            aria-selected="false"
+            onclick="window.openAuthModal('register')"
           >
             Registrarse
           </button>
@@ -89,7 +89,7 @@ const description = "Accede a tu cuenta de Cujiware para gestionar tu membresía
               </div>
 
               <div class="text-sm">
-                <a href="#" class="font-medium text-cuji-blue hover:text-cuji-dark-blue">
+                <a href="/recuperar-contrasena" class="font-medium text-cuji-blue hover:text-cuji-dark-blue">
                   ¿Olvidaste tu contraseña?
                 </a>
               </div>
@@ -105,122 +105,12 @@ const description = "Accede a tu cuenta de Cujiware para gestionar tu membresía
             </div>
           </form>
         </div>
-
-        <!-- Register Form -->
-        <div id="register-form" class="hidden bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <form id="register-form-element" class="space-y-6">
-            <div>
-              <label for="name" class="block text-sm font-medium text-gray-700">
-                Nombre completo
-              </label>
-              <div class="mt-1">
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  required
-                  class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label for="register-email" class="block text-sm font-medium text-gray-700">
-                Correo electrónico
-              </label>
-              <div class="mt-1">
-                <input
-                  id="register-email"
-                  name="email"
-                  type="email"
-                  autocomplete="email"
-                  required
-                  class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label for="country" class="block text-sm font-medium text-gray-700">
-                País
-              </label>
-              <div class="mt-1">
-                <select
-                  id="country"
-                  name="country"
-                  required
-                  class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
-                >
-                  <option value="">Selecciona un país</option>
-                  <option value="VE">Venezuela</option>
-                  <option value="AR">Argentina</option>
-                  <option value="BO">Bolivia</option>
-                  <option value="CL">Chile</option>
-                  <option value="CO">Colombia</option>
-                  <option value="CR">Costa Rica</option>
-                  <option value="CU">Cuba</option>
-                  <option value="DO">República Dominicana</option>
-                  <option value="EC">Ecuador</option>
-                  <option value="SV">El Salvador</option>
-                  <option value="GQ">Guinea Ecuatorial</option>
-                  <option value="GT">Guatemala</option>
-                  <option value="HN">Honduras</option>
-                  <option value="MX">México</option>
-                  <option value="NI">Nicaragua</option>
-                  <option value="PA">Panamá</option>
-                  <option value="PY">Paraguay</option>
-                  <option value="PE">Perú</option>
-                  <option value="PR">Puerto Rico</option>
-                  <option value="UY">Uruguay</option>
-                  <option value="other">Otro</option>
-                </select>
-              </div>
-            </div>
-
-            <div>
-              <label for="register-password" class="block text-sm font-medium text-gray-700">
-                Contraseña
-              </label>
-              <div class="mt-1">
-                <input
-                  id="register-password"
-                  name="password"
-                  type="password"
-                  required
-                  class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label for="confirm-password" class="block text-sm font-medium text-gray-700">
-                Confirmar contraseña
-              </label>
-              <div class="mt-1">
-                <input
-                  id="confirm-password"
-                  name="confirm-password"
-                  type="password"
-                  required
-                  class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
-                />
-              </div>
-            </div>
-
-            <div>
-              <button
-                type="submit"
-                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cuji-blue hover:bg-cuji-dark-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cuji-blue"
-              >
-                Registrarse
-              </button>
-            </div>
-          </form>
-        </div>
       </div>
     </div>
   </div>
 </Layout>
+
+<AuthModal />
 
 <script>
   // Tab switching logic
@@ -248,68 +138,47 @@ const description = "Accede a tu cuenta de Cujiware para gestionar tu membresía
       
       // Show/hide forms
       Object.keys(forms).forEach(key => {
-        if (key === target) {
-          forms[key]?.classList.remove('hidden');
-        } else {
-          forms[key]?.classList.add('hidden');
+        const form = forms[key];
+        if (form) {
+          if (key === target) {
+            form.classList.remove('hidden');
+          } else {
+            form.classList.add('hidden');
+          }
         }
       });
     });
   });
 
-  // Login form handling
+  // Login form submission
   const loginForm = document.getElementById('login-form-element');
-  if (loginForm) {
-    loginForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      const formData = new FormData(loginForm as HTMLFormElement);
-      
-      try {
-        const response = await fetch('/api/auth/login', {
-          method: 'POST',
-          body: formData
-        });
+  loginForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          email: formData.get('email'),
+          password: formData.get('password')
+        })
+      });
 
-        const data = await response.json();
+      const data = await response.json();
 
-        if (!response.ok) {
-          throw new Error(data.error || 'Error en el inicio de sesión');
-        }
-
-        // Si el login es exitoso, redirigir al dashboard
+      if (response.ok) {
         window.location.href = '/dashboard';
-      } catch (error) {
-        alert(error instanceof Error ? error.message : 'Error en el inicio de sesión');
+      } else {
+        alert(data.error || 'Error al iniciar sesión');
       }
-    });
-  }
-
-  // Register form handling
-  const registerForm = document.getElementById('register-form-element');
-  if (registerForm) {
-    registerForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      const formData = new FormData(registerForm as HTMLFormElement);
-      
-      try {
-        const response = await fetch('/api/auth/register', {
-          method: 'POST',
-          body: formData
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.error || 'Error en el registro');
-        }
-
-        // Si el registro es exitoso, redirigir al usuario
-        window.location.href = '/mi-cuenta';
-      } catch (error) {
-        alert(error instanceof Error ? error.message : 'Error en el registro');
-      }
-    });
-  }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al procesar la solicitud');
+    }
+  });
 </script> 

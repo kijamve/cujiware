@@ -3,6 +3,7 @@ import { isAuthenticated } from '../../../middleware/auth';
 import prisma from '../../../lib/db';
 import { getBCVRate } from '../../../lib/bcv';
 import { CachicamoService } from '../../../services/cachicamoService';
+import { MEMBERSHIP_STATUS, PAYMENT_STATUS, PAYMENT_METHOD, PLAN_INTERVAL } from '../../../constants/status';
 
 export const POST: APIRoute = async ({ request, cookies }) => {
   try {
@@ -99,13 +100,13 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     let endDate = new Date(startDate);
     
     switch (plan.interval) {
-      case 'month':
+      case PLAN_INTERVAL.MONTH:
         endDate.setMonth(endDate.getMonth() + 1);
         break;
-      case 'semester':
+      case PLAN_INTERVAL.SEMESTER:
         endDate.setMonth(endDate.getMonth() + 6);
         break;
-      case 'year':
+      case PLAN_INTERVAL.YEAR:
         endDate.setFullYear(endDate.getFullYear() + 1);
         break;
       default:
@@ -120,21 +121,21 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       data: {
         user_id: user.id,
         plan_id: plan.id,
-        status: 'active',
+        status: MEMBERSHIP_STATUS.ACTIVE,
         start_date: startDate,
         end_date: endDate,
-        payment_method: 'venezuela',
+        payment_method: PAYMENT_METHOD.VENEZUELA,
         licenses: {
           create: {
-            status: 'active'
+            status: MEMBERSHIP_STATUS.ACTIVE
           }
         },
         payments: {
           create: {
             amount: amountInBs,
             currency: 'VES',
-            status: 'completed',
-            payment_method: 'venezuela',
+            status: PAYMENT_STATUS.COMPLETED,
+            payment_method: PAYMENT_METHOD.VENEZUELA,
             bank_name: bank_dest,
             reference: reference,
             currency_rate: bcvRate

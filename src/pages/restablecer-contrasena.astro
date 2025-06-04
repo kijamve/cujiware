@@ -1,0 +1,120 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { ArrowLeft } from 'lucide-react';
+
+const title = "Restablecer Contraseña - Cujiware";
+const description = "Restablece tu contraseña de Cujiware.";
+
+// Obtener el token de la URL
+const token = Astro.url.searchParams.get('token');
+if (!token) {
+  return Astro.redirect('/recuperar-contrasena');
+}
+---
+
+<Layout title={title} description={description}>
+  <div class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <a href="/" class="inline-flex items-center text-cuji-blue hover:text-cuji-dark-blue mb-8">
+        <ArrowLeft className="w-5 h-5 mr-2" />
+        Volver al inicio
+      </a>
+
+      <div class="max-w-md mx-auto">
+        <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">Restablecer Contraseña</h2>
+          <p class="text-gray-600 mb-6">
+            Ingresa tu nueva contraseña.
+          </p>
+          
+          <form id="reset-form" class="space-y-6">
+            <input type="hidden" name="token" value={token} />
+            
+            <div>
+              <label for="password" class="block text-sm font-medium text-gray-700">
+                Nueva contraseña
+              </label>
+              <div class="mt-1">
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  required
+                  minlength="8"
+                  class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label for="confirmPassword" class="block text-sm font-medium text-gray-700">
+                Confirmar contraseña
+              </label>
+              <div class="mt-1">
+                <input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  required
+                  minlength="8"
+                  class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
+                />
+              </div>
+            </div>
+
+            <div>
+              <button
+                type="submit"
+                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cuji-blue hover:bg-cuji-dark-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cuji-blue"
+              >
+                Restablecer contraseña
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  const form = document.getElementById('reset-form');
+  
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    const password = formData.get('password') as string;
+    const confirmPassword = formData.get('confirmPassword') as string;
+    const token = formData.get('token') as string;
+
+    if (password !== confirmPassword) {
+      alert('Las contraseñas no coinciden');
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/auth/reset-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          token,
+          password: password.trim()
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('Contraseña actualizada exitosamente');
+        window.location.href = '/dashboard';
+      } else {
+        alert(data.error || 'Error al procesar la solicitud');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al procesar la solicitud');
+    }
+  });
+</script> 

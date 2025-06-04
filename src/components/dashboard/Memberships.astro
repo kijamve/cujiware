@@ -1,6 +1,7 @@
 ---
 import type { Membership, Payment } from '../../types/auth';
 import MembershipCard from './MembershipCard.astro';
+import { MEMBERSHIP_STATUS } from '../../constants/status';
 
 interface Props {
   memberships: Array<Omit<Membership, 'user_id' | 'plan_id'> & {
@@ -39,8 +40,8 @@ interface Props {
 
 const { memberships } = Astro.props;
 
-const activeMemberships = memberships.filter(m => m.status === 'active');
-const cancelledMemberships = memberships.filter(m => m.status === 'cancelled');
+const activeMemberships = memberships.filter(m => m.status === MEMBERSHIP_STATUS.ACTIVE);
+const cancelledMemberships = memberships.filter(m => m.status === MEMBERSHIP_STATUS.CANCELLED);
 
 const canResetLicense = (lastReset: Date | null) => {
   if (!lastReset) return true;

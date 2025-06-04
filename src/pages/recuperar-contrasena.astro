@@ -1,0 +1,108 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { ArrowLeft } from 'lucide-react';
+
+const title = "Recuperar Contraseña - Cujiware";
+const description = "Recupera tu contraseña de Cujiware.";
+---
+
+<Layout title={title} description={description}>
+  <div class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <a href="/" class="inline-flex items-center text-cuji-blue hover:text-cuji-dark-blue mb-8">
+        <ArrowLeft className="w-5 h-5 mr-2" />
+        Volver al inicio
+      </a>
+
+      <div class="max-w-md mx-auto">
+        <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">Recuperar Contraseña</h2>
+          <p class="text-gray-600 mb-6">
+            Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.
+          </p>
+          
+          <form id="recovery-form" class="space-y-6">
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700">
+                Correo electrónico
+              </label>
+              <div class="mt-1">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  required
+                  class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
+                />
+              </div>
+            </div>
+
+            <div>
+              <button
+                type="submit"
+                id="submit-button"
+                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cuji-blue hover:bg-cuji-dark-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cuji-blue disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <span id="button-text">Enviar enlace de recuperación</span>
+                <svg id="loading-spinner" class="hidden animate-spin ml-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  const form = document.getElementById('recovery-form');
+  const submitButton = document.getElementById('submit-button');
+  const buttonText = document.getElementById('button-text');
+  const loadingSpinner = document.getElementById('loading-spinner');
+  
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    // Deshabilitar el botón y mostrar el spinner
+    submitButton?.setAttribute('disabled', 'true');
+    loadingSpinner?.classList.remove('hidden');
+    buttonText!.textContent = 'Enviando...';
+
+    const formData = new FormData(e.target as HTMLFormElement);
+    const email = formData.get('email') as string;
+
+    try {
+      const response = await fetch('/api/auth/forgot-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: email.trim() })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('Si el correo existe en nuestra base de datos, recibirás un enlace para restablecer tu contraseña.');
+        window.location.href = '/';
+      } else {
+        alert(data.error || 'Error al procesar la solicitud');
+        // Restaurar el botón en caso de error
+        submitButton?.removeAttribute('disabled');
+        loadingSpinner?.classList.add('hidden');
+        buttonText!.textContent = 'Enviar enlace de recuperación';
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al procesar la solicitud');
+      // Restaurar el botón en caso de error
+      submitButton?.removeAttribute('disabled');
+      loadingSpinner?.classList.add('hidden');
+      buttonText!.textContent = 'Enviar enlace de recuperación';
+    }
+  });
+</script> 

@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { prisma } from '../../../lib/prisma';
 import Stripe from 'stripe';
+import { MEMBERSHIP_STATUS, LICENSE_STATUS } from '../../../constants/status';
 
 const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2023-10-16'
@@ -33,7 +34,7 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    if (license.status !== 'active') {
+    if (license.status !== LICENSE_STATUS.ACTIVE) {
       return new Response(
         JSON.stringify({ error: 'License is not active' }),
         { status: 403 }
@@ -49,11 +50,11 @@ export const POST: APIRoute = async ({ request }) => {
       await prisma.$transaction([
         prisma.membership.update({
           where: { id: license.membership.id },
-          data: { status: 'cancelled' }
+          data: { status: MEMBERSHIP_STATUS.CANCELLED }
         }),
         prisma.license.updateMany({
           where: { membership_id: license.membership.id },
-          data: { status: 'inactive' }
+          data: { status: LICENSE_STATUS.INACTIVE }
         })
       ]);
 

@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import prisma from '../../../lib/db';
 import Stripe from 'stripe';
+import { MEMBERSHIP_STATUS, PAYMENT_STATUS, PAYMENT_METHOD, PLAN_INTERVAL } from '../../../constants/status';
 
 const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY, {
   apiVersion: '2023-10-16'
@@ -55,14 +56,14 @@ export const POST: APIRoute = async ({ request }) => {
           data: {
             user_id: userId,
             plan_id: planId,
-            status: 'active',
+            status: MEMBERSHIP_STATUS.ACTIVE,
             start_date: new Date(),
             end_date: new Date(),
             stripe_subscription_id: session.subscription as string,
-            payment_method: 'stripe',
+            payment_method: PAYMENT_METHOD.STRIPE,
             licenses: {
               create: {
-                status: 'active'
+                status: MEMBERSHIP_STATUS.ACTIVE
               }
             },
           }
@@ -91,8 +92,8 @@ export const POST: APIRoute = async ({ request }) => {
                 membership_id: membership.id,
                 amount: invoice.amount_paid / 100,
                 currency: invoice.currency.toUpperCase(),
-                status: 'completed',
-                payment_method: 'stripe',
+                status: PAYMENT_STATUS.COMPLETED,
+                payment_method: PAYMENT_METHOD.STRIPE,
                 stripe_invoice_id: invoice.id,
                 invoice_url: invoice.hosted_invoice_url || undefined
               }
@@ -103,13 +104,13 @@ export const POST: APIRoute = async ({ request }) => {
             let endDate = membership.end_date || new Date(now);
             
             switch (membership.plan.interval) {
-              case 'month':
+              case PLAN_INTERVAL.MONTH:
                 endDate.setMonth(endDate.getMonth() + 1);
                 break;
-              case 'semester':
+              case PLAN_INTERVAL.SEMESTER:
                 endDate.setMonth(endDate.getMonth() + 6);
                 break;
-              case 'year':
+              case PLAN_INTERVAL.YEAR:
                 endDate.setFullYear(endDate.getFullYear() + 1);
                 break;
               default:
@@ -143,8 +144,8 @@ export const POST: APIRoute = async ({ request }) => {
                 membership_id: membership.id,
                 amount: invoice.amount_due / 100,
                 currency: invoice.currency.toUpperCase(),
-                status: 'failed',
-                payment_method: 'stripe',
+                status: PAYMENT_STATUS.FAILED,
+                payment_method: PAYMENT_METHOD.STRIPE,
                 stripe_invoice_id: invoice.id,
                 invoice_url: invoice.hosted_invoice_url || undefined
               }
@@ -162,7 +163,7 @@ export const POST: APIRoute = async ({ request }) => {
         });
 
         if (membership) {
-          const newStatus = subscription.status === 'active' ? 'active' : 'cancelled';
+          const newStatus = subscription.status === 'active' ? MEMBERSHIP_STATUS.ACTIVE : MEMBERSHIP_STATUS.CANCELLED;
           
           // Solo actualizar si hay cambios en el estado
           if (membership.status !== newStatus) {
