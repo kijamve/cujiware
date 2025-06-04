@@ -6,6 +6,15 @@ import { CachicamoService } from '../../../services/cachicamoService';
 import { MEMBERSHIP_STATUS, PAYMENT_STATUS, PAYMENT_METHOD, PLAN_INTERVAL } from '../../../constants/status';
 import crypto from 'crypto';
 
+// Verificar si el usuario ha tenido alguna membresía anterior
+async function hasPreviousMembership(userId: string) {
+  const previousMembership = await prisma.membership.findFirst({
+    where: {
+      user_id: userId
+    }
+  });
+  return !!previousMembership;
+}
 export const POST: APIRoute = async (context) => {
   try {
     const user = await requireAuth(context);
@@ -71,7 +80,13 @@ export const POST: APIRoute = async (context) => {
 
     // Obtener la tasa del BCV
     const bcvRate = await getBCVRate();
-    const amountInBs = Number((plan.price * bcvRate).toFixed(2));
+    const hasPrevious = await hasPreviousMembership(user.id);
+    let amountInBs: number;
+    if (!hasPrevious && plan.interval === PLAN_INTERVAL.MONTH) {
+      amountInBs = Number((plan.price * bcvRate * 0.5).toFixed(2));
+    } else {
+      amountInBs = Number((plan.price * bcvRate).toFixed(2));
+    }
 
     // Crear instancia del servicio Cachicamo
     const cachicamoService = new CachicamoService();
