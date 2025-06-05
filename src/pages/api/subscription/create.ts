@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { isAuthenticated } from '../../../middleware/auth';
+import { requireAuth } from '../../../middleware/auth';
 import prisma from '../../../lib/db';
 import Stripe from 'stripe';
 import { getBCVRate } from '../../../lib/bcv';
@@ -60,38 +60,28 @@ async function hasPreviousMembership(userId: string) {
 
 // Crear o obtener el cupón de descuento del 50% para el primer mes
 async function getOrCreateFirstMonthDiscountCoupon() {
-  const couponId = 'FIRST_MONTH_50';
+  const couponId = 'FIRST_MONTH_25';
   try {
     return (await stripe.coupons.retrieve(couponId)).id;
   } catch {
     return (await stripe.coupons.create({
       id: couponId,
-      percent_off: 50,
+      percent_off: 25,
       duration: 'repeating',
       duration_in_months: 1,
-      name: '50% OFF Primer Mes'
+      name: '25% OFF Primer Mes'
     })).id;
   }
 }
 
-export const POST: APIRoute = async ({ request, cookies }) => {
+export const POST: APIRoute = async (context) => {
   try {
-    // Verificar autenticación
-    const user = await isAuthenticated(request);
-    
-    if (!user) {
-      return new Response(
-        JSON.stringify({ error: 'No autorizado' }),
-        { 
-          status: 401,
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }
-      );
+    const user = await requireAuth(context);
+    if (user instanceof Response) {
+      return user;
     }
 
-    const { plan } = await request.json();
+    const { plan } = await context.request.json();
 
     if (!plan) {
       return new Response(
@@ -141,7 +131,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       let discountedPriceBs = 0
       let discountedFormattedPriceBs = ''
       if (!hasPrevious && planData.interval === PLAN_INTERVAL.MONTH) {
-        discountedPriceBs = priceInBs / 2;
+        discountedPriceBs = priceInBs * 0.75;
         discountedFormattedPriceBs = new Intl.NumberFormat('es-VE', {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2
@@ -194,8 +184,8 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         }
       ],
       mode: 'subscription',
-      success_url: `http://${request.headers.get('host')}/dashboard?session_id={CHECKOUT_SESSION_ID}&token=${cookies.get('token')?.value}`,
-      cancel_url: `http://${request.headers.get('host')}/suscripcion`,
+      success_url: `http://${context.request.headers.get('host')}/dashboard?session_id={CHECKOUT_SESSION_ID}&token=${context.cookies.get('token')?.value}`,
+      cancel_url: `http://${context.request.headers.get('host')}/suscripcion`,
       metadata: {
         userId: user.id,
         planId: planData.id,

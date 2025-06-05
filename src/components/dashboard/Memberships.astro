@@ -1,25 +1,11 @@
 ---
-import type { Membership, Payment } from '../../types/auth';
+import type { Membership, Payment, Plan } from '../../types/auth';
 import MembershipCard from './MembershipCard.astro';
 import { MEMBERSHIP_STATUS } from '../../constants/status';
 
 interface Props {
   memberships: Array<Omit<Membership, 'user_id' | 'plan_id'> & {
-    plan: {
-      id: string;
-      name: string;
-      description: string;
-      price: number;
-      currency: string;
-      interval: string;
-      features: any;
-      stripe_price_id: string | null;
-      is_highlighted: boolean;
-      savings_text: string | null;
-      is_visible: boolean;
-      created_at: Date;
-      updated_at: Date;
-    };
+    plan: Plan;
     licenses: {
       id: string;
       status: string;
@@ -36,9 +22,10 @@ interface Props {
     }[];
     payments: Payment[];
   }>;
+  isVenezuelan?: boolean;
 }
 
-const { memberships } = Astro.props;
+const { memberships, isVenezuelan = false } = Astro.props;
 
 const activeMemberships = memberships.filter(m => m.status === MEMBERSHIP_STATUS.ACTIVE);
 const cancelledMemberships = memberships.filter(m => m.status === MEMBERSHIP_STATUS.CANCELLED);
@@ -76,7 +63,7 @@ const canResetLicense = (lastReset: Date | null) => {
       {activeMemberships.length > 0 ? (
         <div class="space-y-6">
           {activeMemberships.map(membership => (
-            <MembershipCard membership={membership} showCancelButton={true} />
+            <MembershipCard membership={membership} showCancelButton={true} isVenezuelan={isVenezuelan} />
           ))}
         </div>
       ) : (
@@ -96,7 +83,7 @@ const canResetLicense = (lastReset: Date | null) => {
       {cancelledMemberships.length > 0 ? (
         <div class="space-y-6">
           {cancelledMemberships.map(membership => (
-            <MembershipCard membership={membership} showCancelButton={false} />
+            <MembershipCard membership={membership} showCancelButton={false} isVenezuelan={isVenezuelan} />
           ))}
         </div>
       ) : (
@@ -107,6 +94,8 @@ const canResetLicense = (lastReset: Date | null) => {
     </div>
   </div>
 </div>
+
+<div id="modal-root"></div>
 
 <script>
   const tabButtons = document.querySelectorAll('.tab-button');

@@ -17,12 +17,46 @@ export function PluginCatalog({ plugins, categories, country, platform }: Plugin
     ? plugins 
     : plugins.filter(plugin => plugin.category === selectedCategory);
 
+  // Schema.org structured data for products
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "itemListElement": filteredPlugins.map((plugin, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": plugin.name,
+        "description": plugin.short_description,
+        "applicationCategory": plugin.category,
+        "operatingSystem": platform === 'woocommerce' ? 'WordPress' : 'PrestaShop',
+        "offers": {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "priceCurrency": "USD",
+          "price": 12,
+          "url": `https://cujiware.com/plugins/${country}/${platform}/${plugin.slug}`
+        }
+      }
+    }))
+  };
+
+  const getPageTitle = () => {
+    const platformName = platform === 'woocommerce' ? 'WooCommerce' : 'PrestaShop';
+    return country === 'all' 
+      ? `Plugins para ${platformName}`
+      : `Plugins para ${platformName} en ${country.charAt(0).toUpperCase() + country.slice(1)}`;
+  };
+
   return (
     <div className="py-12">
+      <script type="application/ld+json">
+        {JSON.stringify(schemaData)}
+      </script>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-6">
-            Plugins para {platform === 'woocommerce' ? 'WooCommerce' : 'PrestaShop'}
+            {getPageTitle()}
           </h1>
           <PluginFilters
             selectedCategory={selectedCategory}

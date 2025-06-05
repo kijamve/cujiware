@@ -6,6 +6,7 @@ import UserInfo from '../components/dashboard/UserInfo.astro';
 import BillingModal from '../components/dashboard/BillingModal.astro';
 import PasswordModal from '../components/dashboard/PasswordModal.astro';
 import Memberships from '../components/dashboard/Memberships.astro';
+import type { UserWithMemberships } from '../types/auth';
 
 const user = await requireAuth(Astro);
 if (user instanceof Response) {
@@ -18,17 +19,44 @@ const userWithMemberships = await prisma.user.findUnique({
   include: {
     memberships: {
       include: {
-        plan: true,
-        licenses: {
-          include: {
-            usages: true
+        plan: {
+          select: {
+            id: true,
+            name: true,
+            description: true,
+            price: true,
+            currency: true,
+            interval: true,
+            features: true,
+            stripe_price_id: true,
+            created_at: true,
+            updated_at: true
           }
         },
-        payments: true
+        licenses: {
+          include: {
+            usages: {
+              where: {
+                last_used_at: {
+                  gte: new Date(Date.now() - 45 * 24 * 60 * 60 * 1000)
+                }
+              },
+              orderBy: {
+                last_used_at: 'desc'
+              }
+            }
+          }
+        },
+        payments: {
+          orderBy: {
+            created_at: 'desc'
+          },
+          take: 6
+        }
       }
     }
   }
-});
+}) as UserWithMemberships;
 
 if (!userWithMemberships) {
   return Astro.redirect('/mi-cuenta');
@@ -47,7 +75,7 @@ const isVenezuelan = userWithMemberships.country === 'VE';
           <UserInfo user={userWithMemberships} isVenezuelan={isVenezuelan} />
           {isVenezuelan && <BillingModal user={userWithMemberships} />}
           <PasswordModal />
-          <Memberships memberships={userWithMemberships.memberships} />
+          <Memberships memberships={userWithMemberships.memberships} isVenezuelan={isVenezuelan} />
         </div>
       </div>
     </div>

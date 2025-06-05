@@ -29,7 +29,7 @@ const filteredPlugins = plugins.filter(plugin => {
 const categories = [...new Set(filteredPlugins.map(plugin => plugin.category))];
 ---
 
-<Layout title={`Plugins para ${platform} - Cujiware`}>
+<Layout title={`Plugins para ${platform} ${country === 'venezuela' ? 'de Venezuela' : country === 'argentina' ? 'de Argentina' : ''} - Cujiware`}>
   <PluginCatalog 
     client:load
     plugins={filteredPlugins}

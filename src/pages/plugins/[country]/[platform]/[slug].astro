@@ -50,9 +50,58 @@ try {
   console.warn(`No se encontró el archivo de contenido para el plugin ${slug}`);
   content = '<p>Estamos trabajando en este contenido, por favor regresa más tarde.</p>';
 }
+
+// Schema.org structured data
+const schemaData = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": plugin.name,
+  "description": plugin.short_description,
+  "applicationCategory": plugin.category === 'payment_method' ? 'FinancialApplication' : 
+                        plugin.category === 'shipping' ? 'LogisticsApplication' : 
+                        'SoftwareApplication',
+  "softwareRequirements": platform === 'woocommerce' ? 'WordPress' : 'PrestaShop',
+  "operatingSystem": "Linux",
+  "author": {
+    "@type": "Organization",
+    "name": "Cujiware"
+  },
+  "image": screenshots.length > 0 ? `https://cujiware.com${screenshots[0].src}` : undefined,
+  "screenshot": screenshots.map(screenshot => ({
+    "@type": "ImageObject",
+    "url": `https://cujiware.com${screenshot.src}`,
+    "caption": screenshot.caption
+  })),
+  "offers": {
+    "@type": "Offer",
+    "priceSpecification": {
+      "@type": "UnitPriceSpecification",
+      "priceCurrency": "USD",
+      "price": 12,
+      "billingIncrement": 1,
+      "billingDuration": 1,
+      "unitCode": "MON",
+      "unitText": "Mes",
+      "description": "Membresía recurrente mensual"
+    },
+    "businessFunction": "http://purl.org/goodrelations/v1#LeaseOut",
+    "url": "https://cujiware.com/suscripcion/"
+  }
+};
+
+// Meta tags para SEO
+const metaDescription = `${plugin.short_description} - Plugin premium para ${platform === 'woocommerce' ? 'WooCommerce' : 'PrestaShop'} disponible en Cujiware.`;
+const canonicalUrl = `https://cujiware.com/plugins/${country}/${platform}/${plugin.slug}`;
+const ogImage = screenshots.length > 0 ? `https://cujiware.com${screenshots[0].src}` : undefined;
 ---
 
-<Layout title={`${plugin.name} - Cujiware`}>
+<Layout 
+  title={`${plugin.name} - Cujiware`}
+  description={metaDescription}
+  canonicalURL={canonicalUrl}
+  image={ogImage}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
   <PluginDetail 
     client:load
     plugin={plugin}

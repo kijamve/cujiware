@@ -16,19 +16,21 @@ const {
   canonicalURL = Astro.url.href
 } = Astro.props;
 
-const imageURL = new URL(image, Astro.site);
+const baseUrl = Astro.site?.toString() || 'https://cujiware.com';
+const imageURL = image.startsWith('http') ? image : new URL(image, baseUrl).toString();
+const canonicalUrl = canonicalURL.startsWith('http') ? canonicalURL : new URL(canonicalURL, baseUrl).toString();
 ---
 
 <SEO
   title={title}
   description={description}
-  canonical={canonicalURL}
+  canonical={canonicalUrl}
   openGraph={{
     basic: {
       title: title,
       type: 'website',
-      image: imageURL.toString(),
-      url: canonicalURL,
+      image: imageURL,
+      url: canonicalUrl,
     },
     optional: {
       description: description,
@@ -43,7 +45,7 @@ const imageURL = new URL(image, Astro.site);
     site: '@cujiware',
     title: title,
     description: description,
-    image: imageURL.toString(),
+    image: imageURL,
     imageAlt: 'Cujiware Membership - Premium WooCommerce & PrestaShop Plugins',
   }}
 />
@@ -51,8 +53,8 @@ const imageURL = new URL(image, Astro.site);
 <SchemaOrg
   organization={{
     name: "Cujiware",
-    url: Astro.site?.toString() || "https://cujiware.com",
-    logo: new URL("/images/logo.png", Astro.site).toString(),
+    url: baseUrl,
+    logo: new URL("/images/logo.png", baseUrl).toString(),
     sameAs: [
       "https://twitter.com/cujiware",
       "https://facebook.com/cujiware",

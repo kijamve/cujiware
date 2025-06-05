@@ -1,0 +1,319 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { ArrowLeft } from 'lucide-react';
+import { requireAuth } from '../../../middleware/auth.ts';
+import { prisma } from '../../../lib/prisma';
+import { getBCVRate } from '../../../lib/bcv';
+import { PLAN_INTERVAL } from '../../../constants/status';
+
+// Verificar si el usuario está autenticado
+const authResult = await requireAuth(Astro);
+if (authResult instanceof Response) {
+  return authResult;
+}
+
+const { planId } = Astro.params;
+const membershipId = Astro.url.searchParams.get('membershipId');
+
+// Obtener el plan
+const plan = await prisma.plan.findUnique({
+  where: { id: planId }
+});
+
+if (!plan) {
+  return Astro.redirect('/pricing');
+}
+
+// Obtener datos del usuario
+const user = await prisma.user.findUnique({
+  where: { id: authResult.id },
+  select: {
+    name: true,
+    billing_full_name: true,
+    billing_tax_id: true,
+    billing_address: true,
+    billing_phone: true
+  }
+});
+
+// Verificar si el usuario ha tenido alguna membresía anterior
+const hasPreviousMembership = await prisma.membership.findFirst({
+  where: {
+    user_id: authResult.id
+  }
+});
+
+// Obtener la tasa del BCV y calcular precios
+const bcvRate = await getBCVRate();
+let price_bs: number;
+if (!hasPreviousMembership && plan.interval === PLAN_INTERVAL.MONTH) {
+  price_bs = Number((plan.price * bcvRate * 0.75).toFixed(2));
+} else {
+  price_bs = Number((plan.price * bcvRate).toFixed(2));
+}
+const formattedOriginalPriceBs = new Intl.NumberFormat('es-VE', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+}).format(plan.price * bcvRate);
+const formattedPriceBs = new Intl.NumberFormat('es-VE', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+}).format(price_bs);
+
+const title = "Pago Móvil - Cujiware";
+const description = "Realiza tu pago móvil para activar tu membresía en Cujiware.";
+---
+
+<Layout title={title} description={description}>
+  <div class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <a href="/pricing" class="inline-flex items-center text-cuji-blue hover:text-cuji-dark-blue mb-8">
+        <ArrowLeft className="w-5 h-5 mr-2" />
+        Volver a planes
+      </a>
+
+      <div class="max-w-2xl mx-auto">
+        <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">Pago Móvil</h2>
+          
+          <!-- Datos de facturación -->
+          <div class="mb-8 p-4 bg-gray-50 rounded-lg">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">Datos de facturación</h3>
+            <p class="text-sm text-gray-600">
+              {user?.billing_full_name || user?.name} {user?.billing_tax_id || ''} - {user?.billing_address || ''}
+            </p>
+            <a href="/dashboard#show-form-billing" class="text-sm text-cuji-blue hover:text-cuji-dark-blue">
+              Editar datos de facturación
+            </a>
+          </div>
+
+          <!-- Información de pago -->
+          <div class="mb-8">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Información de pago</h3>
+            <div class="space-y-2">
+              <p class="text-sm">
+                <span class="font-medium">RIF:</span>
+                <span class="font-mono ml-2">J-50392719-4</span>
+              </p>
+              <p class="text-sm">
+                <span class="font-medium">Teléfono:</span>
+                <span class="font-mono ml-2">04144741641</span>
+              </p>
+              <p class="text-sm">
+                <span class="font-medium">Monto a pagar:</span>
+                {!hasPreviousMembership && plan.interval === PLAN_INTERVAL.MONTH ? (
+                  <span class="ml-2">
+                    <span class="line-through text-gray-500">Bs. {formattedOriginalPriceBs}</span>
+                    <span class="ml-2 font-mono font-bold text-green-600">Bs. {formattedPriceBs}</span>
+                    <span class="ml-2 text-sm text-gray-500">(Descuento solo por el primer mes)</span>
+                  </span>
+                ) : (
+                  <span class="ml-2 font-mono font-bold">Bs. {formattedPriceBs}</span>
+                )}
+              </p>
+            </div>
+          </div>
+
+          <!-- Formulario de pago -->
+          <form id="venezuelaPaymentForm" class="space-y-6" data-plan-id={planId} data-membership-id={membershipId}>
+            <div>
+              <label for="bank_dest" class="block text-sm font-medium text-gray-700">
+                Banco destino
+              </label>
+              <select
+                id="bank_dest"
+                name="bank_dest"
+                required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
+              >
+                <option value="">Selecciona banco destino</option>
+                <option value="BDV">Banco de Venezuela</option>
+                <option value="BVC">Banco Venezolano de Crédito</option>
+              </select>
+            </div>
+
+            <div id="qr-container" class="hidden">
+              <img id="qr-img" class="max-w-xs mx-auto rounded-lg border border-gray-200 shadow-sm" alt="QR Pago Móvil" />
+            </div>
+
+            <div>
+              <label for="bank_origin" class="block text-sm font-medium text-gray-700">
+                Banco de origen
+              </label>
+              <select
+                id="bank_origin"
+                name="bank_origin"
+                required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
+              >
+                <option value="">Selecciona tu banco</option>
+                <option value="0102">BANCO DE VENEZUELA</option>
+                <option value="0134">BANESCO</option>
+                <option value="0105">BANCO MERCANTIL</option>
+                <option value="0108">BANCO PROVINCIAL BBVA</option>
+                <option value="0172">BANCAMIGA</option>
+                <option value="0191">BANCO NACIONAL DE CREDITO</option>
+                <option value="0138">BANCO PLAZA</option>
+                <option value="0104">BANCO VENEZOLANO DE CREDITO</option>
+                <option value="0156">100%BANCO</option>
+                <option value="0196">ABN AMRO BANK</option>
+                <option value="0114">BANCARIBE</option>
+                <option value="0171">BANCO ACTIVO</option>
+                <option value="0166">BANCO AGRICOLA</option>
+                <option value="0175">BANCO BICENTENARIO</option>
+                <option value="0128">BANCO CARONI</option>
+                <option value="0164">BANCO DE DESARROLLO DEL MICROEMPRESARIO</option>
+                <option value="0149">BANCO DEL PUEBLO SOBERANO</option>
+                <option value="0163">BANCO DEL TESORO</option>
+                <option value="0176">BANCO ESPIRITO SANTO</option>
+                <option value="0115">BANCO EXTERIOR</option>
+                <option value="0003">BANCO INDUSTRIAL DE VENEZUELA</option>
+                <option value="0173">BANCO INTERNACIONAL DE DESARROLLO</option>
+                <option value="0116">BANCO OCCIDENTAL DE DESCUENTO</option>
+                <option value="0168">BANCRECER</option>
+                <option value="0177">BANFANB</option>
+                <option value="0146">BANGENTE</option>
+                <option value="0174">BANPLUS</option>
+                <option value="0190">CITIBANK</option>
+                <option value="0121">CORP BANCA</option>
+                <option value="0157">DELSUR</option>
+                <option value="0151">FONDO COMUN</option>
+                <option value="0601">INSTITUTO MUNICIPAL DE CRÉDITO POPULAR</option>
+                <option value="0169">MIBANCO</option>
+                <option value="0137">SOFITASA</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="tax_id" class="block text-sm font-medium text-gray-700">
+                Cédula de Identidad
+              </label>
+              <input
+                type="text"
+                id="tax_id"
+                name="tax_id"
+                required
+                placeholder="V12345678"
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
+              />
+            </div>
+
+            <div>
+              <label for="phone" class="block text-sm font-medium text-gray-700">
+                Teléfono vinculado a tu pago móvil
+              </label>
+              <input
+                type="text"
+                id="phone"
+                name="phone"
+                required
+                placeholder="04120001122"
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
+              />
+            </div>
+
+            <div>
+              <label for="reference" class="block text-sm font-medium text-gray-700">
+                Últimos 6 dígitos de la referencia
+              </label>
+              <input
+                type="text"
+                id="reference"
+                name="reference"
+                required
+                placeholder="123456"
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
+              />
+            </div>
+
+            <div class="flex justify-end space-x-3">
+              <a
+                href="/pricing"
+                class="inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cuji-blue"
+              >
+                Cancelar
+              </a>
+              <button
+                type="submit"
+                class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-cuji-blue hover:bg-cuji-dark-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cuji-blue"
+              >
+                Enviar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  // QR dinámico
+  const bankDest = document.getElementById('bank_dest') as HTMLSelectElement;
+  const qrContainer = document.getElementById('qr-container') as HTMLDivElement;
+  const qrImg = document.getElementById('qr-img') as HTMLImageElement;
+
+  bankDest?.addEventListener('change', (e) => {
+    const value = (e.target as HTMLSelectElement).value;
+    if (value === 'BDV') {
+      qrImg.src = '/images/QR-BDV-KF.png';
+      qrContainer.classList.remove('hidden');
+    } else if (value === 'BVC') {
+      qrImg.src = '/images/QR-BVC-KF.png';
+      qrContainer.classList.remove('hidden');
+    } else {
+      qrContainer.classList.add('hidden');
+      qrImg.src = '';
+    }
+  });
+
+  // Pago móvil submit
+  const form = document.getElementById('venezuelaPaymentForm') as HTMLFormElement;
+  const submitButton = form?.querySelector('button[type="submit"]') as HTMLButtonElement;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+
+    // Deshabilitar el botón y mostrar estado de carga
+    submitButton.disabled = true;
+    submitButton.textContent = 'Enviando...';
+
+    try {
+      const response = await fetch('/api/subscription/venezuela-payment', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          plan_id: form.dataset.planId,
+          membership_id: form.dataset.membershipId,
+          bank_origin: formData.get('bank_origin'),
+          bank_dest: formData.get('bank_dest'),
+          tax_id: formData.get('tax_id'),
+          phone: formData.get('phone'),
+          reference: formData.get('reference')
+        })
+      });
+
+      const result = await response.json();
+      
+      if (result.success) {
+        alert(result.message);
+        window.location.href = '/dashboard';
+      } else {
+        alert(result.error || 'Error al procesar el pago');
+        // Restaurar el botón en caso de error
+        submitButton.disabled = false;
+        submitButton.textContent = 'Enviar';
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al procesar el pago');
+      // Restaurar el botón en caso de error
+      submitButton.disabled = false;
+      submitButton.textContent = 'Enviar';
+    }
+  });
+</script> 

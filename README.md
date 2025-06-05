@@ -263,7 +263,7 @@ CUJIWARE es una plataforma SAAS que proporciona acceso integral a un ecosistema 
 - Notas:
   - Para usuarios de Venezuela: retorna información para pago móvil
   - Para otros países: redirige a Stripe Checkout
-  - Descuento del 50% en el primer mes para planes mensuales
+  - Descuento del 25% en el primer mes para planes mensuales
 
 #### POST /api/subscription/venezuela-payment
 

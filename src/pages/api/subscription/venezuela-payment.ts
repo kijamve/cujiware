@@ -3,7 +3,7 @@ import { requireAuth } from '../../../middleware/auth';
 import prisma from '../../../lib/db';
 import { getBCVRate } from '../../../lib/bcv';
 import { CachicamoService } from '../../../services/cachicamoService';
-import { MEMBERSHIP_STATUS, PAYMENT_STATUS, PAYMENT_METHOD, PLAN_INTERVAL } from '../../../constants/status';
+import { MEMBERSHIP_STATUS, LICENSE_STATUS, PAYMENT_STATUS, PAYMENT_METHOD, PLAN_INTERVAL } from '../../../constants/status';
 import crypto from 'crypto';
 
 // Verificar si el usuario ha tenido alguna membresía anterior
@@ -15,6 +15,21 @@ async function hasPreviousMembership(userId: string) {
   });
   return !!previousMembership;
 }
+
+// Obtener la membresía activa del usuario
+async function getActiveMembership(userId: string) {
+  return await prisma.membership.findFirst({
+    where: {
+      user_id: userId,
+      status: MEMBERSHIP_STATUS.ACTIVE,
+      payment_method: PAYMENT_METHOD.VENEZUELA
+    },
+    include: {
+      plan: true
+    }
+  });
+}
+
 export const POST: APIRoute = async (context) => {
   try {
     const user = await requireAuth(context);
@@ -23,7 +38,7 @@ export const POST: APIRoute = async (context) => {
     }
 
     const body = await context.request.json();
-    const { plan_id, bank_origin, bank_dest, phone, tax_id: originalTaxId, reference } = body;
+    const { plan_id, bank_origin, bank_dest, phone, tax_id: originalTaxId, reference, membership_id } = body;
 
     if (!plan_id || !bank_origin || !bank_dest || !phone || !originalTaxId || !reference) {
       return new Response(JSON.stringify({ 
@@ -83,7 +98,7 @@ export const POST: APIRoute = async (context) => {
     const hasPrevious = await hasPreviousMembership(user.id);
     let amountInBs: number;
     if (!hasPrevious && plan.interval === PLAN_INTERVAL.MONTH) {
-      amountInBs = Number((plan.price * bcvRate * 0.5).toFixed(2));
+      amountInBs = Number((plan.price * bcvRate * 0.75).toFixed(2));
     } else {
       amountInBs = Number((plan.price * bcvRate).toFixed(2));
     }
@@ -178,60 +193,141 @@ export const POST: APIRoute = async (context) => {
       });
     }
 
+    let membership;
+    if (membership_id) {
+      // Es una renovación, verificar que la membresía existe y pertenece al usuario
+      const existingMembership = await prisma.membership.findFirst({
+        where: {
+          id: membership_id,
+          user_id: user.id,
+          status: MEMBERSHIP_STATUS.ACTIVE,
+          payment_method: PAYMENT_METHOD.VENEZUELA
+        }
+      });
 
-    // Calcular la fecha de finalización basada en el intervalo del plan
-    const startDate = new Date();
-    let endDate = new Date(startDate);
-    
-    switch (plan.interval) {
-      case PLAN_INTERVAL.MONTH:
-        endDate.setMonth(endDate.getMonth() + 1);
-        break;
-      case PLAN_INTERVAL.SEMESTER:
-        endDate.setMonth(endDate.getMonth() + 6);
-        break;
-      case PLAN_INTERVAL.YEAR:
-        endDate.setFullYear(endDate.getFullYear() + 1);
-        break;
-      default:
-        return new Response(JSON.stringify({ error: 'Intervalo de plan no válido' }), {
-          status: 400,
+      if (!existingMembership) {
+        return new Response(JSON.stringify({ 
+          error: 'Membresía no encontrada o no está activa',
+          details: 'No se encontró una membresía activa con el ID proporcionado'
+        }), {
+          status: 404,
           headers: { 'Content-Type': 'application/json' }
         });
-    }
+      }
 
-    // Crear la membresía
-    const membership = await prisma.membership.create({
-      data: {
-        user_id: user.id,
-        plan_id: plan.id,
-        status: MEMBERSHIP_STATUS.ACTIVE,
-        start_date: startDate,
-        end_date: endDate,
-        payment_method: PAYMENT_METHOD.VENEZUELA,
-        licenses: {
-          create: {
-            status: MEMBERSHIP_STATUS.ACTIVE
-          }
-        },
-        payments: {
-          create: {
-            amount: amountInBs,
-            currency: 'VES',
-            status: PAYMENT_STATUS.COMPLETED,
-            payment_method: PAYMENT_METHOD.VENEZUELA,
-            bank_name: bank_dest,
-            reference: reference,
-            currency_rate: bcvRate,
-            invoice_url: invoiceUrl
+      // Calcular la nueva fecha de finalización
+      const currentEndDate = new Date(existingMembership.end_date);
+      let newEndDate: Date;
+      
+      const timestamp = currentEndDate.getTime();
+      switch (plan.interval) {
+        case PLAN_INTERVAL.MONTH: {
+          const oneMontInMs =  Math.round((365.25 / 12) * 24 * 60 * 60 * 1000); // 30 días en milisegundos
+          newEndDate = new Date(timestamp + oneMontInMs);
+          break;
+        }
+        case PLAN_INTERVAL.SEMESTER: {
+          const halfYearInMs = Math.round((365.25 / 2) * 24 * 60 * 60 * 1000); // 180 días en milisegundos
+          newEndDate = new Date(timestamp + halfYearInMs);
+          break;
+        }
+        case PLAN_INTERVAL.YEAR: {
+          const oneYearInMs = Math.round(365.25 * 24 * 60 * 60 * 1000); // 31,556,926.08 segundos
+          newEndDate = new Date(timestamp + oneYearInMs);
+          break;
+        }
+        default:
+          return new Response(JSON.stringify({ error: 'Intervalo de plan no válido' }), {
+            status: 400,
+            headers: { 'Content-Type': 'application/json' }
+          });
+      }
+
+      // Actualizar la membresía existente
+      membership = await prisma.membership.update({
+        where: { id: existingMembership.id },
+        data: {
+          end_date: newEndDate,
+          payments: {
+            create: {
+              amount: amountInBs,
+              currency: 'VES',
+              status: PAYMENT_STATUS.COMPLETED,
+              payment_method: PAYMENT_METHOD.VENEZUELA,
+              bank_name: bank_dest,
+              reference: reference,
+              currency_rate: bcvRate,
+              invoice_url: invoiceUrl
+            }
           }
         }
+      });
+    } else {
+      // Es una nueva membresía
+      const startDate = new Date();
+      let endDate: Date;
+      
+      switch (plan.interval) {
+        case PLAN_INTERVAL.MONTH: {
+          // Convertir a timestamp y sumar 30 días en segundos
+          const timestamp = startDate.getTime();
+          const thirtyDaysInMs = 30 * 24 * 60 * 60 * 1000;
+          endDate = new Date(timestamp + thirtyDaysInMs);
+          break;
+        }
+        case PLAN_INTERVAL.SEMESTER: {
+          // Convertir a timestamp y sumar 180 días en segundos
+          const timestamp = startDate.getTime();
+          const oneHundredEightyDaysInMs = 180 * 24 * 60 * 60 * 1000;
+          endDate = new Date(timestamp + oneHundredEightyDaysInMs);
+          break;
+        }
+        case PLAN_INTERVAL.YEAR: {
+          // Para el caso anual mantenemos la lógica anterior ya que es más precisa para años
+          endDate = new Date(startDate);
+          endDate.setFullYear(endDate.getFullYear() + 1);
+          break;
+        }
+        default:
+          return new Response(JSON.stringify({ error: 'Intervalo de plan no válido' }), {
+            status: 400,
+            headers: { 'Content-Type': 'application/json' }
+          });
       }
-    });
+
+      // Crear nueva membresía
+      membership = await prisma.membership.create({
+        data: {
+          user_id: user.id,
+          plan_id: plan.id,
+          status: MEMBERSHIP_STATUS.ACTIVE,
+          start_date: startDate,
+          end_date: endDate,
+          payment_method: PAYMENT_METHOD.VENEZUELA,
+          licenses: {
+            create: Array(plan.license_count).fill({
+              status: LICENSE_STATUS.ACTIVE
+            })
+          },
+          payments: {
+            create: {
+              amount: amountInBs,
+              currency: 'VES',
+              status: PAYMENT_STATUS.COMPLETED,
+              payment_method: PAYMENT_METHOD.VENEZUELA,
+              bank_name: bank_dest,
+              reference: reference,
+              currency_rate: bcvRate,
+              invoice_url: invoiceUrl
+            }
+          }
+        }
+      });
+    }
 
     return new Response(JSON.stringify({ 
       success: true,
-      message: `Pago registrado correctamente.`,
+      message: membership_id ? 'Membresía renovada correctamente.' : 'Pago registrado correctamente.',
       membership_id: membership.id,
       amount_in_bs: amountInBs
     }), {

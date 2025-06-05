@@ -1,24 +1,10 @@
 ---
-import type { Membership, Payment } from '../../types/auth';
+import type { Membership, Payment, Plan } from '../../types/auth';
 import { MEMBERSHIP_STATUS, LICENSE_STATUS, PAYMENT_STATUS, PAYMENT_METHOD } from '../../constants/status';
 
 interface Props {
   membership: Omit<Membership, 'user_id' | 'plan_id'> & {
-    plan: {
-      id: string;
-      name: string;
-      description: string;
-      price: number;
-      currency: string;
-      interval: string;
-      features: any;
-      stripe_price_id: string | null;
-      is_highlighted: boolean;
-      savings_text: string | null;
-      is_visible: boolean;
-      created_at: Date;
-      updated_at: Date;
-    };
+    plan: Plan;
     licenses: {
       id: string;
       status: string;
@@ -36,9 +22,10 @@ interface Props {
     payments: Payment[];
   };
   showCancelButton?: boolean;
+  isVenezuelan?: boolean;
 }
 
-const { membership, showCancelButton = false } = Astro.props;
+const { membership, showCancelButton = false, isVenezuelan = false } = Astro.props;
 
 const canResetLicense = (lastReset: Date | null) => {
   if (!lastReset) return true;
@@ -95,6 +82,16 @@ const canResetLicense = (lastReset: Date | null) => {
       >
         Cancelar Suscripción
       </a>
+    )}
+
+    {isVenezuelan && membership.status === MEMBERSHIP_STATUS.ACTIVE && membership.payment_method === PAYMENT_METHOD.VENEZUELA && (
+      <button
+        class="renew-membership-btn inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+        data-plan-id={membership.plan.id}
+        data-membership-id={membership.id}
+      >
+        Renovar Membresía
+      </button>
     )}
   </div>
 
@@ -240,6 +237,52 @@ const canResetLicense = (lastReset: Date | null) => {
     modal?.addEventListener('click', (e) => {
       if (e.target === modal) {
         modal.classList.add('hidden');
+      }
+    });
+  });
+
+  // Manejar renovación de membresía
+  const renewButtons = document.querySelectorAll('.renew-membership-btn');
+  renewButtons.forEach(button => {
+    button?.addEventListener('click', async () => {
+      const planId = button.getAttribute('data-plan-id');
+      const membershipId = button.getAttribute('data-membership-id');
+      if (!planId || !membershipId) return;
+
+      try {
+        const response = await fetch('/api/subscription/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          credentials: 'include',
+          body: JSON.stringify({ 
+            plan: planId,
+            membership_id: membershipId 
+          })
+        });
+        
+        const data = await response.json();
+
+        if (!response.ok) {
+          if (response.status === 401) {
+            window.location.href = '/mi-cuenta';
+            return;
+          }
+          throw new Error(data.error || 'Error al procesar la renovación');
+        }
+
+        if (data.payment_method === 'venezuela') {
+          window.location.href = `/pagos/ve/${data.plan_id}${membershipId ? `?membershipId=${membershipId}` : ''}`;
+        } else if (data.url) {
+          window.location.href = data.url;
+        } else {
+          throw new Error('Respuesta inválida del servidor');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert(error instanceof Error ? error.message : 'Error al procesar la renovación');
       }
     });
   });

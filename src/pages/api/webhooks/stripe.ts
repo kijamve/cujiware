@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 import prisma from '../../../lib/db';
 import Stripe from 'stripe';
-import { MEMBERSHIP_STATUS, PAYMENT_STATUS, PAYMENT_METHOD, PLAN_INTERVAL } from '../../../constants/status';
+import { MEMBERSHIP_STATUS, LICENSE_STATUS, PAYMENT_STATUS, PAYMENT_METHOD, PLAN_INTERVAL } from '../../../constants/status';
 
 const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY, {
   apiVersion: '2023-10-16'
@@ -63,7 +63,7 @@ export const POST: APIRoute = async ({ request }) => {
             payment_method: PAYMENT_METHOD.STRIPE,
             licenses: {
               create: Array(plan.license_count).fill({
-                status: MEMBERSHIP_STATUS.ACTIVE
+                status: LICENSE_STATUS.ACTIVE
               })
             },
           }
@@ -102,17 +102,24 @@ export const POST: APIRoute = async ({ request }) => {
             // Calcular la nueva fecha de finalización
             const now = new Date();
             let endDate = membership.end_date || new Date(now);
+            const timestamp = endDate.getTime();
             
             switch (membership.plan.interval) {
-              case PLAN_INTERVAL.MONTH:
-                endDate.setMonth(endDate.getMonth() + 1);
+              case PLAN_INTERVAL.MONTH: {
+                const oneMontInMs = Math.round((365.25 / 12) * 24 * 60 * 60 * 1000); // 30 días en milisegundos
+                endDate = new Date(timestamp + oneMontInMs);
                 break;
-              case PLAN_INTERVAL.SEMESTER:
-                endDate.setMonth(endDate.getMonth() + 6);
+              }
+              case PLAN_INTERVAL.SEMESTER: {
+                const halfYearInMs = Math.round((365.25 / 2) * 24 * 60 * 60 * 1000); // 180 días en milisegundos
+                endDate = new Date(timestamp + halfYearInMs);
                 break;
-              case PLAN_INTERVAL.YEAR:
-                endDate.setFullYear(endDate.getFullYear() + 1);
+              }
+              case PLAN_INTERVAL.YEAR: {
+                const oneYearInMs = Math.round(365.25 * 24 * 60 * 60 * 1000); // 31,556,926.08 segundos
+                endDate = new Date(timestamp + oneYearInMs);
                 break;
+              }
               default:
                 throw new Error('Intervalo de plan no válido');
             }
@@ -122,32 +129,6 @@ export const POST: APIRoute = async ({ request }) => {
               data: {
                 last_check_with_gateway: new Date(),
                 end_date: endDate
-              }
-            });
-          }
-        }
-        break;
-      }
-
-      case 'invoice.payment_failed': {
-        const invoice = event.data.object as Stripe.Invoice;
-        
-        if (invoice.subscription) {
-          const membership = await prisma.membership.findFirst({
-            where: { stripe_subscription_id: invoice.subscription as string }
-          });
-
-          if (membership) {
-            // Crear el registro de pago fallido
-            await prisma.payment.create({
-              data: {
-                membership_id: membership.id,
-                amount: invoice.amount_due / 100,
-                currency: invoice.currency.toUpperCase(),
-                status: PAYMENT_STATUS.FAILED,
-                payment_method: PAYMENT_METHOD.STRIPE,
-                stripe_invoice_id: invoice.id,
-                invoice_url: invoice.hosted_invoice_url || undefined
               }
             });
           }

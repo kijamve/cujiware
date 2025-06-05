@@ -15,15 +15,27 @@
         <select name="country" id="country-select" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm">
           <option value="">Selecciona tu país</option>
           <option value="VE">Venezuela</option>
-          <option value="CO">Colombia</option>
-          <option value="PE">Perú</option>
-          <option value="EC">Ecuador</option>
-          <option value="CL">Chile</option>
           <option value="AR">Argentina</option>
-          <option value="MX">México</option>
+          <option value="BO">Bolivia</option>
+          <option value="CL">Chile</option>
+          <option value="CO">Colombia</option>
+          <option value="CR">Costa Rica</option>
+          <option value="DO">República Dominicana</option>
+          <option value="EC">Ecuador</option>
+          <option value="SV">El Salvador</option>
           <option value="ES">España</option>
           <option value="US">Estados Unidos</option>
-          <option value="OT">Otro</option>
+          <option value="GT">Guatemala</option>
+          <option value="HN">Honduras</option>
+          <option value="MX">México</option>
+          <option value="NI">Nicaragua</option>
+          <option value="PA">Panamá</option>
+          <option value="PY">Paraguay</option>
+          <option value="PE">Perú</option>
+          <option value="PR">Puerto Rico</option>
+          <option value="UY">Uruguay</option>
+          <option value="VE">Venezuela</option>
+          <option value="XX">Otro</option>
         </select>
       </div>
       <div id="billing-type-field" class="hidden">
@@ -48,22 +60,26 @@
           <input type="text" name="billing_address" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm">
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Teléfono Celular (Con WhatsApp preferiblemente para recibir notificaciones)</label>
           <input type="text" name="billing_phone" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm" placeholder="04120001122">
         </div>
       </div>
       <div id="natural-fields" class="hidden space-y-4">
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Nombre y Apellido</label>
-          <input type="text" name="name" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm">
+          <input type="text" name="name" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm">
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Cédula de identidad</label>
-          <input type="text" name="billing_tax_id_natural" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm" placeholder="V12345678">
+          <input type="text" name="billing_tax_id_natural" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm" placeholder="V12345678">
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Dirección Corta</label>
-          <input type="text" name="billing_address_natural" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm">
+          <input type="text" name="billing_address_natural" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Teléfono Celular (Con WhatsApp preferiblemente para recibir notificaciones)</label>
+          <input type="text" name="billing_phone_natural" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm" placeholder="04120001122">
         </div>
       </div>
       <div class="flex justify-end space-x-3 mt-6">
@@ -314,10 +330,12 @@
   const setLoadingState = (isLoading: boolean) => {
     if (isLoading) {
       submitButton?.setAttribute('disabled', 'true');
+      closeAuthModalBtn?.setAttribute('disabled', 'true');
       loadingSpinner?.classList.remove('hidden');
       buttonText!.textContent = 'Procesando...';
     } else {
       submitButton?.removeAttribute('disabled');
+      closeAuthModalBtn?.removeAttribute('disabled');
       loadingSpinner?.classList.add('hidden');
       buttonText!.textContent = 'Continuar';
     }
@@ -330,29 +348,63 @@
         const billingFullName = formData.get('billing_full_name');
         const billingTaxId = formData.get('billing_tax_id_juridico');
         const billingAddress = formData.get('billing_address');
-        const billingPhone = formData.get('billing_phone');
+        const billingPhone = formData.get('billing_phone') as string;
 
         if (!billingFullName || !billingTaxId || !billingAddress || !billingPhone) {
           alert('Por favor complete todos los campos de facturación');
+          setLoadingState(false);
           return false;
         }
 
         if (!validateRIF(billingTaxId as string)) {
           alert('El RIF ingresado no es válido');
+          setLoadingState(false);
+          return false;
+        }
+
+        // Validar formato del teléfono móvil venezolano
+        const phoneRegex = /^04[12][264][0-9]{7}$/;
+        if (!phoneRegex.test(billingPhone)) {
+          alert('El número de teléfono debe ser un celular y preferiblemente con WhatsApp para recibir notificaciones.');
+          setLoadingState(false);
           return false;
         }
       } else if (billingType === 'natural') {
         const name = formData.get('name');
         const billingTaxId = formData.get('billing_tax_id_natural');
         const billingAddress = formData.get('billing_address_natural');
+        const billingPhone = formData.get('billing_phone_natural') as string;
 
-        if (!name || !billingTaxId || !billingAddress) {
+        console.log('Datos del formulario natural:', {
+          name,
+          billingTaxId,
+          billingAddress,
+          billingPhone
+        });
+
+        if (!name || !billingTaxId || !billingAddress || !billingPhone) {
+          console.log('Campos faltantes:', {
+            name: !name,
+            billingTaxId: !billingTaxId,
+            billingAddress: !billingAddress,
+            billingPhone: !billingPhone
+          });
           alert('Por favor complete todos los campos requeridos');
+          setLoadingState(false);
           return false;
         }
 
         if (!validateCedula(billingTaxId as string)) {
           alert('La cédula ingresada no es válida. Debe contener entre 6 y 8 dígitos numéricos y puede tener prefijo V, E o P.');
+          setLoadingState(false);
+          return false;
+        }
+
+        // Validar formato del teléfono móvil venezolano
+        const phoneRegex = /^04[12][264][0-9]{7}$/;
+        if (!phoneRegex.test(billingPhone)) {
+          alert('El número de teléfono debe ser un celular y preferiblemente con WhatsApp para recibir notificaciones.');
+          setLoadingState(false);
           return false;
         }
       }
@@ -465,10 +517,12 @@
             const name = formData.get('name');
             const billingTaxId = formData.get('billing_tax_id_natural');
             const billingAddress = formData.get('billing_address_natural');
+            const billingPhone = formData.get('billing_phone_natural');
 
             registerData.name = name;
             registerData.billing_tax_id = billingTaxId;
             registerData.billing_address = billingAddress;
+            registerData.billing_phone = billingPhone;
           }
         }
 
