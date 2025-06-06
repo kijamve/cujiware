@@ -49,10 +49,9 @@
   {
     "name": "Botón de Integración de Megasoft con PrestaShop",
     "slug": "boton-de-integracion-de-megasoft-con-prestashop",
-    "short_description": "Conecta tu tienda PrestaShop con el sistema Megasoft para sincronización de inventario y pedidos",
+    "short_description": "Integra la pasarela de pago Megasoft para aceptar Pago Móvil C2P/P2C, Tarjetas de Crédito y Zelle",
     "icon": "CreditCard",
-    "category": "payment_method",
-    "large_description": "Integración completa con el sistema Megasoft para gestionar tu inventario y pedidos de forma automatizada. Incluye sincronización bidireccional de productos, precios y stock.",
+    "category": "payment_method", 
     "countries": ["venezuela"],
     "platform": ["prestashop"]
   },
@@ -117,7 +116,7 @@
   {
     "name": "Botón de Integración de Megasoft con WooCommerce",
     "slug": "boton-de-integracion-de-megasoft-con-woocommerce",
-    "short_description": "Conecta tu tienda WooCommerce con el sistema Megasoft",
+    "short_description": "Integra la pasarela de pago Megasoft para aceptar Pago Móvil C2P/P2C, Tarjetas de Crédito y Zelle",
     "icon": "CreditCard",
     "category": "payment_method",
     "countries": ["venezuela"],
@@ -162,9 +161,19 @@
   {
     "name": "Andreani para WooCommerce",
     "slug": "andreani-para-woocommerce",
-    "short_description": "Calcula costos de envío con Andreani en tiempo real",
+    "short_description": "Calcula costos de envío con Andreani en tiempo real y genera guías de envío",
     "icon": "Truck",
     "category": "shipping",
+    "countries": ["argentina"],
+    "platform": ["woocommerce"]
+  },
+  {
+    "name": "Correo Argentino para WooCommerce",
+    "slug": "correo-argentino-para-woocommerce",
+    "short_description": "Calcula costos de envío con Correo Argentino en tiempo real y genera guías de envío",
+    "icon": "Truck",
+    "category": "shipping",
+    "featured": true,
     "countries": ["argentina"],
     "platform": ["woocommerce"]
   },
@@ -252,10 +261,11 @@
   {
     "name": "Pagos Offline para WooCommerce",
     "slug": "pagos-offline-para-woocommerce-zelle-binance-p2p-transferencia-pago-movil-y-otros",
-    "short_description": "Acepta pagos por Zelle, Binance P2P y transferencias bancarias",
+    "short_description": "Acepta pagos por Zelle, Binance P2P, Pago Móvil y transferencias bancarias",
     "icon": "Wallet",
     "category": "payment_method",
-    "countries": ["all"],
+    "countries": ["all", "venezuela"],
+    "featured": true,
     "platform": ["woocommerce"]
   },
   {
@@ -270,10 +280,12 @@
   {
     "name": "MercadoPago para WooCommerce",
     "slug": "mercadopago-para-woocommerce",
-    "short_description": "Integración avanzada con MercadoPago para WooCommerce",
+    "short_description": "MercadoPago Tools Pro para WooCommerce con suscripciones",
     "icon": "CreditCard",
     "category": "payment_method",
-    "countries": ["all"],
+    "countries": ["all", "argentina"],
+    "countrie_exclude": ["venezuela"],
+    "featured": true,
     "platform": ["woocommerce"]
   },
   {
@@ -293,6 +305,7 @@
     "category": "payment_method",
     "countries": ["all", "argentina"],
     "countrie_exclude": ["venezuela"],
+    "featured": true,
     "platform": ["prestashop"]
   },
   {

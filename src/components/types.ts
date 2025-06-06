@@ -7,4 +7,5 @@ export interface Plugin {
   countries: string[];
   countrie_exclude?: string[];
   platform: string[];
+  featured?: boolean;
 }

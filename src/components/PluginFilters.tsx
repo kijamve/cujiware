@@ -66,6 +66,7 @@ export function PluginFilters({
         value={platform}
         onChange={handlePlatformChange}
       >
+        <option value="all">Todas las plataformas</option>
         <option value="woocommerce">WooCommerce</option>
         <option value="prestashop">PrestaShop</option>
       </select>

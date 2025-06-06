@@ -7,7 +7,7 @@ export const prerender = true;
 
 export function getStaticPaths() {
   const countries = ['all', 'venezuela', 'argentina'];
-  const platforms = ['woocommerce', 'prestashop'];
+  const platforms = ['all', 'woocommerce', 'prestashop'];
   
   return countries.flatMap(country => 
     platforms.map(platform => ({
@@ -19,7 +19,7 @@ export function getStaticPaths() {
 const { country, platform } = Astro.params;
 
 const filteredPlugins = plugins.filter(plugin => {
-  const matchesPlatform = plugin.platform.includes(platform);
+  const matchesPlatform = platform === 'all' ? true : plugin.platform.includes(platform);
   const matchesCountry = country === 'all' ? true : plugin.countries.includes(country);
   const isExcluded = plugin.countrie_exclude?.includes(country);
   
@@ -29,7 +29,7 @@ const filteredPlugins = plugins.filter(plugin => {
 const categories = [...new Set(filteredPlugins.map(plugin => plugin.category))];
 ---
 
-<Layout title={`Plugins para ${platform} ${country === 'venezuela' ? 'de Venezuela' : country === 'argentina' ? 'de Argentina' : ''} - Cujiware`}>
+<Layout title={`Plugins para ${platform === 'all' ? 'todas las plataformas' : platform} ${country === 'venezuela' ? 'de Venezuela' : country === 'argentina' ? 'de Argentina' : ''} - Cujiware`}>
   <PluginCatalog 
     client:load
     plugins={filteredPlugins}
