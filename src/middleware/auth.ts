@@ -133,4 +133,47 @@ async function validateToken(token: string, context: APIContext | Request) {
       ? new Response(JSON.stringify({ error: 'Token inválido' }), { status: 401 })
       : context.redirect('/mi-cuenta');
   }
+}
+
+export async function requireSuperAdmin(context: APIContext) {
+  const token = context.cookies.get('super_admin_token')?.value;
+
+  if (!token) {
+    if (context.request.headers.get('accept')?.includes('application/json')) {
+      return new Response(
+        JSON.stringify({ error: 'No autorizado' }),
+        { status: 401 }
+      );
+    }
+    return context.redirect('/dashboard_master/login');
+  }
+
+  try {
+    const decoded = jwt.verify(token, import.meta.env.JWT_SECRET) as {
+      email: string;
+      password: string;
+    };
+
+    // Verificar credenciales directamente contra .env
+    if (decoded.email !== import.meta.env.SUPER_ADMIN_EMAIL || 
+        decoded.password !== import.meta.env.SUPER_ADMIN_PASSWORD) {
+      if (context.request.headers.get('accept')?.includes('application/json')) {
+        return new Response(
+          JSON.stringify({ error: 'No autorizado' }),
+          { status: 401 }
+        );
+      }
+      return context.redirect('/dashboard_master/login');
+    }
+
+    return { email: decoded.email };
+  } catch (error) {
+    if (context.request.headers.get('accept')?.includes('application/json')) {
+      return new Response(
+        JSON.stringify({ error: 'Token inválido' }),
+        { status: 401 }
+      );
+    }
+    return context.redirect('/dashboard_master/login');
+  }
 } 

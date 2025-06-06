@@ -4,7 +4,7 @@ import Stripe from 'stripe';
 import { MEMBERSHIP_STATUS, LICENSE_STATUS, PAYMENT_STATUS, PAYMENT_METHOD, PLAN_INTERVAL } from '../../../constants/status';
 
 const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2023-10-16'
+  apiVersion: '2025-05-28.basil'
 });
 
 const webhookSecret = import.meta.env.STRIPE_WEBHOOK_SECRET;

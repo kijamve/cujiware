@@ -1,21 +1,21 @@
-import type { APIRoute } from 'astro';
+import type { APIRoute, APIContext } from 'astro';
 import { requireAuth } from '../../../middleware/auth.ts';
 import { prisma } from '../../../lib/prisma';
 import Stripe from 'stripe';
 import { MEMBERSHIP_STATUS } from '../../../constants/status';
 
 const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2023-10-16'
+  apiVersion: '2025-05-28.basil'
 });
 
-export const POST: APIRoute = async ({ request, cookies }) => {
+export const POST: APIRoute = async (context: APIContext) => {
   try {
-    const user = await requireAuth({ request, cookies });
+    const user = await requireAuth(context);
     if (user instanceof Response) {
       return user;
     }
 
-    const { membership_id } = await request.json();
+    const { membership_id } = await context.request.json();
 
     if (!membership_id) {
       return new Response(

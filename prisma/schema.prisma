@@ -43,6 +43,7 @@ model Membership {
   stripe_subscription_id String?
   payment_method       PaymentMethod
   last_check_with_gateway DateTime?
+  last_remember_date   DateTime?  // Fecha del último recordatorio enviado
   created_at           DateTime @default(now())
   updated_at           DateTime @updatedAt
   user                 User     @relation(fields: [user_id], references: [id])

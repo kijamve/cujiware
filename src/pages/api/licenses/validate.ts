@@ -4,7 +4,7 @@ import Stripe from 'stripe';
 import { MEMBERSHIP_STATUS, LICENSE_STATUS } from '../../../constants/status';
 
 const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2023-10-16'
+  apiVersion: '2025-05-28.basil'
 });
 
 export const POST: APIRoute = async ({ request }) => {
@@ -23,7 +23,8 @@ export const POST: APIRoute = async ({ request }) => {
     const license = await prisma.license.findUnique({
       where: { id: license_id },
       include: {
-        membership: true
+        membership: true,
+        usages: true
       }
     });
 
@@ -46,6 +47,15 @@ export const POST: APIRoute = async ({ request }) => {
     fiveDaysAgo.setDate(fiveDaysAgo.getDate() - 5);
 
     if (license.membership.end_date < fiveDaysAgo) {
+      // Si existe una suscripción en Stripe, cancelarla
+      if (license.membership.stripe_subscription_id) {
+        try {
+          await stripe.subscriptions.cancel(license.membership.stripe_subscription_id);
+        } catch (error) {
+          console.error('Error al cancelar suscripción en Stripe:', error);
+        }
+      }
+
       // Actualizar el estado de la membresía y sus licencias
       await prisma.$transaction([
         prisma.membership.update({

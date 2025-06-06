@@ -67,9 +67,27 @@ const canResetLicense = (lastReset: Date | null) => {
     </div>
   </dl>
 
-  <div class="mt-6 flex gap-4">
+  <div class="mt-6 flex flex-col sm:flex-row gap-4">
+    {isVenezuelan && membership.status === MEMBERSHIP_STATUS.ACTIVE && membership.payment_method === PAYMENT_METHOD.VENEZUELA && (
+      <button
+        class="renew-membership-btn inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+        data-plan-id={membership.plan.id}
+        data-membership-id={membership.id}
+      >
+        Renovar Membresía
+      </button>
+    )}
+    {!isVenezuelan && membership.status === MEMBERSHIP_STATUS.ACTIVE && !membership.stripe_subscription_id && (
+      <button
+        class="renew-membership-stripe-btn inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        data-plan-id={membership.plan.id}
+        data-membership-id={membership.id}
+      >
+        Renovar Membresía
+      </button>
+    )}
     <button
-      class="view-transactions-btn inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-cuji-blue hover:bg-cuji-dark-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cuji-blue"
+      class="view-transactions-btn inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-cuji-blue hover:bg-cuji-dark-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cuji-blue"
       data-membership-id={membership.id}
     >
       Ver Transacciones & Facturas
@@ -78,20 +96,10 @@ const canResetLicense = (lastReset: Date | null) => {
     {showCancelButton && (
       <a
         href={`/suscripcion/cancelar?membership_id=${membership.id}`}
-        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+        class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
       >
         Cancelar Suscripción
       </a>
-    )}
-
-    {isVenezuelan && membership.status === MEMBERSHIP_STATUS.ACTIVE && membership.payment_method === PAYMENT_METHOD.VENEZUELA && (
-      <button
-        class="renew-membership-btn inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-        data-plan-id={membership.plan.id}
-        data-membership-id={membership.id}
-      >
-        Renovar Membresía
-      </button>
     )}
   </div>
 
@@ -241,7 +249,7 @@ const canResetLicense = (lastReset: Date | null) => {
     });
   });
 
-  // Manejar renovación de membresía
+  // Manejar renovación de membresía para Venezuela
   const renewButtons = document.querySelectorAll('.renew-membership-btn');
   renewButtons.forEach(button => {
     button?.addEventListener('click', async () => {
@@ -283,6 +291,50 @@ const canResetLicense = (lastReset: Date | null) => {
       } catch (error) {
         console.error('Error:', error);
         alert(error instanceof Error ? error.message : 'Error al procesar la renovación');
+      }
+    });
+  });
+
+  // Manejar migración a Stripe
+  const stripeRenewButtons = document.querySelectorAll('.renew-membership-stripe-btn');
+  stripeRenewButtons.forEach(button => {
+    button?.addEventListener('click', async () => {
+      const planId = button.getAttribute('data-plan-id');
+      const membershipId = button.getAttribute('data-membership-id');
+      if (!planId || !membershipId) return;
+
+      try {
+        const response = await fetch('/api/subscription/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          credentials: 'include',
+          body: JSON.stringify({ 
+            plan: planId,
+            membership_id: membershipId 
+          })
+        });
+        
+        const data = await response.json();
+
+        if (!response.ok) {
+          if (response.status === 401) {
+            window.location.href = '/mi-cuenta';
+            return;
+          }
+          throw new Error(data.error || 'Error al procesar la migración');
+        }
+
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          throw new Error('Respuesta inválida del servidor');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert(error instanceof Error ? error.message : 'Error al procesar la migración');
       }
     });
   });

@@ -4,6 +4,7 @@ import prisma from '../../../lib/db';
 import Stripe from 'stripe';
 import { getBCVRate } from '../../../lib/bcv';
 import { PLAN_INTERVAL } from '../../../constants/status';
+import { MEMBERSHIP_STATUS } from '../../../constants/status';
 
 const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY, {
   apiVersion: '2025-05-28.basil'
@@ -81,7 +82,7 @@ export const POST: APIRoute = async (context) => {
       return user;
     }
 
-    const { plan } = await context.request.json();
+    const { plan, membership_id } = await context.request.json();
 
     if (!plan) {
       return new Response(
@@ -189,12 +190,42 @@ export const POST: APIRoute = async (context) => {
       metadata: {
         userId: user.id,
         planId: planData.id,
+        membershipId: membership_id,
         licenseCount: planData.license_count.toString()
       },
       automatic_tax: {
         enabled: true
       }
     };
+
+    // Si es una renovación de una membresía existente sin stripe_subscription_id
+    if (membership_id) {
+      const existingMembership = await prisma.membership.findFirst({
+        where: {
+          id: membership_id,
+          user_id: user.id,
+          status: MEMBERSHIP_STATUS.ACTIVE,
+          stripe_subscription_id: null
+        }
+      });
+
+      if (existingMembership) {
+        const now = new Date();
+        const hoursUntilExpiration = (existingMembership.end_date.getTime() - now.getTime()) / (1000 * 60 * 60);
+        
+        // Solo usar trial_end si faltan más de 48 horas
+        if (hoursUntilExpiration > 48) {
+          sessionConfig.subscription_data = {
+            trial_end: Math.floor(existingMembership.end_date.getTime() / 1000)
+          };
+        }
+      } else {
+        return new Response(JSON.stringify({ error: 'Membresía ya tiene una suscripción o esta cancelada' }), {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' }
+        });
+      }
+    }
 
     // Aplicar descuento solo para planes mensuales y usuarios nuevos
     if (planData.interval === PLAN_INTERVAL.MONTH) {
