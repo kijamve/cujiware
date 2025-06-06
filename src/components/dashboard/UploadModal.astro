@@ -1,0 +1,67 @@
+---
+import UploadPluginForm from './UploadPluginForm.astro';
+
+interface Props {
+  plugins: { slug: string; name: string; }[];
+}
+
+const { plugins } = Astro.props;
+---
+
+<div class="upload-modal-container">
+  <div id="upload-modal" class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
+    <div class="bg-white rounded-lg p-6 max-w-md w-full">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-medium text-gray-900">Subir Nueva Versión</h3>
+        <button class="close-modal text-gray-400 hover:text-gray-500">
+          <span class="sr-only">Cerrar</span>
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <UploadPluginForm plugins={plugins} />
+    </div>
+  </div>
+</div>
+
+<script>
+  const uploadBtn = document.getElementById('upload-plugin-btn');
+  const uploadModal = document.getElementById('upload-modal');
+  const closeModalBtns = document.querySelectorAll('.close-modal');
+  const uploadForm = document.getElementById('upload-form');
+
+  uploadBtn?.addEventListener('click', () => {
+    uploadModal?.classList.remove('hidden');
+  });
+
+  closeModalBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      uploadModal?.classList.add('hidden');
+    });
+  });
+
+  uploadForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    
+    try {
+      const response = await fetch('/api/admin/plugins/upload', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (response.ok) {
+        alert('Versión subida correctamente');
+        uploadModal?.classList.add('hidden');
+        window.location.reload();
+      } else {
+        const error = await response.json();
+        alert(error.message || 'Error al subir la versión');
+      }
+    } catch (error) {
+      alert('Error al procesar la solicitud');
+    }
+  });
+</script> 

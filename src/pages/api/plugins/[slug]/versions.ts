@@ -40,16 +40,20 @@ export const GET: APIRoute = async ({ params, request }) => {
     const isUserAuthenticated = !!user;
 
     // Obtener las versiones del plugin ordenadas por fecha de creación (más reciente primero)
-    const versions = await prisma.$queryRaw<PluginVersion[]>`
-      SELECT 
-        id, 
-        version, 
-        file_name, 
-        created_at
-      FROM PluginVersion
-      WHERE plugin_slug = ${slug}
-      ORDER BY created_at DESC
-    `;
+    const versions = await prisma.pluginVersion.findMany({
+      where: {
+        plugin_slug: slug
+      },
+      select: {
+        id: true,
+        version: true,
+        file_name: true,
+        created_at: true
+      },
+      orderBy: {
+        created_at: 'desc'
+      }
+    });
 
     // Si el usuario está autenticado, generar o renovar su token
     const versionsWithTokens = versions.map((version) => {

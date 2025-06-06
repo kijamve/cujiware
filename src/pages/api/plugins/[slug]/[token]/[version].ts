@@ -11,6 +11,7 @@ import { userTokens } from '../versions';
 interface PluginVersion {
   id: string;
   version: string;
+  plugin_slug: string;
   file_name: string;
   file_path_server: string;
   created_at: Date;
@@ -56,17 +57,16 @@ export const GET: APIRoute = async ({ params, request }) => {
     }
 
     // Obtener la versión del plugin
-    const versions = await prisma.$queryRaw<PluginVersion[]>`
-      SELECT * FROM PluginVersion 
-      WHERE plugin_slug = ${slug} 
-      AND id = ${version}
-    `;
+    const pluginVersion = await prisma.pluginVersion.findFirst({
+      where: {
+        plugin_slug: slug,
+        id: version
+      }
+    });
 
-    if (!versions || versions.length === 0) {
+    if (!pluginVersion) {
       return new Response('Versión no encontrada', { status: 404 });
     }
-
-    const pluginVersion = versions[0];
 
     // Verificar si el archivo existe
     const filePath = path.join(process.cwd(), 'zip_plugins', pluginVersion.file_path_server);

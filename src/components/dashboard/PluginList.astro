@@ -1,0 +1,109 @@
+---
+type Plugin = {
+  name: string;
+  short_description: string;
+  platform: string[];
+  slug: string;
+};
+
+type PluginVersion = {
+  id: string;
+  version: string;
+  created_at: Date;
+};
+
+interface Props {
+  plugins: Plugin[];
+  versionsByPlugin: Record<string, PluginVersion[]>;
+}
+
+const { plugins, versionsByPlugin } = Astro.props;
+---
+
+<div class="plugin-list">
+  <div class="space-y-6">
+    {plugins.map(plugin => (
+      <div class="border rounded-lg p-6">
+        <div class="flex justify-between items-start mb-4">
+          <div>
+            <h3 class="text-lg font-medium text-gray-900">{plugin.name}</h3>
+            <p class="text-sm text-gray-500">{plugin.short_description}</p>
+          </div>
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+            {plugin.platform.join(', ')}
+          </span>
+        </div>
+
+        <div class="mt-4">
+          <h4 class="text-sm font-medium text-gray-900 mb-2">Versiones</h4>
+          {versionsByPlugin[plugin.slug] ? (
+            <div class="space-y-2">
+              {versionsByPlugin[plugin.slug].map(version => (
+                <div class="flex items-center justify-between bg-gray-50 p-3 rounded-md">
+                  <div>
+                    <span class="text-sm font-medium text-gray-900">v{version.version}</span>
+                    <span class="text-sm text-gray-500 ml-2">
+                      {new Date(version.created_at).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <div class="flex space-x-2">
+                    <button
+                      class="text-cuji-blue hover:text-cuji-dark-blue text-sm font-medium"
+                      data-version-id={version.id}
+                      data-action="download"
+                    >
+                      Descargar
+                    </button>
+                    <button
+                      class="text-red-600 hover:text-red-700 text-sm font-medium"
+                      data-version-id={version.id}
+                      data-action="delete"
+                    >
+                      Eliminar
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p class="text-sm text-gray-500">No hay versiones disponibles</p>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<script>
+  // Manejo de acciones de versiones
+  document.querySelectorAll('[data-action]').forEach(button => {
+    button.addEventListener('click', async () => {
+      const action = button.getAttribute('data-action');
+      const versionId = button.getAttribute('data-version-id');
+      
+      if (!versionId) return;
+
+      if (action === 'delete') {
+        if (!confirm('¿Estás seguro de que deseas eliminar esta versión?')) return;
+
+        try {
+          const response = await fetch(`/api/admin/plugins/versions/${versionId}`, {
+            method: 'DELETE'
+          });
+
+          if (response.ok) {
+            alert('Versión eliminada correctamente');
+            window.location.reload();
+          } else {
+            const error = await response.json();
+            alert(error.message || 'Error al eliminar la versión');
+          }
+        } catch (error) {
+          alert('Error al procesar la solicitud');
+        }
+      } else if (action === 'download') {
+        window.location.href = `/api/admin/plugins/versions/${versionId}/download`;
+      }
+    });
+  });
+</script> 

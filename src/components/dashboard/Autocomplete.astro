@@ -1,0 +1,87 @@
+---
+interface Props {
+  name: string;
+  label: string;
+  placeholder: string;
+  options: { value: string; label: string; }[];
+  required?: boolean;
+}
+
+const { name, label, placeholder, options, required = false } = Astro.props;
+---
+
+<div class="relative">
+  <label class="block text-sm font-medium text-gray-700 mb-1">{label}</label>
+  <input 
+    type="text" 
+    id={`${name}-input`}
+    placeholder={placeholder}
+    class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
+  >
+  <input 
+    type="hidden" 
+    name={name} 
+    id={`${name}-value`}
+    required={required}
+  >
+  <div 
+    id={`${name}-results`} 
+    class="hidden absolute z-10 w-full mt-1 bg-white shadow-lg max-h-60 rounded-md py-1 text-base overflow-auto focus:outline-none sm:text-sm"
+  >
+  </div>
+</div>
+
+<script define:vars={{ name, options }}>
+  // Esperar a que el DOM esté listo
+  document.addEventListener('DOMContentLoaded', () => {
+    // Obtener los elementos del DOM
+    const input = document.getElementById(`${name}-input`);
+    const hiddenInput = document.getElementById(`${name}-value`);
+    const resultsDiv = document.getElementById(`${name}-results`);
+
+    if (!input || !hiddenInput || !resultsDiv) return;
+
+    // Mostrar resultados filtrados
+    function showResults(matches) {
+      resultsDiv.innerHTML = '';
+      
+      if (matches.length === 0) {
+        resultsDiv.classList.add('hidden');
+        return;
+      }
+
+      matches.forEach(option => {
+        const div = document.createElement('div');
+        div.className = 'cursor-pointer select-none relative py-2 pl-3 pr-9 hover:bg-cuji-blue hover:text-white';
+        div.textContent = option.label;
+        div.setAttribute('data-value', option.value);
+        
+        div.onclick = () => {
+          input.value = option.label;
+          hiddenInput.value = option.value;
+          resultsDiv.classList.add('hidden');
+        };
+
+        resultsDiv.appendChild(div);
+      });
+
+      resultsDiv.classList.remove('hidden');
+    }
+
+    // Filtrar opciones al escribir
+    input.oninput = () => {
+      const value = input.value.toLowerCase();
+      const matches = options.filter(option => 
+        option.label.toLowerCase().includes(value)
+      );
+      showResults(matches);
+    };
+
+    // Cerrar el dropdown al hacer clic fuera
+    document.onclick = (e) => {
+      if (!input.contains(e.target) && !resultsDiv.contains(e.target)) {
+        resultsDiv.classList.add('hidden');
+      }
+    };
+  });
+</script> 

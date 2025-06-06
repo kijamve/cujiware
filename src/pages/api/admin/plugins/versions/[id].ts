@@ -1,18 +1,18 @@
 import type { APIRoute } from 'astro';
-import { requireSuperAdmin } from '../../../../middleware/auth';
-import { prisma } from '../../../../lib/prisma';
+import { requireSuperAdmin } from '../../../../../middleware/auth';
+import { prisma } from '../../../../../lib/prisma';
 import fs from 'fs';
 import path from 'path';
 
-export const DELETE: APIRoute = async ({ params, request }) => {
+export const DELETE: APIRoute = async (context) => {
   try {
     // Verificar si el usuario es super admin
-    const user = await requireSuperAdmin({ request, cookies: new Map() } as any);
+    const user = await requireSuperAdmin(context);
     if (user instanceof Response) {
       return user;
     }
 
-    const { id } = params;
+    const { id } = context.params;
     if (!id) {
       return new Response(
         JSON.stringify({ message: 'ID de versión no proporcionado' }),
