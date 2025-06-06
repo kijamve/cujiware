@@ -40,19 +40,6 @@ export function PluginFilters({
     <div className="flex gap-4">
       <select 
         className="bg-white border border-gray-300 rounded-lg px-4 py-2"
-        value={selectedCategory}
-        onChange={(e) => setSelectedCategory(e.target.value)}
-      >
-        <option value="all">Todas las categorías</option>
-        {categories.map(category => (
-          <option key={category} value={category}>
-            {getCategoryTitle(category)}
-          </option>
-        ))}
-      </select>
-
-      <select 
-        className="bg-white border border-gray-300 rounded-lg px-4 py-2"
         value={country}
         onChange={handleCountryChange}
       >
@@ -70,6 +57,20 @@ export function PluginFilters({
         <option value="woocommerce">WooCommerce</option>
         <option value="prestashop">PrestaShop</option>
       </select>
+      
+      <select 
+        className="bg-white border border-gray-300 rounded-lg px-4 py-2"
+        value={selectedCategory}
+        onChange={(e) => setSelectedCategory(e.target.value)}
+      >
+        <option value="all">Todas las categorías</option>
+        {categories.map(category => (
+          <option key={category} value={category}>
+            {getCategoryTitle(category)}
+          </option>
+        ))}
+      </select>
+
     </div>
   );
 }

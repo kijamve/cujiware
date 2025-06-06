@@ -118,17 +118,18 @@ const description = "Realiza tu pago móvil para activar tu membresía en Cujiwa
           <form id="venezuelaPaymentForm" class="space-y-6" data-plan-id={planId} data-membership-id={membershipId}>
             <div>
               <label for="bank_dest" class="block text-sm font-medium text-gray-700">
-                Banco destino
+                Forma de pago
               </label>
               <select
                 id="bank_dest"
                 name="bank_dest"
-                required
                 class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
               >
                 <option value="">Selecciona banco destino</option>
-                <option value="BDV">Banco de Venezuela</option>
-                <option value="BVC">Banco Venezolano de Crédito</option>
+                <option value="BIOPAGO">Biopago (Pago automático desde tu cuenta del BDV)</option>
+                <option value="BDV">Pago Móvil al BDV</option>
+                <option value="BVC">Pago Móvil al Banco Venezolano de Crédito (BVC)</option>
+                <option value="TDC">Pagar con tarjeta Visa o Mastercard</option>
               </select>
             </div>
 
@@ -136,94 +137,205 @@ const description = "Realiza tu pago móvil para activar tu membresía en Cujiwa
               <img id="qr-img" class="max-w-xs mx-auto rounded-lg border border-gray-200 shadow-sm" alt="QR Pago Móvil" />
             </div>
 
-            <div>
-              <label for="bank_origin" class="block text-sm font-medium text-gray-700">
-                Banco de origen
-              </label>
-              <select
-                id="bank_origin"
-                name="bank_origin"
-                required
-                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
-              >
-                <option value="">Selecciona tu banco</option>
-                <option value="0102">BANCO DE VENEZUELA</option>
-                <option value="0134">BANESCO</option>
-                <option value="0105">BANCO MERCANTIL</option>
-                <option value="0108">BANCO PROVINCIAL BBVA</option>
-                <option value="0172">BANCAMIGA</option>
-                <option value="0191">BANCO NACIONAL DE CREDITO</option>
-                <option value="0138">BANCO PLAZA</option>
-                <option value="0104">BANCO VENEZOLANO DE CREDITO</option>
-                <option value="0156">100%BANCO</option>
-                <option value="0196">ABN AMRO BANK</option>
-                <option value="0114">BANCARIBE</option>
-                <option value="0171">BANCO ACTIVO</option>
-                <option value="0166">BANCO AGRICOLA</option>
-                <option value="0175">BANCO BICENTENARIO</option>
-                <option value="0128">BANCO CARONI</option>
-                <option value="0164">BANCO DE DESARROLLO DEL MICROEMPRESARIO</option>
-                <option value="0149">BANCO DEL PUEBLO SOBERANO</option>
-                <option value="0163">BANCO DEL TESORO</option>
-                <option value="0176">BANCO ESPIRITO SANTO</option>
-                <option value="0115">BANCO EXTERIOR</option>
-                <option value="0003">BANCO INDUSTRIAL DE VENEZUELA</option>
-                <option value="0173">BANCO INTERNACIONAL DE DESARROLLO</option>
-                <option value="0116">BANCO OCCIDENTAL DE DESCUENTO</option>
-                <option value="0168">BANCRECER</option>
-                <option value="0177">BANFANB</option>
-                <option value="0146">BANGENTE</option>
-                <option value="0174">BANPLUS</option>
-                <option value="0190">CITIBANK</option>
-                <option value="0121">CORP BANCA</option>
-                <option value="0157">DELSUR</option>
-                <option value="0151">FONDO COMUN</option>
-                <option value="0601">INSTITUTO MUNICIPAL DE CRÉDITO POPULAR</option>
-                <option value="0169">MIBANCO</option>
-                <option value="0137">SOFITASA</option>
-              </select>
+            <div id="biopago-fields" class="hidden space-y-6">
+              <div>
+                <label for="biopago_tax_id" class="block text-sm font-medium text-gray-700">
+                  Cédula de Identidad
+                </label>
+                <input
+                  type="text"
+                  id="biopago_tax_id"
+                  name="tax_id"
+                  placeholder="V12345678"
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
+                />
+              </div>
+
+              <div>
+                <label for="biopago_phone" class="block text-sm font-medium text-gray-700">
+                  Teléfono vinculado a tu ClaveMóvil BDV
+                </label>
+                <input
+                  type="text"
+                  id="biopago_phone"
+                  name="phone"
+                  placeholder="04120001122"
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
+                />
+              </div>
             </div>
 
-            <div>
-              <label for="tax_id" class="block text-sm font-medium text-gray-700">
-                Cédula de Identidad
-              </label>
-              <input
-                type="text"
-                id="tax_id"
-                name="tax_id"
-                required
-                placeholder="V12345678"
-                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
-              />
+            <div id="tdc-fields" class="hidden space-y-6">
+              <div>
+                <label for="card_name" class="block text-sm font-medium text-gray-700">
+                  Nombre y Apellido
+                </label>
+                <input
+                  type="text"
+                  id="card_name"
+                  name="card_name"
+                  placeholder="Como aparece en la tarjeta"
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
+                />
+              </div>
+
+              <div>
+                <label for="card_tax_id" class="block text-sm font-medium text-gray-700">
+                  Cédula de Identidad o DNI vinculado a la tarjeta
+                </label>
+                <input
+                  type="text"
+                  id="card_tax_id"
+                  name="card_tax_id"
+                  placeholder="V12345678"
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
+                />
+              </div>
+
+              <div>
+                <label for="card_number" class="block text-sm font-medium text-gray-700">
+                  Número de tarjeta
+                </label>
+                <input
+                  type="text"
+                  id="card_number"
+                  name="card_number"
+                  placeholder="1234 5678 9012 3456"
+                  maxlength="19"
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
+                />
+              </div>
+
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label for="card_expire" class="block text-sm font-medium text-gray-700">
+                    Fecha de expiración
+                  </label>
+                  <input
+                    type="text"
+                    id="card_expire"
+                    name="card_expire"
+                    placeholder="MM/AA"
+                    maxlength="5"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
+                  />
+                </div>
+
+                <div>
+                  <label for="card_cvv" class="block text-sm font-medium text-gray-700">
+                    CVV
+                  </label>
+                  <input
+                    type="text"
+                    id="card_cvv"
+                    name="card_cvv"
+                    placeholder="123"
+                    maxlength="4"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label for="card_address" class="block text-sm font-medium text-gray-700">
+                  Dirección de domicilio vinculado a tu tarjeta (Incluye el país si no es de Venezuela)
+                </label>
+                <input
+                  type="text"
+                  id="card_address"
+                  name="card_address"
+                  placeholder="Dirección completa de facturación"
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
+                />
+              </div>
             </div>
 
-            <div>
-              <label for="phone" class="block text-sm font-medium text-gray-700">
-                Teléfono vinculado a tu pago móvil
-              </label>
-              <input
-                type="text"
-                id="phone"
-                name="phone"
-                required
-                placeholder="04120001122"
-                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
-              />
-            </div>
+            <div id="pago-movil-fields" class="hidden space-y-6">
+              <div>
+                <label for="bank_origin" class="block text-sm font-medium text-gray-700">
+                  Banco de origen
+                </label>
+                <select
+                  id="bank_origin"
+                  name="bank_origin"
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
+                >
+                  <option value="">Selecciona tu banco</option>
+                  <option value="0102">BANCO DE VENEZUELA</option>
+                  <option value="0134">BANESCO</option>
+                  <option value="0105">BANCO MERCANTIL</option>
+                  <option value="0108">BANCO PROVINCIAL BBVA</option>
+                  <option value="0172">BANCAMIGA</option>
+                  <option value="0191">BANCO NACIONAL DE CREDITO</option>
+                  <option value="0138">BANCO PLAZA</option>
+                  <option value="0104">BANCO VENEZOLANO DE CREDITO</option>
+                  <option value="0156">100%BANCO</option>
+                  <option value="0196">ABN AMRO BANK</option>
+                  <option value="0114">BANCARIBE</option>
+                  <option value="0171">BANCO ACTIVO</option>
+                  <option value="0166">BANCO AGRICOLA</option>
+                  <option value="0175">BANCO BICENTENARIO</option>
+                  <option value="0128">BANCO CARONI</option>
+                  <option value="0164">BANCO DE DESARROLLO DEL MICROEMPRESARIO</option>
+                  <option value="0149">BANCO DEL PUEBLO SOBERANO</option>
+                  <option value="0163">BANCO DEL TESORO</option>
+                  <option value="0176">BANCO ESPIRITO SANTO</option>
+                  <option value="0115">BANCO EXTERIOR</option>
+                  <option value="0003">BANCO INDUSTRIAL DE VENEZUELA</option>
+                  <option value="0173">BANCO INTERNACIONAL DE DESARROLLO</option>
+                  <option value="0116">BANCO OCCIDENTAL DE DESCUENTO</option>
+                  <option value="0168">BANCRECER</option>
+                  <option value="0177">BANFANB</option>
+                  <option value="0146">BANGENTE</option>
+                  <option value="0174">BANPLUS</option>
+                  <option value="0190">CITIBANK</option>
+                  <option value="0121">CORP BANCA</option>
+                  <option value="0157">DELSUR</option>
+                  <option value="0151">FONDO COMUN</option>
+                  <option value="0601">INSTITUTO MUNICIPAL DE CRÉDITO POPULAR</option>
+                  <option value="0169">MIBANCO</option>
+                  <option value="0137">SOFITASA</option>
+                </select>
+              </div>
 
-            <div>
-              <label for="reference" class="block text-sm font-medium text-gray-700">
-                Últimos 6 dígitos de la referencia
-              </label>
-              <input
-                type="text"
-                id="reference"
-                name="reference"
-                required
-                placeholder="123456"
-                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
-              />
+              <div>
+                <label for="tax_id_pm" class="block text-sm font-medium text-gray-700">
+                  Cédula de Identidad
+                </label>
+                <input
+                  type="text"
+                  id="tax_id_pm"
+                  name="tax_id_pm"
+                  placeholder="V12345678"
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
+                />
+              </div>
+
+              <div>
+                <label for="phone_pm" class="block text-sm font-medium text-gray-700">
+                  Teléfono vinculado a tu pago móvil
+                </label>
+                <input
+                  type="text"
+                  id="phone_pm"
+                  name="phone_pm"
+                  placeholder="04120001122"
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
+                />
+              </div>
+
+              <div>
+                <label for="reference" class="block text-sm font-medium text-gray-700">
+                  Últimos 6 dígitos de la referencia
+                </label>
+                <input
+                  type="text"
+                  id="reference"
+                  name="reference"
+                  placeholder="123456"
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
+                />
+              </div>
             </div>
 
             <div class="flex justify-end space-x-3">
@@ -248,22 +360,74 @@ const description = "Realiza tu pago móvil para activar tu membresía en Cujiwa
 </Layout>
 
 <script>
-  // QR dinámico
+  // QR dinámico y campos condicionales
   const bankDest = document.getElementById('bank_dest') as HTMLSelectElement;
   const qrContainer = document.getElementById('qr-container') as HTMLDivElement;
   const qrImg = document.getElementById('qr-img') as HTMLImageElement;
+  const biopagoFields = document.getElementById('biopago-fields') as HTMLDivElement;
+  const pagoMovilFields = document.getElementById('pago-movil-fields') as HTMLDivElement;
+  const tdcFields = document.getElementById('tdc-fields') as HTMLDivElement;
+
+  // Formatear número de tarjeta
+  const cardNumber = document.getElementById('card_number') as HTMLInputElement;
+  cardNumber?.addEventListener('input', (e) => {
+    let value = (e.target as HTMLInputElement).value.replace(/\D/g, '');
+    value = value.replace(/(\d{4})/g, '$1 ').trim();
+    (e.target as HTMLInputElement).value = value;
+  });
+
+  // Formatear fecha de expiración
+  const cardExpire = document.getElementById('card_expire') as HTMLInputElement;
+  cardExpire?.addEventListener('input', (e) => {
+    let value = (e.target as HTMLInputElement).value.replace(/\D/g, '');
+    if (value.length >= 2) {
+      value = value.slice(0,2) + '/' + value.slice(2);
+    }
+    (e.target as HTMLInputElement).value = value;
+  });
 
   bankDest?.addEventListener('change', (e) => {
     const value = (e.target as HTMLSelectElement).value;
-    if (value === 'BDV') {
-      qrImg.src = '/images/QR-BDV-KF.png';
-      qrContainer.classList.remove('hidden');
-    } else if (value === 'BVC') {
-      qrImg.src = '/images/QR-BVC-KF.png';
-      qrContainer.classList.remove('hidden');
-    } else {
-      qrContainer.classList.add('hidden');
-      qrImg.src = '';
+    
+    // Ocultar todos los campos primero
+    qrContainer.classList.add('hidden');
+    biopagoFields.classList.add('hidden');
+    pagoMovilFields.classList.add('hidden');
+    tdcFields.classList.add('hidden');
+    qrImg.src = '';
+
+    // Remover required de todos los campos
+    const allRequiredFields = form.querySelectorAll('[required]');
+    allRequiredFields.forEach(field => {
+      (field as HTMLElement).removeAttribute('required');
+    });
+
+    // Mostrar campos según el método seleccionado y establecer required
+    if (value === 'BIOPAGO') {
+      biopagoFields.classList.remove('hidden');
+      const biopagoRequiredFields = biopagoFields.querySelectorAll('input');
+      biopagoRequiredFields.forEach(field => {
+        field.setAttribute('required', '');
+      });
+    } else if (value === 'BDV' || value === 'BVC') {
+      pagoMovilFields.classList.remove('hidden');
+      const pagoMovilRequiredFields = pagoMovilFields.querySelectorAll('input, select');
+      pagoMovilRequiredFields.forEach(field => {
+        field.setAttribute('required', '');
+      });
+      if (value === 'BDV') {
+        qrImg.src = '/images/QR-BDV-KF.png';
+        qrContainer.classList.remove('hidden');
+      } else if (value === 'BVC') {
+        qrImg.src = '/images/QR-BVC-KF.png';
+        qrContainer.classList.remove('hidden');
+      }
+    } else if (value === 'TDC') {
+      tdcFields.classList.remove('hidden');
+      const tdcRequiredFields = tdcFields.querySelectorAll('input');
+      tdcRequiredFields.forEach(field => {
+        field.setAttribute('required', '');
+      });
     }
   });
 
@@ -274,43 +438,65 @@ const description = "Realiza tu pago móvil para activar tu membresía en Cujiwa
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const formData = new FormData(form);
+    const paymentMethod = formData.get('bank_dest');
 
     // Deshabilitar el botón y mostrar estado de carga
     submitButton.disabled = true;
     submitButton.textContent = 'Enviando...';
 
     try {
-      const response = await fetch('/api/subscription/venezuela-payment', {
+      const requestBody: any = {
+        plan_id: form.dataset.planId,
+        membership_id: form.dataset.membershipId
+      };
+
+      let endpoint = '';
+      if (paymentMethod === 'TDC') {
+        endpoint = '/api/subscription/venezuela/card-payment';
+        requestBody.card_name = formData.get('card_name');
+        requestBody.card_number = formData.get('card_number')?.toString().replace(/\s/g, '');
+        requestBody.card_expire = formData.get('card_expire');
+        requestBody.card_cvv = formData.get('card_cvv');
+        requestBody.card_address = formData.get('card_address');
+        requestBody.card_tax_id = formData.get('card_tax_id');
+      } else if (paymentMethod === 'BIOPAGO') {
+        endpoint = '/api/subscription/venezuela/biopago-payment';
+        requestBody.tax_id = formData.get('tax_id');
+        requestBody.phone = formData.get('phone');
+      } else {
+        endpoint = '/api/subscription/venezuela/mobile-payment';
+        requestBody.bank_origin = formData.get('bank_origin');
+        requestBody.bank_dest = paymentMethod;
+        requestBody.tax_id = formData.get('tax_id_pm');
+        requestBody.phone = formData.get('phone_pm');
+        requestBody.reference = formData.get('reference');
+      }
+
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
-        body: JSON.stringify({
-          plan_id: form.dataset.planId,
-          membership_id: form.dataset.membershipId,
-          bank_origin: formData.get('bank_origin'),
-          bank_dest: formData.get('bank_dest'),
-          tax_id: formData.get('tax_id'),
-          phone: formData.get('phone'),
-          reference: formData.get('reference')
-        })
+        body: JSON.stringify(requestBody)
       });
 
       const result = await response.json();
       
-      if (result.success) {
+      if (paymentMethod === 'BIOPAGO' && result.paymentUrl) {
+        // Redirigir al usuario a la URL de pago de Biopago
+        window.location.href = result.paymentUrl;
+      } else if (result.redirect) {
+        window.location.href = result.redirect;
+      } else if (result.success) {
         alert(result.message);
         window.location.href = '/dashboard';
       } else {
-        alert(result.error || 'Error al procesar el pago');
-        // Restaurar el botón en caso de error
-        submitButton.disabled = false;
-        submitButton.textContent = 'Enviar';
+        throw new Error(result.error || 'Error al procesar el pago');
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('Error al procesar el pago');
+      alert(error instanceof Error ? error.message : 'Error al procesar el pago');
       // Restaurar el botón en caso de error
       submitButton.disabled = false;
       submitButton.textContent = 'Enviar';

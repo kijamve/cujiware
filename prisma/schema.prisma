@@ -192,6 +192,7 @@ enum PaymentStatus {
 enum PaymentMethod {
   STRIPE
   VENEZUELA
+  BIOPAGO
 }
 
 enum PlanInterval {

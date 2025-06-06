@@ -1,13 +1,13 @@
 [
   {
-    "name": "MercadoPago Tools Pro para Gravity Forms con Suscripciones",
+    "name": "MercadoPago para Gravity Forms - Integración - Soporte para Suscripciones",
     "slug": "mercadopago-tools-pro-para-gravity-forms-con-suscripciones",
-    "short_description": "Integra MercadoPago con Gravity Forms incluyendo soporte para suscripciones recurrentes",
+    "short_description": "Integra MercadoPago con Gravity Forms para procesar pagos y suscripciones recurrentes de forma segura y automatizada",
     "icon": "CreditCard", 
     "category": "payment_method",
     "countries": ["all", "argentina"],
     "countrie_exclude": ["venezuela"],
-    "platform": ["woocommerce"],
+    "platform": ["gravityforms"],
     "screenshots": [
       {
         "src": "/images/plugins/mercadopago-gravity-forms/captura1.png",
@@ -47,27 +47,27 @@
     ]
   },
   {
-    "name": "Botón de Integración de Megasoft con PrestaShop",
+    "name": "Megasoft para PrestaShop - Botón de Pago - C2P/P2C, Tarjetas y Zelle",
     "slug": "boton-de-integracion-de-megasoft-con-prestashop",
-    "short_description": "Integra la pasarela de pago Megasoft para aceptar Pago Móvil C2P/P2C, Tarjetas de Crédito y Zelle",
+    "short_description": "Integra la pasarela de pago Megasoft en PrestaShop para aceptar Pago Móvil C2P/P2C, Tarjetas de Crédito y Zelle de forma segura",
     "icon": "CreditCard",
     "category": "payment_method", 
     "countries": ["venezuela"],
     "platform": ["prestashop"]
   },
   {
-    "name": "Zoom Transportista de Envíos en Venezuela para PrestaShop",
+    "name": "Zoom para PrestaShop - Transportista de Envíos - Cálculo Automático de Tarifas",
     "slug": "zoom-transportista-de-envios-en-venezuela-para-prestashop",
-    "short_description": "Integra Zoom como método de envío en PrestaShop con cálculo automático de tarifas",
+    "short_description": "Integra Zoom como método de envío en PrestaShop con cálculo automático de tarifas y generación de guías de envío",
     "icon": "Truck",
     "category": "shipping",
     "countries": ["venezuela"],
     "platform": ["prestashop"]
   },
   {
-    "name": "Crear Cupones para la Primera Compra en PrestaShop",
+    "name": "Generador de Cupones para PrestaShop - Primera Compra",
     "slug": "crear-cupones-para-la-primera-compra-en-prestashop",
-    "short_description": "Genera cupones de descuento automáticamente para nuevos clientes",
+    "short_description": "Genera automáticamente cupones de descuento para nuevos clientes en su primera compra, aumentando la conversión de ventas",
     "icon": "Ticket",
     "category": "utils",
     "countries": ["all"],
@@ -96,81 +96,81 @@
     ]
   },
   {
-    "name": "Notificaciones por Telegram para PrestaShop",
+    "name": "Telegram para PrestaShop - Notificaciones - Pedidos y Eventos",
     "slug": "notificaciones-por-telegram-para-prestashop",
-    "short_description": "Recibe notificaciones instantáneas de pedidos y eventos importantes en Telegram",
+    "short_description": "Recibe notificaciones instantáneas en Telegram sobre nuevos pedidos, actualizaciones de estado y eventos importantes de tu tienda",
     "icon": "Bell",
     "category": "utils",
     "countries": ["all"],
     "platform": ["prestashop"]
   },
   {
-    "name": "Binance Pay para PrestaShop",
+    "name": "Binance para PrestaShop - Pasarela de Pago - Criptomonedas",
     "slug": "binance-pay-para-prestashop",
-    "short_description": "Acepta pagos en criptomonedas a través de Binance Pay",
+    "short_description": "Acepta pagos en criptomonedas a través de Binance Pay en tu tienda PrestaShop de forma segura y confiable",
     "icon": "Bitcoin",
     "category": "payment_method",
     "countries": ["all"],
     "platform": ["prestashop"]
   },
   {
-    "name": "Botón de Integración de Megasoft con WooCommerce",
+    "name": "Megasoft para WooCommerce - Botón de Pago - C2P/P2C, Tarjetas y Zelle",
     "slug": "boton-de-integracion-de-megasoft-con-woocommerce",
-    "short_description": "Integra la pasarela de pago Megasoft para aceptar Pago Móvil C2P/P2C, Tarjetas de Crédito y Zelle",
+    "short_description": "Integra la pasarela de pago Megasoft en WooCommerce para aceptar Pago Móvil C2P/P2C, Tarjetas de Crédito y Zelle de forma segura",
     "icon": "CreditCard",
     "category": "payment_method",
     "countries": ["venezuela"],
     "platform": ["woocommerce"]
   },
   {
-    "name": "Tasa BCV Automática para WooCommerce (Curcy, WOOCS, Fox)",
+    "name": "BCV para WooCommerce - Actualizador de Tasa - Compatible con Curcy, WOOCS y Fox",
     "slug": "tasa-bcv-automatica-para-woocommerce-curcy-woocs-fox",
-    "short_description": "Actualización automática de tasas de cambio según el BCV",
+    "short_description": "Actualiza automáticamente las tasas de cambio según el Banco Central de Venezuela, compatible con los principales plugins de moneda",
     "icon": "RefreshCw",
     "category": "utils",
     "countries": ["venezuela"],
     "platform": ["woocommerce"]
   },
   {
-    "name": "Biopago y Tarjetas de Débito del Banco de Venezuela para WooCommerce",
+    "name": "Banco de Venezuela para WooCommerce - Integración directa entre tu tienda y el banco - Biopago y Tarjetas",
     "slug": "biopago-y-tarjetas-de-debito-del-banco-de-venezuela-para-woocommerce",
-    "short_description": "Acepta pagos con Biopago y tarjetas de débito del Banco de Venezuela",
+    "short_description": "Acepta pagos con Biopago y tarjetas de débito del Banco de Venezuela en tu tienda WooCommerce de forma segura y confiable",
     "icon": "CreditCard",
     "category": "payment_method",
     "countries": ["venezuela"],
     "platform": ["woocommerce"]
   },
   {
-    "name": "Biopago y Tarjetas de Débito del Banco de Venezuela para PrestaShop",
+    "name": "Banco de Venezuela para PrestaShop - Integración directa entre tu tienda y el banco - Biopago y Tarjetas",
     "slug": "biopago-y-tarjetas-de-debito-del-banco-de-venezuela-para-prestashop",
-    "short_description": "Integración con Biopago y tarjetas de débito del Banco de Venezuela",
+    "short_description": "Integra Biopago y tarjetas de débito del Banco de Venezuela en tu tienda PrestaShop para procesar pagos de forma segura",
     "icon": "CreditCard",
     "category": "payment_method",
     "countries": ["venezuela"],
     "platform": ["prestashop"]
   },
   {
-    "name": "OCA para WooCommerce",
+    "name": "OCA para WooCommerce - Transportista de Envíos - Integración Completa",
     "slug": "oca-para-woocommerce",
-    "short_description": "Integración completa con el servicio de envíos OCA",
+    "short_description": "Integra el servicio de envíos OCA en WooCommerce con cálculo automático de tarifas, generación de guías y rastreo de paquetes",
     "icon": "Truck",
     "category": "shipping",
     "countries": ["argentina"],
     "platform": ["woocommerce"]
   },
   {
-    "name": "Andreani para WooCommerce",
+    "name": "Andreani para WooCommerce - Transportista de Envíos - Cálculo y Guías",
     "slug": "andreani-para-woocommerce",
-    "short_description": "Calcula costos de envío con Andreani en tiempo real y genera guías de envío",
+    "short_description": "Calcula costos de envío con Andreani en tiempo real, genera guías de envío y rastrea paquetes en tu tienda WooCommerce",
     "icon": "Truck",
     "category": "shipping",
     "countries": ["argentina"],
     "platform": ["woocommerce"]
   },
   {
-    "name": "Correo Argentino para WooCommerce",
+    "name": "Correo Argentino para WooCommerce - Transportista de Envíos - Cálculo y Guías",
     "slug": "correo-argentino-para-woocommerce",
-    "short_description": "Calcula costos de envío con Correo Argentino en tiempo real y genera guías de envío",
+    "short_description": "Integra el servicio de envíos del Correo Argentino en WooCommerce con cálculo de tarifas y generación de guías de envío",
     "icon": "Truck",
     "category": "shipping",
     "featured": true,
@@ -178,90 +178,90 @@
     "platform": ["woocommerce"]
   },
   {
-    "name": "Botón de Pago Móvil del Banco de Venezuela para PrestaShop",
+    "name": "Banco de Venezuela para PrestaShop - Integración directa entre tu tienda y el banco - Pago Móvil",
     "slug": "boton-de-integracion-de-pago-movil-del-banco-de-venezuela-con-prestashop",
-    "short_description": "Integra Pago Móvil del Banco de Venezuela en PrestaShop",
+    "short_description": "Integra Pago Móvil del Banco de Venezuela en PrestaShop para procesar pagos de forma segura y automatizada",
     "icon": "Smartphone",
     "category": "payment_method",
     "countries": ["venezuela"],
     "platform": ["prestashop"]
   },
   {
-    "name": "Venezolano de Crédito para WooCommerce (C2P y Pago Móvil)",
+    "name": "Venezolano de Crédito (BVC) para WooCommerce - Integración directa entre tu tienda y el banco - Visa, Mastercard, C2P y Pago Móvil",
     "slug": "venezolano-de-credito-para-woocommerce-con-c2p-y-pago-movil",
-    "short_description": "Acepta pagos del Venezolano de Crédito con C2P y Pago Móvil",
+    "short_description": "Acepta pagos con el Venezolano de Crédito en WooCommerce incluyendo tarjetas Visa, Mastercard, C2P y Pago Móvil de forma segura",
     "icon": "CreditCard",
     "category": "payment_method",
     "countries": ["venezuela"],
     "platform": ["woocommerce"]
   },
   {
-    "name": "Pasarela de Pago Banco Mercantil para PrestaShop",
+    "name": "Banco Mercantil para PrestaShop - Integración directa entre tu tienda y el banco - Tarjetas de Débito",
     "slug": "pasarela-de-pago-banco-mercantil-para-prestashop-acepta-tarjetas-de-debito",
-    "short_description": "Integración con la pasarela de pago del Banco Mercantil",
+    "short_description": "Integra la pasarela de pago del Banco Mercantil en PrestaShop para aceptar tarjetas Visa, Mastercard, C2P y Pago Móvil.",
     "icon": "CreditCard",
     "category": "payment_method",
     "countries": ["venezuela"],
     "platform": ["prestashop"]
   },
   {
-    "name": "Zippin Argentina para PrestaShop",
+    "name": "Zippin para PrestaShop - Transportista de Envíos",
     "slug": "zippin-argentina-para-prestashop",
-    "short_description": "Integra el servicio de envíos Zippin en tu tienda PrestaShop",
+    "short_description": "Integra el servicio de envíos Zippin en tu tienda PrestaShop con cálculo de tarifas y generación de guías de envío",
     "icon": "Truck",
     "category": "shipping",
     "countries": ["argentina"],
     "platform": ["prestashop"]
   },
   {
-    "name": "OCA para PrestaShop",
+    "name": "OCA para PrestaShop - Transportista de Envíos - Cotización y Rastreo",
     "slug": "oca-para-prestashop-cotizacion-generacion-de-guias-y-rastreo-de-paquetes",
-    "short_description": "Cotización, generación de guías y rastreo de paquetes OCA",
+    "short_description": "Integra OCA en PrestaShop con cotización automática, generación de guías y rastreo de paquetes en tiempo real",
     "icon": "Truck",
     "category": "shipping",
     "countries": ["argentina"],
     "platform": ["prestashop"]
   },
   {
-    "name": "Contactar Clientes por WhatsApp desde WooCommerce",
+    "name": "WhatsApp para WooCommerce - Comunicación desde el Panel de Administración",
     "slug": "contactar-clientes-por-whatsapp-desde-el-administrador-de-woocommerce",
-    "short_description": "Envía mensajes de WhatsApp directamente desde el panel de administración",
+    "short_description": "Comunícate con tus clientes por WhatsApp directamente desde el panel de administración de WooCommerce de forma rápida y eficiente",
     "icon": "MessageCircle",
     "category": "utils",
     "countries": ["all"],
     "platform": ["woocommerce"]
   },
   {
-    "name": "Mercantil Banco Venezuela para WooCommerce",
+    "name": "Banco Mercantil para WooCommerce - Integración directa entre tu tienda y el banco - Visa, Mastercard, C2P y Pago Móvil",
     "slug": "mercantil-banco-venezuela-para-woocommerce",
-    "short_description": "Integración completa con Mercantil Banco para pagos en línea",
+    "short_description": "Integra la pasarela de pago del Banco Mercantil en WooCommerce para aceptar tarjetas Visa, Mastercard, C2P y Pago Móvil",
     "icon": "CreditCard",
     "category": "payment_method",
     "countries": ["venezuela"],
     "platform": ["woocommerce"]
   },
   {
-    "name": "MRW y Menssajero Venezuela para WooCommerce",
+    "name": "MRW y Menssajero para WooCommerce - Transportistas de Envíos - Venezuela",
     "slug": "mrw-y-menssajero-venezuela-para-woocommerce",
-    "short_description": "Calcula costos de envío con MRW y Menssajero Venezuela",
+    "short_description": "Integra MRW y Menssajero Venezuela en WooCommerce con cálculo de tarifas y generación de guías de envío",
     "icon": "Truck",
-    "category": "payment_method",
+    "category": "shipping",
     "countries": ["venezuela"],
     "platform": ["woocommerce"]
   },
   {
-    "name": "Zoom Transportista de Envíos en Venezuela para WooCommerce",
+    "name": "Zoom para WooCommerce - Transportista de Envíos - Generación de guías y rastreo de paquetes",
     "slug": "zoom-transportista-de-envios-en-venezuela-para-woocommerce",
-    "short_description": "Integración completa con el servicio de envíos Zoom",
+    "short_description": "Integra Zoom en WooCommerce con cálculo de tarifas, generación de guías y rastreo de paquetes en tiempo real",
     "icon": "Truck",
-    "category": "payment_method",
+    "category": "shipping",
     "countries": ["venezuela"],
     "platform": ["woocommerce"]
   },
   {
-    "name": "Pagos Offline para WooCommerce",
+    "name": "Pagos Offline para WooCommerce - Pasarela de Pago - Múltiples Métodos",
     "slug": "pagos-offline-para-woocommerce-zelle-binance-p2p-transferencia-pago-movil-y-otros",
-    "short_description": "Acepta pagos por Zelle, Binance P2P, Pago Móvil y transferencias bancarias",
+    "short_description": "Acepta múltiples métodos de pago offline en WooCommerce incluyendo Zelle, Binance P2P, Pago Móvil y transferencias bancarias. Requiere de verificación manual de los pagos.",
     "icon": "Wallet",
     "category": "payment_method",
     "countries": ["all", "venezuela"],
@@ -269,18 +269,18 @@
     "platform": ["woocommerce"]
   },
   {
-    "name": "Botón de Pago Móvil del Banco de Venezuela para WooCommerce",
+    "name": "Banco de Venezuela para WooCommerce - Integración directa entre tu tienda y el banco - Pago Móvil",
     "slug": "boton-de-pago-movil-del-banco-de-venezuela-para-woocommerce",
-    "short_description": "Integra Pago Móvil del Banco de Venezuela en WooCommerce",
+    "short_description": "Integra Pago Móvil del Banco de Venezuela en WooCommerce con validación automática de pagos y confirmación instantánea",
     "icon": "Smartphone",
     "category": "payment_method",
     "countries": ["venezuela"],
     "platform": ["woocommerce"]
   },
   {
-    "name": "MercadoPago para WooCommerce",
+    "name": "MercadoPago para WooCommerce - Pasarela de Pago - Soporte para Suscripciones y Marketplace",
     "slug": "mercadopago-para-woocommerce",
-    "short_description": "MercadoPago Tools Pro para WooCommerce con suscripciones",
+    "short_description": "Integra MercadoPago en WooCommerce con soporte para suscripciones recurrentes, marketplace y múltiples métodos de pago",
     "icon": "CreditCard",
     "category": "payment_method",
     "countries": ["all", "argentina"],
@@ -289,18 +289,18 @@
     "platform": ["woocommerce"]
   },
   {
-    "name": "Andreani para PrestaShop",
+    "name": "Andreani para PrestaShop - Transportista de Envíos - Cotización y Rastreo",
     "slug": "andreani-para-prestashop-cotizacion-generacion-de-guias-y-rastreo-de-paquetes",
-    "short_description": "Cotización, generación de guías y rastreo con Andreani",
+    "short_description": "Integra Andreani en PrestaShop con cotización automática, generación de guías y rastreo de paquetes en tiempo real",
     "icon": "Truck",
     "category": "payment_method",
     "countries": ["argentina"],
     "platform": ["prestashop"]
   },
   {
-    "name": "MercadoPago Tools Pro para PrestaShop",
+    "name": "MercadoPago para PrestaShop - Pasarela de Pago - Soporte para Suscripciones y Marketplace",
     "slug": "mercadopago-tools-pro-para-prestashop",
-    "short_description": "Herramientas avanzadas de MercadoPago para PrestaShop",
+    "short_description": "Integra MercadoPago en PrestaShop con soporte para suscripciones recurrentes, marketplace y múltiples métodos de pago",
     "icon": "CreditCard",
     "category": "payment_method",
     "countries": ["all", "argentina"],
@@ -309,18 +309,18 @@
     "platform": ["prestashop"]
   },
   {
-    "name": "Botón de Pago del Banco BNC para WooCommerce",
+    "name": "Banco BNC para WooCommerce - Integración directa entre tu tienda y el banco - Botón de Pago",
     "slug": "boton-de-pago-del-banco-bnc-para-plugin-woocommerce-wordpress",
-    "short_description": "Integra pagos del Banco BNC en tu tienda WooCommerce",
+    "short_description": "Integra la pasarela de pago del Banco Nacional de Crédito en WooCommerce para procesar pagos con tarjetas Visa, Mastercard, C2P y Pago Móvil",
     "icon": "CreditCard",
     "category": "payment_method",
     "countries": ["venezuela"],
     "platform": ["woocommerce"]
   },
   {
-    "name": "Notificaciones por Telegram para WooCommerce",
+    "name": "Telegram para WooCommerce - Notificaciones - Pedidos y Eventos",
     "slug": "notificaciones-por-telegram-para-woocommerce",
-    "short_description": "Recibe notificaciones de pedidos en Telegram",
+    "short_description": "Recibe notificaciones instantáneas en Telegram sobre nuevos pedidos, actualizaciones de estado y eventos importantes de tu tienda",
     "icon": "Bell",
     "category": "utils",
     "countries": ["all"],

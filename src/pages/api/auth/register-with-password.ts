@@ -2,7 +2,7 @@ import type { APIRoute } from 'astro';
 import prisma from '../../../lib/db';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { sendWelcomeEmail } from '../../../lib/email';
+import { sendWelcomeEmail } from '../../../utils/email';
 
 interface RegisterData {
   email: string;

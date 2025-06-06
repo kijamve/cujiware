@@ -56,11 +56,11 @@ interface InvoicePayment {
 
 interface CreateInvoiceData {
   customer_uuid: string;
-  async_payment_uuid: string;
+  payment_method_uuid: string;
+  async_payment_uuid?: string;
   plan_name: string;
   price_bs: number;
   payment_reference: string;
-  payment_type: 'bdv' | 'bvc';
 }
 
 interface InvoiceResponse {
@@ -128,6 +128,8 @@ export class CachicamoService {
   private taxPercent: number;
   public mobileBDVPaymentUuid: string;
   public mobileBVCPaymentUuid: string;
+  public cardPaymentUuid: string;
+  public biopagoPaymentUuid: string;
 
   constructor() {
     this.baseUrl = 'https://api.cachicamo.app';
@@ -138,8 +140,10 @@ export class CachicamoService {
     this.taxPercent = Number(process.env.CACHICAMO_TAX_PERCENT) || 16;
     this.mobileBDVPaymentUuid = process.env.CACHICAMO_MOBILE_BDV_PAYMENT_UUID || '';
     this.mobileBVCPaymentUuid = process.env.CACHICAMO_MOBILE_BVC_PAYMENT_UUID || '';
+    this.cardPaymentUuid = process.env.CACHICAMO_CARD_PAYMENT_UUID || '';
+    this.biopagoPaymentUuid = process.env.CACHICAMO_BIOPAGO_PAYMENT_UUID || '';
 
-    if (!this.token || !this.storeUuid || !this.taxUuid || !this.printerUuid || !this.mobileBDVPaymentUuid || !this.mobileBVCPaymentUuid) {
+    if (!this.token || !this.storeUuid || !this.taxUuid || !this.printerUuid || !this.mobileBDVPaymentUuid || !this.mobileBVCPaymentUuid || !this.cardPaymentUuid || !this.biopagoPaymentUuid) {
       throw new Error('CACHICAMO_TOKEN, CACHICAMO_STORE_UUID, CACHICAMO_TAX_UUID, CACHICAMO_PRINTER_UUID, CACHICAMO_MOBILE_BDV_PAYMENT_UUID, CACHICAMO_MOBILE_BCV_PAYMENT_UUID y CACHICAMO_CARD_PAYMENT_UUID son requeridos en el archivo .env');
     }
   }
@@ -267,11 +271,6 @@ export class CachicamoService {
       // Generar un ID único para la referencia del producto
       const requestReference = Math.random().toString(36).substring(2, 15);
 
-      // Seleccionar el UUID del método de pago según el tipo
-      const paymentMethodUuid = data.payment_type === 'bdv' 
-        ? this.mobileBDVPaymentUuid 
-        : this.mobileBVCPaymentUuid;
-
       const taxRate = this.taxPercent / 100;
       
       // Función para redondear correctamente
@@ -292,8 +291,8 @@ export class CachicamoService {
         extra_taxes: [],
         pending_reason: 'Error de precisión de decimales en el cálculo de la tasa del BCV o del IVA',
         payments: [{
-          payment_method_uuid: paymentMethodUuid,
-          async_payment_uuid: data.async_payment_uuid,
+          payment_method_uuid: data.payment_method_uuid,
+          ...(data.async_payment_uuid ? { async_payment_uuid: data.async_payment_uuid } : {}),
           payment_reference: data.payment_reference
         }],
         products: [{

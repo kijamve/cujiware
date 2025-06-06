@@ -18,7 +18,8 @@ export const PAYMENT_STATUS = {
 
 export const PAYMENT_METHOD = {
   STRIPE: 'STRIPE',
-  VENEZUELA: 'VENEZUELA'
+  VENEZUELA: 'VENEZUELA',
+  BIOPAGO: 'BIOPAGO'
 } as const;
 
 export const PLAN_INTERVAL = {
