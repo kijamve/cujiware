@@ -97,15 +97,6 @@
     ]
   },
   {
-    "name": "Delivery y Rastreo de Paquetes para PrestaShop en Tiempo Real",
-    "slug": "delivery-y-rastreo-de-paquetes-para-prestashop-en-tiempo-real",
-    "short_description": "Sistema avanzado de seguimiento de envíos con actualizaciones en tiempo real",
-    "icon": "PackageSearch",
-    "category": "shipping",
-    "countries": ["all"],
-    "platform": ["prestashop"]
-  },
-  {
     "name": "Notificaciones por Telegram para PrestaShop",
     "slug": "notificaciones-por-telegram-para-prestashop",
     "short_description": "Recibe notificaciones instantáneas de pedidos y eventos importantes en Telegram",
@@ -175,15 +166,6 @@
     "icon": "Truck",
     "category": "shipping",
     "countries": ["argentina"],
-    "platform": ["woocommerce"]
-  },
-  {
-    "name": "Botón de Integración de Bancamiga con WooCommerce",
-    "slug": "boton-de-integracion-de-bancamiga-con-woocommerce-woocommerce",
-    "short_description": "Acepta pagos a través de Bancamiga en tu tienda WooCommerce",
-    "icon": "CreditCard",
-    "category": "payment_method",
-    "countries": ["venezuela"],
     "platform": ["woocommerce"]
   },
   {
@@ -268,15 +250,6 @@
     "platform": ["woocommerce"]
   },
   {
-    "name": "Binance Pay para WooCommerce",
-    "slug": "binance-pay-para-woocommerce-woocommerce-pasarela-de-pago-boton-de-pago",
-    "short_description": "Acepta pagos en criptomonedas con Binance Pay",
-    "icon": "Bitcoin",
-    "category": "payment_method",
-    "countries": ["all"],
-    "platform": ["woocommerce"]
-  },
-  {
     "name": "Pagos Offline para WooCommerce",
     "slug": "pagos-offline-para-woocommerce-zelle-binance-p2p-transferencia-pago-movil-y-otros",
     "short_description": "Acepta pagos por Zelle, Binance P2P y transferencias bancarias",
@@ -324,7 +297,7 @@
   },
   {
     "name": "Botón de Pago del Banco BNC para WooCommerce",
-    "slug": "boton-de-pago-del-banco-bnc-para-plugin-woocommerce-woocommerce",
+    "slug": "boton-de-pago-del-banco-bnc-para-plugin-woocommerce-wordpress",
     "short_description": "Integra pagos del Banco BNC en tu tienda WooCommerce",
     "icon": "CreditCard",
     "category": "payment_method",

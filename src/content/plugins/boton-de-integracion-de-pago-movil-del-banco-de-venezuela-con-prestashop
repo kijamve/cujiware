@@ -1,0 +1,119 @@
+<!-- Plantilla para el plugin de Pago Móvil BDV para Prestashop -->
+<div class="plugin-content">
+  <section class="mb-8">
+    <h2 class="text-2xl font-bold mb-6">Botón de Integración de Pago Móvil del Banco de Venezuela para Prestashop</h2>
+    <p class="text-lg text-gray-700 mb-6">
+      Integra la pasarela de pago móvil del Banco de Venezuela en tu tienda Prestashop. Este plugin te permite aceptar pagos móviles interbancarios con validación automática, ofreciendo una solución de pago moderna y eficiente para tus clientes.
+    </p>
+    <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
+      <p class="text-red-700">
+        <strong>IMPORTANTE:</strong> Este plugin requiere aprobación previa del Banco de Venezuela. No compres si no has iniciado los trámites administrativos con el banco. Los accesos al API son limitados a empresas jurídicas y están sujetos a condiciones confidenciales del banco.
+      </p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-2xl font-bold mb-4">Características Principales</h2>
+    <div class="grid gap-6">
+      <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+        <h3 class="text-xl font-semibold mb-3">Validación Automática</h3>
+        <p class="text-gray-700">
+          Sistema de validación automática de pagos móviles interbancarios, asegurando transacciones seguras y confiables.
+        </p>
+      </div>
+
+      <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+        <h3 class="text-xl font-semibold mb-3">Conversión de Divisas</h3>
+        <p class="text-gray-700">
+          Conversión automática de precios a bolívares al momento del pago, utilizando la tasa del día. Compatible con tiendas en dólares.
+        </p>
+      </div>
+
+      <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+        <h3 class="text-xl font-semibold mb-3">Integración API Oficial</h3>
+        <p class="text-gray-700">
+          Utiliza la API oficial de consolidación de pagos del Banco de Venezuela, asegurando compatibilidad y soporte continuo.
+        </p>
+      </div>
+
+      <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+        <h3 class="text-xl font-semibold mb-3">Panel de Administración</h3>
+        <p class="text-gray-700">
+          Interfaz intuitiva para gestionar transacciones, configurar credenciales y monitorear el estado de los pagos.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-2xl font-bold mb-4">Requisitos del Sistema</h2>
+    <ul class="list-disc pl-6 space-y-2 text-gray-700">
+      <li>Prestashop 1.7/8.x</li>
+      <li>PHP 7.0 o superior</li>
+      <li>Librerías Curl para PHP</li>
+      <li>Librerías OpenSSL para PHP</li>
+      <li>Cuenta Jurídica en el Banco de Venezuela</li>
+      <li>Aprobación previa del Banco de Venezuela</li>
+    </ul>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-2xl font-bold mb-4">Consideraciones Importantes</h2>
+    <div class="grid gap-6">
+      <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+        <h3 class="text-xl font-semibold mb-3">Proceso de Aprobación</h3>
+        <p class="text-gray-700">
+          Cada comercio debe gestionar su propio proceso de aprobación con el Banco de Venezuela. Contacta a tu agencia comercial más cercana para iniciar los trámites necesarios.
+        </p>
+      </div>
+
+      <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+        <h3 class="text-xl font-semibold mb-3">Limitaciones</h3>
+        <p class="text-gray-700">
+          La plataforma solo procesa pagos en bolívares. No se aceptan pagos en divisas extranjeras directamente.
+        </p>
+      </div>
+
+      <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+        <h3 class="text-xl font-semibold mb-3">Política de Reembolso</h3>
+        <p class="text-gray-700">
+          No se ofrecen reembolsos si el banco no acepta tu modelo de negocio o si los accesos al API son revocados posteriormente.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-2xl font-bold mb-4">Beneficios para tu Negocio</h2>
+    <div class="grid gap-6">
+      <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+        <h3 class="text-xl font-semibold mb-3">Ampliación de Opciones de Pago</h3>
+        <p class="text-gray-700">
+          Ofrece a tus clientes la posibilidad de pagar mediante pago móvil interbancario, ampliando tus opciones de pago.
+        </p>
+      </div>
+
+      <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+        <h3 class="text-xl font-semibold mb-3">Proceso de Pago Simplificado</h3>
+        <p class="text-gray-700">
+          Validación automática de pagos, reduciendo la intervención manual y minimizando errores.
+        </p>
+      </div>
+
+      <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+        <h3 class="text-xl font-semibold mb-3">Integración Oficial</h3>
+        <p class="text-gray-700">
+          Utiliza la API oficial del Banco de Venezuela, asegurando compatibilidad y soporte continuo.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-2xl font-bold mb-4">Resumen</h2>
+    <p class="text-lg text-gray-700">
+      Optimiza tu tienda Prestashop con la pasarela de pago móvil oficial del Banco de Venezuela. Este plugin te permite integrar el sistema de pago móvil interbancario de manera segura y eficiente, ofreciendo a tus clientes una forma moderna y conveniente de realizar sus pagos. Con validación automática y conversión de divisas integrada, mejora la experiencia de compra de tus clientes y expande tus opciones de pago con la integración oficial del Banco de Venezuela.
+    </p>
+  </section>
+
+</div>
