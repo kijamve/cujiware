@@ -51,6 +51,11 @@ try {
   content = '<p>Estamos trabajando en este contenido, por favor regresa más tarde.</p>';
 }
 
+// Meta tags para SEO
+const metaDescription = `${plugin.short_description} - Plugin premium para ${platform === 'woocommerce' ? 'WooCommerce' : 'PrestaShop'} disponible en Cujiware.`;
+const canonicalUrl = `https://cujiware.com/plugins/${country}/${platform}/${plugin.slug}`;
+const ogImage = screenshots.length > 0 ? `https://cujiware.com${screenshots[0].src}` : undefined;
+
 // Schema.org structured data
 const schemaData = {
   "@context": "https://schema.org",
@@ -67,6 +72,7 @@ const schemaData = {
     "name": "Cujiware"
   },
   "image": screenshots.length > 0 ? `https://cujiware.com${screenshots[0].src}` : undefined,
+  "url": canonicalUrl,
   "screenshot": screenshots.map(screenshot => ({
     "@type": "ImageObject",
     "url": `https://cujiware.com${screenshot.src}`,
@@ -88,11 +94,6 @@ const schemaData = {
     "url": "https://cujiware.com/suscripcion/"
   }
 };
-
-// Meta tags para SEO
-const metaDescription = `${plugin.short_description} - Plugin premium para ${platform === 'woocommerce' ? 'WooCommerce' : 'PrestaShop'} disponible en Cujiware.`;
-const canonicalUrl = `https://cujiware.com/plugins/${country}/${platform}/${plugin.slug}`;
-const ogImage = screenshots.length > 0 ? `https://cujiware.com${screenshots[0].src}` : undefined;
 ---
 
 <Layout 

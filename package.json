@@ -17,6 +17,7 @@
     "@astrojs/tailwind": "^5.1.0",
     "@astrojs/vercel": "^6.0.0",
     "@prisma/client": "^5.10.0",
+    "@woocommerce/woocommerce-rest-api": "^1.0.1",
     "astro": "^4.4.0",
     "astro-seo": "^0.8.4",
     "bcryptjs": "^3.0.2",

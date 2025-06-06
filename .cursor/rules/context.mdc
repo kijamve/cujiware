@@ -3,7 +3,4 @@ description:
 globs: 
 alwaysApply: true
 ---
-Todo el resumen del contexto del proyecto estara definido en [README.md](mdc:README.md) usalo siempre como fuente principal de informacion.
-
-
-IMPORTANTE: los comandos son siempre en base yarn, no uses npm bajo ningun concepto.
+Los comandos son siempre con yarn, no uses npm bajo ningun concepto.

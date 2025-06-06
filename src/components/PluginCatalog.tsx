@@ -28,14 +28,30 @@ export function PluginCatalog({ plugins, categories, country, platform }: Plugin
         "@type": "SoftwareApplication",
         "name": plugin.name,
         "description": plugin.short_description,
-        "applicationCategory": plugin.category,
-        "operatingSystem": platform === 'woocommerce' ? 'WordPress' : 'PrestaShop',
+        "applicationCategory": plugin.category === 'payment_method' ? 'FinancialApplication' : 
+                            plugin.category === 'shipping' ? 'LogisticsApplication' : 
+                            'SoftwareApplication',
+        "softwareRequirements": platform === 'woocommerce' ? 'WordPress' : 'PrestaShop',
+        "operatingSystem": "Linux",
+        "author": {
+          "@type": "Organization",
+          "name": "Cujiware"
+        },
+        "url": `https://cujiware.com/plugins/${country}/${platform}/${plugin.slug}`,
         "offers": {
           "@type": "Offer",
-          "availability": "https://schema.org/InStock",
-          "priceCurrency": "USD",
-          "price": 12,
-          "url": `https://cujiware.com/plugins/${country}/${platform}/${plugin.slug}`
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "priceCurrency": "USD",
+            "price": 12,
+            "billingIncrement": 1,
+            "billingDuration": 1,
+            "unitCode": "MON",
+            "unitText": "Mes",
+            "description": "Membresía recurrente mensual"
+          },
+          "businessFunction": "http://purl.org/goodrelations/v1#LeaseOut",
+          "url": "https://cujiware.com/suscripcion/"
         }
       }
     }))
