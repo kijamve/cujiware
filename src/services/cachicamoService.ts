@@ -293,7 +293,7 @@ export class CachicamoService {
         payments: [{
           payment_method_uuid: data.payment_method_uuid,
           ...(data.async_payment_uuid ? { async_payment_uuid: data.async_payment_uuid } : {}),
-          payment_reference: data.payment_reference
+          payment_reference: ''+data.payment_reference
         }],
         products: [{
           custom_product_name: 'Cujiware - Plan '+data.plan_name,
