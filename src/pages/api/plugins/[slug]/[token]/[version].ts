@@ -1,8 +1,8 @@
 import type { APIRoute } from 'astro';
-import { prisma } from '../../../../../lib/prisma';
+import { prisma } from '@/lib/prisma';
 import fs from 'fs';
 import path from 'path';
-import { validateToken } from '../../../../../utils/token';
+import { validateToken } from '@/utils/token';
 
 export const GET: APIRoute = async ({ params, request }) => {
   try {

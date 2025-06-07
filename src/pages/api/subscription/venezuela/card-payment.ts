@@ -1,11 +1,11 @@
 import type { APIRoute } from 'astro';
-import { requireAuth } from '../../../../middleware/auth';
-import prisma from '../../../../lib/db';
-import { getBCVRate } from '../../../../lib/bcv';
-import { CachicamoService } from '../../../../services/cachicamoService';
-import { VenezolanoService } from '../../../../services/venezolano';
-import { PLAN_INTERVAL } from '../../../../constants/status';
-import { handleMembershipCreation, handleMembershipRenewal, createInvoice } from '../../../../lib/subscription/utils';
+import { requireAuth } from '@/middleware/auth';
+import prisma from '@/lib/db';
+import { getBCVRate } from '@/lib/bcv';
+import { CachicamoService } from '@/services/cachicamoService';
+import { VenezolanoService } from '@/services/venezolano';
+import { PLAN_INTERVAL } from '@/constants/status';
+import { handleMembershipCreation, handleMembershipRenewal, createInvoice } from '@/lib/subscription/utils';
 
 // Verificar si el usuario ha tenido alguna membresía anterior
 async function hasPreviousMembership(userId: string) {

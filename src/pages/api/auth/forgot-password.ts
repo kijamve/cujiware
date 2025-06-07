@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
-import prisma from '../../../lib/db';
+import prisma from '@/lib/db';
 import { randomBytes } from 'crypto';
-import { sendEmail } from '../../../utils/email';
+import { sendEmail } from '@/utils/email';
 
 export const POST: APIRoute = async ({ request }) => {
   try {

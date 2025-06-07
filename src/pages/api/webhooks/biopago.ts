@@ -1,10 +1,10 @@
 import type { APIRoute } from 'astro';
-import prisma from '../../../lib/db';
-import { BiopagoVzlaAPI } from '../../../services/biopagoService';
-import { CachicamoService } from '../../../services/cachicamoService';
-import { getBCVRate } from '../../../lib/bcv';
-import { PAYMENT_STATUS, PAYMENT_METHOD } from '../../../constants/status';
-import { handleMembershipCreation, handleMembershipRenewal, createInvoice } from '../../../lib/subscription/utils';
+import prisma from '@/lib/db';
+import { BiopagoVzlaAPI } from '@/services/biopagoService';
+import { CachicamoService } from '@/services/cachicamoService';
+import { getBCVRate } from '@/lib/bcv';
+import { PAYMENT_STATUS, PAYMENT_METHOD } from '@/constants/status';
+import { handleMembershipCreation, handleMembershipRenewal, createInvoice } from '@/lib/subscription/utils';
 
 export const GET: APIRoute = async (context) => {
   try {

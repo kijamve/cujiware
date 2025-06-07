@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
-import { requireSuperAdmin } from '../../../../../../middleware/auth';
-import { prisma } from '../../../../../../lib/prisma';
+import { requireSuperAdmin } from '@/middleware/auth';
+import { prisma } from '@/lib/prisma';
 import fs from 'fs';
 import path from 'path';
 

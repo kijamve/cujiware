@@ -1,12 +1,12 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { requireAuth } from '../middleware/auth.ts';
-import { prisma } from '../lib/prisma';
-import UserInfo from '../components/dashboard/UserInfo.astro';
-import BillingModal from '../components/dashboard/BillingModal.astro';
-import PasswordModal from '../components/dashboard/PasswordModal.astro';
-import Memberships from '../components/dashboard/Memberships.astro';
-import type { UserWithMemberships } from '../types/auth';
+import Layout from '@/layouts/Layout.astro';
+import { requireAuth } from '@/middleware/auth.ts';
+import { prisma } from '@/lib/prisma';
+import UserInfo from '@/components/dashboard/UserInfo.astro';
+import BillingModal from '@/components/dashboard/BillingModal.astro';
+import PasswordModal from '@/components/dashboard/PasswordModal.astro';
+import Memberships from '@/components/dashboard/Memberships.astro';
+import type { UserWithMemberships } from '@/types/auth';
 
 const user = await requireAuth(Astro);
 if (user instanceof Response) {

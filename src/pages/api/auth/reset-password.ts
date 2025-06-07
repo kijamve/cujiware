@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import prisma from '../../../lib/db';
+import prisma from '@/lib/db';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 

@@ -1,7 +1,7 @@
 ---
-import type { Membership, Payment, Plan } from '../../types/auth';
+import type { Membership, Payment, Plan } from '@/types/auth';
 import MembershipCard from './MembershipCard.astro';
-import { MEMBERSHIP_STATUS } from '../../constants/status';
+import { MEMBERSHIP_STATUS } from '@/constants/status';
 
 interface Props {
   memberships: Array<Omit<Membership, 'user_id' | 'plan_id'> & {

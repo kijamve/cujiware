@@ -17,14 +17,14 @@ function cleanupExpiredTokens() {
 setInterval(cleanupExpiredTokens, 5 * 60 * 1000);
 
 // Generar un token único para la descarga
-export function generateToken(): string {
+export const generateToken = (): string => {
   const token = crypto.randomBytes(32).toString('hex');
   const expiresAt = new Date();
   expiresAt.setMinutes(expiresAt.getMinutes() + 5); // El token expira en 5 minutos
 
   downloadTokens.set(token, { token, expiresAt });
   return token;
-}
+};
 
 // Verificar si un token es válido
 export function validateToken(token: string): boolean {

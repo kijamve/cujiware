@@ -1,9 +1,9 @@
 import type { APIRoute } from 'astro';
-import { requireAuth } from '../../../../middleware/auth';
-import prisma from '../../../../lib/db';
-import { getBCVRate } from '../../../../lib/bcv';
-import { BiopagoVzlaAPI } from '../../../../services/biopagoService';
-import { PLAN_INTERVAL } from '../../../../constants/status';
+import { requireAuth } from '@/middleware/auth';
+import prisma from '@/lib/db';
+import { getBCVRate } from '@/lib/bcv';
+import { BiopagoVzlaAPI } from '@/services/biopagoService';
+import { PLAN_INTERVAL } from '@/constants/status';
 
 // Verificar si el usuario ha tenido alguna membresía anterior
 async function hasPreviousMembership(userId: string) {

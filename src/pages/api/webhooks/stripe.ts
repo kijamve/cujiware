@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
-import prisma from '../../../lib/db';
+import prisma from '@/lib/db';
 import Stripe from 'stripe';
-import { MEMBERSHIP_STATUS, LICENSE_STATUS, PAYMENT_STATUS, PAYMENT_METHOD, PLAN_INTERVAL } from '../../../constants/status';
+import { MEMBERSHIP_STATUS, LICENSE_STATUS, PAYMENT_STATUS, PAYMENT_METHOD, PLAN_INTERVAL } from '@/constants/status';
 
 const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY, {
   apiVersion: '2025-05-28.basil'

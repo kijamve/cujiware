@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
-import { prisma } from '../../../../lib/prisma';
-import { requireAuth } from '../../../../middleware/auth';
+import { prisma } from '@/lib/prisma';
+import { requireAuth } from '@/middleware/auth';
 
 export const POST: APIRoute = async ({ params, request }) => {
   const user = await requireAuth(request);

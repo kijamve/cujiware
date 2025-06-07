@@ -1,6 +1,6 @@
 import type { APIContext } from 'astro';
 import jwt from 'jsonwebtoken';
-import prisma from '../lib/db';
+import prisma from '@/lib/db';
 
 interface JWTPayload {
   userId: string;

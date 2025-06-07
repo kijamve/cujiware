@@ -1,10 +1,10 @@
 import type { APIRoute } from 'astro';
-import { requireAuth } from '../../../middleware/auth';
-import prisma from '../../../lib/db';
+import { requireAuth } from '@/middleware/auth';
+import prisma from '@/lib/db';
 import Stripe from 'stripe';
-import { getBCVRate } from '../../../lib/bcv';
-import { PLAN_INTERVAL } from '../../../constants/status';
-import { MEMBERSHIP_STATUS } from '../../../constants/status';
+import { getBCVRate } from '@/lib/bcv';
+import { PLAN_INTERVAL } from '@/constants/status';
+import { MEMBERSHIP_STATUS } from '@/constants/status';
 
 const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY, {
   apiVersion: '2025-05-28.basil'

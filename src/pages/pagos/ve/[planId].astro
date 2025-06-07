@@ -1,10 +1,10 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
+import Layout from '@/layouts/Layout.astro';
 import { ArrowLeft } from 'lucide-react';
-import { requireAuth } from '../../../middleware/auth.ts';
-import { prisma } from '../../../lib/prisma';
-import { getBCVRate } from '../../../lib/bcv';
-import { PLAN_INTERVAL } from '../../../constants/status';
+import { requireAuth } from '@/middleware/auth.ts';
+import { prisma } from '@/lib/prisma';
+import { getBCVRate } from '@/lib/bcv';
+import { PLAN_INTERVAL } from '@/constants/status';
 
 // Verificar si el usuario está autenticado
 const authResult = await requireAuth(Astro);

@@ -1,5 +1,5 @@
 import type { VenezuelaPaymentData } from './PricingTypes';
-import '../styles/venezuela-modal.css';
+import '@/styles/venezuela-modal.css';
 
 export class VenezuelaPaymentModal extends HTMLElement {
   private data: VenezuelaPaymentData;

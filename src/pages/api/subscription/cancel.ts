@@ -1,8 +1,8 @@
 import type { APIRoute, APIContext } from 'astro';
-import { requireAuth } from '../../../middleware/auth.ts';
-import { prisma } from '../../../lib/prisma';
+import { requireAuth } from '@/middleware/auth.ts';
+import { prisma } from '@/lib/prisma';
 import Stripe from 'stripe';
-import { MEMBERSHIP_STATUS } from '../../../constants/status';
+import { MEMBERSHIP_STATUS } from '@/constants/status';
 
 const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY, {
   apiVersion: '2025-05-28.basil'

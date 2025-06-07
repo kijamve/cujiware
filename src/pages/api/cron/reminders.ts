@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { checkAndSendReminders } from '../../../lib/reminders';
+import { checkAndSendReminders } from '@/lib/reminders';
 
 export const GET: APIRoute = async ({ request }) => {
   try {

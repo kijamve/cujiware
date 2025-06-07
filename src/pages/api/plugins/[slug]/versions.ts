@@ -1,9 +1,9 @@
 import type { APIRoute } from 'astro';
-import { prisma } from '../../../../lib/prisma';
-import { isAuthenticated } from '../../../../middleware/auth';
+import { prisma } from '@/lib/prisma';
+import { isAuthenticated } from '@/middleware/auth';
 import type { User } from '@prisma/client';
 import { randomUUID } from 'crypto';
-import { generateToken } from '../../../../utils/token';
+import { generateToken } from '@/utils/token';
 
 interface PluginVersion {
   id: string;

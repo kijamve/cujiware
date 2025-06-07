@@ -1,8 +1,8 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from '@/layouts/Layout.astro';
 import { ArrowLeft } from 'lucide-react';
-import { requireAuth } from '../middleware/auth.ts';
-import AuthModal from '../components/AuthModal.astro';
+import { requireAuth } from '@/middleware/auth.ts';
+import AuthModal from '@/components/AuthModal.astro';
 
 // Verificar si el usuario está autenticado
 const authResult = await requireAuth(Astro);

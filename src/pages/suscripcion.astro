@@ -1,7 +1,7 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { requireAuth } from '../middleware/auth';
-import PricingCards from '../components/PricingCards.astro';
+import Layout from '@/layouts/Layout.astro';
+import { requireAuth } from '@/middleware/auth';
+import PricingCards from '@/components/PricingCards.astro';
 
 const user = await requireAuth(Astro);
 const planId = Astro.url.searchParams.get('planId');

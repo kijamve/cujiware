@@ -1,4 +1,4 @@
-import { MEMBERSHIP_STATUS, LICENSE_STATUS, PAYMENT_STATUS, PAYMENT_METHOD, PLAN_INTERVAL, type MembershipStatus, type LicenseStatus, type PaymentStatus, type PaymentMethod, type PlanInterval } from '../constants/status';
+import { MEMBERSHIP_STATUS, LICENSE_STATUS, PAYMENT_STATUS, PAYMENT_METHOD, PLAN_INTERVAL, type MembershipStatus, type LicenseStatus, type PaymentStatus, type PaymentMethod, type PlanInterval } from '@/constants/status';
 
 export interface User {
   id: string;

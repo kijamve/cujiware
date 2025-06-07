@@ -1,11 +1,11 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { requireSuperAdmin } from '../../middleware/auth.ts';
-import { prisma } from '../../lib/prisma';
-import plugins from '../../data/plugins.json';
-import Tabs from '../../components/dashboard/Tabs.astro';
-import PluginList from '../../components/dashboard/PluginList.astro';
-import UploadModal from '../../components/dashboard/UploadModal.astro';
+import Layout from '@/layouts/Layout.astro';
+import { requireSuperAdmin } from '@/middleware/auth.ts';
+import { prisma } from '@/lib/prisma';
+import plugins from '@/data/plugins.json';
+import Tabs from '@/components/dashboard/Tabs.astro';
+import PluginList from '@/components/dashboard/PluginList.astro';
+import UploadModal from '@/components/dashboard/UploadModal.astro';
 
 const user = await requireSuperAdmin(Astro);
 if (user instanceof Response) {

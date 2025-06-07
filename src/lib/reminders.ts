@@ -1,6 +1,6 @@
 import { prisma } from './prisma';
-import { MEMBERSHIP_STATUS } from '../constants/status';
-import { sendEmail } from '../utils/email';
+import { MEMBERSHIP_STATUS } from '@/constants/status';
+import { sendEmail } from '@/utils/email';
 
 export async function checkAndSendReminders() {
   const now = new Date();
