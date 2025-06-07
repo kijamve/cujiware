@@ -267,84 +267,185 @@ Básica Anual - 1 Sitio
 103,45 U$D / año
 
 marzo 31, 2025	marzo 31, 2026
+
+Lucas Bertotti
+Argentina
+sistemas@tp3d.com.ar
+	
+c8bda8b7-927a-4214-b4c3-e35e0fbdec0b
 #####################
 #4296 por VISAGISMO S.R.L.
 Básica - 1 Sitio
 10,34 U$D / mes
 
 marzo 31, 2025	julio 5, 2025
+
+VISAGISMO S.R.L.
+Argentina
+prestashop@lurebyms.com
+
+60c4b9f4-360a-47c1-b804-815a7f03235f
 #####################
 #4288 por Jesus Alvarado
 Básica Anual - 1 Sitio
 120,00 U$D / año
 
 marzo 29, 2025	marzo 29, 2026
+
+Jesus Alvarado
+28670687
+Anzoategui, Venezuela
++584123445822
+
+joffreyzuly@gmail.com
+
+de7d991f-104c-4fe5-9d73-1446483b5319
 #####################
 #4280 por INVERSIONES CAHERSI
 Básica Anual - 1 Sitio
 120,00 U$D / año
 
 marzo 27, 2025	marzo 27, 2026
+
+INVERSIONES CAHERSI MOTOR´S, C.A.
+J406785776
+CALLE LEONCIO MARTÍNEZ QTA ALICIA URB LAS ACACIAS CARACAS DISTRITO CAPITAL, Venezuela
++582126343737
+inversionescahersi@gmail.com
+
+f38468c4-7f3e-44c6-a507-30ad0dad5ded
 #####################
 #4271 por MATIAS WENDLER CORONEL
 Básica Semestral - 1 Sitio
 51,72 U$D cada 6 meses
 
 marzo 27, 2025	septiembre 27, 2025
+
+MATIAS WENDLER CORONEL
+Argentina
+wendlerwebsolutions@gmail.com
+
+2af499b4-3e51-4b34-92a2-ba69984dbdc6
 #####################
-#4266 por Andrés Abreu
+#4266 por PINTURERIA A&M, C.A
 Básica - 1 Sitio
 12,00 U$D / mes
 
 marzo 25, 2025	junio 30, 2025
+
+PINTURERIA A&M, C.A
+J500120028
+AV MANUEL FELIPE TOVAR EDIF ESMERALDA SUITE PISO PB LOCAL SN URB SAN BERNARDINO CARACAS DISTRITO CAPITAL ZONA POSTAL 1010, Venezuela
++584125821224
+tiendasmontanasanbernardino@gmail.com
+
+12da5ad8-16a4-4410-9867-137af834e58c
 #####################
 #4255 por Stockin Lavanda
-Básica - 1 Sitio
+Básica Semestral - 1 Sitio
 62,07 U$D cada 6 meses
 
 marzo 20, 2025	septiembre 20, 2025
+
+Argentina
+ventasonline@stockinlavanda.com.ar
+
+4dcdb23b-c9c0-4230-8864-6f8f6979e398
 #####################
 #4239 por Daniel Hernandez
 Básica Anual - 1 Sitio
 120,00 U$D / año
 
 marzo 14, 2025	marzo 14, 2026
+
+DANIEL JOSE HERNANDEZ RINCON
+V12634136
+Cafetal, Caracas, Venezuela
++584122606640
+danieljhr1@gmail.com
+
+abd1dc75-71e1-4d96-95db-0e1018a2ab60
 #####################
-#4232 por Miriam Rodriguez
+#4232 por SOCIEDAD VENEZOLANA DE CARDIOLOGIA
 Pro Anual - 3 Sitios
 320,00 U$D / año
 
 marzo 14, 2025	marzo 14, 2026
+
+SOCIEDAD VENEZOLANA DE CARDIOLOGIA
+J001320075
+Av. Mohedano con Calle Don Pedro Grases, Centro Gerencial Mohedano, Piso 4, Ofic. 4-D, La Castellana. Caracas. ZP 1060, Venezuela
++582122631534
+administracion@svcardiologia.com
+
+ec1c477b-d5f2-4e13-a3a8-3af40c0baeb5
+ec1c477b-d5f2-4e13-a3a8-3af40c0baeb6
+ec1c477b-d5f2-4e13-a3a8-3af40c0baeb7
 #####################
 #4226 por Javier Chirinos
 Básica - 1 Sitio
 12,00 U$D / mes
 
 marzo 12, 2025	junio 15, 2025
+
+WILMAN JAVIER CHIRINOS PINO
+V13059584
+ARAGUA, GIRARDOT, LOS TACARIGUAS, Venezuela
++584124457158
+tutrabajodegrado1@gmail.com
+	
+9df0411b-4df0-455a-9103-c6b8113a70d5
 #####################
-#4165 por Miriam Rodriguez
+#4165 por SOCIEDAD VENEZOLANA DE CARDIOLOGIA
 Membresía - Básica Anual - 1 Sitio
 120,00 U$D / año
 
 febrero 27, 2025	febrero 27, 2026
+
+SOCIEDAD VENEZOLANA DE CARDIOLOGIA
+J001320075
+Av. Mohedano con Calle Don Pedro Grases, Centro Gerencial Mohedano, Piso 4, Ofic. 4-D, La Castellana. Caracas. ZP 1060, Venezuela
++582122631534
+administracion@svcardiologia.com
+	
+9932ff69-ae5e-499b-bd53-dc864f22531c
 #####################
 #4131 por FRANCO CAIMI
 Membresía - Básica Semestral - 1 Sitio
 51,72 U$D cada 6 meses
 
 febrero 17, 2025	agosto 17, 2025
+
+FRANCO CAIMI
+Argentina
+franco_caimi@hotmail.com
+
+87a75f5e-f2d6-45fb-b3d5-091f2fa40ff5
 #####################
 #4070 por Sergio Riebra
 Membresía - Básica Semestral - 1 Sitio
 60,00 U$D cada 6 meses
 
 febrero 5, 2025	agosto 5, 2025
+
+Sergio Riebra
+16675837
+Caracas, Venezuela
++584125967375
+legalmenteconectadoscorp@gmail.com
+
+41558a86-89d1-4bee-a541-e1dc0c7f71e0
 #####################
 #4027 por Martin Gutierrez
 Membresía - Básica - 1 Sitio
 10,34 U$D / mes
 
 enero 24, 2025	junio 28, 2025
+
+Argentina
+martingutierrez08@gmail.com
+
+b0935662-e35f-4001-a941-b84e0cd9dba8
 #####################
 #3962 por PPH Sa
 Membresía - Básica Semestral - 1 Sitio
@@ -352,6 +453,11 @@ Membresía - Básica Semestral - 1 Sitio
 
 enero 3, 2025	julio 3, 2025
 
+PPH sa
+Argentina
+leandropadulo@hotmail.com
+
+725b12c2-f416-4a3a-92d7-a71dde49c2d5
 #####################
 #3906 por Dalmiro José Yarza Montes
 Membresía - Básica Semestral - 1 Sitio
@@ -359,20 +465,38 @@ Membresía - Básica Semestral - 1 Sitio
 
 diciembre 18, 2024	noviembre 18, 2025
 
+Dalmiro José Yarza Montes
+V12077898
+urbanizacion la esmeralda, calle 2 numero 18 San felipe Yaracuy
+dalmirojy@gmail.com
++584128431894
+	
+bb101a68-fdb3-446c-a5e6-c5d8a8fef35f
 #####################
 #3866 por Angel David
 Membresía - Básica - 1 Sitio
 12,00 U$D / mes
 
-diciembre 9, 2024	En 3 días
+diciembre 9, 2024	2025-06-10
 
+Angel david
+30160816
+Caracas, Venezuela
++584243373387
+angeldfp2004@gmail.com
+
+63fe76e5-d11b-4f84-b135-6f2e0bdde1ff
 #####################
 #3834 por Lucas Bertotti
 Membresía - Básica Anual - 1 Sitio
 103,45 U$D / año
 
 noviembre 29, 2024	noviembre 29, 2025
-Seleccionar Subscription – Nov 27, 2024 @ 02:17 PM	
+
+Argentina
+sistemas@tp3d.com.ar
+
+c67317f5-2d41-4643-99c6-daa678c5caa5
 #####################
 #3818 por Jairo Feria
 Membership - Básica Anual - 1 Sitio
