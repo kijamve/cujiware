@@ -337,7 +337,6 @@ CUJIWARE es una plataforma SAAS que proporciona acceso integral a un ecosistema 
   - 400: 'Slug no proporcionado'
   - 500: 'Error interno del servidor'
 - Notas:
-  - download_token solo se incluye si el usuario está autenticado
   - El token expira en 10 minutos
 
 #### GET /api/plugins/{slug}/{token}/{version}

@@ -4,7 +4,7 @@ import prisma from '../../../../lib/db';
 import { getBCVRate } from '../../../../lib/bcv';
 import { CachicamoService } from '../../../../services/cachicamoService';
 import { VenezolanoService } from '../../../../services/venezolano';
-import { MEMBERSHIP_STATUS, LICENSE_STATUS, PAYMENT_STATUS, PAYMENT_METHOD, PLAN_INTERVAL } from '../../../../constants/status';
+import { PLAN_INTERVAL } from '../../../../constants/status';
 import { handleMembershipCreation, handleMembershipRenewal, createInvoice } from '../../../../lib/subscription/utils';
 
 // Verificar si el usuario ha tenido alguna membresía anterior

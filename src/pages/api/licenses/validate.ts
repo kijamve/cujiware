@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro';
 import { prisma } from '../../../lib/prisma';
 import Stripe from 'stripe';
 import { MEMBERSHIP_STATUS, LICENSE_STATUS } from '../../../constants/status';
+import { generateToken } from '../../../utils/token';
 
 const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-05-28.basil'
@@ -19,14 +20,25 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    // Buscar la licencia
-    const license = await prisma.license.findUnique({
-      where: { id: license_id },
-      include: {
-        membership: true,
-        usages: true
-      }
-    });
+    // Buscar la licencia y la última versión del plugin
+    const [license, latestPluginVersion] = await Promise.all([
+      prisma.license.findUnique({
+        where: { id: license_id },
+        include: {
+          membership: true,
+          usages: {
+            orderBy: {
+              last_used_at: 'desc'
+            },
+            take: 5
+          }
+        }
+      }),
+      prisma.pluginVersion.findFirst({
+        where: { plugin_slug },
+        orderBy: { created_at: 'desc' }
+      })
+    ]);
 
     if (!license) {
       return new Response(
@@ -136,13 +148,24 @@ export const POST: APIRoute = async ({ request }) => {
       }
     });
 
+    // Generar token para la descarga
+    const downloadToken = generateToken();
+    const downloadUrl = latestPluginVersion ? 
+      `/api/plugins/${plugin_slug}/${downloadToken}/${latestPluginVersion.id}` : null;
+
     return new Response(
       JSON.stringify({
         valid: true,
         license: {
           ...license,
           usages: license.usages
-        }
+        },
+        latest_version: latestPluginVersion ? {
+          version: latestPluginVersion.version,
+          file_name: latestPluginVersion.file_name,
+          file_path_server: latestPluginVersion.file_path_server,
+          download_url: downloadUrl
+        } : null
       }),
       { status: 200 }
     );

@@ -3,6 +3,7 @@ import { prisma } from '../../../../lib/prisma';
 import { isAuthenticated } from '../../../../middleware/auth';
 import type { User } from '@prisma/client';
 import { randomUUID } from 'crypto';
+import { generateToken } from '../../../../utils/token';
 
 interface PluginVersion {
   id: string;
@@ -57,14 +58,8 @@ export const GET: APIRoute = async ({ params, request }) => {
 
     // Si el usuario está autenticado, generar o renovar su token
     const versionsWithTokens = versions.map((version) => {
-      if (isUserAuthenticated && user) {
-        // Generar nuevo token si no existe o ha expirado
-        if (!userTokens.has(user.id) || userTokens.get(user.id)!.expiresAt < new Date()) {
-          const token = randomUUID();
-          const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutos
-          userTokens.set(user.id, { token, expiresAt, userId: user.id });
-        }
-        return { ...version, download_token: userTokens.get(user.id)!.token };
+      if (isUserAuthenticated) {
+        return { ...version, download_token: generateToken() };
       }
       return { ...version, download_token: null };
     });

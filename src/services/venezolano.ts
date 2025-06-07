@@ -1,4 +1,5 @@
-import { AES, enc, mode, pad } from 'crypto-js';
+import pkg from 'crypto-js';
+const { AES, enc, mode, pad } = pkg;
 
 interface CardData {
   cardholder: string;
@@ -68,21 +69,48 @@ export class VenezolanoService {
 
   private encrypt(data: any): string {
     const jsonStr = JSON.stringify(data);
-    const encrypted = AES.encrypt(jsonStr, this.key, {
-      iv: enc.Utf8.parse(this.iv),
+    const key = enc.Utf8.parse(this.key);
+    const iv = enc.Utf8.parse(this.iv);
+    
+    const encrypted = AES.encrypt(jsonStr, key, {
+      iv: iv,
       mode: mode.CBC,
       padding: pad.Pkcs7
     });
-    return encrypted.toString();
+    
+    // Convertir a base64 como lo hace PHP
+    return Buffer.from(encrypted.ciphertext.toString(), 'hex').toString('base64');
   }
 
   private decrypt(encryptedData: string): any {
-    const decrypted = AES.decrypt(encryptedData, this.key, {
-      iv: enc.Utf8.parse(this.iv),
-      mode: mode.CBC,
-      padding: pad.Pkcs7
-    });
-    return JSON.parse(decrypted.toString(enc.Utf8));
+    try {
+      // Convertir de base64 a hex como lo espera crypto-js
+      const hexData = Buffer.from(encryptedData, 'base64').toString('hex');
+      const key = enc.Utf8.parse(this.key);
+      const iv = enc.Utf8.parse(this.iv);
+      
+      const decrypted = AES.decrypt(
+        { ciphertext: enc.Hex.parse(hexData) } as pkg.lib.CipherParams,
+        key,
+        {
+          iv: iv,
+          mode: mode.CBC,
+          padding: pad.Pkcs7
+        }
+      );
+      
+      const decryptedStr = decrypted.toString(enc.Utf8);
+      console.log('Decrypted data:', decryptedStr);
+      
+      if (!decryptedStr) {
+        throw new Error('Decryption resulted in empty string');
+      }
+      
+      return JSON.parse(decryptedStr);
+    } catch (error) {
+      console.error('Decryption error:', error);
+      throw new Error('Error al desencriptar los datos');
+    }
   }
 
   private async makeRequest(endpoint: string, data: any): Promise<any> {
@@ -99,9 +127,11 @@ export class VenezolanoService {
       body: JSON.stringify(request)
     });
 
-    const result = await response.json();
-    if (result?.response?.response) {
-      return this.decrypt(result.response.response);
+    const text = await response.text();
+    console.log('Response text:', text);
+    const result = JSON.parse(text);
+    if (result?.response) {
+      return this.decrypt(result.response);
     }
     return result;
   }

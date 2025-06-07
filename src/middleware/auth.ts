@@ -9,16 +9,27 @@ interface JWTPayload {
 
 export async function isAuthenticated(request: Request) {
   try {
-    // Obtener el token del header de autorización
+    let token: string | undefined;
+
+    // Intentar obtener el token del header de autorización
     const authHeader = request.headers.get('Authorization');
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      console.log('No se encontró el header de autorización o no tiene el formato correcto');
-      return null;
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      token = authHeader.split(' ')[1];
     }
 
-    const token = authHeader.split(' ')[1];
+    // Si no hay token en el header, intentar obtenerlo de las cookies
     if (!token) {
-      console.log('No se encontró el token en el header de autorización');
+      const cookies = request.headers.get('cookie');
+      if (cookies) {
+        const tokenCookie = cookies.split(';').find(cookie => cookie.trim().startsWith('token='));
+        if (tokenCookie) {
+          token = tokenCookie.split('=')[1];
+        }
+      }
+    }
+
+    if (!token) {
+      console.log('No se encontró el token en el header de autorización ni en las cookies');
       return null;
     }
 

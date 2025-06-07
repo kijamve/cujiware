@@ -1,21 +1,8 @@
 import type { APIRoute } from 'astro';
 import { prisma } from '../../../../../lib/prisma';
-import { isAuthenticated } from '../../../../../middleware/auth';
 import fs from 'fs';
 import path from 'path';
-import { LICENSE_STATUS } from '../../../../../constants/status';
-
-// Importar el mapa de tokens desde el archivo de versiones
-import { userTokens } from '../versions';
-
-interface PluginVersion {
-  id: string;
-  version: string;
-  plugin_slug: string;
-  file_name: string;
-  file_path_server: string;
-  created_at: Date;
-}
+import { validateToken } from '../../../../../utils/token';
 
 export const GET: APIRoute = async ({ params, request }) => {
   try {
@@ -24,36 +11,9 @@ export const GET: APIRoute = async ({ params, request }) => {
       return new Response('Parámetros incompletos', { status: 400 });
     }
 
-    // Verificar si el usuario está autenticado
-    const user = await isAuthenticated(request);
-    if (!user) {
-      return new Response('No autorizado', { status: 401 });
-    }
-
-    // Verificar si el usuario tiene una licencia activa para el plugin
-    const license = await prisma.license.findFirst({
-      where: {
-        membership: {
-          user_id: user.id,
-        },
-        status: LICENSE_STATUS.ACTIVE
-      }
-    });
-
-    if (!license) {
-      return new Response('Se requiere una licencia activa para descargar este plugin', { status: 403 });
-    }
-
-    // Verificar si el usuario tiene un token válido
-    const userTokenData = userTokens.get(user.id);
-    if (!userTokenData || userTokenData.token !== token) {
-      return new Response('Token inválido', { status: 404 });
-    }
-
-    // Verificar si el token ha expirado
-    if (userTokenData.expiresAt < new Date()) {
-      userTokens.delete(user.id);
-      return new Response('Token expirado', { status: 410 });
+    // Verificar si el token es válido
+    if (!validateToken(token)) {
+      return new Response('Token inválido o expirado', { status: 401 });
     }
 
     // Obtener la versión del plugin

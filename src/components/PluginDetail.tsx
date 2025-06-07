@@ -8,8 +8,8 @@ interface PluginVersion {
   id: string;
   version: string;
   file_name: string;
-  download_token: string;
   created_at: string;
+  download_token?: string | null;
 }
 
 interface PluginDetailProps {
@@ -33,17 +33,18 @@ export function PluginDetail({ plugin, country, platform, content, screenshots }
   useEffect(() => {
     const fetchVersions = async () => {
       try {
-        const response = await fetch(`/api/plugins/${plugin.slug}/versions`);
+        const response = await fetch(`/api/plugins/${plugin.slug}/versions`, {
+          credentials: 'include',
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
         if (!response.ok) {
           throw new Error('Error al cargar las versiones');
         }
         const data = await response.json();
-        // Si el usuario no está autenticado, removemos el token de descarga
-        const versionsWithoutToken = data.map((version: PluginVersion) => ({
-          ...version,
-          download_token: response.status === 401 ? null : version.download_token
-        }));
-        setVersions(versionsWithoutToken);
+        setVersions(data);
       } catch (err) {
         setError('No se pudieron cargar las versiones del plugin');
         console.error(err);
@@ -62,16 +63,22 @@ export function PluginDetail({ plugin, country, platform, content, screenshots }
   };
 
   const handleDownload = async (version: PluginVersion) => {
-    if (!version.download_token) {
-      window.location.href = '/mi-cuenta';
-      return;
-    }
-
     try {
       setIsLoading(true);
       setError(null);
       
-      const response = await fetch(`/api/plugins/${plugin.slug}/${version.download_token}/${version.id}`);
+      if (!version.download_token) {
+        window.location.href = '/mi-cuenta';
+        return;
+      }
+      
+      const response = await fetch(`/api/plugins/${plugin.slug}/${version.download_token}/${version.id}`, {
+        credentials: 'include',
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
       
       if (!response.ok) {
         if (response.status === 401) {
