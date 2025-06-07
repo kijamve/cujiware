@@ -1,4 +1,4 @@
-import prisma from '@/db';
+import prisma from '@/lib/db';
 import { MEMBERSHIP_STATUS, LICENSE_STATUS, PAYMENT_STATUS, PAYMENT_METHOD, PLAN_INTERVAL } from '@/constants/status';
 import { CachicamoService } from '@/services/cachicamoService';
 

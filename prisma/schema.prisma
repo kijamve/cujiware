@@ -134,15 +134,13 @@ model Plan {
 /// Almacena información sobre archivos y versiones disponibles
 model PluginVersion {
   id                String   @id @default(cuid())
-  plugin_slug       String
+  file_name         String   @unique
   version           String
-  file_name         String
   file_path_server  String
   created_at        DateTime @default(now())
   updated_at        DateTime @updatedAt
 
-  @@unique([plugin_slug, version])
-  @@index([plugin_slug])
+  @@index([file_name])
 }
 
 /// Modelo que registra los pagos realizados

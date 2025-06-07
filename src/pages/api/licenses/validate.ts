@@ -11,9 +11,9 @@ const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY!, {
 export const POST: APIRoute = async ({ request }) => {
   try {
     const body = await request.json();
-    const { license_id, domain, plugin_slug } = body;
+    const { license_id, domain, file_name } = body;
 
-    if (!license_id || !domain || !plugin_slug) {
+    if (!license_id || !domain || !file_name) {
       return new Response(
         JSON.stringify({ error: 'Missing required fields' }),
         { status: 400 }
@@ -35,7 +35,11 @@ export const POST: APIRoute = async ({ request }) => {
         }
       }),
       prisma.pluginVersion.findFirst({
-        where: { plugin_slug },
+        where: {
+          file_name: {
+            startsWith: file_name
+          }
+        },
         orderBy: { created_at: 'desc' }
       })
     ]);
@@ -110,7 +114,7 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // Crear o actualizar el uso de la licencia
-    const licenseUsage = await prisma.licenseUsage.upsert({
+    await prisma.licenseUsage.upsert({
       where: {
         license_id_domain: {
           license_id: license_id,
@@ -132,7 +136,7 @@ export const POST: APIRoute = async ({ request }) => {
       where: {
         license_id_plugin_slug_domain: {
           license_id: license_id,
-          plugin_slug: plugin_slug,
+          plugin_slug: file_name,
           domain: domain
         }
       },
@@ -142,7 +146,7 @@ export const POST: APIRoute = async ({ request }) => {
       },
       create: {
         license_id: license_id,
-        plugin_slug: plugin_slug,
+        plugin_slug: file_name,
         domain: domain,
         last_usage: new Date()
       }
@@ -151,7 +155,7 @@ export const POST: APIRoute = async ({ request }) => {
     // Generar token para la descarga
     const downloadToken = generateToken();
     const downloadUrl = latestPluginVersion ? 
-      `/api/plugins/${plugin_slug}/${downloadToken}/${latestPluginVersion.id}` : null;
+      `/api/plugins/${latestPluginVersion.plugin_slug}/${downloadToken}/${latestPluginVersion.id}` : null;
 
     return new Response(
       JSON.stringify({
@@ -162,9 +166,8 @@ export const POST: APIRoute = async ({ request }) => {
         },
         latest_version: latestPluginVersion ? {
           version: latestPluginVersion.version,
-          file_name: latestPluginVersion.file_name,
-          file_path_server: latestPluginVersion.file_path_server,
-          download_url: downloadUrl
+          download_url: downloadUrl,
+          created_at: latestPluginVersion.created_at
         } : null
       }),
       { status: 200 }
