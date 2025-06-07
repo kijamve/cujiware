@@ -3,6 +3,7 @@ import { requireAuth } from '../../../../middleware/auth';
 import prisma from '../../../../lib/db';
 import { getBCVRate } from '../../../../lib/bcv';
 import { CachicamoService } from '../../../../services/cachicamoService';
+import { VenezolanoService } from '../../../../services/venezolano';
 import { MEMBERSHIP_STATUS, LICENSE_STATUS, PAYMENT_STATUS, PAYMENT_METHOD, PLAN_INTERVAL } from '../../../../constants/status';
 import { handleMembershipCreation, handleMembershipRenewal, createInvoice } from '../../../../lib/subscription/utils';
 
@@ -104,36 +105,90 @@ export const POST: APIRoute = async (context) => {
       });
     }
 
-    // Simular pago exitoso y generar referencia
-    const reference = Math.random().toString().slice(2, 8);
+    // Procesar pago con Venezolano
+    const venezolanoService = new VenezolanoService();
+    const orderId = `MEM-${Date.now()}`;
+    const customerIp = context.request.headers.get('x-forwarded-for') || '127.0.0.1';
 
-    // Crear factura usando la función del utils
-    const invoiceUrl = await createInvoice(
-      customerUuid,
-      plan,
-      amountInBs,
-      reference,
-      'TDC'
-    );
+    try {
+      const cardData = {
+        cardholder: card_name,
+        dni_type: cleanTaxId[0],
+        dni: cleanTaxId.substring(1),
+        card_number: card_number.replace(/\s/g, ''),
+        email: user.email,
+        phone: user.billing_phone || '04120000000',
+        address: card_address,
+        expire: {
+          mm: card_expire.split('/')[0],
+          yyyy: card_expire.split('/')[1]
+        },
+        cvc: card_cvv
+      };
 
-    // Crear o renovar membresía
-    const membership = membership_id 
-      ? await handleMembershipRenewal(membership_id, user.id, plan, amountInBs, bcvRate, 'TDC', reference, invoiceUrl)
-      : await handleMembershipCreation(user.id, plan, amountInBs, bcvRate, 'TDC', reference, invoiceUrl);
+      const paymentResult = await venezolanoService.createPaymentTDC(
+        `Pago de membresía ${plan.name}`,
+        orderId,
+        amountInBs,
+        customerIp,
+        cardData
+      );
 
-    if (membership instanceof Response) {
-      return membership;
+      if (!paymentResult || paymentResult.estatus?.toLowerCase() !== 'pagado') {
+        let errorMessage = 'Error al procesar el pago';
+        if (paymentResult?.descResp) {
+          errorMessage += `: ${paymentResult.descResp}`;
+        }
+        if (paymentResult?.codRespuesta) {
+          errorMessage += ` [error nro.: ${paymentResult.codRespuesta}]`;
+        }
+        return new Response(JSON.stringify({ 
+          error: errorMessage
+        }), {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' }
+        });
+      }
+
+      // Crear factura usando la función del utils
+      const invoiceUrl = await createInvoice(
+        customerUuid,
+        plan,
+        amountInBs,
+        paymentResult.referenciaBVC || orderId,
+        'TDC'
+      );
+
+      // Crear o renovar membresía
+      const membership = membership_id 
+        ? await handleMembershipRenewal(membership_id, user.id, plan, amountInBs, bcvRate, 'TDC', paymentResult.referenciaBVC || orderId, invoiceUrl)
+        : await handleMembershipCreation(user.id, plan, amountInBs, bcvRate, 'TDC', paymentResult.referenciaBVC || orderId, invoiceUrl);
+
+      if (membership instanceof Response) {
+        return membership;
+      }
+
+      return new Response(JSON.stringify({ 
+        success: true,
+        message: membership_id ? 'Membresía renovada correctamente.' : 'Pago registrado correctamente.',
+        membership_id: membership.id,
+        amount_in_bs: amountInBs,
+        reference: paymentResult.referenciaBVC,
+        authorization_code: paymentResult.codAutorizacion
+      }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    } catch (error) {
+      console.error('Error al procesar pago con tarjeta:', error);
+      return new Response(JSON.stringify({ 
+        error: 'Error al procesar el pago',
+        details: error instanceof Error ? error.message : 'Error desconocido'
+      }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
-
-    return new Response(JSON.stringify({ 
-      success: true,
-      message: membership_id ? 'Membresía renovada correctamente.' : 'Pago registrado correctamente.',
-      membership_id: membership.id,
-      amount_in_bs: amountInBs
-    }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' }
-    });
   } catch (error) {
     console.error('Error al procesar pago con tarjeta:', error);
     return new Response(JSON.stringify({ 
