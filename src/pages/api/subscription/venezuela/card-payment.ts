@@ -46,6 +46,46 @@ export const POST: APIRoute = async (context) => {
       });
     }
 
+    // Validar CVC
+    if (!card_cvv) {
+      return new Response(JSON.stringify({ 
+        error: 'El código CVC es requerido'
+      }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    } else if (!/^[0-9]+$/.test(card_cvv)) {
+      return new Response(JSON.stringify({ 
+        error: 'Su código CVC solo puede contener digitos'
+      }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    } else if (card_cvv.length !== 3) {
+      return new Response(JSON.stringify({ 
+        error: `El código CVC debe ser de 3 digitos y no de ${card_cvv.length}`
+      }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
+    // Validar fecha de expiración
+    const [expireMonth, expireYear] = card_expire.split('/');
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear() % 100;
+    const currentMonth = currentDate.getMonth() + 1;
+
+    if (parseInt(expireYear) < currentYear || 
+        (parseInt(expireYear) === currentYear && parseInt(expireMonth) < currentMonth)) {
+      return new Response(JSON.stringify({ 
+        error: 'Su tarjeta esta Vencida'
+      }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
     // Limpiar y formatear la cédula
     let cleanTaxId = card_tax_id.replace(/[^A-Za-z0-9]/g, ''); // Eliminar caracteres especiales
     if (/^\d+$/.test(cleanTaxId)) { // Si solo contiene números
@@ -120,8 +160,8 @@ export const POST: APIRoute = async (context) => {
         phone: user.billing_phone || '04120000000',
         address: card_address,
         expire: {
-          mm: card_expire.split('/')[0],
-          yyyy: card_expire.split('/')[1]
+          mm: expireMonth,
+          yyyy: expireYear
         },
         cvc: card_cvv
       };
