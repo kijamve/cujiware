@@ -2,14 +2,15 @@
 import Autocomplete from './Autocomplete.astro';
 
 interface Props {
-  plugins: { slug: string; name: string; }[];
+  plugins: { slug: string; name: string; file_name: string; }[];
 }
 
 const { plugins } = Astro.props;
 
 const pluginOptions = plugins.map(plugin => ({
   value: plugin.slug,
-  label: plugin.name
+  label: plugin.name,
+  file_name: plugin.file_name
 }));
 ---
 
@@ -71,4 +72,23 @@ const pluginOptions = plugins.map(plugin => ({
       </button>
     </div>
   </form>
-</div> 
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('upload-form');
+    const fileNameInput = form?.querySelector('[name="file_name"]') as HTMLInputElement;
+
+    // Escuchar el evento en el documento
+    document.addEventListener('optionSelected', ((e: Event) => {
+      console.log('Evento optionSelected recibido:', e);
+      const customEvent = e as CustomEvent<{ file_name: string }>;
+      const { file_name } = customEvent.detail;
+      console.log('File name recibido:', file_name);
+      if (file_name && fileNameInput) {
+        console.log('Actualizando input con:', file_name);
+        fileNameInput.value = file_name;
+      }
+    }) as EventListener);
+  });
+</script> 

@@ -42,6 +42,8 @@ export function PluginCatalog({ plugins, categories, country, platform }: Plugin
     return filtered.sort((a, b) => {
       if (a.featured && !b.featured) return -1;
       if (!a.featured && b.featured) return 1;
+      if (a.new_arrivals && !b.new_arrivals) return -1;
+      if (!a.new_arrivals && b.new_arrivals) return 1;
       return a.name.localeCompare(b.name);
     });
   }, [plugins, selectedCategory, searchQuery, platform]);

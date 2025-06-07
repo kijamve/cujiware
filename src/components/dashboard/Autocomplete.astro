@@ -3,7 +3,7 @@ interface Props {
   name: string;
   label: string;
   placeholder: string;
-  options: { value: string; label: string; }[];
+  options: { value: string; label: string; file_name?: string; }[];
   required?: boolean;
 }
 
@@ -55,11 +55,22 @@ const { name, label, placeholder, options, required = false } = Astro.props;
         div.className = 'cursor-pointer select-none relative py-2 pl-3 pr-9 hover:bg-cuji-blue hover:text-white';
         div.textContent = option.label;
         div.setAttribute('data-value', option.value);
+        if (option.file_name) {
+          div.setAttribute('data-file-name', option.file_name);
+        }
         
         div.onclick = () => {
           input.value = option.label;
           hiddenInput.value = option.value;
           resultsDiv.classList.add('hidden');
+
+          // Disparar evento personalizado cuando se selecciona una opción
+          const event = new CustomEvent('optionSelected', {
+            detail: { file_name: option.file_name },
+            bubbles: true,
+            composed: true
+          });
+          div.dispatchEvent(event);
         };
 
         resultsDiv.appendChild(div);

@@ -8,4 +8,5 @@ export interface Plugin {
   countrie_exclude?: string[];
   platform: string[];
   featured?: boolean;
+  new_arrivals?: boolean;
 }

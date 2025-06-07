@@ -1,6 +1,6 @@
 import { PluginIcon } from './PluginIcon';
 import type { Plugin } from './types';
-import { Star } from 'lucide-react';
+import { Star, Sparkles } from 'lucide-react';
 
 interface PluginCardProps {
   plugin: Plugin;
@@ -14,11 +14,17 @@ export function PluginCard({ plugin, country, platform }: PluginCardProps) {
   };
 
   return (
-    <div className={`bg-white rounded-lg shadow-md overflow-hidden border ${plugin.featured ? 'border-cuji-green' : 'border-gray-200'} relative`}>
+    <div className={`bg-white rounded-lg shadow-md overflow-hidden border ${plugin.featured ? 'border-cuji-green' : plugin.new_arrivals ? 'border-cuji-blue' : 'border-gray-200'} relative`}>
       {plugin.featured && (
         <div className="absolute top-4 right-4 bg-cuji-green text-white px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1">
           <Star className="h-4 w-4" />
           Lo más buscado
+        </div>
+      )}
+      {plugin.new_arrivals && (
+        <div className="absolute top-4 right-4 bg-cuji-blue text-white px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1">
+          <Sparkles className="h-4 w-4" />
+          Nuevo
         </div>
       )}
       <div className="p-6">

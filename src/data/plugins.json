@@ -2,6 +2,7 @@
   {
     "name": "MercadoPago para Gravity Forms - Integración - Soporte para Suscripciones",
     "slug": "mercadopago-tools-pro-para-gravity-forms-con-suscripciones",
+    "file_name": "gfkmercadopago.zip",
     "short_description": "Integra MercadoPago con Gravity Forms para procesar pagos y suscripciones recurrentes de forma segura y automatizada",
     "icon": "CreditCard", 
     "category": "payment_method",
@@ -49,6 +50,7 @@
   {
     "name": "Megasoft para PrestaShop - Botón de Pago - C2P/P2C, Tarjetas y Zelle",
     "slug": "boton-de-integracion-de-megasoft-con-prestashop",
+    "file_name": "kmegasoft.zip",
     "short_description": "Integra la pasarela de pago Megasoft en PrestaShop para aceptar Pago Móvil C2P/P2C, Tarjetas de Crédito y Zelle de forma segura",
     "icon": "CreditCard",
     "category": "payment_method", 
@@ -58,6 +60,7 @@
   {
     "name": "Zoom para PrestaShop - Transportista de Envíos - Cálculo Automático de Tarifas",
     "slug": "zoom-transportista-de-envios-en-venezuela-para-prestashop",
+    "file_name": "zoomve.zip",
     "short_description": "Integra Zoom como método de envío en PrestaShop con cálculo automático de tarifas y generación de guías de envío",
     "icon": "Truck",
     "category": "shipping",
@@ -67,6 +70,7 @@
   {
     "name": "Generador de Cupones para PrestaShop - Primera Compra",
     "slug": "crear-cupones-para-la-primera-compra-en-prestashop",
+    "file_name": "cartrulefirstorder.zip",
     "short_description": "Genera automáticamente cupones de descuento para nuevos clientes en su primera compra, aumentando la conversión de ventas",
     "icon": "Ticket",
     "category": "utils",
@@ -98,6 +102,7 @@
   {
     "name": "Telegram para PrestaShop - Notificaciones - Pedidos y Eventos",
     "slug": "notificaciones-por-telegram-para-prestashop",
+    "file_name": "telegramnotify.zip",
     "short_description": "Recibe notificaciones instantáneas en Telegram sobre nuevos pedidos, actualizaciones de estado y eventos importantes de tu tienda",
     "icon": "Bell",
     "category": "utils",
@@ -107,6 +112,7 @@
   {
     "name": "Binance para PrestaShop - Pasarela de Pago - Criptomonedas",
     "slug": "binance-pay-para-prestashop",
+    "file_name": "kbinancepay.zip",
     "short_description": "Acepta pagos en criptomonedas a través de Binance Pay en tu tienda PrestaShop de forma segura y confiable",
     "icon": "Bitcoin",
     "category": "payment_method",
@@ -116,6 +122,7 @@
   {
     "name": "Megasoft para WooCommerce - Botón de Pago - C2P/P2C, Tarjetas y Zelle",
     "slug": "boton-de-integracion-de-megasoft-con-woocommerce",
+    "file_name": "woocommerce-kmegasoft.zip",
     "short_description": "Integra la pasarela de pago Megasoft en WooCommerce para aceptar Pago Móvil C2P/P2C, Tarjetas de Crédito y Zelle de forma segura",
     "icon": "CreditCard",
     "category": "payment_method",
@@ -125,6 +132,7 @@
   {
     "name": "BCV para WooCommerce - Actualizador de Tasa - Compatible con Curcy, WOOCS y Fox",
     "slug": "tasa-bcv-automatica-para-woocommerce-curcy-woocs-fox",
+    "file_name": "woocommerce-bcvautoupdate.zip",
     "short_description": "Actualiza automáticamente las tasas de cambio según el Banco Central de Venezuela, compatible con los principales plugins de moneda",
     "icon": "RefreshCw",
     "category": "utils",
@@ -134,6 +142,7 @@
   {
     "name": "Banco de Venezuela para WooCommerce - Integración directa entre tu tienda y el banco - Biopago y Tarjetas",
     "slug": "biopago-y-tarjetas-de-debito-del-banco-de-venezuela-para-woocommerce",
+    "file_name": "woocommerce-biopagovzla.zip",
     "short_description": "Acepta pagos con Biopago y tarjetas de débito del Banco de Venezuela en tu tienda WooCommerce de forma segura y confiable",
     "icon": "CreditCard",
     "category": "payment_method",
@@ -143,6 +152,7 @@
   {
     "name": "Banco de Venezuela para PrestaShop - Integración directa entre tu tienda y el banco - Biopago y Tarjetas",
     "slug": "biopago-y-tarjetas-de-debito-del-banco-de-venezuela-para-prestashop",
+    "file_name": "kbiopago.zip",
     "short_description": "Integra Biopago y tarjetas de débito del Banco de Venezuela en tu tienda PrestaShop para procesar pagos de forma segura",
     "icon": "CreditCard",
     "category": "payment_method",
@@ -152,6 +162,7 @@
   {
     "name": "OCA para WooCommerce - Transportista de Envíos - Integración Completa",
     "slug": "oca-para-woocommerce",
+    "file_name": "carriers-of-argentina-for-woocommerce.zip",
     "short_description": "Integra el servicio de envíos OCA en WooCommerce con cálculo automático de tarifas, generación de guías y rastreo de paquetes",
     "icon": "Truck",
     "category": "shipping",
@@ -161,6 +172,7 @@
   {
     "name": "Andreani para WooCommerce - Transportista de Envíos - Cálculo y Guías",
     "slug": "andreani-para-woocommerce",
+    "file_name": "carriers-of-argentina-for-woocommerce.zip",
     "short_description": "Calcula costos de envío con Andreani en tiempo real, genera guías de envío y rastrea paquetes en tu tienda WooCommerce",
     "icon": "Truck",
     "category": "shipping",
@@ -170,6 +182,7 @@
   {
     "name": "Correo Argentino para WooCommerce - Transportista de Envíos - Cálculo y Guías",
     "slug": "correo-argentino-para-woocommerce",
+    "file_name": "carriers-of-argentina-for-woocommerce.zip",
     "short_description": "Integra el servicio de envíos del Correo Argentino en WooCommerce con cálculo de tarifas y generación de guías de envío",
     "icon": "Truck",
     "category": "shipping",
@@ -180,8 +193,9 @@
   {
     "name": "Banco de Venezuela para PrestaShop - Integración directa entre tu tienda y el banco - Pago Móvil",
     "slug": "boton-de-integracion-de-pago-movil-del-banco-de-venezuela-con-prestashop",
+    "file_name": "kbdvpagomovil.zip",
     "short_description": "Integra Pago Móvil del Banco de Venezuela en PrestaShop para procesar pagos de forma segura y automatizada",
-    "icon": "Smartphone",
+    "icon": "CreditCard",
     "category": "payment_method",
     "countries": ["venezuela"],
     "platform": ["prestashop"]
@@ -189,6 +203,7 @@
   {
     "name": "Venezolano de Crédito (BVC) para WooCommerce - Integración directa entre tu tienda y el banco - Visa, Mastercard, C2P y Pago Móvil",
     "slug": "venezolano-de-credito-para-woocommerce-con-c2p-y-pago-movil",
+    "file_name": "woocommerce-venezolano.zip",
     "short_description": "Acepta pagos con el Venezolano de Crédito en WooCommerce incluyendo tarjetas Visa, Mastercard, C2P y Pago Móvil de forma segura",
     "icon": "CreditCard",
     "category": "payment_method",
@@ -198,6 +213,7 @@
   {
     "name": "Banco Mercantil para PrestaShop - Integración directa entre tu tienda y el banco - Tarjetas de Débito",
     "slug": "pasarela-de-pago-banco-mercantil-para-prestashop-acepta-tarjetas-de-debito",
+    "file_name": "bmercantilvnzla.zip",
     "short_description": "Integra la pasarela de pago del Banco Mercantil en PrestaShop para aceptar tarjetas Visa, Mastercard, C2P y Pago Móvil.",
     "icon": "CreditCard",
     "category": "payment_method",
@@ -207,6 +223,7 @@
   {
     "name": "Zippin para PrestaShop - Transportista de Envíos",
     "slug": "zippin-argentina-para-prestashop",
+    "file_name": "kzippin.zip",
     "short_description": "Integra el servicio de envíos Zippin en tu tienda PrestaShop con cálculo de tarifas y generación de guías de envío",
     "icon": "Truck",
     "category": "shipping",
@@ -216,6 +233,7 @@
   {
     "name": "OCA para PrestaShop - Transportista de Envíos - Cotización y Rastreo",
     "slug": "oca-para-prestashop-cotizacion-generacion-de-guias-y-rastreo-de-paquetes",
+    "file_name": "kocashipping.zip",
     "short_description": "Integra OCA en PrestaShop con cotización automática, generación de guías y rastreo de paquetes en tiempo real",
     "icon": "Truck",
     "category": "shipping",
@@ -225,6 +243,7 @@
   {
     "name": "WhatsApp para WooCommerce - Comunicación desde el Panel de Administración",
     "slug": "contactar-clientes-por-whatsapp-desde-el-administrador-de-woocommerce",
+    "file_name": "woocommerce-kwhatsapporders.zip",
     "short_description": "Comunícate con tus clientes por WhatsApp directamente desde el panel de administración de WooCommerce de forma rápida y eficiente",
     "icon": "MessageCircle",
     "category": "utils",
@@ -234,6 +253,7 @@
   {
     "name": "Banco Mercantil para WooCommerce - Integración directa entre tu tienda y el banco - Visa, Mastercard, C2P y Pago Móvil",
     "slug": "mercantil-banco-venezuela-para-woocommerce",
+    "file_name": "woocommerce-mercantil.zip",
     "short_description": "Integra la pasarela de pago del Banco Mercantil en WooCommerce para aceptar tarjetas Visa, Mastercard, C2P y Pago Móvil",
     "icon": "CreditCard",
     "category": "payment_method",
@@ -243,6 +263,7 @@
   {
     "name": "MRW y Menssajero para WooCommerce - Transportistas de Envíos - Venezuela",
     "slug": "mrw-y-menssajero-venezuela-para-woocommerce",
+    "file_name": "woocommerce-kmrwve.zip",
     "short_description": "Integra MRW y Menssajero Venezuela en WooCommerce con cálculo de tarifas y generación de guías de envío",
     "icon": "Truck",
     "category": "shipping",
@@ -252,6 +273,7 @@
   {
     "name": "Zoom para WooCommerce - Transportista de Envíos - Generación de guías y rastreo de paquetes",
     "slug": "zoom-transportista-de-envios-en-venezuela-para-woocommerce",
+    "file_name": "woocommerce-zoomve.zip",
     "short_description": "Integra Zoom en WooCommerce con cálculo de tarifas, generación de guías y rastreo de paquetes en tiempo real",
     "icon": "Truck",
     "category": "shipping",
@@ -261,6 +283,7 @@
   {
     "name": "Pagos Offline para WooCommerce - Pasarela de Pago - Múltiples Métodos",
     "slug": "pagos-offline-para-woocommerce-zelle-binance-p2p-transferencia-pago-movil-y-otros",
+    "file_name": "woocommerce-kpaymentoffline.zip",
     "short_description": "Acepta múltiples métodos de pago offline en WooCommerce incluyendo Zelle, Binance P2P, Pago Móvil y transferencias bancarias. Requiere de verificación manual de los pagos.",
     "icon": "Wallet",
     "category": "payment_method",
@@ -271,15 +294,50 @@
   {
     "name": "Banco de Venezuela para WooCommerce - Integración directa entre tu tienda y el banco - Pago Móvil",
     "slug": "boton-de-pago-movil-del-banco-de-venezuela-para-woocommerce",
+    "file_name": "woocommerce-kbdvpagomovil.zip",
     "short_description": "Integra Pago Móvil del Banco de Venezuela en WooCommerce con validación automática de pagos y confirmación instantánea",
-    "icon": "Smartphone",
+    "icon": "CreditCard",
     "category": "payment_method",
     "countries": ["venezuela"],
     "platform": ["woocommerce"]
   },
   {
+    "name": "Banco del Tesoro para WooCommerce - Integración directa entre tu tienda y el banco - Pago Móvil y BT Pagos (C2P)",
+    "slug": "boton-de-pago-movil-y-bt-pagos-del-banco-del-tesoro-para-woocommerce",
+    "file_name": "woocommerce-kbdtpagomovil.zip",
+    "short_description": "Integra Pago Móvil y BT Pagos (C2P) del Banco del Tesoro en WooCommerce con validación automática de pagos y confirmación instantánea",
+    "icon": "CreditCard",
+    "category": "payment_method",
+    "countries": ["venezuela"],
+    "platform": ["woocommerce"],
+    "new_arrivals": true
+  },
+  {
+    "name": "Banco R4 (Mi Banco) para WooCommerce - Integración directa entre tu tienda y el banco - Pago Móvil y C2P",
+    "slug": "boton-de-pago-movil-y-kr4-pagos-del-banco-kr4-para-woocommerce",
+    "file_name": "woocommerce-kr4.zip",
+    "short_description": "Integra Pago Móvil y C2P del Banco R4 (Mi Banco) en WooCommerce con validación automática de pagos y confirmación instantánea",
+    "icon": "CreditCard",
+    "category": "payment_method",
+    "countries": ["venezuela"],
+    "platform": ["woocommerce"],
+    "new_arrivals": true
+  },
+  {
+    "name": "Cashea para WooCommerce - Financiamiento a Meses Sin Intereses - Venezuela",
+    "slug": "cashea-venezuela-financiamiento-a-meses-sin-intereses-para-woocommerce",
+    "file_name": "woocommerce-kcashea.zip",
+    "short_description": "Ofrece financiamiento a meses sin intereses a tus clientes en Venezuela a través de Cashea, aumentando el ticket promedio de tus ventas",
+    "icon": "CreditCard",
+    "category": "payment_method",
+    "countries": ["venezuela"],
+    "platform": ["woocommerce"],
+    "new_arrivals": true
+  },
+  {
     "name": "MercadoPago para WooCommerce - Pasarela de Pago - Soporte para Suscripciones y Marketplace",
     "slug": "mercadopago-para-woocommerce",
+    "file_name": "woocommerce-kmercadopago.zip",
     "short_description": "Integra MercadoPago en WooCommerce con soporte para suscripciones recurrentes, marketplace y múltiples métodos de pago",
     "icon": "CreditCard",
     "category": "payment_method",
@@ -291,6 +349,7 @@
   {
     "name": "Andreani para PrestaShop - Transportista de Envíos - Cotización y Rastreo",
     "slug": "andreani-para-prestashop-cotizacion-generacion-de-guias-y-rastreo-de-paquetes",
+    "file_name": "kandreani.zip",
     "short_description": "Integra Andreani en PrestaShop con cotización automática, generación de guías y rastreo de paquetes en tiempo real",
     "icon": "Truck",
     "category": "payment_method",
@@ -300,6 +359,7 @@
   {
     "name": "MercadoPago para PrestaShop - Pasarela de Pago - Soporte para Suscripciones y Marketplace",
     "slug": "mercadopago-tools-pro-para-prestashop",
+    "file_name": "mptoolspro.zip",
     "short_description": "Integra MercadoPago en PrestaShop con soporte para suscripciones recurrentes, marketplace y múltiples métodos de pago",
     "icon": "CreditCard",
     "category": "payment_method",
@@ -311,6 +371,7 @@
   {
     "name": "Banco BNC para WooCommerce - Integración directa entre tu tienda y el banco - Botón de Pago",
     "slug": "boton-de-pago-del-banco-bnc-para-plugin-woocommerce-wordpress",
+    "file_name": "woocommerce-bncvpos.zip",
     "short_description": "Integra la pasarela de pago del Banco Nacional de Crédito en WooCommerce para procesar pagos con tarjetas Visa, Mastercard, C2P y Pago Móvil",
     "icon": "CreditCard",
     "category": "payment_method",
@@ -320,6 +381,7 @@
   {
     "name": "Telegram para WooCommerce - Notificaciones - Pedidos y Eventos",
     "slug": "notificaciones-por-telegram-para-woocommerce",
+    "file_name": "woocommerce-telegramnotify.zip",
     "short_description": "Recibe notificaciones instantáneas en Telegram sobre nuevos pedidos, actualizaciones de estado y eventos importantes de tu tienda",
     "icon": "Bell",
     "category": "utils",
