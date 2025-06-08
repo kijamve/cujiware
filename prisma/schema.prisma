@@ -29,6 +29,7 @@ model User {
   reset_token_expires   DateTime?
 
   @@index([email])
+  @@map("user")
 }
 
 /// Modelo que representa las membresías de los usuarios
@@ -55,6 +56,7 @@ model Membership {
   @@index([plan_id])
   @@index([stripe_subscription_id])
   @@index([status])
+  @@map("membership")
 }
 
 /// Modelo que representa las licencias de software
@@ -72,6 +74,7 @@ model License {
 
   @@index([membership_id])
   @@index([status])
+  @@map("license")
 }
 
 /// Modelo que registra el uso de licencias por dominio
@@ -89,6 +92,7 @@ model LicenseUsage {
   @@index([license_id])
   @@index([domain])
   @@unique([license_id, domain])
+  @@map("licenseusage")
 }
 
 /// Modelo que asocia plugins específicos a una licencia
@@ -106,6 +110,7 @@ model LicensePlugin {
   @@unique([license_id, plugin_slug, domain])
   @@index([license_id])
   @@index([plugin_slug])
+  @@map("licenseplugin")
 }
 
 /// Modelo que define los planes de suscripción disponibles
@@ -128,19 +133,23 @@ model Plan {
   memberships     Membership[]
 
   @@index([interval])
+  @@map("plan")
 }
 
 /// Modelo que gestiona las versiones de los plugins
 /// Almacena información sobre archivos y versiones disponibles
 model PluginVersion {
   id                String   @id @default(cuid())
-  file_name         String   @unique
+  plugin_slug       String
+  file_name         String
   version           String
   file_path_server  String
   created_at        DateTime @default(now())
   updated_at        DateTime @updatedAt
 
+  @@index([plugin_slug])
   @@index([file_name])
+  @@map("pluginversion")
 }
 
 /// Modelo que registra los pagos realizados
@@ -166,6 +175,7 @@ model Payment {
   @@index([payment_method])
   @@index([stripe_invoice_id])
   @@index([reference])
+  @@map("payment")
 }
 
 /// Enums para mejorar la consistencia de los datos
@@ -197,4 +207,4 @@ enum PlanInterval {
   MONTH
   SEMESTER
   YEAR
-} 
+}

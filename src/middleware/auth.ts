@@ -33,6 +33,7 @@ export async function isAuthenticated(request: Request) {
       return null;
     }
 
+    console.log('Validando token: ', token);
     // Verificar el token
     const decoded = jwt.verify(token, import.meta.env.JWT_SECRET) as {
       id: string;
@@ -166,7 +167,7 @@ export async function requireSuperAdmin(context: APIContext) {
     };
 
     // Verificar credenciales directamente contra .env
-    if (decoded.email !== import.meta.env.SUPER_ADMIN_EMAIL || 
+    if (decoded.email !== import.meta.env.SUPER_ADMIN_EMAIL ||
         decoded.password !== import.meta.env.SUPER_ADMIN_PASSWORD) {
       if (context.request.headers.get('accept')?.includes('application/json')) {
         return new Response(
@@ -187,4 +188,4 @@ export async function requireSuperAdmin(context: APIContext) {
     }
     return context.redirect('/dashboard_master/login');
   }
-} 
+}
