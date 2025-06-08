@@ -8,14 +8,14 @@ import path from 'path';
 export function getStaticPaths() {
   const paths = [];
   const countries = ['all', 'venezuela', 'argentina'];
-  
+
   for (const plugin of plugins) {
     for (const platform of plugin.platform) {
       for (const country of countries) {
         // Verificar si el plugin está disponible para este país
         const isAvailable = country === 'all' ? true : plugin.countries.includes(country);
         const isExcluded = plugin.countrie_exclude?.includes(country);
-        
+
         if (isAvailable && !isExcluded) {
           paths.push({
             params: {
@@ -28,7 +28,7 @@ export function getStaticPaths() {
       }
     }
   }
-  
+
   return paths;
 }
 
@@ -53,7 +53,7 @@ try {
 
 // Meta tags para SEO
 const metaDescription = `${plugin.short_description} - Plugin premium para ${platform === 'woocommerce' ? 'WooCommerce' : 'PrestaShop'} disponible en Cujiware.`;
-const canonicalUrl = `https://cujiware.com/plugins/${country}/${platform}/${plugin.slug}`;
+const canonicalUrl = `https://cujiware.com/plugins/${plugin.countries[0]}/${plugin.platform}/${plugin.slug}`;
 const ogImage = screenshots.length > 0 ? `https://cujiware.com${screenshots[0].src}` : undefined;
 
 // Schema.org structured data
@@ -62,8 +62,8 @@ const schemaData = {
   "@type": "SoftwareApplication",
   "name": plugin.name,
   "description": plugin.short_description,
-  "applicationCategory": plugin.category === 'payment_method' ? 'FinancialApplication' : 
-                        plugin.category === 'shipping' ? 'LogisticsApplication' : 
+  "applicationCategory": plugin.category === 'payment_method' ? 'FinancialApplication' :
+                        plugin.category === 'shipping' ? 'LogisticsApplication' :
                         'SoftwareApplication',
   "softwareRequirements": platform === 'woocommerce' ? 'WordPress' : 'PrestaShop',
   "operatingSystem": "Linux",
@@ -96,14 +96,14 @@ const schemaData = {
 };
 ---
 
-<Layout 
+<Layout
   title={`${plugin.name} - Cujiware`}
   description={metaDescription}
   canonicalURL={canonicalUrl}
   image={ogImage}
 >
   <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
-  <PluginDetail 
+  <PluginDetail
     client:load
     plugin={plugin}
     country={country}
