@@ -12,6 +12,7 @@
     "prisma:migrate": "prisma migrate dev"
   },
   "dependencies": {
+    "@astrojs/node": "^9.2.2",
     "@astrojs/react": "^4.3.0",
     "@astrojs/sitemap": "^3.4.0",
     "@astrojs/tailwind": "^5.1.0",
@@ -20,7 +21,7 @@
     "@types/crypto-js": "^4.2.2",
     "@types/nodemailer": "^6.4.17",
     "@woocommerce/woocommerce-rest-api": "^1.0.1",
-    "astro": "^4.4.0",
+    "astro": "^5.9.1",
     "astro-seo": "^0.8.4",
     "bcryptjs": "^3.0.2",
     "crypto-js": "^4.2.0",
