@@ -8,12 +8,12 @@ interface PluginFiltersProps {
   platform: string;
 }
 
-export function PluginFilters({ 
-  selectedCategory, 
-  setSelectedCategory, 
+export function PluginFilters({
+  selectedCategory,
+  setSelectedCategory,
   categories,
   country,
-  platform 
+  platform
 }: PluginFiltersProps) {
   const getCategoryTitle = (category: string) => {
     switch (category) {
@@ -37,9 +37,9 @@ export function PluginFilters({
   };
 
   return (
-    <div className="flex gap-4">
-      <select 
-        className="bg-white border border-gray-300 rounded-lg px-4 py-2"
+    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+      <select
+        className="w-full sm:w-auto bg-white border border-gray-300 rounded-lg px-3 sm:px-4 py-2 text-sm sm:text-base"
         value={country}
         onChange={handleCountryChange}
       >
@@ -47,9 +47,9 @@ export function PluginFilters({
         <option value="venezuela">Venezuela</option>
         <option value="argentina">Argentina</option>
       </select>
-      
-      <select 
-        className="bg-white border border-gray-300 rounded-lg px-4 py-2"
+
+      <select
+        className="w-full sm:w-auto bg-white border border-gray-300 rounded-lg px-3 sm:px-4 py-2 text-sm sm:text-base"
         value={platform}
         onChange={handlePlatformChange}
       >
@@ -57,9 +57,9 @@ export function PluginFilters({
         <option value="woocommerce">WooCommerce</option>
         <option value="prestashop">PrestaShop</option>
       </select>
-      
-      <select 
-        className="bg-white border border-gray-300 rounded-lg px-4 py-2"
+
+      <select
+        className="w-full sm:w-auto bg-white border border-gray-300 rounded-lg px-3 sm:px-4 py-2 text-sm sm:text-base"
         value={selectedCategory}
         onChange={(e) => setSelectedCategory(e.target.value)}
       >
@@ -70,7 +70,6 @@ export function PluginFilters({
           </option>
         ))}
       </select>
-
     </div>
   );
 }
