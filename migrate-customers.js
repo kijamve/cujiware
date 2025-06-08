@@ -498,12 +498,19 @@ sistemas@tp3d.com.ar
 
 c67317f5-2d41-4643-99c6-daa678c5caa5
 #####################
-#3818 por Jairo Feria
+#3818 por CIRUGIAS LA NACIONAL C.A
 Membership - Básica Anual - 1 Sitio
 120,00 U$D / año
 
 noviembre 27, 2024	noviembre 27, 2025
 
+CIRUGIAS LA NACIONAL C.A
+J400245192
+AV BOLIVAR SUR FRENTE A LA ESTACION METRO MICHELENA VALENCIA EDO CARABOBO, Venezuela
++584144713093
+jairoferia7@hotmail.com
+	
+a1864f4a-7646-463c-8142-6416cd80b8c9
 #####################
 #3804 por Pablo López
 Membresía - Básica Semestral - 1 Sitio
@@ -511,6 +518,10 @@ Membresía - Básica Semestral - 1 Sitio
 
 noviembre 25, 2024	noviembre 25, 2025
 
+Argentina
+lopezpablodaniel@gmail.com
+
+9eecae4a-80d3-4eec-aa2e-a09013dd8107
 #####################
 #3705 por Nicolas Caso
 Membresía - Básica Anual - 1 Sitio
@@ -518,6 +529,10 @@ Membresía - Básica Anual - 1 Sitio
 
 octubre 31, 2024	octubre 31, 2025
 
+Argentina
+caso.nico@hotmail.com
+	
+051787bb-f836-4334-955b-30b436daa272
 #####################
 #3668 por MARIO FERNANDEZ CALLE
 Membresía - Básica Anual - 1 Sitio
@@ -525,6 +540,10 @@ Membresía - Básica Anual - 1 Sitio
 
 octubre 25, 2024	octubre 25, 2025
 
+Bolivia
+mariosuperbit@gmail.com
+
+bbc7f17d-c869-435a-bdcb-07afbf6294ee
 #####################
 #3643 por Carlos Bermudez
 Membresía - Básica Anual - 1 Sitio
@@ -532,6 +551,13 @@ Membresía - Básica Anual - 1 Sitio
 
 octubre 20, 2024	octubre 20, 2025
 
+Carlos Bermudez
+Caracas
+16135650
++584141329106
+mipodcast.live@gmail.com
+	
+1bcf7d5d-9042-4a27-a3b1-9ea3fb407f00
 #####################
 #3570 por Miguel Ramon Duarte Prieto
 Membresía - Básica - 1 Sitio
@@ -539,13 +565,23 @@ Membresía - Básica - 1 Sitio
 
 octubre 11, 2024	En 20 horas
 
+Miguel Ramon Duarte Prieto
+Paraguay
+miguelpy21@gmail.com
+
+f3443f0d-2373-44c4-be0f-164be11a0997
 #####################
 #3565 por Luis Katz
 Membresía - Básica - 1 Sitio
 31,02 U$D cada 6 meses
 
-octubre 11, 2024	En 5 días
+octubre 11, 2024	2025-06-12
 
+Luis Katz
+Argentina:
+guillermoarielkatz@gmail.com
+
+5929a9c0-60dd-4dd0-b06f-3bef5a366c01
 #####################
 #3551 por Andry Reyes
 Membresía - Básica Anual - 1 Sitio
@@ -553,6 +589,13 @@ Membresía - Básica Anual - 1 Sitio
 
 octubre 9, 2024	diciembre 9, 2025
 
+andry reyes
+4978965
+Caracas
++584129490569
+assaxve@gmail.com
+
+d274dd2a-5bdc-48db-86e9-e69040de94be
 #####################
 #3536 por Fabrizio Robbio
 Membresía - Básica Anual - 1 Sitio
@@ -560,13 +603,25 @@ Membresía - Básica Anual - 1 Sitio
 
 octubre 9, 2024	octubre 9, 2025
 
+Fabrizio Robbio
+Chile
+admin@moldesunicose.com
+
+cbb5bbb7-dbd1-499c-9991-8027fd9e3104
 #####################
 #3514 por Jonathan Bitriago
 Membresía - Básica Anual - 1 Sitio
 66,00 U$D / año
 
 octubre 2, 2024	octubre 2, 2025
-Seleccionar Subscription – Sep 30, 2024 @ 05:09 PM	
+
+Jonathan Bitriago
+21139440
+Urbanización Club Hipico Las Trinitarias, Barquisimeto 3001, Venezuela., Venezuela
++584121734028
+owlsunityagency@gmail.com
+
+d3e2d3e5-8eb0-4f77-a3f2-3a19246929ab
 #####################
 #3499 por Daniel Sanchez
 Membership - Básica Anual - 1 Sitio
@@ -574,6 +629,13 @@ Membership - Básica Anual - 1 Sitio
 
 septiembre 30, 2024	septiembre 30, 2025
 
+Daniel Sanchez
+23724136
+Av las americas Res puerta de hierro, Venezuela
++584121234567
+sanchedale@gmail.com
+	
+29ea627b-6db0-46fb-9628-a5069f738e5c
 #####################
 #3477 por LUCIANO LIVETTI
 Membresía - Básica Anual - 1 Sitio
@@ -581,6 +643,11 @@ Membresía - Básica Anual - 1 Sitio
 
 septiembre 24, 2024	septiembre 24, 2025
 
+LUCIANO LIVETTI
+Argentina
+laquinta.medios@gmail.com
+	
+b73f8df3-bfbb-46cf-ae71-91ce87ed3261
 #####################
 #3461 por Wendy Rojas
 Membresía - Básica Anual - 1 Sitio
@@ -588,6 +655,13 @@ Membresía - Básica Anual - 1 Sitio
 
 septiembre 20, 2024	septiembre 20, 2025
 
+Wendy Rojas
+31334380
+Caracas
++582125961220
+TVNOVEDADESVE@GMAIL.COM
+		
+8e184bc5-b17c-42df-a867-71fcb4efe899
 #####################
 #3426 por Juan Agustin Traverso
 Membresía - Básica - 1 Sitio
@@ -595,6 +669,11 @@ Membresía - Básica - 1 Sitio
 
 septiembre 10, 2024	junio 15, 2025
 
+Juan Agustin Traverso
+Argentina
+info@lavaindumentaria.com.ar
+
+25b2dc1c-c309-47f9-8338-f689937f52ef
 #####################
 #3422 por Jonathan Bitriago
 Membresía - Básica Anual - 1 Sitio
@@ -602,6 +681,13 @@ Membresía - Básica Anual - 1 Sitio
 
 septiembre 10, 2024	septiembre 10, 2025
 
+Jonathan Bitriago
+21139440
+Urbanización Club Hipico Las Trinitarias, Barquisimeto 3001, Venezuela., Venezuela
++584121734028
+owlsunityagency@gmail.com
+	
+e2c92216-1d27-445a-bc54-4a882d273a7d
 #####################
 #3390 por Joel Amén
 Membresía - Básica Anual - 1 Sitio
@@ -609,13 +695,50 @@ Membresía - Básica Anual - 1 Sitio
 
 septiembre 2, 2024	septiembre 2, 2025
 
+Joel Amén
+Argentina
+tiempoesmemoria@gmail.com
+
+503e2e09-b0d9-4ae3-841c-dce26aa9750c
 #####################
-#3380 por Manuel Thielen
-Plan Especial - Ventana Digital
-116,00 U$D cada 5 años
+#3380 por SEGUCALL DIGITAL, C.A.
+Plan Especial - Ventana Digital - 25 sitios
+116,00 U$D cada 1 mes
 
-agosto 28, 2024	agosto 28, 2029
+agosto 28, 2024	agosto 28, 2030
 
+SEGUCALL DIGITAL, C.A.
+J501928517
+AV SUR CC CENTRO EMPRESARIAL LAGUNITA NIVEL 4 OF. 407, URB LA LAGUNITA, CARACAS, Venezuela
++584242521880
+administracion@ventana.digital
+
+49560b50-1596-4a2f-8623-8c586e57e600
+49560b50-1596-4a2f-8623-8c586e57e601
+49560b50-1596-4a2f-8623-8c586e57e602    
+49560b50-1596-4a2f-8623-8c586e57e603
+49560b50-1596-4a2f-8623-8c586e57e604
+49560b50-1596-4a2f-8623-8c586e57e605
+49560b50-1596-4a2f-8623-8c586e57e606
+49560b50-1596-4a2f-8623-8c586e57e607
+49560b50-1596-4a2f-8623-8c586e57e608
+49560b50-1596-4a2f-8623-8c586e57e609
+49560b50-1596-4a2f-8623-8c586e57e610
+49560b50-1596-4a2f-8623-8c586e57e611
+49560b50-1596-4a2f-8623-8c586e57e612
+49560b50-1596-4a2f-8623-8c586e57e613
+49560b50-1596-4a2f-8623-8c586e57e614
+49560b50-1596-4a2f-8623-8c586e57e615
+49560b50-1596-4a2f-8623-8c586e57e616
+49560b50-1596-4a2f-8623-8c586e57e617
+49560b50-1596-4a2f-8623-8c586e57e618
+49560b50-1596-4a2f-8623-8c586e57e619
+49560b50-1596-4a2f-8623-8c586e57e620
+49560b50-1596-4a2f-8623-8c586e57e621
+49560b50-1596-4a2f-8623-8c586e57e622
+49560b50-1596-4a2f-8623-8c586e57e623
+49560b50-1596-4a2f-8623-8c586e57e624
+49560b50-1596-4a2f-8623-8c586e57e625
 #####################
 #3379 por Julio Peñaloza
 Membresía - Básica Anual - 1 Sitio
@@ -623,6 +746,13 @@ Membresía - Básica Anual - 1 Sitio
 
 agosto 28, 2024	agosto 28, 2025
 
+Julio Peñaloza
+27938006
+Portuguesa, Venezuela
++584120557754
+xerographics1999@hotmail.com
+
+280b8d4d-ba8c-4ffb-9f99-a128a0c7af8a
 #####################
 #3370 por Hector Osorio
 Membresía - Básica Anual - 1 Sitio
@@ -630,20 +760,42 @@ Membresía - Básica Anual - 1 Sitio
 
 agosto 27, 2024	agosto 27, 2025
 
+hector osorio
+24903603
+Carabobo, Venezuela
++584147114220
+ganaconmodaurbana@gmail.com
+
+	
+a056b927-4b0d-4ced-afe3-edf7856d9c41
 #####################
-#3332 por Honexis Medina
+#3332 por Sercoinfal C.A. 
 Membresía - Básica Anual - 1 Sitio
 66,00 U$D / año
 
 agosto 22, 2024	agosto 22, 2025
-Seleccionar Subscription – Aug 21, 2024 @ 05:02 PM	
+
+Sercoinfal C.A. 
+J305910553
+Av. ppal Local Industrial Terranostra parcela nro. L-35 Urb. Parque Comercio Industrial Castillito, San Diego 2006, Carabobo, Valencia, Venezuela
++584144206511
+hmedina@sercoinfal.com
+
+b1696a43-d9ab-4789-afa3-023ce95d1269	
 #####################
 #3326 por MOISES FRIDZON
 Membership - Básica Anual - 1 Sitio
 66,00 U$D / año
 
 agosto 21, 2024	agosto 21, 2025
-Seleccionar Subscription – Aug 21, 2024 @ 02:19 PM	
+
+mfridzon@opticacaroni.com
+MOISES FRIDZON
+1097449
+Caracas, Venezuela
++584242500970
+
+747f7cb5-2eda-41b7-b77f-935322dfbede
 #####################
 #3322 por Estación El Consejo S.A
 Membership - Básica Anual - 1 Sitio
@@ -651,6 +803,13 @@ Membership - Básica Anual - 1 Sitio
 
 agosto 21, 2024	agosto 21, 2025
 
+Estación El Consejo S.A
+J075601840
+Carretera Panamericana Hacienda Santa Teresa, El Consejo Estado Aragua, Venezuela
++584144532331
+jtirado@ronsantateresa.com
+
+43402eb3-69b5-4a29-ae12-1d6f3cd98463
 #####################
 #3319 por Julio Peñaloza
 Membresía - Básica Anual - 1 Sitio
@@ -658,6 +817,14 @@ Membresía - Básica Anual - 1 Sitio
 
 agosto 18, 2024	agosto 18, 2025
 
+
+Julio Peñaloza
+27938006
+Portuguesa, Venezuela
++584120557754
+xerographics1999@hotmail.com
+
+2b4a486e-59c6-4af9-8ffb-d05bec320271
 #####################
 #3313 por Jhonny Rea
 Membresía - Básica - 1 Sitio
@@ -665,6 +832,13 @@ Membresía - Básica - 1 Sitio
 
 agosto 14, 2024	diciembre 12, 2025
 
+Jhonny Rea
+18622519
+La Candelaria, Caracas, Venezuela
++584127136957
+jhonnyrea2010@hotmail.com
+
+3daf40eb-224a-4bc2-a09f-e7b955f924ab
 #####################
 #3299 por Carlos Luna
 Membresía - Básica Anual - 1 Sitio
@@ -672,13 +846,22 @@ Membresía - Básica Anual - 1 Sitio
 
 agosto 9, 2024	agosto 9, 2025
 
+México
+espeacke@gmail.com
+
+	
+ae4f4d85-be52-4874-9dd8-a33faff5fa2c
 #####################
 #3288 por Gaston Valerio
 Membresía - Básica Anual - 1 Sitio
 56,90 U$D / año
 
 agosto 6, 2024	agosto 6, 2025
-Seleccionar Subscription – Jul 18, 2024 @ 07:21 PM	
+
+Argentina
+gvalerio@trv.com.ar
+
+5636b191-e70c-4ad1-817f-43cecb66503e
 #####################
 #3207 por Diaz Gabriel Alejandro
 Membership - Básica Anual - 1 Sitio
@@ -686,6 +869,11 @@ Membership - Básica Anual - 1 Sitio
 
 julio 18, 2024	julio 18, 2025
 
+Diaz Gabriel Alejandro
+Argentina
+gabriel@rpdigital.com.ar
+	
+4fe1dc4e-80d3-4f02-9fe1-8da8971769f8
 #####################
 #3205 por Carlos Luna
 Membresía - Básica Anual - 1 Sitio
@@ -693,13 +881,24 @@ Membresía - Básica Anual - 1 Sitio
 
 julio 18, 2024	julio 18, 2025
 
+Carlos Luna
+México
+espeacke@gmail.com
+
+6f57f3d1-a1d3-40e6-b872-50f3973bcd4f
 #####################
-#3198 por Now de Venezuela
+#3198 por Now de Venezuela CA 
 Membresía - Básica Anual - 1 Sitio
 66,00 U$D / año
 
 julio 17, 2024	julio 17, 2025
+Now de Venezuela CA 
+J305766479
+Av 3H con Calle 80 #80-05 Local 1 y 2, Maracaibo, Zulia, Venezuela
++584121234567
+sistemas@nowdevenezuela.com
 
+a70a7f05-2a13-4f73-804b-7a420a687cd0
 #####################
 #3195 por Pablo Toledo
 Membresía - Básica Anual - 1 Sitio
@@ -707,6 +906,11 @@ Membresía - Básica Anual - 1 Sitio
 
 julio 16, 2024	julio 16, 2025
 
+Pablo Toledo
+Argentina
+Administracion3@starligh.com
+
+58679094-c3a4-4eb0-bd2c-a5a71538bc79
 #####################
 #3192 por Leonardo Mariño
 Membresía - Básica Anual - 1 Sitio
@@ -714,6 +918,11 @@ Membresía - Básica Anual - 1 Sitio
 
 julio 16, 2024	julio 16, 2025
 
+Leonardo Mariño
+Argentina
+mktleomarino@gmail.com
+
+c459fdc5-7b91-4326-b531-955c1e28ff4b
 #####################
 #3184 por Jose Primavera
 Membership - Básica - 1 Sitio
@@ -783,6 +992,12 @@ Membresía - Básica Anual - 1 Sitio
 66,00 U$D / año
 
 abril 25, 2024	abril 28, 2026
+
+Jonathan Bitriago
+21139440
+Urbanización Club Hipico Las Trinitarias, Barquisimeto 3001, Venezuela., Venezuela
++584121734028
+owlsunityagency@gmail.com
 
 #####################
 #2622 por Facundo Martin Pieroni
