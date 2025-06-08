@@ -930,6 +930,13 @@ Membership - Básica - 1 Sitio
 
 julio 15, 2024	junio 16, 2025
 
+jose primavera
+v12761486
+subida de oripoto con calle tamanaco cruze con tusmare urb. tusmare casa primavera, Venezuela
++584142071207
+miguelprimavera1@gmail.com
+
+1cfb923e-c6fa-4823-a151-3cef9815d7d1
 #####################
 #3178 por Alaing Maldonado
 Membresía - Básica Anual - 1 Sitio
@@ -937,6 +944,13 @@ Membresía - Básica Anual - 1 Sitio
 
 julio 11, 2024	julio 11, 2025
 
+Alaing Maldonado
+19961966
+Caracas
++584123311226
+alaingmaldonado@somosdecopaint.com
+
+ca103547-41c7-445b-a4bc-4578a2a4d534
 #####################
 #3158 por Nicolas Salazar
 Membresía - Básica Anual - 1 Sitio
@@ -944,6 +958,11 @@ Membresía - Básica Anual - 1 Sitio
 
 julio 8, 2024	julio 8, 2025
 
+Nicolas Salazar
+Chile
+ventas@onehostchile.cl
+
+5a7751ed-fa82-42c6-9202-6d0065fb1c76
 #####################
 #3133 por Paula MARTINEZ
 Membresía - Básica - 1 Sitio
@@ -951,6 +970,11 @@ Membresía - Básica - 1 Sitio
 
 julio 4, 2024	julio 6, 2025
 
+Paula MARTINEZ
+Argentina
+pmartineznf@gmail.com
+
+4131dd8e-5294-43a1-976e-b89858187d8b
 #####################
 #3112 por Eugenio Cesar Oliden
 Membresía - Básica Anual - 1 Sitio
@@ -958,6 +982,11 @@ Membresía - Básica Anual - 1 Sitio
 
 julio 1, 2024	julio 1, 2025
 
+Eugenio Cesar Oliden
+España
+ecoliden@gmail.com
+
+9c00886f-0026-4d17-a230-ddb06983225d
 #####################
 #3067 por Hancho Issa
 Membresía - Pro - 3 Sitios
@@ -965,6 +994,15 @@ Membresía - Pro - 3 Sitios
 
 junio 25, 2024	junio 16, 2025
 
+Hancho Issa
+445451
+Caracas, Venezuela
++584241616368
+hancho.issa@gmail.com
+
+2bf6475c-fcc0-49cb-8a5e-1ec9f7b073ae
+2bf6475c-fcc0-49cb-8a5e-1ec9f7b073a2
+2bf6475c-fcc0-49cb-8a5e-1ec9f7b073a3
 #####################
 #2949 por Keisy Pérez
 Membresía - Básica - 1 Sitio
@@ -972,6 +1010,13 @@ Membresía - Básica - 1 Sitio
 
 mayo 28, 2024	En 5 días
 
+KEISY YUDITH PEREZ CORREA
+V16045183
+GUARICO, ROSCIO, SAN JUAN DE LOS MORROS, Venezuela
++584120342306
+marketingdkp40@gmail.com
+	
+23ed274b-d1e0-4396-988b-a1ec0771b8b4
 #####################
 #2847 por Jesus De la rosa
 Membresía - Básica - 1 Sitio
@@ -979,6 +1024,11 @@ Membresía - Básica - 1 Sitio
 
 mayo 10, 2024	junio 15, 2025
 
+Jesus De la rosa
+República Dominicana
+over20233@gmail.com
+
+40cc73ff-b207-4fac-8da4-54c8fcf7a204
 #####################
 #2779 por HSIU HUANG
 Membresía - Básica Anual - 1 Sitio
@@ -986,6 +1036,11 @@ Membresía - Básica Anual - 1 Sitio
 
 mayo 6, 2024	mayo 6, 2026
 
+HSIU HUANG
+Argentina
+point.app@modapoint.com.ar
+	
+56ba04ae-d886-471e-98f2-41a7ef310db6
 #####################
 #2735 por Jonathan Bitriago
 Membresía - Básica Anual - 1 Sitio
@@ -998,7 +1053,8 @@ Jonathan Bitriago
 Urbanización Club Hipico Las Trinitarias, Barquisimeto 3001, Venezuela., Venezuela
 +584121734028
 owlsunityagency@gmail.com
-
+	
+04192638-8aaf-4b08-a8ff-bf977643b9b7
 #####################
 #2622 por Facundo Martin Pieroni
 Membresía - Básica - 1 Sitio
@@ -1006,13 +1062,22 @@ Membresía - Básica - 1 Sitio
 
 abril 2, 2024	agosto 8, 2025
 
+Facundo Martin Pieroni
+Argentina
+facundoante@hotmail.com
+
+6bda278c-2714-497b-b415-6dbdb4f323d3
 #####################
 #2454 por JESUS ROJAS
 Membresía - Básica Anual - 1 Sitio
 56,90 U$D / año
 
 marzo 7, 2024	marzo 7, 2026
+JESUS ROJAS
+Estados Unidos (EEUU)
+jrojas@iocagroup.com
 
+8316b81e-98d8-403e-a791-8a133472e008
 #####################
 #2402 por Isabel Bermudez
 Membresía - Básica Anual - 1 Sitio
@@ -1020,6 +1085,13 @@ Membresía - Básica Anual - 1 Sitio
 
 febrero 28, 2024	marzo 2, 2026
 
+Isabel Bermudez
+17705397
+Calle D, Qta Loly, Las Marias, El Hatillo, Caracas, Venezuela
++584141365257
+isabermudezfebres@gmail.com
+
+87be0385-6a71-4fdb-980f-d71828d76fbd
 #####################
 #2263 por Liam Fung
 Membresía - Básica Anual - 1 Sitio
@@ -1027,6 +1099,13 @@ Membresía - Básica Anual - 1 Sitio
 
 febrero 5, 2024	febrero 5, 2026
 
+Liam Fung
+29856925
+mañongo valencia Carabobo, Venezuela
++584125052777
+carovastore@gmail.com
+
+f2a05b86-5d8e-4f51-8bc6-6f0ff5498a80
 #####################
 #2167 por John David Ferreira Dos Santos
 Membresía - Básica - 1 Sitio
@@ -1034,11 +1113,24 @@ Membresía - Básica - 1 Sitio
 
 enero 19, 2024	junio 30, 2025
 
+JOHN DAVID FERREIRA DOS SANTOS
+V11742654
+MIRANDA, BARUTA, Venezuela
++584241925476
+j18d11fs77@gmail.com
+
+52182e69-283f-4186-8497-b46432659f33
 #####################
 #1820 por Karla Patricia Perez Leon
 Membresía - Básica Anual - 1 Sitio
 66,00 U$D / año
 
 noviembre 29, 2023	enero 15, 2026
+
+Karla Patricia Perez Leon
+El Salvador
+kperezleon@gmail.com
+	
+f12f6855-913f-4690-949d-3c4546b2d334
 
 */
