@@ -28,8 +28,8 @@ export async function isAuthenticated(request: Request) {
       }
     }
 
-    if (!token) {
-      console.log('No se encontró el token en el header de autorización ni en las cookies');
+    if (!token || token === 'null' || token === 'undefined') {
+      // console.log('No se encontró el token en el header de autorización ni en las cookies');
       return null;
     }
 

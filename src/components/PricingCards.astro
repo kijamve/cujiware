@@ -46,18 +46,18 @@ function closeVenezuelaModal() {
       <h2 class="text-3xl font-bold font-heading text-gray-900 mb-4">Planes de Suscripción</h2>
       <p class="text-lg text-gray-600">Elige el plan que mejor se adapte a tus necesidades. Recuerda que es una membresía por dominio.</p>
     </div>
-    
+
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
       {plans.map((plan: Plan) => (
         <PricingCard plan={plan} />
       ))}
     </div>
-    
+
     <div class="mt-16 text-center max-w-3xl mx-auto">
       <div class="bg-blue-50 rounded-lg p-6 border border-blue-100">
         <h3 class="text-xl font-bold font-heading text-gray-900 mb-2">¿Necesitas múltiples dominios?</h3>
         <p class="text-gray-600 mb-4">Si administras múltiples tiendas, cada dominio requiere una membresía independiente. Contáctanos para descuentos por volumen a partir de 5 dominios.</p>
-        <a href="#contact" class="inline-flex items-center text-cuji-blue hover:text-cuji-dark-blue font-medium">
+        <a href="/#contact" class="inline-flex items-center text-cuji-blue hover:text-cuji-dark-blue font-medium">
           Contacta a nuestro equipo de ventas
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
@@ -76,12 +76,12 @@ function closeVenezuelaModal() {
 
   document.addEventListener('DOMContentLoaded', () => {
     const buttons = document.querySelectorAll('[data-plan-id]') as NodeListOf<HTMLButtonElement>;
-    
+
     buttons.forEach(button => {
       button.addEventListener('click', async (e) => {
         const clickedButton = e.currentTarget as HTMLButtonElement;
         const planId = clickedButton.dataset.planId;
-        
+
         if (!planId) {
           console.error('No se encontró el ID del plan');
           return;
@@ -126,7 +126,7 @@ function closeVenezuelaModal() {
             },
             body: JSON.stringify({ plan: planId })
           });
-          
+
           const data = await response.json();
           console.log('Datos recibidos del servidor:', data);
 

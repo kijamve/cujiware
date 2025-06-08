@@ -21,7 +21,7 @@ const plan = await prisma.plan.findUnique({
 });
 
 if (!plan) {
-  return Astro.redirect('/pricing');
+  return Astro.redirect('/suscripcion');
 }
 
 // Obtener datos del usuario
@@ -67,7 +67,7 @@ const description = "Realiza tu pago móvil para activar tu membresía en Cujiwa
 <Layout title={title} description={description}>
   <div class="min-h-screen bg-gray-50 py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <a href="/pricing" class="inline-flex items-center text-cuji-blue hover:text-cuji-dark-blue mb-8">
+      <a href="/suscripcion" class="inline-flex items-center text-cuji-blue hover:text-cuji-dark-blue mb-8">
         <ArrowLeft className="w-5 h-5 mr-2" />
         Volver a planes
       </a>
@@ -75,7 +75,7 @@ const description = "Realiza tu pago móvil para activar tu membresía en Cujiwa
       <div class="max-w-2xl mx-auto">
         <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <h2 class="text-2xl font-bold text-gray-900 mb-6">Pago Móvil</h2>
-          
+
           <!-- Datos de facturación -->
           <div class="mb-8 p-4 bg-gray-50 rounded-lg">
             <h3 class="text-lg font-semibold text-gray-900 mb-2">Datos de facturación</h3>
@@ -340,7 +340,7 @@ const description = "Realiza tu pago móvil para activar tu membresía en Cujiwa
 
             <div class="flex justify-end space-x-3">
               <a
-                href="/pricing"
+                href="/suscripcion"
                 class="inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cuji-blue"
               >
                 Cancelar
@@ -388,7 +388,7 @@ const description = "Realiza tu pago móvil para activar tu membresía en Cujiwa
 
   bankDest?.addEventListener('change', (e) => {
     const value = (e.target as HTMLSelectElement).value;
-    
+
     // Ocultar todos los campos primero
     qrContainer.classList.add('hidden');
     biopagoFields.classList.add('hidden');
@@ -474,7 +474,7 @@ const description = "Realiza tu pago móvil para activar tu membresía en Cujiwa
 
       const response = await fetch(endpoint, {
         method: 'POST',
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
@@ -482,7 +482,7 @@ const description = "Realiza tu pago móvil para activar tu membresía en Cujiwa
       });
 
       const result = await response.json();
-      
+
       if (paymentMethod === 'BIOPAGO' && result.paymentUrl) {
         // Redirigir al usuario a la URL de pago de Biopago
         window.location.href = result.paymentUrl;
@@ -502,4 +502,4 @@ const description = "Realiza tu pago móvil para activar tu membresía en Cujiwa
       submitButton.textContent = 'Enviar';
     }
   });
-</script> 
+</script>

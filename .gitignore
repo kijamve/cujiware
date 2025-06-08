@@ -24,3 +24,4 @@ pnpm-debug.log*
 .idea/
 uuid_validation_results.json
 extracted_uuids.json
+yarn.lock
