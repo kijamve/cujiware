@@ -1,0 +1,1367 @@
+[
+    {
+        "name": "Jose Gonzalez",
+        "email": "jjgonzc@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Básica - 1 Sitio",
+            "price": 12.00,
+            "interval": "MONTH",
+            "start_date": "2025-06-02",
+            "end_date": "2025-07-02"
+        },
+        "billing": {
+            "address": "Calle 91-2, Maracaibo",
+            "phone": "04140690428",
+            "tax_id": "V26709194"
+        },
+        "licenses": ["91d7326d-0fc3-4778-8e5a-39f82928aa21"]
+    },
+    {
+        "name": "Tallal Henaui",
+        "email": "tallalh@hotmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Básica Semestral - 1 Sitio",
+            "price": 60.00,
+            "interval": "SEMESTER",
+            "start_date": "2025-05-28",
+            "end_date": "2025-11-28"
+        },
+        "billing": {
+            "address": "CARABOBO, VALENCIA, SAN JOSE",
+            "phone": "04143462111",
+            "tax_id": "V11238735"
+        },
+        "licenses": ["d638952f-8510-4785-b2ec-9a9e306452c4"]
+    },
+    {
+        "name": "CARLOS DEL CASTILLO",
+        "email": "rodcarlos11@gmail.com",
+        "country": "US",
+        "membership": {
+            "plan_name": "Básica Semestral - 1 Sitio",
+            "price": 51.72,
+            "interval": "SEMESTER",
+            "start_date": "2025-05-28",
+            "end_date": "2025-12-28"
+        },
+        "licenses": ["7497ba78-d1fe-4cd0-938a-6d5e51c888db"]
+    },
+    {
+        "name": "INVERSIONES APARCITY S A",
+        "email": "gerente.sis@hotelcct.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Básica Anual - 1 Sitio",
+            "price": 120.00,
+            "interval": "YEAR",
+            "start_date": "2025-05-27",
+            "end_date": "2026-05-27"
+        },
+        "billing": {
+            "address": "AV LA ESTANCIA CC CENTRO COMERCIAL CIUDAD TAMANACO NIVEL LOBBY LOCAL HOTEL CCT URB CHUAO CARACAS (CHACAO) MIRANDA ZONA POSTAL 1061",
+            "phone": "02127008000",
+            "tax_id": "J001829610"
+        },
+        "licenses": ["ef577a8c-3bc4-4959-bd34-1ee64acee740"]
+    },
+    {
+        "name": "Liam Fung",
+        "email": "carovastore@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Básica Anual - 1 Sitio",
+            "price": 120.00,
+            "interval": "YEAR",
+            "start_date": "2025-05-27",
+            "end_date": "2026-05-27"
+        },
+        "billing": {
+            "address": "mañongo valencia Carabobo",
+            "phone": "04125052777",
+            "tax_id": "29856925"
+        },
+        "licenses": ["1c61af9e-ed65-4994-b895-02b387e1636e"]
+    },
+    {
+        "name": "VICTOR ELIAS BITAR BADDOUR",
+        "email": "baddourv181@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Básica - 1 Sitio",
+            "price": 12.00,
+            "interval": "MONTH",
+            "start_date": "2025-05-27",
+            "end_date": "2025-06-27"
+        },
+        "billing": {
+            "address": "MONAGAS, MATURIN, SAN SIMON",
+            "phone": "04249480518",
+            "tax_id": "V23534481"
+        },
+        "licenses": ["6ddc1985-973b-4258-ad7e-fe622e6222d6"]
+    },
+    {
+        "name": "Marianna Sapiro",
+        "email": "plazacafeadm@gmail.com",
+        "country": "UY",
+        "membership": {
+            "plan_name": "Básica - 1 Sitio",
+            "price": 10.34,
+            "interval": "MONTH",
+            "start_date": "2025-05-26",
+            "end_date": "2025-06-26"
+        },
+        "licenses": ["ad5e24ba-d9f0-4f6d-a505-0c533906d5c3"]
+    },
+    {
+        "name": "Lucas Sempé",
+        "email": "sempelucas@gmail.com",
+        "country": "AR",
+        "membership": {
+            "plan_name": "Básica - 1 Sitio",
+            "price": 10.34,
+            "interval": "MONTH",
+            "start_date": "2025-05-26",
+            "end_date": "2025-06-26"
+        },
+        "licenses": ["d118f72f-7dce-4f92-9b7e-68e9b21cdca7"]
+    },
+    {
+        "name": "ANGELICA MARIA RANGEL MACHADO",
+        "email": "armsalud24@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Básica - 1 Sitio",
+            "price": 12.00,
+            "interval": "MONTH",
+            "start_date": "2025-05-23",
+            "end_date": "2025-06-23"
+        },
+        "billing": {
+            "address": "Caracas",
+            "phone": "04241913404",
+            "tax_id": "V23692896"
+        },
+        "licenses": ["39a09137-8b5d-41b1-9921-829207e7bc26"]
+    },
+    {
+        "name": "SURTI DONUTS C.A.",
+        "email": "surtidonuts.gest@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Básica Semestral - 1 Sitio",
+            "price": 60.00,
+            "interval": "SEMESTER",
+            "start_date": "2025-05-21",
+            "end_date": "2025-11-21"
+        },
+        "billing": {
+            "address": "Calle Colon, Qta Oracion, PB Nro 19 Loc A, Urb Los Caobos, Caracas, Distrito Capital",
+            "phone": "04126095695",
+            "tax_id": "J317011503"
+        },
+        "licenses": ["21471951-480d-471a-9e22-735a5059863c"]
+    },
+    {
+        "name": "Leonardo Rafael Grabow",
+        "email": "clientesbinweb@gmail.com",
+        "country": "AR",
+        "membership": {
+            "plan_name": "Básica - 1 Sitio",
+            "price": 10.34,
+            "interval": "MONTH",
+            "start_date": "2025-05-20",
+            "end_date": "2025-06-20"
+        },
+        "licenses": ["76ce6212-d5d9-4ffc-b1a2-4d732e5d70f5"]
+    },
+    {
+        "name": "Hidrotech Argentina SA",
+        "email": "jlopez@hidrofil.com.ar",
+        "country": "AR",
+        "membership": {
+            "plan_name": "Básica - 1 Sitio",
+            "price": 10.34,
+            "interval": "MONTH",
+            "start_date": "2025-05-15",
+            "end_date": "2025-06-15"
+        },
+        "licenses": ["32086a50-3109-4554-938a-1f7adc4a15cc"]
+    },
+    {
+        "name": "Aleisa Medina",
+        "email": "gibranimport@gmqil.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Básica - 1 Sitio",
+            "price": 12.00,
+            "interval": "MONTH",
+            "start_date": "2025-05-09",
+            "end_date": "2025-06-10"
+        },
+        "billing": {
+            "address": "Porlamar, Nueva Esparta",
+            "phone": "04147911995",
+            "tax_id": "412485563"
+        },
+        "licenses": ["79bfbabf-e07e-4f63-914e-ca4125b65b1e"]
+    },
+    {
+        "name": "PEDRO JOSE POLLER CASTRO",
+        "email": "aclgestion2024@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Membership - Básica - 1 Sitio",
+            "price": 12.00,
+            "interval": "MONTH",
+            "start_date": "2025-05-09",
+            "end_date": "2025-06-10"
+        },
+        "billing": {
+            "address": "GUARICO, ROSCIO, PARAPARA",
+            "phone": "04126119034",
+            "tax_id": "V19985896"
+        },
+        "licenses": ["7adf1496-51d0-40db-abb7-5dc5533381f9"]
+    },
+    {
+        "name": "RAYNER RICARDO ALVAREZ GARCIA",
+        "email": "raynericardo@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Básica - 1 Sitio",
+            "price": 12.00,
+            "interval": "MONTH",
+            "start_date": "2025-05-09",
+            "end_date": "2025-06-09"
+        },
+        "billing": {
+            "address": "CARABOBO, NAGUANAGUA, NAGUANAGUA",
+            "phone": "04145817152",
+            "tax_id": "V22410730"
+        },
+        "licenses": ["f3bd2b96-b2d5-4d95-b172-e38bc6d10191"]
+    },
+    {
+        "name": "HUGO GERARDO MONTILLA LEAL",
+        "email": "a1plusve@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Básica Semestral - 1 Sitio",
+            "price": 60.00,
+            "interval": "SEMESTER",
+            "start_date": "2025-05-07",
+            "end_date": "2025-11-07"
+        },
+        "billing": {
+            "address": "ZULIA, MARACAIBO, FRANCISCO EUGENIO",
+            "phone": "04146058166",
+            "tax_id": "V16607915"
+        },
+        "licenses": ["86d376e1-b180-430e-8de9-eee29f98c9ca"]
+    },
+    {
+        "name": "Pablo Albarracin",
+        "email": "palbarracin@frappe.com.ar",
+        "country": "AR",
+        "membership": {
+            "plan_name": "Básica Semestral - 1 Sitio",
+            "price": 51.72,
+            "interval": "SEMESTER",
+            "start_date": "2025-05-02",
+            "end_date": "2025-11-02"
+        },
+        "licenses": ["227175d2-7dec-4ec6-97b6-a5a94ede97f0"]
+    },
+    {
+        "name": "Eduardo Agustin Usandizaga",
+        "email": "anuessle@sumainversiones.com.ar",
+        "country": "AR",
+        "membership": {
+            "plan_name": "Básica Anual - 1 Sitio",
+            "price": 103.45,
+            "interval": "YEAR",
+            "start_date": "2025-04-15",
+            "end_date": "2026-04-15"
+        },
+        "licenses": ["1144d333-ca3a-4ac7-a9bb-f3239fe56a9b"]
+    },
+    {
+        "name": "Julieta Lindner",
+        "email": "marittimactivewear@gmail.com",
+        "country": "AR",
+        "membership": {
+            "plan_name": "Básica - 1 Sitio",
+            "price": 5.17,
+            "interval": "MONTH",
+            "start_date": "2025-04-10",
+            "end_date": "2025-06-12"
+        },
+        "licenses": ["fe0a62c6-f394-4e65-8b3b-14c798d659d2"]
+    },
+    {
+        "name": "giomar rogger rios peralta",
+        "email": "riperink30@gmail.com",
+        "country": "AR",
+        "membership": {
+            "plan_name": "Básica Semestral - 1 Sitio",
+            "price": 51.72,
+            "interval": "SEMESTER",
+            "start_date": "2025-04-03",
+            "end_date": "2025-10-03"
+        },
+        "licenses": ["54e4fdd6-089a-43b9-bf64-bb985387689e"]
+    },
+    {
+        "name": "Lucas Bertotti",
+        "email": "sistemas@tp3d.com.ar",
+        "country": "AR",
+        "membership": {
+            "plan_name": "Básica Anual - 1 Sitio",
+            "price": 103.45,
+            "interval": "YEAR",
+            "start_date": "2025-03-31",
+            "end_date": "2026-03-31"
+        },
+        "licenses": ["c8bda8b7-927a-4214-b4c3-e35e0fbdec0b"]
+    },
+    {
+        "name": "VISAGISMO S.R.L.",
+        "email": "prestashop@lurebyms.com",
+        "country": "AR",
+        "membership": {
+            "plan_name": "Básica - 1 Sitio",
+            "price": 10.34,
+            "interval": "MONTH",
+            "start_date": "2025-03-31",
+            "end_date": "2025-07-05"
+        },
+        "licenses": ["60c4b9f4-360a-47c1-b804-815a7f03235f"]
+    },
+    {
+        "name": "Jesus Alvarado",
+        "email": "joffreyzuly@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Básica Anual - 1 Sitio",
+            "price": 120.00,
+            "interval": "YEAR",
+            "start_date": "2025-03-29",
+            "end_date": "2026-03-29"
+        },
+        "billing": {
+            "address": "Anzoategui",
+            "phone": "04123445822",
+            "tax_id": "28670687"
+        },
+        "licenses": ["de7d991f-104c-4fe5-9d73-1446483b5319"]
+    },
+    {
+        "name": "INVERSIONES CAHERSI MOTOR´S, C.A.",
+        "email": "inversionescahersi@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Básica Anual - 1 Sitio",
+            "price": 120.00,
+            "interval": "YEAR",
+            "start_date": "2025-03-27",
+            "end_date": "2026-03-27"
+        },
+        "billing": {
+            "address": "CALLE LEONCIO MARTÍNEZ QTA ALICIA URB LAS ACACIAS CARACAS DISTRITO CAPITAL",
+            "phone": "02126343737",
+            "tax_id": "J406785776"
+        },
+        "licenses": ["f38468c4-7f3e-44c6-a507-30ad0dad5ded"]
+    },
+    {
+        "name": "MATIAS WENDLER CORONEL",
+        "email": "wendlerwebsolutions@gmail.com",
+        "country": "AR",
+        "membership": {
+            "plan_name": "Básica Semestral - 1 Sitio",
+            "price": 51.72,
+            "interval": "SEMESTER",
+            "start_date": "2025-03-27",
+            "end_date": "2025-09-27"
+        },
+        "licenses": ["2af499b4-3e51-4b34-92a2-ba69984dbdc6"]
+    },
+    {
+        "name": "PINTURERIA A&M, C.A",
+        "email": "tiendasmontanasanbernardino@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Básica - 1 Sitio",
+            "price": 12.00,
+            "interval": "MONTH",
+            "start_date": "2025-03-25",
+            "end_date": "2025-06-30"
+        },
+        "billing": {
+            "address": "AV MANUEL FELIPE TOVAR EDIF ESMERALDA SUITE PISO PB LOCAL SN URB SAN BERNARDINO CARACAS DISTRITO CAPITAL ZONA POSTAL 1010",
+            "phone": "04125821224",
+            "tax_id": "J500120028"
+        },
+        "licenses": ["12da5ad8-16a4-4410-9867-137af834e58c"]
+    },
+    {
+        "name": "Stockin Lavanda",
+        "email": "ventasonline@stockinlavanda.com.ar",
+        "country": "AR",
+        "membership": {
+            "plan_name": "Básica Semestral - 1 Sitio",
+            "price": 62.07,
+            "interval": "SEMESTER",
+            "start_date": "2025-03-20",
+            "end_date": "2025-09-20"
+        },
+        "licenses": ["4dcdb23b-c9c0-4230-8864-6f8f6979e398"]
+    },
+    {
+        "name": "DANIEL JOSE HERNANDEZ RINCON",
+        "email": "danieljhr1@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Básica Anual - 1 Sitio",
+            "price": 120.00,
+            "interval": "YEAR",
+            "start_date": "2025-03-14",
+            "end_date": "2026-03-14"
+        },
+        "billing": {
+            "address": "Cafetal, Caracas",
+            "phone": "04122606640",
+            "tax_id": "V12634136"
+        },
+        "licenses": ["abd1dc75-71e1-4d96-95db-0e1018a2ab60"]
+    },
+    {
+        "name": "SOCIEDAD VENEZOLANA DE CARDIOLOGIA",
+        "email": "administracion@svcardiologia.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Pro Anual - 3 Sitios",
+            "price": 320.00,
+            "interval": "YEAR",
+            "start_date": "2025-03-14",
+            "end_date": "2026-03-14"
+        },
+        "billing": {
+            "address": "Av. Mohedano con Calle Don Pedro Grases, Centro Gerencial Mohedano, Piso 4, Ofic. 4-D, La Castellana. Caracas. ZP 1060",
+            "phone": "02122631534",
+            "tax_id": "J001320075"
+        },
+        "licenses": [
+            "ec1c477b-d5f2-4e13-a3a8-3af40c0baeb5",
+            "ec1c477b-d5f2-4e13-a3a8-3af40c0baeb6",
+            "ec1c477b-d5f2-4e13-a3a8-3af40c0baeb7"
+        ]
+    },
+    {
+        "name": "WILMAN JAVIER CHIRINOS PINO",
+        "email": "tutrabajodegrado1@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Básica - 1 Sitio",
+            "price": 12.00,
+            "interval": "MONTH",
+            "start_date": "2025-03-12",
+            "end_date": "2025-06-15"
+        },
+        "billing": {
+            "address": "ARAGUA, GIRARDOT, LOS TACARIGUAS",
+            "phone": "04124457158",
+            "tax_id": "V13059584"
+        },
+        "licenses": ["9df0411b-4df0-455a-9103-c6b8113a70d5"]
+    },
+    {
+        "name": "SOCIEDAD VENEZOLANA DE CARDIOLOGIA",
+        "email": "administracion@svcardiologia.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 120.00,
+            "interval": "YEAR",
+            "start_date": "2025-02-27",
+            "end_date": "2026-02-27"
+        },
+        "billing": {
+            "address": "Av. Mohedano con Calle Don Pedro Grases, Centro Gerencial Mohedano, Piso 4, Ofic. 4-D, La Castellana. Caracas. ZP 1060",
+            "phone": "02122631534",
+            "tax_id": "J001320075"
+        },
+        "licenses": ["9932ff69-ae5e-499b-bd53-dc864f22531c"]
+    },
+    {
+        "name": "FRANCO CAIMI",
+        "email": "franco_caimi@hotmail.com",
+        "country": "AR",
+        "membership": {
+            "plan_name": "Membresía - Básica Semestral - 1 Sitio",
+            "price": 51.72,
+            "interval": "SEMESTER",
+            "start_date": "2025-02-17",
+            "end_date": "2025-08-17"
+        },
+        "licenses": ["87a75f5e-f2d6-45fb-b3d5-091f2fa40ff5"]
+    },
+    {
+        "name": "Sergio Riebra",
+        "email": "legalmenteconectadoscorp@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Membresía - Básica Semestral - 1 Sitio",
+            "price": 60.00,
+            "interval": "SEMESTER",
+            "start_date": "2025-02-05",
+            "end_date": "2025-08-05"
+        },
+        "billing": {
+            "address": "Caracas",
+            "phone": "04125967375",
+            "tax_id": "16675837"
+        },
+        "licenses": ["41558a86-89d1-4bee-a541-e1dc0c7f71e0"]
+    },
+    {
+        "name": "Martin Gutierrez",
+        "email": "martingutierrez08@gmail.com",
+        "country": "AR",
+        "membership": {
+            "plan_name": "Membresía - Básica - 1 Sitio",
+            "price": 10.34,
+            "interval": "MONTH",
+            "start_date": "2025-01-24",
+            "end_date": "2025-06-28"
+        },
+        "licenses": ["b0935662-e35f-4001-a941-b84e0cd9dba8"]
+    },
+    {
+        "name": "PPH sa",
+        "email": "leandropadulo@hotmail.com",
+        "country": "AR",
+        "membership": {
+            "plan_name": "Membresía - Básica Semestral - 1 Sitio",
+            "price": 51.72,
+            "interval": "SEMESTER",
+            "start_date": "2025-01-03",
+            "end_date": "2025-07-03"
+        },
+        "licenses": ["725b12c2-f416-4a3a-92d7-a71dde49c2d5"]
+    },
+    {
+        "name": "Dalmiro José Yarza Montes",
+        "email": "dalmirojy@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Membresía - Básica Semestral - 1 Sitio",
+            "price": 60.00,
+            "interval": "SEMESTER",
+            "start_date": "2024-12-18",
+            "end_date": "2025-11-18"
+        },
+        "billing": {
+            "address": "urbanizacion la esmeralda, calle 2 numero 18 San felipe Yaracuy",
+            "phone": "04128431894",
+            "tax_id": "V12077898"
+        },
+        "licenses": ["bb101a68-fdb3-446c-a5e6-c5d8a8fef35f"]
+    },
+    {
+        "name": "Angel david",
+        "email": "angeldfp2004@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Membresía - Básica - 1 Sitio",
+            "price": 12.00,
+            "interval": "MONTH",
+            "start_date": "2024-12-09",
+            "end_date": "2025-06-10"
+        },
+        "billing": {
+            "address": "Caracas",
+            "phone": "04243373387",
+            "tax_id": "30160816"
+        },
+        "licenses": ["63fe76e5-d11b-4f84-b135-6f2e0bdde1ff"]
+    },
+    {
+        "name": "Lucas Bertotti",
+        "email": "sistemas@tp3d.com.ar",
+        "country": "AR",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 103.45,
+            "interval": "YEAR",
+            "start_date": "2024-11-29",
+            "end_date": "2025-11-29"
+        },
+        "licenses": ["c67317f5-2d41-4643-99c6-daa678c5caa5"]
+    },
+    {
+        "name": "CIRUGIAS LA NACIONAL C.A",
+        "email": "jairoferia7@hotmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Membership - Básica Anual - 1 Sitio",
+            "price": 120.00,
+            "interval": "YEAR",
+            "start_date": "2024-11-27",
+            "end_date": "2025-11-27"
+        },
+        "billing": {
+            "address": "AV BOLIVAR SUR FRENTE A LA ESTACION METRO MICHELENA VALENCIA EDO CARABOBO",
+            "phone": "04144713093",
+            "tax_id": "J400245192"
+        },
+        "licenses": ["a1864f4a-7646-463c-8142-6416cd80b8c9"]
+    },
+    {
+        "name": "Pablo López",
+        "email": "lopezpablodaniel@gmail.com",
+        "country": "AR",
+        "membership": {
+            "plan_name": "Membresía - Básica Semestral - 1 Sitio",
+            "price": 51.72,
+            "interval": "SEMESTER",
+            "start_date": "2024-11-25",
+            "end_date": "2025-11-25"
+        },
+        "licenses": ["9eecae4a-80d3-4eec-aa2e-a09013dd8107"]
+    },
+    {
+        "name": "Nicolas Caso",
+        "email": "caso.nico@hotmail.com",
+        "country": "AR",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 56.90,
+            "interval": "YEAR",
+            "start_date": "2024-10-31",
+            "end_date": "2025-10-31"
+        },
+        "licenses": ["051787bb-f836-4334-955b-30b436daa272"]
+    },
+    {
+        "name": "MARIO FERNANDEZ CALLE",
+        "email": "mariosuperbit@gmail.com",
+        "country": "BO",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 56.90,
+            "interval": "YEAR",
+            "start_date": "2024-10-25",
+            "end_date": "2025-10-25"
+        },
+        "licenses": ["bbc7f17d-c869-435a-bdcb-07afbf6294ee"]
+    },
+    {
+        "name": "Carlos Bermudez",
+        "email": "mipodcast.live@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 66.00,
+            "interval": "YEAR",
+            "start_date": "2024-10-20",
+            "end_date": "2025-10-20"
+        },
+        "billing": {
+            "address": "Caracas",
+            "phone": "04141329106",
+            "tax_id": "16135650"
+        },
+        "licenses": ["1bcf7d5d-9042-4a27-a3b1-9ea3fb407f00"]
+    },
+    {
+        "name": "Miguel Ramon Duarte Prieto",
+        "email": "miguelpy21@gmail.com",
+        "country": "PY",
+        "membership": {
+            "plan_name": "Membresía - Básica - 1 Sitio",
+            "price": 5.17,
+            "interval": "MONTH",
+            "start_date": "2024-10-11",
+            "end_date": "2024-10-12"
+        },
+        "licenses": ["f3443f0d-2373-44c4-be0f-164be11a0997"]
+    },
+    {
+        "name": "Luis Katz",
+        "email": "guillermoarielkatz@gmail.com",
+        "country": "AR",
+        "membership": {
+            "plan_name": "Membresía - Básica - 1 Sitio",
+            "price": 31.02,
+            "interval": "SEMESTER",
+            "start_date": "2024-10-11",
+            "end_date": "2025-06-12"
+        },
+        "licenses": ["5929a9c0-60dd-4dd0-b06f-3bef5a366c01"]
+    },
+    {
+        "name": "andry reyes",
+        "email": "assaxve@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 66.00,
+            "interval": "YEAR",
+            "start_date": "2024-10-09",
+            "end_date": "2025-12-09"
+        },
+        "billing": {
+            "address": "Caracas",
+            "phone": "04129490569",
+            "tax_id": "4978965"
+        },
+        "licenses": ["d274dd2a-5bdc-48db-86e9-e69040de94be"]
+    },
+    {
+        "name": "Fabrizio Robbio",
+        "email": "admin@moldesunicose.com",
+        "country": "CL",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 56.90,
+            "interval": "YEAR",
+            "start_date": "2024-10-09",
+            "end_date": "2025-10-09"
+        },
+        "licenses": ["cbb5bbb7-dbd1-499c-9991-8027fd9e3104"]
+    },
+    {
+        "name": "Jonathan Bitriago",
+        "email": "owlsunityagency@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 66.00,
+            "interval": "YEAR",
+            "start_date": "2024-10-02",
+            "end_date": "2025-10-02"
+        },
+        "billing": {
+            "address": "Urbanización Club Hipico Las Trinitarias, Barquisimeto 3001.",
+            "phone": "04121734028",
+            "tax_id": "21139440"
+        },
+        "licenses": ["d3e2d3e5-8eb0-4f77-a3f2-3a19246929ab"]
+    },
+    {
+        "name": "Daniel Sanchez",
+        "email": "sanchedale@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Membership - Básica Anual - 1 Sitio",
+            "price": 66.00,
+            "interval": "YEAR",
+            "start_date": "2024-09-30",
+            "end_date": "2025-09-30"
+        },
+        "billing": {
+            "address": "Av las americas Res puerta de hierro",
+            "phone": "04121234567",
+            "tax_id": "23724136"
+        },
+        "licenses": ["29ea627b-6db0-46fb-9628-a5069f738e5c"]
+    },
+    {
+        "name": "LUCIANO LIVETTI",
+        "email": "laquinta.medios@gmail.com",
+        "country": "AR",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 56.90,
+            "interval": "YEAR",
+            "start_date": "2024-09-24",
+            "end_date": "2025-09-24"
+        },
+        "licenses": ["b73f8df3-bfbb-46cf-ae71-91ce87ed3261"]
+    },
+    {
+        "name": "Wendy Rojas",
+        "email": "TVNOVEDADESVE@GMAIL.COM",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 66.00,
+            "interval": "YEAR",
+            "start_date": "2024-09-20",
+            "end_date": "2025-09-20"
+        },
+        "billing": {
+            "address": "Caracas",
+            "phone": "02125961220",
+            "tax_id": "31334380"
+        },
+        "licenses": ["8e184bc5-b17c-42df-a867-71fcb4efe899"]
+    },
+    {
+        "name": "Juan Agustin Traverso",
+        "email": "info@lavaindumentaria.com.ar",
+        "country": "AR",
+        "membership": {
+            "plan_name": "Membresía - Básica - 1 Sitio",
+            "price": 5.17,
+            "interval": "MONTH",
+            "start_date": "2024-09-10",
+            "end_date": "2025-06-15"
+        },
+        "licenses": ["25b2dc1c-c309-47f9-8338-f689937f52ef"]
+    },
+    {
+        "name": "Jonathan Bitriago",
+        "email": "owlsunityagency@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 66.00,
+            "interval": "YEAR",
+            "start_date": "2024-09-10",
+            "end_date": "2025-09-10"
+        },
+        "billing": {
+            "address": "Urbanización Club Hipico Las Trinitarias, Barquisimeto 3001.",
+            "phone": "04121734028",
+            "tax_id": "21139440"
+        },
+        "licenses": ["e2c92216-1d27-445a-bc54-4a882d273a7d"]
+    },
+    {
+        "name": "Joel Amén",
+        "email": "tiempoesmemoria@gmail.com",
+        "country": "AR",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 56.90,
+            "interval": "YEAR",
+            "start_date": "2024-09-02",
+            "end_date": "2025-09-02"
+        },
+        "licenses": ["503e2e09-b0d9-4ae3-841c-dce26aa9750c"]
+    },
+    {
+        "name": "SEGUCALL DIGITAL, C.A.",
+        "email": "administracion@ventana.digital",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Especial - Ventana Digital - 25 sitios",
+            "price": 116.00,
+            "interval": "MONTH",
+            "start_date": "2024-08-28",
+            "end_date": "2030-08-28"
+        },
+        "billing": {
+            "address": "AV SUR CC CENTRO EMPRESARIAL LAGUNITA NIVEL 4 OF. 407, URB LA LAGUNITA, CARACAS",
+            "phone": "04242521880",
+            "tax_id": "J501928517"
+        },
+        "licenses": [
+            "49560b50-1596-4a2f-8623-8c586e57e600",
+            "49560b50-1596-4a2f-8623-8c586e57e601",
+            "49560b50-1596-4a2f-8623-8c586e57e602",
+            "49560b50-1596-4a2f-8623-8c586e57e603",
+            "49560b50-1596-4a2f-8623-8c586e57e604",
+            "49560b50-1596-4a2f-8623-8c586e57e605",
+            "49560b50-1596-4a2f-8623-8c586e57e606",
+            "49560b50-1596-4a2f-8623-8c586e57e607",
+            "49560b50-1596-4a2f-8623-8c586e57e608",
+            "49560b50-1596-4a2f-8623-8c586e57e609",
+            "49560b50-1596-4a2f-8623-8c586e57e610",
+            "49560b50-1596-4a2f-8623-8c586e57e611",
+            "49560b50-1596-4a2f-8623-8c586e57e612",
+            "49560b50-1596-4a2f-8623-8c586e57e613",
+            "49560b50-1596-4a2f-8623-8c586e57e614",
+            "49560b50-1596-4a2f-8623-8c586e57e615",
+            "49560b50-1596-4a2f-8623-8c586e57e616",
+            "49560b50-1596-4a2f-8623-8c586e57e617",
+            "49560b50-1596-4a2f-8623-8c586e57e618",
+            "49560b50-1596-4a2f-8623-8c586e57e619",
+            "49560b50-1596-4a2f-8623-8c586e57e620",
+            "49560b50-1596-4a2f-8623-8c586e57e621",
+            "49560b50-1596-4a2f-8623-8c586e57e622",
+            "49560b50-1596-4a2f-8623-8c586e57e623",
+            "49560b50-1596-4a2f-8623-8c586e57e624",
+            "49560b50-1596-4a2f-8623-8c586e57e625"
+        ]
+    },
+    {
+        "name": "Julio Peñaloza",
+        "email": "xerographics1999@hotmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 66.00,
+            "interval": "YEAR",
+            "start_date": "2024-08-28",
+            "end_date": "2025-08-28"
+        },
+        "billing": {
+            "address": "Portuguesa",
+            "phone": "04120557754",
+            "tax_id": "27938006"
+        },
+        "licenses": ["280b8d4d-ba8c-4ffb-9f99-a128a0c7af8a"]
+    },
+    {
+        "name": "hector osorio",
+        "email": "ganaconmodaurbana@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 66.00,
+            "interval": "YEAR",
+            "start_date": "2024-08-27",
+            "end_date": "2025-08-27"
+        },
+        "billing": {
+            "address": "Carabobo",
+            "phone": "04147114220",
+            "tax_id": "24903603"
+        },
+        "licenses": ["a056b927-4b0d-4ced-afe3-edf7856d9c41"]
+    },
+    {
+        "name": "Sercoinfal C.A.",
+        "email": "hmedina@sercoinfal.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 66.00,
+            "interval": "YEAR",
+            "start_date": "2024-08-22",
+            "end_date": "2025-08-22"
+        },
+        "billing": {
+            "address": "Av. ppal Local Industrial Terranostra parcela nro. L-35 Urb. Parque Comercio Industrial Castillito, San Diego 2006, Carabobo, Valencia",
+            "phone": "04144206511",
+            "tax_id": "J305910553"
+        },
+        "licenses": ["b1696a43-d9ab-4789-afa3-023ce95d1269"]
+    },
+    {
+        "name": "MOISES FRIDZON",
+        "email": "mfridzon@opticacaroni.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Membership - Básica Anual - 1 Sitio",
+            "price": 66.00,
+            "interval": "YEAR",
+            "start_date": "2024-08-21",
+            "end_date": "2025-08-21"
+        },
+        "billing": {
+            "address": "Caracas",
+            "phone": "04242500970",
+            "tax_id": "1097449"
+        },
+        "licenses": ["747f7cb5-2eda-41b7-b77f-935322dfbede"]
+    },
+    {
+        "name": "Estación El Consejo S.A",
+        "email": "jtirado@ronsantateresa.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Membership - Básica Anual - 1 Sitio",
+            "price": 66.00,
+            "interval": "YEAR",
+            "start_date": "2024-08-21",
+            "end_date": "2025-08-21"
+        },
+        "billing": {
+            "address": "Carretera Panamericana Hacienda Santa Teresa, El Consejo Estado Aragua",
+            "phone": "04144532331",
+            "tax_id": "J075601840"
+        },
+        "licenses": ["43402eb3-69b5-4a29-ae12-1d6f3cd98463"]
+    },
+    {
+        "name": "Julio Peñaloza",
+        "email": "xerographics1999@hotmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 66.00,
+            "interval": "YEAR",
+            "start_date": "2024-08-18",
+            "end_date": "2025-08-18"
+        },
+        "billing": {
+            "address": "Portuguesa",
+            "phone": "04120557754",
+            "tax_id": "27938006"
+        },
+        "licenses": ["2b4a486e-59c6-4af9-8ffb-d05bec320271"]
+    },
+    {
+        "name": "Jhonny Rea",
+        "email": "jhonnyrea2010@hotmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Membresía - Básica - 1 Sitio",
+            "price": 72.00,
+            "interval": "MONTH",
+            "start_date": "2024-08-14",
+            "end_date": "2025-12-12"
+        },
+        "billing": {
+            "address": "La Candelaria, Caracas",
+            "phone": "04127136957",
+            "tax_id": "18622519"
+        },
+        "licenses": ["3daf40eb-224a-4bc2-a09f-e7b955f924ab"]
+    },
+    {
+        "name": "Carlos Luna",
+        "email": "espeacke@gmail.com",
+        "country": "MX",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 56.90,
+            "interval": "YEAR",
+            "start_date": "2024-08-09",
+            "end_date": "2025-08-09"
+        },
+        "licenses": ["ae4f4d85-be52-4874-9dd8-a33faff5fa2c"]
+    },
+    {
+        "name": "Gaston Valerio",
+        "email": "gvalerio@trv.com.ar",
+        "country": "AR",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 56.90,
+            "interval": "YEAR",
+            "start_date": "2024-08-06",
+            "end_date": "2025-08-06"
+        },
+        "licenses": ["5636b191-e70c-4ad1-817f-43cecb66503e"]
+    },
+    {
+        "name": "Diaz Gabriel Alejandro",
+        "email": "gabriel@rpdigital.com.ar",
+        "country": "AR",
+        "membership": {
+            "plan_name": "Membership - Básica Anual - 1 Sitio",
+            "price": 56.90,
+            "interval": "YEAR",
+            "start_date": "2024-07-18",
+            "end_date": "2025-07-18"
+        },
+        "licenses": ["4fe1dc4e-80d3-4f02-9fe1-8da8971769f8"]
+    },
+    {
+        "name": "Carlos Luna",
+        "email": "espeacke@gmail.com",
+        "country": "MX",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 56.90,
+            "interval": "YEAR",
+            "start_date": "2024-07-18",
+            "end_date": "2025-07-18"
+        },
+        "licenses": ["6f57f3d1-a1d3-40e6-b872-50f3973bcd4f"]
+    },
+    {
+        "name": "Now de Venezuela CA",
+        "email": "sistemas@nowdevenezuela.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 66.00,
+            "interval": "YEAR",
+            "start_date": "2024-07-17",
+            "end_date": "2025-07-17"
+        },
+        "billing": {
+            "address": "Av 3H con Calle 80 #80-05 Local 1 y 2, Maracaibo, Zulia",
+            "phone": "04121234567",
+            "tax_id": "J305766479"
+        },
+        "licenses": ["a70a7f05-2a13-4f73-804b-7a420a687cd0"]
+    },
+    {
+        "name": "Pablo Toledo",
+        "email": "Administracion3@starligh.com",
+        "country": "AR",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 56.90,
+            "interval": "YEAR",
+            "start_date": "2024-07-16",
+            "end_date": "2025-07-16"
+        },
+        "licenses": ["58679094-c3a4-4eb0-bd2c-a5a71538bc79"]
+    },
+    {
+        "name": "Leonardo Mariño",
+        "email": "mktleomarino@gmail.com",
+        "country": "AR",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 56.90,
+            "interval": "YEAR",
+            "start_date": "2024-07-16",
+            "end_date": "2025-07-16"
+        },
+        "licenses": ["c459fdc5-7b91-4326-b531-955c1e28ff4b"]
+    },
+    {
+        "name": "jose primavera",
+        "email": "miguelprimavera1@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Membership - Básica - 1 Sitio",
+            "price": 6.00,
+            "interval": "MONTH",
+            "start_date": "2024-07-15",
+            "end_date": "2025-06-16"
+        },
+        "billing": {
+            "address": "subida de oripoto con calle tamanaco cruze con tusmare urb. tusmare casa primavera",
+            "phone": "04142071207",
+            "tax_id": "v12761486"
+        },
+        "licenses": ["1cfb923e-c6fa-4823-a151-3cef9815d7d1"]
+    },
+    {
+        "name": "Alaing Maldonado",
+        "email": "alaingmaldonado@somosdecopaint.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 66.00,
+            "interval": "YEAR",
+            "start_date": "2024-07-11",
+            "end_date": "2025-07-11"
+        },
+        "billing": {
+            "address": "Caracas",
+            "phone": "04123311226",
+            "tax_id": "19961966"
+        },
+        "licenses": ["ca103547-41c7-445b-a4bc-4578a2a4d534"]
+    },
+    {
+        "name": "Nicolas Salazar",
+        "email": "ventas@onehostchile.cl",
+        "country": "CL",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 56.90,
+            "interval": "YEAR",
+            "start_date": "2024-07-08",
+            "end_date": "2025-07-08"
+        },
+        "licenses": ["5a7751ed-fa82-42c6-9202-6d0065fb1c76"]
+    },
+    {
+        "name": "Paula MARTINEZ",
+        "email": "pmartineznf@gmail.com",
+        "country": "AR",
+        "membership": {
+            "plan_name": "Membresía - Básica - 1 Sitio",
+            "price": 5.17,
+            "interval": "MONTH",
+            "start_date": "2024-07-04",
+            "end_date": "2025-07-06"
+        },
+        "licenses": ["4131dd8e-5294-43a1-976e-b89858187d8b"]
+    },
+    {
+        "name": "Eugenio Cesar Oliden",
+        "email": "ecoliden@gmail.com",
+        "country": "ES",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 56.90,
+            "interval": "YEAR",
+            "start_date": "2024-07-01",
+            "end_date": "2025-07-01"
+        },
+        "licenses": ["9c00886f-0026-4d17-a230-ddb06983225d"]
+    },
+    {
+        "name": "Hancho Issa",
+        "email": "hancho.issa@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Membresía - Pro - 3 Sitios",
+            "price": 15.00,
+            "interval": "MONTH",
+            "start_date": "2024-06-25",
+            "end_date": "2025-06-16"
+        },
+        "billing": {
+            "address": "Caracas",
+            "phone": "04241616368",
+            "tax_id": "445451"
+        },
+        "licenses": [
+            "2bf6475c-fcc0-49cb-8a5e-1ec9f7b073ae",
+            "2bf6475c-fcc0-49cb-8a5e-1ec9f7b073a2",
+            "2bf6475c-fcc0-49cb-8a5e-1ec9f7b073a3"
+        ]
+    },
+    {
+        "name": "KEISY YUDITH PEREZ CORREA",
+        "email": "marketingdkp40@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Membresía - Básica - 1 Sitio",
+            "price": 6.00,
+            "interval": "MONTH",
+            "start_date": "2024-05-28",
+            "end_date": "2025-06-12"
+        },
+        "billing": {
+            "address": "GUARICO, ROSCIO, SAN JUAN DE LOS MORROS",
+            "phone": "04120342306",
+            "tax_id": "V16045183"
+        },
+        "licenses": ["23ed274b-d1e0-4396-988b-a1ec0771b8b4"]
+    },
+    {
+        "name": "Jesus De la rosa",
+        "email": "over20233@gmail.com",
+        "country": "DO",
+        "membership": {
+            "plan_name": "Membresía - Básica - 1 Sitio",
+            "price": 5.17,
+            "interval": "MONTH",
+            "start_date": "2024-05-10",
+            "end_date": "2025-06-15"
+        },
+        "licenses": ["40cc73ff-b207-4fac-8da4-54c8fcf7a204"]
+    },
+    {
+        "name": "HSIU HUANG",
+        "email": "point.app@modapoint.com.ar",
+        "country": "AR",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 56.90,
+            "interval": "YEAR",
+            "start_date": "2024-05-06",
+            "end_date": "2026-05-06"
+        },
+        "licenses": ["56ba04ae-d886-471e-98f2-41a7ef310db6"]
+    },
+    {
+        "name": "Jonathan Bitriago",
+        "email": "owlsunityagency@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 66.00,
+            "interval": "YEAR",
+            "start_date": "2024-04-25",
+            "end_date": "2026-04-28"
+        },
+        "billing": {
+            "address": "Urbanización Club Hipico Las Trinitarias, Barquisimeto 3001.",
+            "phone": "04121734028",
+            "tax_id": "21139440"
+        },
+        "licenses": ["04192638-8aaf-4b08-a8ff-bf977643b9b7"]
+    },
+    {
+        "name": "Facundo Martin Pieroni",
+        "email": "facundoante@hotmail.com",
+        "country": "AR",
+        "membership": {
+            "plan_name": "Membresía - Básica - 1 Sitio",
+            "price": 5.17,
+            "interval": "MONTH",
+            "start_date": "2024-04-02",
+            "end_date": "2025-08-08"
+        },
+        "licenses": ["6bda278c-2714-497b-b415-6dbdb4f323d3"]
+    },
+    {
+        "name": "JESUS ROJAS",
+        "email": "jrojas@iocagroup.com",
+        "country": "US",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 56.90,
+            "interval": "YEAR",
+            "start_date": "2024-03-07",
+            "end_date": "2026-03-07"
+        },
+        "licenses": ["8316b81e-98d8-403e-a791-8a133472e008"]
+    },
+    {
+        "name": "Isabel Bermudez",
+        "email": "isabermudezfebres@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 66.00,
+            "interval": "YEAR",
+            "start_date": "2024-02-28",
+            "end_date": "2026-03-02"
+        },
+        "billing": {
+            "address": "Calle D, Qta Loly, Las Marias, El Hatillo, Caracas",
+            "phone": "04141365257",
+            "tax_id": "17705397"
+        },
+        "licenses": ["87be0385-6a71-4fdb-980f-d71828d76fbd"]
+    },
+    {
+        "name": "Liam Fung",
+        "email": "carovastore@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 66.00,
+            "interval": "YEAR",
+            "start_date": "2024-02-05",
+            "end_date": "2026-02-05"
+        },
+        "billing": {
+            "address": "mañongo valencia Carabobo",
+            "phone": "04125052777",
+            "tax_id": "29856925"
+        },
+        "licenses": ["f2a05b86-5d8e-4f51-8bc6-6f0ff5498a80"]
+    },
+    {
+        "name": "JOHN DAVID FERREIRA DOS SANTOS",
+        "email": "j18d11fs77@gmail.com",
+        "country": "VE",
+        "membership": {
+            "plan_name": "Membresía - Básica - 1 Sitio",
+            "price": 6.00,
+            "interval": "MONTH",
+            "start_date": "2024-01-19",
+            "end_date": "2025-06-30"
+        },
+        "billing": {
+            "address": "MIRANDA, BARUTA",
+            "phone": "04241925476",
+            "tax_id": "V11742654"
+        },
+        "licenses": ["52182e69-283f-4186-8497-b46432659f33"]
+    },
+    {
+        "name": "Karla Patricia Perez Leon",
+        "email": "kperezleon@gmail.com",
+        "country": "SV",
+        "membership": {
+            "plan_name": "Membresía - Básica Anual - 1 Sitio",
+            "price": 66.00,
+            "interval": "YEAR",
+            "start_date": "2023-11-29",
+            "end_date": "2026-01-15"
+        },
+        "licenses": ["f12f6855-913f-4690-949d-3c4546b2d334"]
+    }
+]
