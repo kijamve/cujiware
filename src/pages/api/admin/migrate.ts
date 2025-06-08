@@ -2,7 +2,6 @@ import type { APIRoute } from 'astro';
 import { requireSuperAdmin } from '@/middleware/auth.ts';
 import { prisma } from '@/lib/prisma';
 import { MEMBERSHIP_STATUS, LICENSE_STATUS, PAYMENT_METHOD, PLAN_INTERVAL } from '@/constants/status';
-import migrateData from '../../../../migrate.json';
 import bcrypt from 'bcryptjs';
 import { sendMigrationEmail } from '../../../utils/email';
 
@@ -13,6 +12,9 @@ export const POST: APIRoute = async (context) => {
     if (user instanceof Response) {
       return user;
     }
+
+    // Obtener el JSON del body
+    const migrateData = await context.request.json();
 
     const results = {
       users: { created: 0, updated: 0 },
@@ -98,7 +100,7 @@ export const POST: APIRoute = async (context) => {
       });
 
       const existingLicenseIds = existingLicenses.map(l => l.id);
-      const newLicenseIds = data.licenses.filter(id => !existingLicenseIds.includes(id));
+      const newLicenseIds = data.licenses.filter((id: string) => !existingLicenseIds.includes(id));
 
       // Si hay licencias existentes, obtener la membresía asociada
       let existingMembership = existingLicenses.length > 0 ? existingLicenses[0].membership : null;
@@ -107,7 +109,7 @@ export const POST: APIRoute = async (context) => {
         // Si existe una membresía, agregar las licencias faltantes
         if (newLicenseIds.length > 0) {
           await prisma.license.createMany({
-            data: newLicenseIds.map(id => ({
+            data: newLicenseIds.map((id: string) => ({
               id,
               membership_id: existingMembership.id,
               status: LICENSE_STATUS.ACTIVE
@@ -133,7 +135,7 @@ export const POST: APIRoute = async (context) => {
             end_date: new Date(data.membership.end_date),
             payment_method: data.country === 'VE' ? PAYMENT_METHOD.VENEZUELA : PAYMENT_METHOD.STRIPE,
             licenses: {
-              create: newLicenseIds.map(id => ({
+              create: newLicenseIds.map((id: string) => ({
                 id,
                 status: LICENSE_STATUS.ACTIVE
               }))

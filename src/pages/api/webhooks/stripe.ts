@@ -35,7 +35,7 @@ export const POST: APIRoute = async ({ request }) => {
     switch (event.type) {
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session;
-        const { userId, planId } = session.metadata || {};
+        const { userId, planId, membershipId } = session.metadata || {};
 
         if (!userId || !planId) {
           throw new Error('Metadata incompleta en la sesión');
@@ -50,6 +50,25 @@ export const POST: APIRoute = async ({ request }) => {
           throw new Error('Plan no encontrado');
         }
 
+        if (membershipId) {
+          const membership = await prisma.membership.findUnique({
+            where: { id: membershipId }
+          });
+          if (membership) {
+            await prisma.membership.update({
+              where: { id: membershipId },
+              data: {
+                status: MEMBERSHIP_STATUS.ACTIVE,
+                stripe_subscription_id: session.subscription as string,
+                payment_method: PAYMENT_METHOD.STRIPE,
+              }
+            });
+            return new Response(JSON.stringify({ received: true }), {
+              status: 200,
+              headers: { 'Content-Type': 'application/json' }
+            });
+          }
+        }
 
         // Crear la membresía
         const membership = await prisma.membership.create({
@@ -72,7 +91,7 @@ export const POST: APIRoute = async ({ request }) => {
       }
       case 'invoice.paid': {
         const invoice = event.data.object as Stripe.Invoice;
-        
+
         const subId = invoice.lines.data[0].parent?.subscription_item_details?.subscription || null;
         if (subId) {
           // Diferir el procesamiento por 10 segundos
@@ -102,26 +121,29 @@ export const POST: APIRoute = async ({ request }) => {
             // Calcular la nueva fecha de finalización
             const now = new Date();
             let endDate = membership.end_date || new Date(now);
-            const timestamp = endDate.getTime();
-            
-            switch (membership.plan.interval) {
-              case PLAN_INTERVAL.MONTH: {
-                const oneMontInMs = Math.round((365.25 / 12) * 24 * 60 * 60 * 1000); // 30 días en milisegundos
-                endDate = new Date(timestamp + oneMontInMs);
-                break;
+
+            if (invoice.total > 0) {
+              const timestamp = endDate.getTime();
+
+              switch (membership.plan.interval) {
+                case PLAN_INTERVAL.MONTH: {
+                  const oneMontInMs = Math.round((365.25 / 12) * 24 * 60 * 60 * 1000); // 30 días en milisegundos
+                  endDate = new Date(timestamp + oneMontInMs);
+                  break;
+                }
+                case PLAN_INTERVAL.SEMESTER: {
+                  const halfYearInMs = Math.round((365.25 / 2) * 24 * 60 * 60 * 1000); // 180 días en milisegundos
+                  endDate = new Date(timestamp + halfYearInMs);
+                  break;
+                }
+                case PLAN_INTERVAL.YEAR: {
+                  const oneYearInMs = Math.round(365.25 * 24 * 60 * 60 * 1000); // 31,556,926.08 segundos
+                  endDate = new Date(timestamp + oneYearInMs);
+                  break;
+                }
+                default:
+                  throw new Error('Intervalo de plan no válido');
               }
-              case PLAN_INTERVAL.SEMESTER: {
-                const halfYearInMs = Math.round((365.25 / 2) * 24 * 60 * 60 * 1000); // 180 días en milisegundos
-                endDate = new Date(timestamp + halfYearInMs);
-                break;
-              }
-              case PLAN_INTERVAL.YEAR: {
-                const oneYearInMs = Math.round(365.25 * 24 * 60 * 60 * 1000); // 31,556,926.08 segundos
-                endDate = new Date(timestamp + oneYearInMs);
-                break;
-              }
-              default:
-                throw new Error('Intervalo de plan no válido');
             }
 
             await prisma.membership.update({
@@ -145,7 +167,7 @@ export const POST: APIRoute = async ({ request }) => {
 
         if (membership) {
           const newStatus = subscription.status === 'active' ? MEMBERSHIP_STATUS.ACTIVE : MEMBERSHIP_STATUS.CANCELLED;
-          
+
           // Solo actualizar si hay cambios en el estado
           if (membership.status !== newStatus) {
             await prisma.membership.update({
@@ -172,4 +194,4 @@ export const POST: APIRoute = async ({ request }) => {
       headers: { 'Content-Type': 'application/json' }
     });
   }
-}; 
+};

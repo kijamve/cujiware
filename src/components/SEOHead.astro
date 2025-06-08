@@ -9,9 +9,9 @@ export interface Props {
   canonicalURL?: string;
 }
 
-const { 
-  title, 
-  description, 
+const {
+  title,
+  description,
   image = '/images/cujiware-social-image.jpg',
   canonicalURL = Astro.url.href
 } = Astro.props;
@@ -54,7 +54,7 @@ const canonicalUrl = canonicalURL.startsWith('http') ? canonicalURL : new URL(ca
   organization={{
     name: "Cujiware",
     url: baseUrl,
-    logo: new URL("/images/logo.png", baseUrl).toString(),
+    logo: new URL("/CujiwareLetras.svg", baseUrl).toString(),
     sameAs: [
       "https://twitter.com/cujiware",
       "https://facebook.com/cujiware",

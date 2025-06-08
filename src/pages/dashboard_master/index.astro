@@ -36,12 +36,20 @@ const versionsByPlugin = pluginVersions.reduce((acc, version) => {
         <div class="px-4 py-5 sm:p-6">
           <div class="flex justify-between items-center mb-8">
             <h1 class="text-2xl font-bold text-gray-900">Dashboard Master</h1>
-            <button
-              id="logout-btn"
-              class="inline-flex items-center justify-center px-3 py-2 border border-gray-300 text-sm leading-4 font-medium rounded-md text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-            >
-              Cerrar Sesión
-            </button>
+            <div class="flex gap-4">
+              <button
+                id="migrate-btn"
+                class="inline-flex items-center justify-center px-3 py-2 border border-gray-300 text-sm leading-4 font-medium rounded-md text-green-700 bg-white hover:bg-green-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+              >
+                Ejecutar Migración
+              </button>
+              <button
+                id="logout-btn"
+                class="inline-flex items-center justify-center px-3 py-2 border border-gray-300 text-sm leading-4 font-medium rounded-md text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+              >
+                Cerrar Sesión
+              </button>
+            </div>
           </div>
 
           <Tabs activeTab="plugins" />
@@ -73,6 +81,43 @@ const versionsByPlugin = pluginVersions.reduce((acc, version) => {
 
 <UploadModal plugins={plugins} />
 
+<!-- Modal de Migración -->
+<div id="migrate-modal" class="fixed inset-0 bg-gray-500 bg-opacity-75 hidden">
+  <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+    <div class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-3xl sm:p-6">
+      <div>
+        <div class="mt-3 text-center sm:mt-5">
+          <h3 class="text-lg font-medium leading-6 text-gray-900 mb-4">JSON de Migración</h3>
+          <div class="mt-2">
+            <textarea
+              id="migration-json"
+              rows="20"
+              class="block w-full rounded-md border-gray-300 shadow-sm focus:border-cuji-blue focus:ring-cuji-blue sm:text-sm font-mono"
+              placeholder="Pega aquí el JSON de migración..."
+            ></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
+        <button
+          type="button"
+          id="execute-migration-btn"
+          class="inline-flex w-full justify-center rounded-md border border-transparent bg-cuji-blue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-cuji-dark-blue focus:outline-none focus:ring-2 focus:ring-cuji-blue focus:ring-offset-2 sm:col-start-2 sm:text-sm"
+        >
+          Ejecutar Migración
+        </button>
+        <button
+          type="button"
+          id="cancel-migration-btn"
+          class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-cuji-blue focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   // Logout
   const logoutBtn = document.getElementById('logout-btn');
@@ -88,4 +133,78 @@ const versionsByPlugin = pluginVersions.reduce((acc, version) => {
       console.error('Error al cerrar sesión:', error);
     }
   });
-</script> 
+
+  // Migración
+  const migrateBtn = document.getElementById('migrate-btn') as HTMLButtonElement;
+  const migrateModal = document.getElementById('migrate-modal');
+  const migrationJson = document.getElementById('migration-json') as HTMLTextAreaElement;
+  const executeMigrationBtn = document.getElementById('execute-migration-btn') as HTMLButtonElement;
+  const cancelMigrationBtn = document.getElementById('cancel-migration-btn');
+
+  // Mostrar modal
+  migrateBtn?.addEventListener('click', () => {
+    migrateModal?.classList.remove('hidden');
+  });
+
+  // Cerrar modal
+  cancelMigrationBtn?.addEventListener('click', () => {
+    migrateModal?.classList.add('hidden');
+    migrationJson.value = '';
+  });
+
+  // Ejecutar migración
+  executeMigrationBtn?.addEventListener('click', async () => {
+    try {
+      const jsonData = migrationJson.value.trim();
+      if (!jsonData) {
+        alert('Por favor, ingresa el JSON de migración');
+        return;
+      }
+
+      // Validar que sea un JSON válido
+      try {
+        JSON.parse(jsonData);
+      } catch (e) {
+        alert('El JSON ingresado no es válido');
+        return;
+      }
+
+      if (!confirm('¿Estás seguro de que deseas ejecutar la migración? Esta acción no se puede deshacer.')) {
+        return;
+      }
+
+      executeMigrationBtn.disabled = true;
+      executeMigrationBtn.textContent = 'Migrando...';
+
+      const response = await fetch('/api/admin/migrate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: jsonData
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert(`Migración completada exitosamente:\n\n` +
+          `Usuarios: ${data.results.users.created} creados, ${data.results.users.updated} actualizados\n` +
+          `Planes: ${data.results.plans.created} creados, ${data.results.plans.updated} actualizados\n` +
+          `Membresías: ${data.results.memberships.created} creadas, ${data.results.memberships.updated} actualizadas\n` +
+          `Licencias: ${data.results.licenses.created} creadas, ${data.results.licenses.skipped} omitidas`);
+
+        // Cerrar modal y limpiar textarea
+        migrateModal?.classList.add('hidden');
+        migrationJson.value = '';
+      } else {
+        throw new Error(data.error || 'Error desconocido');
+      }
+    } catch (error: any) {
+      console.error('Error en la migración:', error);
+      alert('Error al ejecutar la migración: ' + (error.message || 'Error desconocido'));
+    } finally {
+      executeMigrationBtn.disabled = false;
+      executeMigrationBtn.textContent = 'Ejecutar Migración';
+    }
+  });
+</script>

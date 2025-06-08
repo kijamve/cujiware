@@ -45,8 +45,8 @@ const canResetLicense = (lastReset: Date | null) => {
       <dt class="text-sm font-medium text-gray-500">Estado</dt>
       <dd class="mt-1 text-sm text-gray-900">
         <span class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-          membership.status === MEMBERSHIP_STATUS.ACTIVE 
-            ? 'bg-green-100 text-green-800' 
+          membership.status === MEMBERSHIP_STATUS.ACTIVE
+            ? 'bg-green-100 text-green-800'
             : 'bg-red-100 text-red-800'
         }`}>
           {membership.status === MEMBERSHIP_STATUS.ACTIVE ? 'Activa' : 'Cancelada'}
@@ -83,7 +83,7 @@ const canResetLicense = (lastReset: Date | null) => {
         data-plan-id={membership.plan.id}
         data-membership-id={membership.id}
       >
-        Renovar Membresía
+        Vincular Tarjeta
       </button>
     )}
     <button
@@ -124,10 +124,16 @@ const canResetLicense = (lastReset: Date | null) => {
                 <h4 class="text-sm font-medium text-gray-900">Últimos usos</h4>
                 { license.status === LICENSE_STATUS.ACTIVE && canResetLicense(license.last_reset) ? (
                   <button
-                    class="reset-btn inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                    class="reset-btn inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 group relative"
                     data-license-id={license.id}
                   >
-                    Resetear Licencia
+                    Resetear usos de la Licencia
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                      Solo se puede hacer 1 vez cada 15 días
+                    </span>
                   </button>
                 ) : license.status === LICENSE_STATUS.ACTIVE && license.last_reset ? (
                   <div class="text-xs text-gray-500">
@@ -135,7 +141,7 @@ const canResetLicense = (lastReset: Date | null) => {
                   </div>
                 ) : null}
               </div>
-              
+
               {license.usages && license.usages.length > 0 ? (
                 <div class="space-y-2">
                   {license.usages.map(usage => (
@@ -169,7 +175,7 @@ const canResetLicense = (lastReset: Date | null) => {
           </svg>
         </button>
       </div>
-      
+
       <div class="space-y-4">
         {membership.payments && membership.payments.length > 0 ? (
           membership.payments.map(payment => (
@@ -184,7 +190,7 @@ const canResetLicense = (lastReset: Date | null) => {
                   </p>
                 </div>
                 <span class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                  payment.status === PAYMENT_STATUS.COMPLETED 
+                  payment.status === PAYMENT_STATUS.COMPLETED
                     ? 'bg-green-100 text-green-800'
                     : payment.status === PAYMENT_STATUS.PENDING
                     ? 'bg-yellow-100 text-yellow-800'
@@ -193,7 +199,7 @@ const canResetLicense = (lastReset: Date | null) => {
                   {payment.status === PAYMENT_STATUS.COMPLETED ? 'Completado' : payment.status === PAYMENT_STATUS.PENDING ? 'Pendiente' : 'Fallido'}
                 </span>
               </div>
-              
+
               <div class="mt-2 text-sm text-gray-500">
                 <p>Método: {payment.payment_method === PAYMENT_METHOD.STRIPE ? 'Tarjeta' : 'Transferencia'}</p>
                 {payment.bank_name && <p>Banco: {payment.bank_name}</p>}
@@ -265,12 +271,12 @@ const canResetLicense = (lastReset: Date | null) => {
             'Accept': 'application/json'
           },
           credentials: 'include',
-          body: JSON.stringify({ 
+          body: JSON.stringify({
             plan: planId,
-            membership_id: membershipId 
+            membership_id: membershipId
           })
         });
-        
+
         const data = await response.json();
 
         if (!response.ok) {
@@ -311,12 +317,12 @@ const canResetLicense = (lastReset: Date | null) => {
             'Accept': 'application/json'
           },
           credentials: 'include',
-          body: JSON.stringify({ 
+          body: JSON.stringify({
             plan: planId,
-            membership_id: membershipId 
+            membership_id: membershipId
           })
         });
-        
+
         const data = await response.json();
 
         if (!response.ok) {
@@ -338,4 +344,4 @@ const canResetLicense = (lastReset: Date | null) => {
       }
     });
   });
-</script> 
+</script>
