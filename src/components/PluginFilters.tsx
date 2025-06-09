@@ -56,6 +56,7 @@ export function PluginFilters({
         <option value="all">Todas las plataformas</option>
         <option value="woocommerce">WooCommerce</option>
         <option value="prestashop">PrestaShop</option>
+        <option value="gravityforms">Gravity Forms</option>
       </select>
 
       <select

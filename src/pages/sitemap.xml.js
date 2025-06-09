@@ -1,4 +1,5 @@
 import { getCollection } from 'astro:content';
+import plugins from '../data/plugins.json';
 
 export async function GET() {
   const baseUrl = import.meta.env.PUBLIC_APP_URL || 'https://cujiware.com';
@@ -11,29 +12,34 @@ export async function GET() {
     '/privacidad',
     '/terminos',
     '/reembolsos',
-    '/suscripcion',
-    '/mi-cuenta',
-    '/dashboard'
+    '/suscripcion'
   ];
 
   // Páginas dinámicas de plugins
   const countries = ['all', 'venezuela', 'argentina'];
   const platforms = ['woocommerce', 'prestashop'];
-  
-  const dynamicPages = countries.flatMap(country => 
+
+  const dynamicPages = countries.flatMap(country =>
     platforms.map(platform => `/plugins/${country}/${platform}`)
   );
 
-  const pages = [
-    ...staticPages,
-    ...dynamicPages
-  ].map(url => ({
-    url,
+  // URLs de plugins individuales
+  const pluginPages = plugins.map(plugin => ({
+    url: `/plugins/${plugin.countries[0]}/${plugin.platform[0]}/${plugin.slug}`,
     lastModified: currentDate
   }));
-  
+
+  const pages = [
+    ...staticPages,
+    ...dynamicPages,
+    ...pluginPages
+  ].map(page => ({
+    url: (typeof page === 'string' ? page : page.url).replace(/\/+/g, '/'), // Elimina slashes duplicados
+    lastModified: currentDate
+  }));
+
   const sitemap = generateSitemap(pages, baseUrl);
-  
+
   return new Response(sitemap, {
     headers: {
       'Content-Type': 'application/xml',
@@ -47,7 +53,7 @@ function generateSitemap(pages, baseUrl) {
   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     ${pages.map(page => `
       <url>
-        <loc>${baseUrl}${page.url}</loc>
+        <loc>${baseUrl.replace(/\/+$/, '')}${page.url}</loc>
         <lastmod>${page.lastModified.toISOString()}</lastmod>
         <changefreq>weekly</changefreq>
         <priority>${page.url === '/' ? '1.0' : '0.8'}</priority>

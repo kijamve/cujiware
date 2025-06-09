@@ -1,6 +1,6 @@
 <div id="auth-modal" class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
   <div class="bg-white rounded-lg p-6 max-w-md w-full">
-    <h3 class="text-lg font-medium text-gray-900 mb-4">Iniciar Sesión</h3>
+    <h3 class="text-lg font-medium text-gray-900 mb-4">Iniciar Sesión / Registro</h3>
     <form id="auth-form" class="space-y-4" onsubmit="return false;">
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
@@ -208,12 +208,12 @@
 
   function validateRIF(rif: string): boolean {
     if (!rif || rif.length < 2) return false;
-    
+
     // Limpiar RIF: solo letras y números
     const cleanRIF = rif.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
     const type = cleanRIF[0];
     const ci = cleanRIF.slice(1);
-    
+
     function ci_to_rif(type: string, ci: string): string | false {
       if (ci.length > 9) return false;
 
@@ -262,17 +262,17 @@
   function validateCedula(cedula: string): boolean {
     // Limpiar cédula: solo letras y números
     const cleanCedula = cedula.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
-    
+
     // Obtener el prefijo y los números
     let prefix = cleanCedula[0];
     let numbers = cleanCedula.slice(1);
-    
+
     // Si no tiene prefijo válido, asumimos que es V
     if (!['V', 'E', 'P'].includes(prefix)) {
       prefix = 'V';
       numbers = cleanCedula;
     }
-    
+
     // Validar que los números estén en el rango correcto
     const numCedula = parseInt(numbers);
     return !isNaN(numCedula) && numCedula >= 100000 && numCedula <= 99999999;
@@ -283,7 +283,7 @@
   rifInput?.addEventListener('input', (e) => {
     const input = e.target as HTMLInputElement;
     const value = input.value.toUpperCase();
-    
+
     // Formatear automáticamente
     if (value.length > 0) {
       const type = value[0];
@@ -301,13 +301,13 @@
   cedulaInput?.addEventListener('input', (e) => {
     const input = e.target as HTMLInputElement;
     const value = input.value.toUpperCase();
-    
+
     // Formatear automáticamente
     if (value.length > 0) {
       const firstChar = value[0];
       let prefix = '';
       let numbers = '';
-      
+
       // Si el primer carácter es V, E o P, lo usamos como prefijo
       if (['V', 'E', 'P'].includes(firstChar)) {
         prefix = firstChar;
@@ -317,7 +317,7 @@
         prefix = 'V';
         numbers = value.replace(/\D/g, '');
       }
-      
+
       if (numbers.length > 0) {
         input.value = `${prefix}-${numbers}`;
       } else {
@@ -427,13 +427,13 @@
       // Si no hay campo de contraseña visible, verificar si el email existe
       if (!passwordField?.classList.contains('hidden')) {
         // Login normal
-        const loginData = { 
-          email: email.trim(), 
-          password: password.trim() 
+        const loginData = {
+          email: email.trim(),
+          password: password.trim()
         };
         console.log('Enviando datos de login:', loginData);
         console.log('Plan actual:', currentPlanId);
-        
+
         try {
           const response = await fetch('/api/auth/login', {
             method: 'POST',
@@ -450,7 +450,7 @@
 
           if (response.ok) {
             console.log('Login exitoso:', data);
-            
+
             // Guardar el token en localStorage
             if (data.token) {
               localStorage.setItem('token', data.token);
@@ -458,13 +458,13 @@
             } else {
               console.error('No se recibió token en la respuesta');
             }
-            
+
             // El token ya se guarda automáticamente en las cookies por el servidor
             console.log('Token guardado en cookies por el servidor');
 
             // Cerrar el modal
             closeAuthModal();
-            
+
             // Si estamos en la página de cuenta o el planId es 'register', redirigir al dashboard
             if (currentPlanId === 'register' || window.location.pathname === '/mi-cuenta') {
               window.location.href = '/dashboard';
@@ -491,8 +491,8 @@
         }
       } else if (!countryField?.classList.contains('hidden')) {
         // Registro con contraseña aleatoria
-        const registerData: any = { 
-          email: email.trim(), 
+        const registerData: any = {
+          email: email.trim(),
           country: country.trim()
         };
 
@@ -540,13 +540,13 @@
 
           if (response.ok) {
             console.log('Registro exitoso:', data);
-            
+
             // El token ya se guarda automáticamente en las cookies por el servidor
             console.log('Token guardado en cookies por el servidor');
 
             // Cerrar el modal
             closeAuthModal();
-            
+
             // Si estamos en la página de cuenta o el planId es 'register', redirigir al dashboard
             if (currentPlanId === 'register' || window.location.pathname === '/mi-cuenta') {
               window.location.href = '/dashboard';
@@ -605,4 +605,4 @@
       setLoadingState(false);
     }
   });
-</script> 
+</script>

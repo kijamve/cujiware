@@ -17,7 +17,7 @@ const description = "Accede al panel de administración de Cujiware.";
       <div class="max-w-md mx-auto">
         <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <h2 class="text-2xl font-bold text-gray-900 mb-8">Login Super Admin</h2>
-          
+
           <form id="login-form" class="space-y-6">
             <div>
               <label for="email" class="block text-sm font-medium text-gray-700">
@@ -66,11 +66,11 @@ const description = "Accede al panel de administración de Cujiware.";
 
 <script>
   const loginForm = document.getElementById('login-form');
-  
+
   loginForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
-    
+
     try {
       const response = await fetch('/api/admin/login', {
         method: 'POST',
@@ -93,4 +93,4 @@ const description = "Accede al panel de administración de Cujiware.";
       alert('Error al procesar la solicitud');
     }
   });
-</script> 
+</script>

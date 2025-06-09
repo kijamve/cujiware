@@ -4,7 +4,7 @@
     "slug": "mercadopago-tools-pro-para-gravity-forms-con-suscripciones",
     "file_name": "gfkmercadopago.zip",
     "short_description": "Integra MercadoPago con Gravity Forms para procesar pagos y suscripciones recurrentes de forma segura y automatizada",
-    "icon": "CreditCard", 
+    "icon": "CreditCard",
     "category": "payment_method",
     "countries": ["all", "argentina"],
     "countrie_exclude": ["venezuela"],
@@ -17,7 +17,7 @@
       },
       {
         "src": "/images/plugins/mercadopago-gravity-forms/captura2.png",
-        "alt": "Configuración del plugin", 
+        "alt": "Configuración del plugin",
         "caption": "Panel de configuración del plugin"
       },
       {
@@ -53,7 +53,7 @@
     "file_name": "kmegasoft.zip",
     "short_description": "Integra la pasarela de pago Megasoft en PrestaShop para aceptar Pago Móvil C2P/P2C, Tarjetas de Crédito y Zelle de forma segura",
     "icon": "CreditCard",
-    "category": "payment_method", 
+    "category": "payment_method",
     "countries": ["venezuela"],
     "platform": ["prestashop"]
   },
@@ -352,7 +352,7 @@
     "file_name": "kandreani.zip",
     "short_description": "Integra Andreani en PrestaShop con cotización automática, generación de guías y rastreo de paquetes en tiempo real",
     "icon": "Truck",
-    "category": "payment_method",
+    "category": "shipping",
     "countries": ["argentina"],
     "platform": ["prestashop"]
   },
