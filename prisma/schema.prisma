@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,20 +10,20 @@ datasource db {
 /// Modelo que representa a los usuarios del sistema
 /// Almacena información personal y de facturación
 model User {
-  id                    String       @id @default(cuid())
-  email                 String       @unique
-  password              String       // Contraseña hasheada
-  name                  String
-  country               String
-  billing_full_name     String?      // Nombre completo para facturación
-  billing_phone         String?      // Teléfono para facturación
-  billing_tax_id        String?      // Número de identificación fiscal
-  billing_address       String?      // Dirección de facturación
-  created_at            DateTime     @default(now())
-  updated_at            DateTime     @updatedAt
-  memberships           Membership[]
-  reset_token           String?      @db.Text
-  reset_token_expires   DateTime?
+  id                  String       @id @default(cuid())
+  email               String       @unique
+  password            String
+  name                String
+  country             String
+  billing_full_name   String?
+  billing_phone       String?
+  billing_tax_id      String?
+  billing_address     String?
+  created_at          DateTime     @default(now())
+  updated_at          DateTime     @updatedAt
+  reset_token         String?
+  reset_token_expires DateTime?
+  memberships         Membership[]
 
   @@index([email])
   @@map("user")
@@ -35,22 +32,22 @@ model User {
 /// Modelo que representa las membresías de los usuarios
 /// Gestiona las suscripciones y planes de los usuarios
 model Membership {
-  id                    String   @id @default(cuid())
-  user_id              String
-  plan_id              String
-  status               MembershipStatus
-  start_date           DateTime
-  end_date             DateTime
-  stripe_subscription_id String?
-  payment_method       PaymentMethod
+  id                      String           @id @default(cuid())
+  user_id                 String
+  plan_id                 String
+  status                  MembershipStatus
+  start_date              DateTime
+  end_date                DateTime
+  stripe_subscription_id  String?
+  payment_method          PaymentMethod
   last_check_with_gateway DateTime?
-  last_remember_date   DateTime?  // Fecha del último recordatorio enviado
-  created_at           DateTime @default(now())
-  updated_at           DateTime @updatedAt
-  user                 User     @relation(fields: [user_id], references: [id])
-  plan                 Plan     @relation(fields: [plan_id], references: [id])
-  licenses             License[]
-  payments             Payment[]
+  last_remember_date      DateTime?
+  created_at              DateTime         @default(now())
+  updated_at              DateTime         @updatedAt
+  licenses                License[]
+  plan                    Plan             @relation(fields: [plan_id], references: [id])
+  user                    User             @relation(fields: [user_id], references: [id])
+  payments                Payment[]
 
   @@index([user_id])
   @@index([plan_id])
@@ -62,15 +59,15 @@ model Membership {
 /// Modelo que representa las licencias de software
 /// Gestiona el acceso y uso de los plugins
 model License {
-  id            String     @id @default(uuid())
+  id            String          @id @default(uuid())
   membership_id String
   status        LicenseStatus
-  last_reset    DateTime?  // Fecha del último reset de la licencia
-  created_at    DateTime   @default(now())
-  updated_at    DateTime   @updatedAt
-  membership    Membership @relation(fields: [membership_id], references: [id])
-  usages        LicenseUsage[]
+  last_reset    DateTime?
+  created_at    DateTime        @default(now())
+  updated_at    DateTime        @updatedAt
+  membership    Membership      @relation(fields: [membership_id], references: [id])
   plugins       LicensePlugin[]
+  usages        LicenseUsage[]
 
   @@index([membership_id])
   @@index([status])
@@ -89,23 +86,23 @@ model LicenseUsage {
   updated_at    DateTime @updatedAt
   license       License  @relation(fields: [license_id], references: [id])
 
+  @@unique([license_id, domain])
   @@index([license_id])
   @@index([domain])
-  @@unique([license_id, domain])
   @@map("licenseusage")
 }
 
 /// Modelo que asocia plugins específicos a una licencia
 /// Permite el control granular de qué plugins puede usar cada licencia
 model LicensePlugin {
-  id           String   @id @default(cuid())
-  license_id   String
-  plugin_slug  String
-  domain       String
-  last_usage   DateTime?
-  created_at   DateTime @default(now())
-  updated_at   DateTime @updatedAt
-  license      License  @relation(fields: [license_id], references: [id])
+  id          String    @id @default(cuid())
+  license_id  String
+  plugin_slug String
+  domain      String
+  last_usage  DateTime?
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  license     License   @relation(fields: [license_id], references: [id])
 
   @@unique([license_id, plugin_slug, domain])
   @@index([license_id])
@@ -122,14 +119,14 @@ model Plan {
   price           Float
   currency        String
   interval        PlanInterval
-  features        Json        // Array de strings almacenado como JSON
-  stripe_price_id String?     @unique
-  is_highlighted  Boolean     @default(false)
+  features        Json
+  stripe_price_id String?      @unique
+  is_highlighted  Boolean      @default(false)
   savings_text    String?
-  is_visible      Boolean     @default(true)
-  license_count   Int         @default(1)  // Número de licencias a generar por defecto
-  created_at      DateTime    @default(now())
-  updated_at      DateTime    @updatedAt
+  is_visible      Boolean      @default(true)
+  license_count   Int          @default(1)
+  created_at      DateTime     @default(now())
+  updated_at      DateTime     @updatedAt
   memberships     Membership[]
 
   @@index([interval])
@@ -144,6 +141,7 @@ model PluginVersion {
   file_name         String
   version           String
   file_path_server  String
+  changelog         String?  @db.Text
   created_at        DateTime @default(now())
   updated_at        DateTime @updatedAt
 
@@ -155,20 +153,20 @@ model PluginVersion {
 /// Modelo que registra los pagos realizados
 /// Incluye información de transacciones y estados de pago
 model Payment {
-  id              String     @id @default(cuid())
-  membership_id   String
-  amount          Float
-  currency        String
-  status          PaymentStatus
-  payment_method  PaymentMethod
+  id                String        @id @default(cuid())
+  membership_id     String
+  amount            Float
+  currency          String
+  status            PaymentStatus
+  payment_method    PaymentMethod
   stripe_invoice_id String?
-  bank_name       String?
-  currency_rate   Float?
-  reference       String?
-  invoice_url     String?
-  created_at      DateTime   @default(now())
-  updated_at      DateTime   @updatedAt
-  membership      Membership @relation(fields: [membership_id], references: [id])
+  bank_name         String?
+  currency_rate     Float?
+  reference         String?
+  invoice_url       String?
+  created_at        DateTime      @default(now())
+  updated_at        DateTime      @updatedAt
+  membership        Membership    @relation(fields: [membership_id], references: [id])
 
   @@index([membership_id])
   @@index([status])

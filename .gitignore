@@ -25,3 +25,4 @@ pnpm-debug.log*
 uuid_validation_results.json
 extracted_uuids.json
 yarn.lock
+zip_plugins/*

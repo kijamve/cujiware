@@ -26,46 +26,56 @@ const pluginOptions = plugins.map(plugin => ({
 
     <div>
       <label class="block text-sm font-medium text-gray-700 mb-1">Versión</label>
-      <input 
-        type="text" 
-        name="version" 
-        required 
-        placeholder="ej: 1.0.0" 
+      <input
+        type="text"
+        name="version"
+        required
+        placeholder="ej: 1.0.0"
         class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
       >
     </div>
 
     <div>
       <label class="block text-sm font-medium text-gray-700 mb-1">Nombre del Archivo</label>
-      <input 
-        type="text" 
-        name="file_name" 
-        required 
-        placeholder="ej: plugin-v1.0.0.zip" 
+      <input
+        type="text"
+        name="file_name"
+        required
+        placeholder="ej: plugin-v1.0.0.zip"
         class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
       >
     </div>
 
     <div>
       <label class="block text-sm font-medium text-gray-700 mb-1">Archivo ZIP</label>
-      <input 
-        type="file" 
-        name="file" 
-        accept=".zip" 
-        required 
+      <input
+        type="file"
+        name="file"
+        accept=".zip"
+        required
         class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-cuji-blue file:text-white hover:file:bg-cuji-dark-blue"
       >
     </div>
 
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Changelog</label>
+      <textarea
+        name="changelog"
+        rows="4"
+        placeholder="Describe los cambios en esta versión..."
+        class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cuji-blue focus:border-cuji-blue sm:text-sm"
+      ></textarea>
+    </div>
+
     <div class="flex justify-end space-x-3 mt-6">
-      <button 
-        type="button" 
+      <button
+        type="button"
         class="close-modal px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cuji-blue"
       >
         Cancelar
       </button>
-      <button 
-        type="submit" 
+      <button
+        type="submit"
         class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cuji-blue hover:bg-cuji-dark-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cuji-blue"
       >
         Subir
@@ -91,4 +101,4 @@ const pluginOptions = plugins.map(plugin => ({
       }
     }) as EventListener);
   });
-</script> 
+</script>

@@ -1,7 +1,6 @@
 import type { APIRoute } from 'astro';
 import { prisma } from '@/lib/prisma';
 import { isAuthenticated } from '@/middleware/auth';
-import type { User } from '@prisma/client';
 import { randomUUID } from 'crypto';
 import { generateToken } from '@/utils/token';
 
@@ -10,10 +9,12 @@ interface PluginVersion {
   version: string;
   file_name: string;
   created_at: Date;
+  changelog?: string | null;
+  download_token?: string | null;
 }
 
 // Almacenamiento temporal de tokens por usuario (en producción usar Redis o similar)
-export const userTokens = new Map<string, { 
+export const userTokens = new Map<string, {
   token: string;
   expiresAt: Date;
   userId: string;
@@ -37,7 +38,7 @@ export const GET: APIRoute = async ({ params, request }) => {
     }
 
     // Verificar si el usuario está autenticado
-    const user: User | null = await isAuthenticated(request);
+    const user = await isAuthenticated(request);
     const isUserAuthenticated = !!user;
 
     // Obtener las versiones del plugin ordenadas por fecha de creación (más reciente primero)
@@ -49,7 +50,8 @@ export const GET: APIRoute = async ({ params, request }) => {
         id: true,
         version: true,
         file_name: true,
-        created_at: true
+        created_at: true,
+        changelog: true
       },
       orderBy: {
         created_at: 'desc'
@@ -57,7 +59,13 @@ export const GET: APIRoute = async ({ params, request }) => {
     });
 
     // Si el usuario está autenticado, generar o renovar su token
-    const versionsWithTokens = versions.map((version) => {
+    const versionsWithTokens = versions.map((version: {
+      id: string;
+      version: string;
+      file_name: string;
+      created_at: Date;
+      changelog: string | null;
+    }) => {
       if (isUserAuthenticated) {
         return { ...version, download_token: generateToken() };
       }
@@ -74,4 +82,4 @@ export const GET: APIRoute = async ({ params, request }) => {
     console.error('Error al obtener las versiones:', error);
     return new Response('Error interno del servidor', { status: 500 });
   }
-}; 
+};
