@@ -14,30 +14,30 @@ interface PluginCatalogProps {
 export function PluginCatalog({ plugins, categories, country, platform }: PluginCatalogProps) {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
-  
+
   const filteredPlugins = useMemo(() => {
     let filtered = plugins;
-    
+
     // Filtrar por categoría
     if (selectedCategory !== 'all') {
       filtered = filtered.filter(plugin => plugin.category === selectedCategory);
     }
-    
+
     // Filtrar por plataforma
     if (platform !== 'all') {
       filtered = filtered.filter(plugin => plugin.platform.includes(platform));
     }
-    
+
     // Filtrar por búsqueda
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(plugin => 
+      filtered = filtered.filter(plugin =>
         plugin.name.toLowerCase().includes(query) ||
         plugin.slug.toLowerCase().includes(query) ||
         plugin.short_description.toLowerCase().includes(query)
       );
     }
-    
+
     // Ordenar: destacados primero, luego por nombre
     return filtered.sort((a, b) => {
       if (a.featured && !b.featured) return -1;
@@ -59,8 +59,8 @@ export function PluginCatalog({ plugins, categories, country, platform }: Plugin
         "@type": "SoftwareApplication",
         "name": plugin.name,
         "description": plugin.short_description,
-        "applicationCategory": plugin.category === 'payment_method' ? 'FinancialApplication' : 
-                            plugin.category === 'shipping' ? 'LogisticsApplication' : 
+        "applicationCategory": plugin.category === 'payment_method' ? 'FinancialApplication' :
+                            plugin.category === 'shipping' ? 'LogisticsApplication' :
                             'SoftwareApplication',
         "softwareRequirements": platform === 'woocommerce' ? 'WordPress' : 'PrestaShop',
         "operatingSystem": "Linux",
@@ -74,7 +74,7 @@ export function PluginCatalog({ plugins, categories, country, platform }: Plugin
           "priceSpecification": {
             "@type": "UnitPriceSpecification",
             "priceCurrency": "USD",
-            "price": 12,
+            "price": 15,
             "billingIncrement": 1,
             "billingDuration": 1,
             "unitCode": "MON",
@@ -90,12 +90,12 @@ export function PluginCatalog({ plugins, categories, country, platform }: Plugin
 
   const getPageTitle = () => {
     if (platform === 'all') {
-      return country === 'all' 
+      return country === 'all'
         ? 'Plugins para todas las plataformas'
         : `Plugins para todas las plataformas en ${country.charAt(0).toUpperCase() + country.slice(1)}`;
     }
     const platformName = platform === 'woocommerce' ? 'WooCommerce' : 'PrestaShop';
-    return country === 'all' 
+    return country === 'all'
       ? `Plugins para ${platformName}`
       : `Plugins para ${platformName} en ${country.charAt(0).toUpperCase() + country.slice(1)}`;
   };
@@ -110,7 +110,7 @@ export function PluginCatalog({ plugins, categories, country, platform }: Plugin
           <h1 className="text-3xl font-bold text-gray-900 mb-6">
             {getPageTitle()}
           </h1>
-          
+
           {/* Buscador */}
           <div className="relative mb-6">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
