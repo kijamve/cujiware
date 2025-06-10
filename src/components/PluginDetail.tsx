@@ -4,6 +4,7 @@ import PluginScreenshots from './PluginScreenshots';
 import type { Plugin } from './types';
 import { useState, useEffect } from 'react';
 import pluginsData from '../data/plugins.json';
+import { getRelatedPlugins } from '../utils/relatedPlugins';
 
 interface PluginVersion {
   id: string;
@@ -131,49 +132,12 @@ export function PluginDetail({ plugin, country, platform, content, screenshots }
 
   const latestVersion = versions[0];
 
-  const relatedPlugins = pluginsData
-    .filter(p =>
-      p.category === plugin.category &&
-      p.platform.includes(platform) &&
-      p.countries.includes(country) &&
-      p.slug !== plugin.slug
-    )
-    .sort(() => Math.random() - 0.5)
-    .sort((a, b) => {
-      if (a.featured && !b.featured) return -1;
-      if (!a.featured && b.featured) return 1;
-
-      if (a.new_arrivals && !b.new_arrivals) return -1;
-      if (!a.new_arrivals && b.new_arrivals) return 1;
-
-      return 0;
-    });
-
-  // Si no hay suficientes plugins relacionados, complementamos con plugins del mismo país y plataforma
-  if (relatedPlugins.length < 5) {
-    const additionalPlugins = pluginsData
-      .filter(p =>
-        p.platform.includes(platform) &&
-        p.countries.includes(country) &&
-        p.slug !== plugin.slug &&
-        !relatedPlugins.some(rp => rp.slug === p.slug)
-      )
-      .sort(() => Math.random() - 0.5)
-      .sort((a, b) => {
-        if (a.featured && !b.featured) return -1;
-        if (!a.featured && b.featured) return 1;
-
-        if (a.new_arrivals && !b.new_arrivals) return -1;
-        if (!a.new_arrivals && b.new_arrivals) return 1;
-
-        return 0;
-      })
-      .slice(0, 5 - relatedPlugins.length);
-
-    relatedPlugins.push(...additionalPlugins);
-  } else {
-    relatedPlugins.splice(5);
-  }
+  const relatedPlugins = getRelatedPlugins({
+    currentPlugin: plugin,
+    allPlugins: pluginsData,
+    platform,
+    country
+  });
 
   return (
     <div className="py-6 md:py-12">
