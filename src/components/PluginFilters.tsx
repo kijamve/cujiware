@@ -28,49 +28,77 @@ export function PluginFilters({
     }
   };
 
-  const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    window.location.href = `/plugins/${e.target.value}/${platform}`;
+  const handleCountryChange = (newCountry: string) => {
+    window.location.href = `/plugins/${newCountry}/${platform}`;
   };
 
-  const handlePlatformChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    window.location.href = `/plugins/${country}/${e.target.value}`;
+  const handlePlatformChange = (newPlatform: string) => {
+    window.location.href = `/plugins/${country}/${newPlatform}`;
   };
+
+  const FilterGroup = ({ title, options, selectedValue, onChange }: {
+    title: string;
+    options: { value: string; label: string }[];
+    selectedValue: string;
+    onChange: (value: string) => void;
+  }) => (
+    <div className="flex flex-col gap-1">
+      <h3 className="text-xs font-bold px-2 py-1 rounded-full">{title}</h3>
+      <div className="flex flex-wrap gap-1">
+        {options.map((option) => (
+          <button
+            key={option.value}
+            onClick={() => onChange(option.value)}
+            className={`px-2 py-1 rounded-full text-xs font-medium transition-colors
+              ${selectedValue === option.value
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+          >
+            {option.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
 
   return (
-    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-      <select
-        className="w-full sm:w-auto bg-white border border-gray-300 rounded-lg px-3 sm:px-4 py-2 text-sm sm:text-base"
-        value={country}
+    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-start">
+      <FilterGroup
+        title="País"
+        options={[
+          { value: 'all', label: 'Todos' },
+          { value: 'venezuela', label: 'Venezuela' },
+          { value: 'argentina', label: 'Argentina' }
+        ]}
+        selectedValue={country}
         onChange={handleCountryChange}
-      >
-        <option value="all">Todos los países</option>
-        <option value="venezuela">Venezuela</option>
-        <option value="argentina">Argentina</option>
-      </select>
+      />
 
-      <select
-        className="w-full sm:w-auto bg-white border border-gray-300 rounded-lg px-3 sm:px-4 py-2 text-sm sm:text-base"
-        value={platform}
+      <FilterGroup
+        title="Plataforma"
+        options={[
+          { value: 'all', label: 'Todas' },
+          { value: 'woocommerce', label: 'WooCommerce' },
+          { value: 'prestashop', label: 'PrestaShop' },
+          { value: 'gravityforms', label: 'Gravity Forms' }
+        ]}
+        selectedValue={platform}
         onChange={handlePlatformChange}
-      >
-        <option value="all">Todas las plataformas</option>
-        <option value="woocommerce">WooCommerce</option>
-        <option value="prestashop">PrestaShop</option>
-        <option value="gravityforms">Gravity Forms</option>
-      </select>
+      />
 
-      <select
-        className="w-full sm:w-auto bg-white border border-gray-300 rounded-lg px-3 sm:px-4 py-2 text-sm sm:text-base"
-        value={selectedCategory}
-        onChange={(e) => setSelectedCategory(e.target.value)}
-      >
-        <option value="all">Todas las categorías</option>
-        {categories.map(category => (
-          <option key={category} value={category}>
-            {getCategoryTitle(category)}
-          </option>
-        ))}
-      </select>
+      <FilterGroup
+        title="Categoría"
+        options={[
+          { value: 'all', label: 'Todas' },
+          ...categories.map(category => ({
+            value: category,
+            label: getCategoryTitle(category)
+          }))
+        ]}
+        selectedValue={selectedCategory}
+        onChange={setSelectedCategory}
+      />
     </div>
   );
 }
