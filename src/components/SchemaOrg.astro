@@ -14,18 +14,28 @@ export interface Props {
     offers: {
       name: string;
       "@type": string;
+      url: string;
+      availability: string;
       priceSpecification: {
         "@type": string;
-        priceCurrency: string;
         price: number;
-        billingIncrement: number;
-        billingDuration: number;
-        unitCode: string;
-        unitText: string;
-        description: string;
-      };
+        priceCurrency: string;
+        validForMemberTier?: {
+          "@type": string;
+          "@id": string;
+        };
+      }[];
       businessFunction: string;
-      url: string;
+      hasMerchantReturnPolicy: {
+        "@type": string;
+        applicableCountry: string;
+        returnPolicyCategory: string;
+        merchantReturnDays: number;
+        returnMethod: string;
+        returnFees: string;
+        returnPolicyUrl: string;
+        refundType: string;
+      };
     }[];
   };
 }

@@ -71,18 +71,45 @@ export function PluginCatalog({ plugins, categories, country, platform }: Plugin
         "url": `https://cujiware.com/plugins/${country}/${platform}/${plugin.slug}`,
         "offers": {
           "@type": "Offer",
-          "priceSpecification": {
-            "@type": "UnitPriceSpecification",
-            "priceCurrency": "USD",
-            "price": 15,
-            "billingIncrement": 1,
-            "billingDuration": 1,
-            "unitCode": "MON",
-            "unitText": "Mes",
-            "description": "Membresía recurrente mensual"
-          },
+          "name": "Membresía Mensual, Semestral o Anual",
+          "url": "https://cujiware.com/suscripcion/",
+          "availability": "https://schema.org/InStock",
+          "priceSpecification": [
+            {
+              "@type": "UnitPriceSpecification",
+              "price": 15.00,
+              "priceCurrency": "USD"
+            },
+            {
+              "@type": "UnitPriceSpecification",
+              "price": 70.00,
+              "priceCurrency": "USD",
+              "validForMemberTier": {
+                "@type": "MemberProgramTier",
+                "@id": "https://cujiware.com/suscripcion#pricing"
+              }
+            },
+            {
+              "@type": "UnitPriceSpecification",
+              "price": 120.00,
+              "priceCurrency": "USD",
+              "validForMemberTier": {
+                "@type": "MemberProgramTier",
+                "@id": "https://cujiware.com/suscripcion#pricing"
+              }
+            }
+          ],
           "businessFunction": "http://purl.org/goodrelations/v1#LeaseOut",
-          "url": "https://cujiware.com/suscripcion/"
+          "hasMerchantReturnPolicy": {
+            "@type": "MerchantReturnPolicy",
+            "applicableCountry": "US",
+            "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+            "merchantReturnDays": 30,
+            "returnMethod": "https://schema.org/ReturnByMail",
+            "returnFees": "https://schema.org/FreeReturn",
+            "returnPolicyUrl": "https://cujiware.com/reembolsos",
+            "refundType": "https://schema.org/FullRefund"
+          }
         }
       }
     }))
