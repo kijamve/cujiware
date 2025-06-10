@@ -59,9 +59,9 @@ export function PluginCatalog({ plugins, categories, country, platform }: Plugin
         "@type": "SoftwareApplication",
         "name": plugin.name,
         "description": plugin.short_description,
-        "applicationCategory": plugin.category === 'payment_method' ? 'FinancialApplication' :
-                            plugin.category === 'shipping' ? 'LogisticsApplication' :
-                            'SoftwareApplication',
+        "applicationCategory": plugin.category === 'payment_method' ? 'FinanceApplication' :
+                            plugin.category === 'shipping' ? 'ShoppingApplication' :
+                            'UtilitiesApplication',
         "softwareRequirements": platform === 'woocommerce' ? 'WordPress' : 'PrestaShop',
         "operatingSystem": "Linux",
         "author": {

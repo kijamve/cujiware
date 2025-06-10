@@ -3,17 +3,29 @@ export interface Props {
   organization: {
     name: string;
     url: string;
+    image: string;
     logo: string;
     sameAs: string[];
   };
   product: {
     name: string;
+    image: string;
     description: string;
     offers: {
       name: string;
-      price: string;
-      priceCurrency: string;
-      availability: string;
+      "@type": string;
+      priceSpecification: {
+        "@type": string;
+        priceCurrency: string;
+        price: number;
+        billingIncrement: number;
+        billingDuration: number;
+        unitCode: string;
+        unitText: string;
+        description: string;
+      };
+      businessFunction: string;
+      url: string;
     }[];
   };
 }
@@ -26,6 +38,7 @@ const { organization, product } = Astro.props;
   "@type": "Organization",
   "name": organization.name,
   "url": organization.url,
+  "image": organization.image,
   "logo": organization.logo,
   "sameAs": organization.sameAs
 })}>
@@ -34,18 +47,13 @@ const { organization, product } = Astro.props;
 <script type="application/ld+json" set:html={JSON.stringify({
   "@context": "https://schema.org",
   "@type": "Product",
+  "image": product.image,
   "name": product.name,
   "description": product.description,
   "brand": {
     "@type": "Brand",
     "name": organization.name
   },
-  "offers": product.offers.map(offer => ({
-    "@type": "Offer",
-    "name": offer.name,
-    "price": offer.price,
-    "priceCurrency": offer.priceCurrency,
-    "availability": offer.availability
-  }))
+  "offers": product.offers
 })}>
 </script>

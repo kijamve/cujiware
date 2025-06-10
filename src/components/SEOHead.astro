@@ -9,14 +9,15 @@ export interface Props {
   canonicalURL?: string;
 }
 
+const baseUrl = Astro.site?.toString() || 'https://cujiware.com';
+
 const {
   title,
   description,
-  image = '/images/cujiware-social-image.jpg',
+  image = new URL("/CujiwareLetras.svg", baseUrl).toString(),
   canonicalURL = Astro.url.href
 } = Astro.props;
 
-const baseUrl = Astro.site?.toString() || 'https://cujiware.com';
 const imageURL = image.startsWith('http') ? image : new URL(image, baseUrl).toString();
 const canonicalUrl = canonicalURL.startsWith('http') ? canonicalURL : new URL(canonicalURL, baseUrl).toString();
 ---
@@ -37,7 +38,7 @@ const canonicalUrl = canonicalURL.startsWith('http') ? canonicalURL : new URL(ca
       siteName: 'Cujiware',
     },
     image: {
-      alt: 'Cujiware Membership - Premium WooCommerce & PrestaShop Plugins',
+      alt: 'Cujiware',
     }
   }}
   twitter={{
@@ -46,7 +47,7 @@ const canonicalUrl = canonicalURL.startsWith('http') ? canonicalURL : new URL(ca
     title: title,
     description: description,
     image: imageURL,
-    imageAlt: 'Cujiware Membership - Premium WooCommerce & PrestaShop Plugins',
+    imageAlt: 'Cujiware - Plugins Premium para Wordpress + WooCommerce & PrestaShop con acceso ilimitado a todos los plugins con una membresía',
   }}
 />
 
@@ -54,34 +55,65 @@ const canonicalUrl = canonicalURL.startsWith('http') ? canonicalURL : new URL(ca
   organization={{
     name: "Cujiware",
     url: baseUrl,
+    image: new URL("/CujiwareLetras.svg", baseUrl).toString(),
     logo: new URL("/CujiwareLetras.svg", baseUrl).toString(),
     sameAs: [
-      "https://twitter.com/cujiware",
-      "https://facebook.com/cujiware",
-      "https://instagram.com/cujiware"
+      "https://instagram.com/cujiware",
+      "https://www.tiktok.com/@cujiware"
     ]
   }}
   product={{
-    name: "Cujiware Membership",
-    description: "Premium WooCommerce & PrestaShop plugins without domain restrictions",
+    name: title,
+    image: imageURL || new URL("/CujiwareLetras.svg", baseUrl).toString(),
+    description: description,
     offers: [
       {
+        "@type": "Offer",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "priceCurrency": "USD",
+          "price": 15,
+          "billingIncrement": 1,
+          "billingDuration": 1,
+          "unitCode": "MON",
+          "unitText": "Mes",
+          "description": "Membresía recurrente mensual"
+        },
+        "businessFunction": "http://purl.org/goodrelations/v1#LeaseOut",
+        "url": "https://cujiware.com/suscripcion/",
         name: "Monthly Plan",
-        price: "12",
-        priceCurrency: "USD",
-        availability: "https://schema.org/InStock"
       },
       {
         name: "Semi-Annual Plan",
-        price: "65",
-        priceCurrency: "USD",
-        availability: "https://schema.org/InStock"
+        "@type": "Offer",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "priceCurrency": "USD",
+          "price": 70,
+          "billingIncrement": 1,
+          "billingDuration": 6,
+          "unitCode": "MON",
+          "unitText": "Semestre",
+          "description": "Membresía recurrente semestral"
+        },
+        "businessFunction": "http://purl.org/goodrelations/v1#LeaseOut",
+        "url": "https://cujiware.com/suscripcion/"
       },
       {
         name: "Annual Plan",
-        price: "120",
-        priceCurrency: "USD",
-        availability: "https://schema.org/InStock"
+        "@type": "Offer",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "priceCurrency": "USD",
+          "price": 120,
+          "billingIncrement": 1,
+          "billingDuration": 12,
+          "unitCode": "MON",
+          "unitText": "Año",
+          "description": "Membresía recurrente anual"
+        },
+        "businessFunction": "http://purl.org/goodrelations/v1#LeaseOut",
+        "url": "https://cujiware.com/suscripcion/"
       }
     ]
   }}

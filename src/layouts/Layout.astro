@@ -11,10 +11,11 @@ export interface Props {
   canonicalURL?: string;
 }
 
+const baseUrl = Astro.site?.toString() || 'https://cujiware.com';
 const {
-  title = 'Cujiware Membership - Premium WooCommerce & PrestaShop Plugins',
+  title = 'Cujiware - Premium WooCommerce & PrestaShop Plugins',
   description = 'Get unlimited access to all Cujiware premium plugins for WooCommerce and PrestaShop with our membership plans. No domain restrictions per membership.',
-  image = '/images/cujiware-social-image.jpg',
+  image = new URL("/CujiwareLetras.svg", baseUrl).toString(),
   canonicalURL = Astro.url.href,
 } = Astro.props;
 ---
