@@ -1,17 +1,7 @@
 import type { APIRoute } from 'astro';
 import { prisma } from '@/lib/prisma';
-import { isAuthenticated } from '@/middleware/auth';
-import { randomUUID } from 'crypto';
+import { requireAuth } from '@/middleware/auth';
 import { generateToken } from '@/utils/token';
-
-interface PluginVersion {
-  id: string;
-  version: string;
-  file_name: string;
-  created_at: Date;
-  changelog?: string | null;
-  download_token?: string | null;
-}
 
 // Almacenamiento temporal de tokens por usuario (en producción usar Redis o similar)
 export const userTokens = new Map<string, {
@@ -30,16 +20,20 @@ setInterval(() => {
   }
 }, 60 * 1000);
 
-export const GET: APIRoute = async ({ params, request }) => {
+export const GET: APIRoute = async (context) => {
   try {
-    const { slug } = params;
+    const { slug } = context.params;
     if (!slug) {
       return new Response('Slug no proporcionado', { status: 400 });
     }
 
     // Verificar si el usuario está autenticado
-    const user = await isAuthenticated(request);
-    const isUserAuthenticated = !!user;
+    const user = await requireAuth(context);
+    if (user instanceof Response) {
+      return user;
+    }
+
+    const withLicenseActive = user.memberships.some(membership => membership.licenses.some(license => license.status === 'ACTIVE'));
 
     // Obtener las versiones del plugin ordenadas por fecha de creación (más reciente primero)
     const versions = await prisma.pluginVersion.findMany({
@@ -66,7 +60,7 @@ export const GET: APIRoute = async ({ params, request }) => {
       created_at: Date;
       changelog: string | null;
     }) => {
-      if (isUserAuthenticated) {
+      if (withLicenseActive) {
         return { ...version, download_token: generateToken() };
       }
       return { ...version, download_token: null };

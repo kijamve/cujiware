@@ -5,6 +5,8 @@ import { PluginDetail } from '@/components/PluginDetail';
 import fs from 'fs';
 import path from 'path';
 
+export const prerender = true;
+
 export function getStaticPaths() {
   const paths = [];
   const countries = ['all', 'venezuela', 'argentina'];

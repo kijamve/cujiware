@@ -1,8 +1,8 @@
 ---
-import type { Membership } from '@/types/auth';
+import type { MembershipWithRelations } from '@/utils/types';
 
 interface Props {
-  memberships: (Membership & {
+  memberships: (MembershipWithRelations & {
     user: {
       name: string;
       email: string;
@@ -84,21 +84,23 @@ const sortedMemberships = memberships;
             {new Date(membership.start_date).toLocaleDateString()}
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+            <span class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
               (() => {
                 const today = new Date();
+                today.setHours(0, 0, 0, 0); // Resetear la hora a 00:00:00
                 const endDate = new Date(membership.end_date);
+                endDate.setHours(0, 0, 0, 0); // Resetear la hora a 00:00:00
                 const diffDays = Math.floor((endDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
 
-                if (diffDays < -5) {
+                if (diffDays < 0) {
                   return 'bg-red-100 text-red-800';
-                } else if (diffDays < 0) {
+                } else if (diffDays <= 5) {
                   return 'bg-yellow-100 text-yellow-800';
                 } else {
                   return 'bg-green-100 text-green-800';
                 }
               })()
-            }">
+            }`}>
               {new Date(membership.end_date).toLocaleDateString()}
             </span>
           </td>
