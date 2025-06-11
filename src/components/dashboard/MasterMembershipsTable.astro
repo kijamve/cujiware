@@ -1,18 +1,18 @@
 ---
-import type { MembershipWithRelations } from '@/utils/types';
-import type { Payment } from '@/types/auth';
-import { MEMBERSHIP_STATUS } from '@/constants/status';
-import { LicenseStatus } from '@prisma/client';
+import type { Membership } from '@/types/auth';
+import EditDatesModal from './EditDatesModal.astro';
+import ManageLicensesModal from './ManageLicensesModal.astro';
+import LicenseDetailsModal from './LicenseDetailsModal.astro';
 
 interface Props {
-  memberships: MembershipWithRelations[];
+  memberships: Membership[];
 }
 
 const { memberships } = Astro.props;
 
-// Ordenar membresías por fecha de vencimiento
+// Ordenar membresías por fecha de fin
 const sortedMemberships = [...memberships].sort((a, b) => {
-  return new Date(a.end_date).getTime() - new Date(b.end_date).getTime();
+  return new Date(b.end_date).getTime() - new Date(a.end_date).getTime();
 });
 ---
 
@@ -44,25 +44,31 @@ const sortedMemberships = [...memberships].sort((a, b) => {
       </tr>
     </thead>
     <tbody class="bg-white divide-y divide-gray-200">
-      {sortedMemberships.map(membership => (
+      {sortedMemberships.map((membership) => (
         <tr>
           <td class="px-6 py-4 whitespace-nowrap">
-            <div class="text-sm font-medium text-gray-900">{membership.user.name}</div>
-            <div class="text-sm text-gray-500">{membership.user.email}</div>
+            <div class="flex items-center">
+              <div>
+                <div class="text-sm font-medium text-gray-900">
+                  {membership.user.name}
+                </div>
+                <div class="text-sm text-gray-500">
+                  {membership.user.email}
+                </div>
+              </div>
+            </div>
           </td>
           <td class="px-6 py-4 whitespace-nowrap">
             <div class="text-sm text-gray-900">{membership.plan.name}</div>
-            <div class="text-sm text-gray-500">{membership.plan.interval}</div>
+            <div class="text-sm text-gray-500">{membership.plan.description}</div>
           </td>
           <td class="px-6 py-4 whitespace-nowrap">
             <span class={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-              membership.status === MEMBERSHIP_STATUS.ACTIVE
+              membership.status === 'ACTIVE'
                 ? 'bg-green-100 text-green-800'
-                : membership.status === MEMBERSHIP_STATUS.CANCELLED
-                ? 'bg-red-100 text-red-800'
-                : 'bg-yellow-100 text-yellow-800'
+                : 'bg-red-100 text-red-800'
             }`}>
-              {membership.status}
+              {membership.status === 'ACTIVE' ? 'Activa' : 'Cancelada'}
             </span>
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -71,36 +77,34 @@ const sortedMemberships = [...memberships].sort((a, b) => {
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
             {new Date(membership.end_date).toLocaleDateString()}
           </td>
-          <td class="px-6 py-4 whitespace-nowrap">
-            <div class="text-sm text-gray-900">
-              {membership.licenses.length} / {membership.plan.license_count}
-            </div>
-            <div class="text-sm text-gray-500">
-              {membership.licenses.filter(l => l.status === 'ACTIVE').length} activas
-            </div>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            {membership.licenses.length} / {membership.plan.license_count}
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-            <button
-              class="text-cuji-blue hover:text-cuji-dark-blue mr-3"
-              data-action="edit-dates"
-              data-membership-id={membership.id}
-            >
-              Editar Fechas
-            </button>
-            <button
-              class="text-cuji-blue hover:text-cuji-dark-blue mr-3"
-              data-action="manage-licenses"
-              data-membership-id={membership.id}
-            >
-              Gestionar Licencias
-            </button>
-            <button
-              class="text-cuji-blue hover:text-cuji-dark-blue"
-              data-action="view-payments"
-              data-membership-id={membership.id}
-            >
-              Ver Pagos
-            </button>
+            <div class="flex space-x-2">
+              <button
+                class="text-indigo-600 hover:text-indigo-900"
+                data-action="edit-dates"
+                data-membership-id={membership.id}
+                data-end-date={membership.end_date}
+              >
+                Editar Fechas
+              </button>
+              <button
+                class="text-indigo-600 hover:text-indigo-900"
+                data-action="manage-licenses"
+                data-membership-id={membership.id}
+              >
+                Gestionar Licencias
+              </button>
+              <button
+                class="text-indigo-600 hover:text-indigo-900"
+                data-action="view-payments"
+                data-membership-id={membership.id}
+              >
+                Ver Pagos
+              </button>
+            </div>
           </td>
         </tr>
       ))}
@@ -108,161 +112,189 @@ const sortedMemberships = [...memberships].sort((a, b) => {
   </table>
 </div>
 
-<div id="modal-root"></div>
-
 <script>
-  // Manejar edición de fechas
+  // Función para crear y mostrar un modal
+  function createModal(content: string) {
+    const modal = document.createElement('div');
+    modal.innerHTML = content;
+    document.body.appendChild(modal);
+    return modal;
+  }
+
+  // Función para cerrar un modal
+  function closeModal(modal: HTMLElement) {
+    modal.remove();
+  }
+
+  // Manejador para editar fechas
   document.querySelectorAll('[data-action="edit-dates"]').forEach(button => {
     button.addEventListener('click', async () => {
       const membershipId = button.getAttribute('data-membership-id');
-      const newEndDate = prompt('Ingrese la nueva fecha de vencimiento (YYYY-MM-DD):');
+      const endDate = button.getAttribute('data-end-date');
 
-      if (newEndDate) {
+      const response = await fetch(`/api/memberships/${membershipId}/dates`);
+      const content = await response.text();
+
+      const modal = createModal(content);
+
+      // Agregar manejador para cerrar el modal
+      modal.querySelector('[data-action="close"]')?.addEventListener('click', () => {
+        closeModal(modal);
+      });
+    });
+  });
+
+  // Manejador para gestionar licencias
+  document.querySelectorAll('[data-action="manage-licenses"]').forEach(button => {
+    button.addEventListener('click', async () => {
+      const membershipId = button.getAttribute('data-membership-id');
+
+      const response = await fetch(`/api/memberships/${membershipId}/licenses`);
+      const { licenses } = await response.json();
+
+      const response2 = await fetch(`/api/memberships/${membershipId}/licenses/manage`);
+      const content = await response2.text();
+
+      const modal = createModal(content);
+
+      // Agregar manejadores para los botones del modal
+      modal.querySelector('[data-action="close"]')?.addEventListener('click', () => {
+        closeModal(modal);
+      });
+
+      modal.querySelector('[data-action="add-license"]')?.addEventListener('click', async () => {
         try {
-          const response = await fetch(`/api/memberships/${membershipId}/dates`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ end_date: newEndDate }),
+          const response = await fetch(`/api/memberships/${membershipId}/licenses`, {
+            method: 'POST',
           });
 
           if (response.ok) {
             window.location.reload();
           } else {
-            const data = await response.json();
-            alert(data.message || 'Error al actualizar las fechas');
+            const { message } = await response.json();
+            alert(message);
           }
-        } catch (err) {
-          console.error('Error:', err);
-          alert('Error al actualizar las fechas');
+        } catch (error) {
+          console.error('Error al agregar licencia:', error);
+          alert('Error al agregar licencia');
         }
-      }
-    });
-  });
+      });
 
-  // Manejar gestión de licencias
-  document.querySelectorAll('[data-action="manage-licenses"]').forEach(button => {
-    button.addEventListener('click', async () => {
-      const membershipId = button.getAttribute('data-membership-id');
-      const action = prompt('Seleccione una acción:\n1. Agregar licencia\n2. Inactivar licencia\n3. Resetear uso de licencia');
-
-      if (!action) return;
-
-      switch (action) {
-        case '1':
+      modal.querySelectorAll('[data-action="activate-license"]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const licenseId = btn.getAttribute('data-license-id');
           try {
-            const response = await fetch(`/api/memberships/${membershipId}/licenses`, {
-              method: 'POST',
+            const response = await fetch(`/api/licenses/${licenseId}/status`, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ status: 'ACTIVE' }),
             });
+
             if (response.ok) {
               window.location.reload();
             } else {
-              const data = await response.json();
-              alert(data.message || 'Error al agregar licencia');
+              const { message } = await response.json();
+              alert(message);
             }
-          } catch (err) {
-            console.error('Error:', err);
-            alert('Error al agregar licencia');
+          } catch (error) {
+            console.error('Error al activar licencia:', error);
+            alert('Error al activar licencia');
           }
-          break;
+        });
+      });
 
-        case '2':
-          const licenseId = prompt('Ingrese el ID de la licencia a inactivar:');
-          if (licenseId) {
-            try {
-              const response = await fetch(`/api/licenses/${licenseId}/status`, {
-                method: 'PUT',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ status: 'INACTIVE' }),
-              });
-              if (response.ok) {
-                window.location.reload();
-              } else {
-                const data = await response.json();
-                alert(data.message || 'Error al inactivar licencia');
-              }
-            } catch (err) {
-              console.error('Error:', err);
-              alert('Error al inactivar licencia');
+      modal.querySelectorAll('[data-action="deactivate-license"]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const licenseId = btn.getAttribute('data-license-id');
+          try {
+            const response = await fetch(`/api/licenses/${licenseId}/status`, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ status: 'INACTIVE' }),
+            });
+
+            if (response.ok) {
+              window.location.reload();
+            } else {
+              const { message } = await response.json();
+              alert(message);
             }
+          } catch (error) {
+            console.error('Error al desactivar licencia:', error);
+            alert('Error al desactivar licencia');
           }
-          break;
+        });
+      });
 
-        case '3':
-          const licenseToReset = prompt('Ingrese el ID de la licencia a resetear:');
-          if (licenseToReset) {
+      modal.querySelectorAll('[data-action="reset-license"]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const licenseId = btn.getAttribute('data-license-id');
+          if (confirm('¿Estás seguro de que deseas resetear esta licencia? Esto eliminará todos los usos registrados.')) {
             try {
-              const response = await fetch(`/api/licenses/${licenseToReset}/reset`, {
+              const response = await fetch(`/api/licenses/${licenseId}/reset`, {
                 method: 'POST',
               });
+
               if (response.ok) {
                 window.location.reload();
               } else {
-                const data = await response.json();
-                alert(data.message || 'Error al resetear licencia');
+                const { message } = await response.json();
+                alert(message);
               }
-            } catch (err) {
-              console.error('Error:', err);
+            } catch (error) {
+              console.error('Error al resetear licencia:', error);
               alert('Error al resetear licencia');
             }
           }
-          break;
-      }
+        });
+      });
+
+      modal.querySelectorAll('[data-action="view-license-details"]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const licenseId = btn.getAttribute('data-license-id');
+          try {
+            const response = await fetch(`/api/licenses/${licenseId}/details`);
+            const content = await response.text();
+
+            const detailsModal = createModal(content);
+
+            detailsModal.querySelector('[data-action="close"]')?.addEventListener('click', () => {
+              closeModal(detailsModal);
+            });
+
+            detailsModal.querySelector('[data-action="copy-license-id"]')?.addEventListener('click', () => {
+              const licenseId = detailsModal.querySelector('[data-license-id]')?.getAttribute('data-license-id');
+              if (licenseId) {
+                navigator.clipboard.writeText(licenseId);
+                alert('ID de licencia copiado al portapapeles');
+              }
+            });
+          } catch (error) {
+            console.error('Error al obtener detalles de licencia:', error);
+            alert('Error al obtener detalles de licencia');
+          }
+        });
+      });
     });
   });
 
-  // Manejar visualización de pagos
+  // Manejador para ver pagos
   document.querySelectorAll('[data-action="view-payments"]').forEach(button => {
     button.addEventListener('click', async () => {
       const membershipId = button.getAttribute('data-membership-id');
-      try {
-        const response = await fetch(`/api/memberships/${membershipId}/payments`);
-        const data = await response.json();
 
-        if (response.ok) {
-          const paymentsList = data.payments.map((payment: { created_at: string; amount: number; currency: string; status: string; payment_method: string; reference?: string; invoice_url?: string; }) => `
-            <div class="p-4 border-b last:border-b-0">
-              <div class="flex justify-between items-center">
-                <div>
-                  <p class="text-sm text-gray-600">Fecha: ${new Date(payment.created_at).toLocaleDateString()}</p>
-                  <p class="text-sm font-medium">Monto: ${payment.amount} ${payment.currency}</p>
-                  <p class="text-sm text-gray-600">Estado: ${payment.status}</p>
-                  <p class="text-sm text-gray-600">Método: ${payment.payment_method}</p>
-                  ${payment.reference ? `<p class="text-sm text-gray-600">Referencia: ${payment.reference}</p>` : ''}
-                </div>
-                ${payment.invoice_url ? `<a href="${payment.invoice_url}" target="_blank" class="text-cuji-blue hover:text-cuji-dark-blue text-sm">Ver Factura</a>` : ''}
-              </div>
-            </div>
-          `).join('');
+      const response = await fetch(`/api/memberships/${membershipId}/payments/modal`);
+      const content = await response.text();
 
-          const modal = document.createElement('div');
-          modal.className = 'fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full';
-          modal.innerHTML = `
-            <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-              <div class="mt-3">
-                <h3 class="text-lg font-medium text-gray-900 mb-4">Historial de Pagos</h3>
-                <div class="max-h-96 overflow-y-auto">
-                  ${paymentsList || '<p class="text-center text-gray-500">No hay pagos registrados</p>'}
-                </div>
-                <div class="mt-4 text-right">
-                  <button class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300" onclick="this.closest('.fixed').remove()">
-                    Cerrar
-                  </button>
-                </div>
-              </div>
-            </div>
-          `;
-          document.getElementById('modal-root')?.appendChild(modal);
-        } else {
-          alert(data.message || 'Error al obtener pagos');
-        }
-      } catch (err) {
-        console.error('Error:', err);
-        alert('Error al obtener pagos');
-      }
+      const modal = createModal(content);
+
+      modal.querySelector('[data-action="close"]')?.addEventListener('click', () => {
+        closeModal(modal);
+      });
     });
   });
 </script>

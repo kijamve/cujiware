@@ -1,0 +1,138 @@
+---
+import type { License } from '@/types/auth';
+
+interface Props {
+  license: License & {
+    usages: {
+      id: string;
+      domain: string;
+      first_used_at: Date;
+      last_used_at: Date;
+    }[];
+    plugins: {
+      id: string;
+      plugin_slug: string;
+      domain: string;
+      last_usage: Date | null;
+    }[];
+  };
+}
+
+const { license } = Astro.props;
+---
+<div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" id="license-details-modal">
+  <div class="relative top-20 mx-auto p-5 border w-[600px] shadow-lg rounded-md bg-white">
+    <div class="mt-3">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-medium text-gray-900">Detalles de la Licencia</h3>
+        <button class="close-modal text-gray-400 hover:text-gray-500">
+          <span class="sr-only">Cerrar</span>
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="mb-6">
+        <div class="flex items-center justify-between bg-gray-50 p-3 rounded-md mb-4">
+          <span class="font-mono text-sm">{license.id}</span>
+          <button
+            class="copy-btn text-cuji-blue hover:text-cuji-dark-blue text-sm font-medium"
+            data-code={license.id}
+          >
+            Copiar
+          </button>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 mb-4">
+          <div>
+            <h4 class="text-sm font-medium text-gray-900 mb-2">Estado</h4>
+            <span class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+              license.status === 'ACTIVE'
+                ? 'bg-green-100 text-green-800'
+                : 'bg-red-100 text-red-800'
+            }`}>
+              {license.status === 'ACTIVE' ? 'Activa' : 'Inactiva'}
+            </span>
+          </div>
+          <div>
+            <h4 class="text-sm font-medium text-gray-900 mb-2">Último Reset</h4>
+            <p class="text-sm text-gray-500">
+              {license.last_reset ? new Date(license.last_reset).toLocaleDateString() : 'Nunca'}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-6">
+        <div>
+          <h4 class="text-sm font-medium text-gray-900 mb-2">Dominios Activos</h4>
+          {license.usages.length > 0 ? (
+            <div class="space-y-2">
+              {license.usages.map(usage => (
+                <div class="flex items-center justify-between bg-gray-50 p-2 rounded-md text-sm">
+                  <span>{usage.domain}</span>
+                  <span class="text-gray-500">
+                    Último uso: {new Date(usage.last_used_at).toLocaleDateString()}
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p class="text-sm text-gray-500">No hay dominios activos</p>
+          )}
+        </div>
+
+        <div>
+          <h4 class="text-sm font-medium text-gray-900 mb-2">Plugins Utilizados</h4>
+          {license.plugins.length > 0 ? (
+            <div class="space-y-2">
+              {license.plugins.map(plugin => (
+                <div class="flex items-center justify-between bg-gray-50 p-2 rounded-md text-sm">
+                  <span>{plugin.plugin_slug}</span>
+                  <span class="text-gray-500">
+                    Último uso: {plugin.last_usage ? new Date(plugin.last_usage).toLocaleDateString() : 'Nunca'}
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p class="text-sm text-gray-500">No hay plugins utilizados</p>
+          )}
+        </div>
+      </div>
+
+      <div class="mt-6 text-right">
+        <button
+          class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 close-modal"
+        >
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const modal = document.getElementById('license-details-modal');
+  const closeButtons = modal?.querySelectorAll('.close-modal');
+  const copyButton = modal?.querySelector('.copy-btn');
+
+  closeButtons?.forEach(button => {
+    button.addEventListener('click', () => {
+      modal?.remove();
+    });
+  });
+
+  copyButton?.addEventListener('click', () => {
+    const code = copyButton.getAttribute('data-code');
+    if (code) {
+      navigator.clipboard.writeText(code);
+      const originalText = copyButton.textContent;
+      copyButton.textContent = '¡Copiado!';
+      setTimeout(() => {
+        copyButton.textContent = originalText;
+      }, 2000);
+    }
+  });
+</script>

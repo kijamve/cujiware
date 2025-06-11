@@ -3,18 +3,15 @@ import { prisma } from '@/lib/prisma';
 
 export const GET: APIRoute = async ({ params }) => {
   try {
-    const { id } = params;
-
-    if (!id) {
+    const membershipId = params.id;
+    if (!membershipId) {
       return new Response(JSON.stringify({ message: 'ID de membresía no proporcionado' }), {
         status: 400,
       });
     }
 
     const payments = await prisma.payment.findMany({
-      where: {
-        membership_id: id,
-      },
+      where: { membership_id: membershipId },
       orderBy: {
         created_at: 'desc',
       },
@@ -25,7 +22,7 @@ export const GET: APIRoute = async ({ params }) => {
     });
   } catch (error) {
     console.error('Error al obtener pagos:', error);
-    return new Response(JSON.stringify({ message: 'Error al obtener los pagos' }), {
+    return new Response(JSON.stringify({ message: 'Error al obtener pagos' }), {
       status: 500,
     });
   }
