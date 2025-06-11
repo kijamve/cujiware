@@ -9,28 +9,28 @@ const { activeTab } = Astro.props;
 <div class="dashboard-tabs">
   <div class="border-b border-gray-200">
     <nav class="-mb-px flex space-x-8" aria-label="Tabs">
-      <button
+      <a
+        href="/dashboard_master"
         class:list={[
           'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm',
-          activeTab === 'plugins' 
+          activeTab === 'plugins'
             ? ['border-cuji-blue', 'text-cuji-blue']
             : ['border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300']
         ]}
-        data-tab="plugins"
       >
         Plugins
-      </button>
-      <button
+      </a>
+      <a
+        href="/dashboard_master/memberships"
         class:list={[
           'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm',
           activeTab === 'memberships'
             ? ['border-cuji-blue', 'text-cuji-blue']
             : ['border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300']
         ]}
-        data-tab="memberships"
       >
         Membresías
-      </button>
+      </a>
     </nav>
   </div>
 </div>
@@ -48,16 +48,16 @@ const { activeTab } = Astro.props;
     tab.addEventListener('click', () => {
       const target = tab.getAttribute('data-tab') as ContentKey;
       if (!target) return;
-      
+
       // Actualizar estilos de tabs
       tabs.forEach(t => {
         t.classList.remove('border-cuji-blue', 'text-cuji-blue');
         t.classList.add('border-transparent', 'text-gray-500');
       });
-      
+
       tab.classList.remove('border-transparent', 'text-gray-500');
       tab.classList.add('border-cuji-blue', 'text-cuji-blue');
-      
+
       // Mostrar/ocultar contenido
       (Object.keys(contents) as ContentKey[]).forEach(key => {
         if (contents[key]) {
@@ -66,4 +66,4 @@ const { activeTab } = Astro.props;
       });
     });
   });
-</script> 
+</script>

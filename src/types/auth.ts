@@ -84,6 +84,7 @@ export interface Plan {
   interval: PlanInterval;
   features: string[]; // En la base de datos se almacena como JSON
   stripe_price_id?: string;
+  license_count: number;
   created_at: Date;
   updated_at: Date;
 }
@@ -129,4 +130,4 @@ export interface UserWithMemberships extends Omit<User, 'memberships'> {
     }[];
     payments: Payment[];
   }>;
-} 
+}

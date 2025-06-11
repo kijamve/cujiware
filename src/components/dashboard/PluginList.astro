@@ -80,7 +80,7 @@ const { plugins, versionsByPlugin } = Astro.props;
     button.addEventListener('click', async () => {
       const action = button.getAttribute('data-action');
       const versionId = button.getAttribute('data-version-id');
-      
+
       if (!versionId) return;
 
       if (action === 'delete') {
@@ -106,4 +106,4 @@ const { plugins, versionsByPlugin } = Astro.props;
       }
     });
   });
-</script> 
+</script>

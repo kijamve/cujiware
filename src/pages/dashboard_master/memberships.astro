@@ -1,0 +1,51 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import MasterMembershipsTable from '@/components/dashboard/MasterMembershipsTable.astro';
+import { prisma } from '@/lib/prisma';
+import type { MembershipWithRelations } from '@/utils/types';
+
+// Obtener todas las membresías con sus relaciones
+const memberships = await prisma.membership.findMany({
+  include: {
+    plan: true,
+    user: {
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
+    },
+    licenses: {
+      include: {
+        usages: {
+          select: {
+            id: true,
+            domain: true,
+            first_used_at: true,
+            last_used_at: true,
+          },
+        },
+      },
+    },
+    payments: true,
+  },
+  orderBy: {
+    end_date: 'asc',
+  },
+});
+---
+<Layout title="Administración de Membresías - Dashboard Master">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="md:flex md:items-center md:justify-between">
+      <div class="flex-1 min-w-0">
+        <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+          Administración de Membresías
+        </h2>
+      </div>
+    </div>
+
+    <div class="mt-8">
+      <MasterMembershipsTable memberships={memberships as unknown as MembershipWithRelations[]} />
+    </div>
+  </div>
+</Layout>
