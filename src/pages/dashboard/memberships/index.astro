@@ -1,0 +1,68 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import MasterMembershipsTable from '@/components/dashboard/MasterMembershipsTable.astro';
+import { prisma } from '@/lib/prisma';
+import { requireSuperAdmin } from '@/middleware/auth';
+
+const admin = await requireSuperAdmin(Astro);
+if (admin instanceof Response) return admin;
+
+const url = new URL(Astro.request.url);
+const page = parseInt(url.searchParams.get('page') || '1');
+const limit = 30;
+const offset = (page - 1) * limit;
+
+// Obtener el total de membresías para la paginación
+const total = await prisma.membership.count();
+const totalPages = Math.ceil(total / limit);
+
+// Obtener las membresías paginadas
+const membershipsList = await prisma.membership.findMany({
+  include: {
+    user: {
+      select: {
+        name: true,
+        email: true,
+      },
+    },
+    plan: {
+      select: {
+        name: true,
+        description: true,
+        license_count: true,
+      },
+    },
+    licenses: true,
+  },
+  take: limit,
+  skip: offset,
+  orderBy: [
+    {
+      status: 'asc',
+    },
+    {
+      end_date: 'asc',
+    }
+  ],
+});
+---
+
+<Layout title="Membresías">
+  <div class="px-4 sm:px-6 lg:px-8">
+    <div class="sm:flex sm:items-center">
+      <div class="sm:flex-auto">
+        <h1 class="text-base font-semibold leading-6 text-gray-900">Membresías</h1>
+        <p class="mt-2 text-sm text-gray-700">
+          Lista de todas las membresías activas en el sistema.
+        </p>
+      </div>
+    </div>
+    <div class="mt-8 flow-root">
+      <MasterMembershipsTable
+        memberships={membershipsList}
+        currentPage={page}
+        totalPages={totalPages}
+      />
+    </div>
+  </div>
+</Layout>
