@@ -21,8 +21,8 @@ export const GET: APIRoute = async ({ params }) => {
     }
 
     const html = `
-      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
-        <div class="bg-white rounded-lg p-6 max-w-md w-full">
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center overflow-y-auto">
+        <div class="bg-white rounded-lg p-6 max-w-md w-full my-8">
           <div class="flex justify-between items-center mb-4">
             <h2 class="text-lg font-medium">Editar Fechas</h2>
             <button
@@ -36,34 +36,30 @@ export const GET: APIRoute = async ({ params }) => {
             </button>
           </div>
 
-          <div class="mb-4">
-            <label for="end-date" class="block text-sm font-medium text-gray-700">
-              Fecha de Fin
-            </label>
-            <input
-              type="date"
-              id="end-date"
-              name="end-date"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-              value="${new Date(membership.end_date).toISOString().split('T')[0]}"
-              min="${new Date().toISOString().split('T')[0]}"
-            />
-          </div>
+          <form id="edit-dates-form">
+            <div class="mb-4">
+              <label for="end-date" class="block text-sm font-medium text-gray-700">
+                Fecha de Fin
+              </label>
+              <input
+                type="date"
+                id="end-date"
+                name="end-date"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                value="${new Date(membership.end_date).toISOString().split('T')[0]}"
+                min="${new Date().toISOString().split('T')[0]}"
+              />
+            </div>
 
-          <div class="flex justify-end space-x-2">
-            <button
-              class="bg-white text-gray-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-50"
-              data-action="close"
-            >
-              Cancelar
-            </button>
-            <button
-              class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700"
-              data-action="save"
-            >
-              Guardar
-            </button>
-          </div>
+            <div class="flex justify-end space-x-2">
+              <button
+                type="submit"
+                class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700"
+              >
+                Guardar
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     `;

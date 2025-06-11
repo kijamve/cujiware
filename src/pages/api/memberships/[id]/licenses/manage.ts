@@ -37,8 +37,8 @@ export const GET: APIRoute = async (context) => {
     }
 
     const html = `
-      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
-        <div class="bg-white rounded-lg p-6 max-w-2xl w-full">
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center overflow-y-auto">
+        <div class="bg-white rounded-lg p-6 max-w-2xl w-full my-8">
           <div class="flex justify-between items-center mb-4">
             <h2 class="text-lg font-medium">Gestionar Licencias</h2>
             <button
@@ -67,7 +67,7 @@ export const GET: APIRoute = async (context) => {
             </div>
           </div>
 
-          <div class="space-y-4">
+          <div class="space-y-4 max-h-[calc(100vh-16rem)] overflow-y-auto">
             ${membership.licenses.map((license) => `
               <div class="border rounded-lg p-4">
                 <div class="flex justify-between items-center mb-2">

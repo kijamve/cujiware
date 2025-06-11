@@ -1,8 +1,5 @@
 ---
 import type { Membership } from '@/types/auth';
-import EditDatesModal from './EditDatesModal.astro';
-import ManageLicensesModal from './ManageLicensesModal.astro';
-import LicenseDetailsModal from './LicenseDetailsModal.astro';
 
 interface Props {
   memberships: (Membership & {
@@ -151,12 +148,16 @@ const sortedMemberships = [...memberships].sort((a, b) => {
     const modal = document.createElement('div');
     modal.innerHTML = content;
     document.body.appendChild(modal);
+    // Bloquear el scroll del body
+    document.body.style.overflow = 'hidden';
     return modal;
   }
 
   // Función para cerrar un modal
   function closeModal(modal: HTMLElement) {
     modal.remove();
+    // Restaurar el scroll del body
+    document.body.style.overflow = '';
   }
 
   // Manejador para editar fechas
@@ -173,6 +174,36 @@ const sortedMemberships = [...memberships].sort((a, b) => {
       // Agregar manejador para cerrar el modal
       modal.querySelector('[data-action="close"]')?.addEventListener('click', () => {
         closeModal(modal);
+      });
+
+      // Agregar manejador para el formulario
+      const form = modal.querySelector('#edit-dates-form');
+      form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const endDateInput = form.querySelector('#end-date') as HTMLInputElement;
+        if (!endDateInput) return;
+
+        try {
+          const response = await fetch(`/api/memberships/${membershipId}/dates`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              end_date: endDateInput.value
+            })
+          });
+
+          if (response.ok) {
+            window.location.reload();
+          } else {
+            const { message } = await response.json();
+            alert(message || 'Error al actualizar las fechas');
+          }
+        } catch (error) {
+          console.error('Error al actualizar fechas:', error);
+          alert('Error al actualizar las fechas');
+        }
       });
     });
   });
