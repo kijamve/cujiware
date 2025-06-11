@@ -5,7 +5,18 @@ import ManageLicensesModal from './ManageLicensesModal.astro';
 import LicenseDetailsModal from './LicenseDetailsModal.astro';
 
 interface Props {
-  memberships: Membership[];
+  memberships: (Membership & {
+    user: {
+      name: string;
+      email: string;
+    };
+    plan: {
+      name: string;
+      description: string;
+      license_count: number;
+    };
+    licenses: Array<any>;
+  })[];
 }
 
 const { memberships } = Astro.props;
@@ -36,9 +47,6 @@ const sortedMemberships = [...memberships].sort((a, b) => {
           Fecha Fin
         </th>
         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-          Licencias
-        </th>
-        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
           Acciones
         </th>
       </tr>
@@ -61,6 +69,9 @@ const sortedMemberships = [...memberships].sort((a, b) => {
           <td class="px-6 py-4 whitespace-nowrap">
             <div class="text-sm text-gray-900">{membership.plan.name}</div>
             <div class="text-sm text-gray-500">{membership.plan.description}</div>
+            <div class="text-sm text-gray-500">
+              Licencias: {membership.licenses.length} / {membership.plan.license_count}
+            </div>
           </td>
           <td class="px-6 py-4 whitespace-nowrap">
             <span class={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
@@ -75,34 +86,56 @@ const sortedMemberships = [...memberships].sort((a, b) => {
             {new Date(membership.start_date).toLocaleDateString()}
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            {new Date(membership.end_date).toLocaleDateString()}
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            {membership.licenses.length} / {membership.plan.license_count}
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+              (() => {
+                const today = new Date();
+                const endDate = new Date(membership.end_date);
+                const diffDays = Math.floor((endDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+
+                if (diffDays < -5) {
+                  return 'bg-red-100 text-red-800';
+                } else if (diffDays < 0) {
+                  return 'bg-yellow-100 text-yellow-800';
+                } else {
+                  return 'bg-green-100 text-green-800';
+                }
+              })()
+            }">
+              {new Date(membership.end_date).toLocaleDateString()}
+            </span>
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-            <div class="flex space-x-2">
+            <div class="flex space-x-3">
               <button
                 class="text-indigo-600 hover:text-indigo-900"
                 data-action="edit-dates"
                 data-membership-id={membership.id}
                 data-end-date={membership.end_date}
+                title="Editar Fechas"
               >
-                Editar Fechas
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
               </button>
               <button
                 class="text-indigo-600 hover:text-indigo-900"
                 data-action="manage-licenses"
                 data-membership-id={membership.id}
+                title="Gestionar Licencias"
               >
-                Gestionar Licencias
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                </svg>
               </button>
               <button
                 class="text-indigo-600 hover:text-indigo-900"
                 data-action="view-payments"
                 data-membership-id={membership.id}
+                title="Ver Pagos"
               >
-                Ver Pagos
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                </svg>
               </button>
             </div>
           </td>

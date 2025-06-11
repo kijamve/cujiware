@@ -1,14 +1,18 @@
 import type { APIRoute } from 'astro';
 import { prisma } from '@/lib/prisma';
+import { requireSuperAdmin } from '@/middleware/auth.ts';
 
-export const GET: APIRoute = async ({ params }) => {
+export const GET: APIRoute = async (context) => {
   try {
-    const membershipId = params.id;
-    if (!membershipId) {
-      return new Response(JSON.stringify({ message: 'ID de membresía no proporcionado' }), {
-        status: 400,
-      });
-    }
+
+  // Primero intentar validar como super admin
+  const admin = await requireSuperAdmin(context);
+  const membershipId = context.params.id;
+  if (!membershipId) {
+    return new Response(JSON.stringify({ message: 'ID de membresía no proporcionado' }), {
+      status: 400,
+    });
+  }
 
     const payments = await prisma.payment.findMany({
       where: { membership_id: membershipId },

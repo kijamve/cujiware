@@ -1,14 +1,22 @@
 import type { APIRoute } from 'astro';
 import { prisma } from '@/lib/prisma';
-import { requireAuth } from '@/middleware/auth';
+import { requireSuperAdmin, requireAuth } from '@/middleware/auth';
 
-export const POST: APIRoute = async ({ params, request }) => {
-  const user = await requireAuth(request);
-  if (user instanceof Response) {
-    return user;
+export const POST: APIRoute = async (context) => {
+  // Primero intentar validar como super admin
+  const admin = await requireSuperAdmin(context);
+  let isSuperAdmin = !(admin instanceof Response);
+
+  // Si no es super admin, validar como usuario común
+  let user;
+  if (!isSuperAdmin) {
+    user = await requireAuth(context);
+    if (user instanceof Response) {
+      return user;
+    }
   }
 
-  const licenseId = params.id;
+  const licenseId = context.params.id;
   if (!licenseId) {
     return new Response(JSON.stringify({ message: 'ID de licencia no proporcionado' }), {
       status: 400,
@@ -16,14 +24,19 @@ export const POST: APIRoute = async ({ params, request }) => {
   }
 
   try {
-    // Verificar que la licencia pertenece al usuario
-    const license = await prisma.license.findFirst({
-      where: {
-        id: licenseId,
+    // Construir la consulta base
+    const whereClause = {
+      id: licenseId,
+      ...(isSuperAdmin ? {} : {
         membership: {
-          user_id: user.id
+          user_id: user?.id ?? ''
         }
-      },
+      })
+    };
+
+    // Verificar que la licencia existe y pertenece al usuario (si no es super admin)
+    const license = await prisma.license.findFirst({
+      where: whereClause,
       include: {
         membership: true
       }
@@ -35,14 +48,14 @@ export const POST: APIRoute = async ({ params, request }) => {
       });
     }
 
-    // Verificar si han pasado 15 días desde el último reset
-    if (license.last_reset) {
+    // Si no es super admin, verificar el período de 15 días
+    if (!isSuperAdmin && license.last_reset) {
       const fifteenDaysAgo = new Date();
       fifteenDaysAgo.setDate(fifteenDaysAgo.getDate() - 15);
-      
+
       if (license.last_reset > fifteenDaysAgo) {
-        return new Response(JSON.stringify({ 
-          message: 'Debes esperar 15 días entre cada reset de licencia' 
+        return new Response(JSON.stringify({
+          message: 'Debes esperar 15 días entre cada reset de licencia'
         }), {
           status: 400,
         });
@@ -75,4 +88,4 @@ export const POST: APIRoute = async ({ params, request }) => {
       status: 500,
     });
   }
-}; 
+};

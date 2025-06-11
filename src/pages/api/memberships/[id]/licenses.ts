@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { prisma } from '@/lib/prisma';
+import { requireSuperAdmin } from '@/middleware/auth';
 
 export const GET: APIRoute = async ({ params }) => {
   try {
@@ -28,9 +29,15 @@ export const GET: APIRoute = async ({ params }) => {
   }
 };
 
-export const POST: APIRoute = async ({ params }) => {
+export const POST: APIRoute = async (context) => {
   try {
-    const membershipId = params.id;
+    // Validar que sea super admin
+    const admin = await requireSuperAdmin(context);
+    if (admin instanceof Response) {
+      return admin;
+    }
+
+    const membershipId = context.params.id;
     if (!membershipId) {
       return new Response(JSON.stringify({ message: 'ID de membresía no proporcionado' }), {
         status: 400,
@@ -48,12 +55,6 @@ export const POST: APIRoute = async ({ params }) => {
     if (!membership) {
       return new Response(JSON.stringify({ message: 'Membresía no encontrada' }), {
         status: 404,
-      });
-    }
-
-    if (membership.licenses.length >= membership.plan.license_count) {
-      return new Response(JSON.stringify({ message: 'Se ha alcanzado el límite de licencias para este plan' }), {
-        status: 400,
       });
     }
 

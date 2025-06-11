@@ -1,18 +1,41 @@
 import type { APIRoute } from 'astro';
 import { prisma } from '@/lib/prisma';
+import { requireSuperAdmin, requireAuth } from '@/middleware/auth';
 
-export const GET: APIRoute = async ({ params }) => {
+export const GET: APIRoute = async (context) => {
   try {
-    const licenseId = params.id;
+    // Primero intentar validar como super admin
+    const admin = await requireSuperAdmin(context);
+    let isSuperAdmin = !(admin instanceof Response);
+
+    // Si no es super admin, validar como usuario común
+    let user;
+    if (!isSuperAdmin) {
+      user = await requireAuth(context);
+      if (user instanceof Response) {
+        return user;
+      }
+    }
+
+    const licenseId = context.params.id;
     if (!licenseId) {
       return new Response(JSON.stringify({ message: 'ID de licencia no proporcionado' }), {
         status: 400,
       });
     }
+    const whereClause = {
+      id: licenseId,
+      ...(isSuperAdmin ? {} : {
+        membership: {
+          user_id: user?.id ?? ''
+        }
+      })
+    };
 
     const license = await prisma.license.findUnique({
-      where: { id: licenseId },
+      where: whereClause,
       include: {
+        membership: true,
         usages: {
           orderBy: {
             last_used_at: 'desc',

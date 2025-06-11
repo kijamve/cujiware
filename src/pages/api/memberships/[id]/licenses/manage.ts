@@ -1,9 +1,16 @@
 import type { APIRoute } from 'astro';
 import { prisma } from '@/lib/prisma';
+import { requireSuperAdmin } from '@/middleware/auth';
 
-export const GET: APIRoute = async ({ params }) => {
+export const GET: APIRoute = async (context) => {
   try {
-    const membershipId = params.id;
+    // Validar que sea super admin
+    const admin = await requireSuperAdmin(context);
+    if (admin instanceof Response) {
+      return admin;
+    }
+
+    const membershipId = context.params.id;
     if (!membershipId) {
       return new Response(JSON.stringify({ message: 'ID de membresía no proporcionado' }), {
         status: 400,
@@ -53,7 +60,7 @@ export const GET: APIRoute = async ({ params }) => {
               <button
                 class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700"
                 data-action="add-license"
-                ${membership.licenses.length >= membership.plan.license_count ? 'disabled' : ''}
+                data-membership-id=${membershipId}
               >
                 Agregar Licencia
               </button>
@@ -67,7 +74,13 @@ export const GET: APIRoute = async ({ params }) => {
                   <div>
                     <p class="text-sm font-medium">ID: ${license.id}</p>
                     <p class="text-sm text-gray-500">
-                      Estado: ${license.status === 'ACTIVE' ? 'Activa' : 'Inactiva'}
+                      Estado: <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                        license.status === 'ACTIVE'
+                          ? 'bg-green-100 text-green-800'
+                          : 'bg-red-100 text-red-800'
+                      }">
+                        ${license.status === 'ACTIVE' ? 'Activa' : 'Inactiva'}
+                      </span>
                     </p>
                     <p class="text-sm text-gray-500">
                       Último reset: ${license.last_reset ? new Date(license.last_reset).toLocaleDateString() : 'Nunca'}
