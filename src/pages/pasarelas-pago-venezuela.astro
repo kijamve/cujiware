@@ -48,23 +48,6 @@ import ContactForm from '@/components/ContactForm.astro';
         </div>
       </section>
 
-      <div class="bg-[#1a365d] rounded-xl p-8 mb-12 !text-white shadow-lg">
-        <h2 class="text-3xl font-bold mb-4 text-center !text-white">¿Necesitas integrar estas pasarelas de pago?</h2>
-        <p class="text-xl mb-8 text-center text-white">¡Ya tenemos la mayoría de estas integraciones disponibles en nuestro catálogo de plugins!</p>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-          <a href="/plugins/venezuela/woocommerce" class="block bg-[#2c5282] !text-white rounded-lg p-6 text-center transform transition-all duration-300 hover:bg-[#2b6cb0] hover:shadow-xl">
-            <h3 class="text-2xl font-bold mb-2 !text-white">WooCommerce</h3>
-            <p class="text-white">Integra estas pasarelas en tu tienda WooCommerce</p>
-          </a>
-
-          <a href="/plugins/venezuela/prestashop" class="block bg-[#2c5282] !text-white rounded-lg p-6 text-center transform transition-all duration-300 hover:bg-[#2b6cb0] hover:shadow-xl">
-            <h3 class="text-2xl font-bold mb-2 !text-white">PrestaShop</h3>
-            <p class="text-white">Integra estas pasarelas en tu tienda PrestaShop</p>
-          </a>
-        </div>
-      </div>
-
       <section id="pago-movil" class="mb-12">
         <h2 class="text-3xl font-bold mb-4">Pago Móvil C2P</h2>
         <p class="mb-4">En el contexto financiero de Venezuela, el Pago Móvil ha experimentado una evolución significativa, pasando de ser una herramienta centrada en las transacciones entre personas (P2C) a una modalidad más amplia conocida como Comercio a Persona (C2P).</p>
@@ -86,18 +69,17 @@ import ContactForm from '@/components/ContactForm.astro';
         <p class="mb-4">Biopago ex-Cle/IPG es una práctica solución de pago ofrecida por el Banco de Venezuela. Esta opción permite transacciones entre personas naturales y jurídicas del mismo banco.</p>
         <p class="mb-4">Este método de pago acepta exclusivamente tarjetas de crédito Visa y Mastercard emitidas en Venezuela y transferencias entre cuentas del mismo banco con solo una clave que se envía por SMS al momento de ejecutar el cobro.</p>
 
-        <div class="bg-blue-50 p-4 rounded-lg mb-4">
-          <p class="font-semibold mb-2">Ver nuestra integración para:</p>
-          <div class="flex gap-4">
-            <a href="/plugins/all/woocommerce/biopago-y-tarjetas-de-debito-del-banco-de-venezuela-para-woocommerce" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-              WooCommerce
-            </a>
-            <a href="/plugins/all/prestashop/biopago-y-tarjetas-de-debito-del-banco-de-venezuela-para-prestashop" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-              PrestaShop
-            </a>
-          </div>
+        <div class="inline-flex items-center gap-2 text-sm text-blue-600">
+          <span class="font-medium text-black">Ver integración:</span>
+          <a href="/plugins/all/woocommerce/biopago-y-tarjetas-de-debito-del-banco-de-venezuela-para-woocommerce" class="inline-flex items-center hover:text-blue-800">
+            <img src="/src/assets/woo-icon.svg" class="h-4 w-4 mr-1" alt="WooCommerce" />
+            WooCommerce
+          </a>
+          <span class="text-gray-400">|</span>
+          <a href="/plugins/all/prestashop/biopago-y-tarjetas-de-debito-del-banco-de-venezuela-para-prestashop" class="inline-flex items-center hover:text-blue-800">
+            <img src="/src/assets/presta-icon.svg" class="h-4 w-4 mr-1" alt="PrestaShop" />
+            PrestaShop
+          </a>
         </div>
       </section>
 
@@ -106,18 +88,17 @@ import ContactForm from '@/components/ContactForm.astro';
         <p class="mb-4">La pasarela de pago del Banco Mercantil ofrece una solución completa para transacciones en línea. Permite a los comercios brindar a sus clientes múltiples opciones de recaudación de fondos a través de sus API.</p>
         <p class="mb-4">Esta plataforma acepta tarjetas de crédito (de cualquier banco nacional e internacional), débito (exclusivamente tarjetas de débito de clientes del Banco Mercantil) y Pago Móvil C2P.</p>
 
-        <div class="bg-blue-50 p-4 rounded-lg mb-4">
-          <p class="font-semibold mb-2">Ver nuestra integración para:</p>
-          <div class="flex gap-4">
-            <a href="/plugins/all/woocommerce/mercantil-banco-venezuela-para-woocommerce" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-              WooCommerce
-            </a>
-            <a href="/plugins/all/prestashop/pasarela-de-pago-banco-mercantil-para-prestashop-acepta-tarjetas-de-debito" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-              PrestaShop
-            </a>
-          </div>
+        <div class="inline-flex items-center gap-2 text-sm text-blue-600">
+          <span class="font-medium text-black">Ver integración:</span>
+          <a href="/plugins/all/woocommerce/mercantil-banco-venezuela-para-woocommerce" class="inline-flex items-center hover:text-blue-800">
+            <img src="/src/assets/woo-icon.svg" class="h-4 w-4 mr-1" alt="WooCommerce" />
+            WooCommerce
+          </a>
+          <span class="text-gray-400">|</span>
+          <a href="/plugins/all/prestashop/pasarela-de-pago-banco-mercantil-para-prestashop-acepta-tarjetas-de-debito" class="inline-flex items-center hover:text-blue-800">
+            <img src="/src/assets/presta-icon.svg" class="h-4 w-4 mr-1" alt="PrestaShop" />
+            PrestaShop
+          </a>
         </div>
       </section>
 
@@ -125,14 +106,12 @@ import ContactForm from '@/components/ContactForm.astro';
         <h2 class="text-3xl font-bold mb-4">Banco Venezolano de Crédito (BVC)</h2>
         <p class="mb-4">La plataforma de pago en línea del Banco Venezolano de Crédito ofrece mediante sus API una solución que abarca la aceptación de tarjetas de crédito (de cualquier banco nacional e internacional), débito (exclusivamente con cuentas del BVC) y Pago Móvil (tanto el clásico como el C2P).</p>
 
-        <div class="bg-blue-50 p-4 rounded-lg mb-4">
-          <p class="font-semibold mb-2">Ver nuestra integración para:</p>
-          <div class="flex gap-4">
-            <a href="/plugins/all/woocommerce/venezolano-de-credito-para-woocommerce-con-c2p-y-pago-movil" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-              WooCommerce
-            </a>
-          </div>
+        <div class="inline-flex items-center gap-2 text-sm text-blue-600">
+          <span class="font-medium text-black">Ver integración:</span>
+          <a href="/plugins/all/woocommerce/venezolano-de-credito-para-woocommerce-con-c2p-y-pago-movil" class="inline-flex items-center hover:text-blue-800">
+            <img src="/src/assets/woo-icon.svg" class="h-4 w-4 mr-1" alt="WooCommerce" />
+            WooCommerce
+          </a>
         </div>
       </section>
 
@@ -140,14 +119,12 @@ import ContactForm from '@/components/ContactForm.astro';
         <h2 class="text-3xl font-bold mb-4">Banco Nacional de Crédito (BNC)</h2>
         <p class="mb-4">La plataforma de pago en línea del Banco Nacional de Crédito ofrece mediante sus API una solución que abarca la aceptación de tarjetas de crédito (de cualquier banco nacional e internacional), débito (exclusivamente con cuentas del BVC) y Pago Móvil (tanto el clásico como el C2P).</p>
 
-        <div class="bg-blue-50 p-4 rounded-lg mb-4">
-          <p class="font-semibold mb-2">Ver nuestra integración para:</p>
-          <div class="flex gap-4">
-            <a href="/plugins/all/woocommerce/boton-de-pago-del-banco-bnc-para-plugin-woocommerce-wordpress" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-              WooCommerce
-            </a>
-          </div>
+        <div class="inline-flex items-center gap-2 text-sm text-blue-600">
+          <span class="font-medium text-black">Ver integración:</span>
+          <a href="/plugins/all/woocommerce/boton-de-pago-del-banco-bnc-para-plugin-woocommerce-wordpress" class="inline-flex items-center hover:text-blue-800">
+            <img src="/src/assets/woo-icon.svg" class="h-4 w-4 mr-1" alt="WooCommerce" />
+            WooCommerce
+          </a>
         </div>
       </section>
 
@@ -160,14 +137,12 @@ import ContactForm from '@/components/ContactForm.astro';
         <h2 class="text-3xl font-bold mb-4">Banco del Tesoro (BT Pagos)</h2>
         <p class="mb-4">El Banco del Tesoro ofrece su plataforma BT Pagos que permite la integración de pagos C2P y cuenta con un validador de pagos móviles. Esta solución permite a los comercios recibir pagos de manera segura y eficiente a través de la plataforma de pago móvil.</p>
 
-        <div class="bg-blue-50 p-4 rounded-lg mb-4">
-          <p class="font-semibold mb-2">Ver nuestra integración para:</p>
-          <div class="flex gap-4">
-            <a href="/plugins/all/woocommerce/boton-de-pago-movil-y-bt-pagos-del-banco-del-tesoro-para-woocommerce" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-              WooCommerce
-            </a>
-          </div>
+        <div class="inline-flex items-center gap-2 text-sm text-blue-600">
+          <span class="font-medium text-black">Ver integración:</span>
+          <a href="/plugins/all/woocommerce/boton-de-pago-movil-y-bt-pagos-del-banco-del-tesoro-para-woocommerce" class="inline-flex items-center hover:text-blue-800">
+            <img src="/src/assets/woo-icon.svg" class="h-4 w-4 mr-1" alt="WooCommerce" />
+            WooCommerce
+          </a>
         </div>
       </section>
 
@@ -175,14 +150,12 @@ import ContactForm from '@/components/ContactForm.astro';
         <h2 class="text-3xl font-bold mb-4">Banco R4 (Mi Banco)</h2>
         <p class="mb-4">El Banco R4, también conocido como Mi Banco, ofrece soluciones de pago que incluyen tanto el sistema C2P como un validador de pagos móviles clásico. Esta plataforma permite a los comercios recibir pagos a través de múltiples canales, facilitando las transacciones tanto para el comercio como para los clientes.</p>
 
-        <div class="bg-blue-50 p-4 rounded-lg mb-4">
-          <p class="font-semibold mb-2">Ver nuestra integración para:</p>
-          <div class="flex gap-4">
-            <a href="/plugins/all/woocommerce/boton-de-pago-movil-y-kr4-pagos-del-banco-kr4-para-woocommerce" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-              WooCommerce
-            </a>
-          </div>
+        <div class="inline-flex items-center gap-2 text-sm text-blue-600">
+          <span class="font-medium text-black">Ver integración:</span>
+          <a href="/plugins/all/woocommerce/boton-de-pago-movil-y-kr4-pagos-del-banco-kr4-para-woocommerce" class="inline-flex items-center hover:text-blue-800">
+            <img src="/src/assets/woo-icon.svg" class="h-4 w-4 mr-1" alt="WooCommerce" />
+            WooCommerce
+          </a>
         </div>
       </section>
 
@@ -190,18 +163,17 @@ import ContactForm from '@/components/ContactForm.astro';
         <h2 class="text-3xl font-bold mb-4">Mega Soft</h2>
         <p class="mb-4">La integración de la pasarela de pago Mega Soft proporciona una solución flexible y automatizada para la validación de pagos. Esta solución es ofrecida exclusivamente a comerciantes con cuentas jurídicas en cualquier banco nacional y está diseñada para aceptar múltiples formas de pago.</p>
 
-        <div class="bg-blue-50 p-4 rounded-lg mb-4">
-          <p class="font-semibold mb-2">Ver nuestra integración para:</p>
-          <div class="flex gap-4">
-            <a href="/plugins/all/woocommerce/boton-de-integracion-de-megasoft-con-woocommerce" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-              WooCommerce
-            </a>
-            <a href="/plugins/all/prestashop/boton-de-integracion-de-megasoft-con-prestashop" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-              PrestaShop
-            </a>
-          </div>
+        <div class="inline-flex items-center gap-2 text-sm text-blue-600">
+          <span class="font-medium text-black">Ver integración:</span>
+          <a href="/plugins/all/woocommerce/boton-de-integracion-de-megasoft-con-woocommerce" class="inline-flex items-center hover:text-blue-800">
+            <img src="/src/assets/woo-icon.svg" class="h-4 w-4 mr-1" alt="WooCommerce" />
+            WooCommerce
+          </a>
+          <span class="text-gray-400">|</span>
+          <a href="/plugins/all/prestashop/boton-de-integracion-de-megasoft-con-prestashop" class="inline-flex items-center hover:text-blue-800">
+            <img src="/src/assets/presta-icon.svg" class="h-4 w-4 mr-1" alt="PrestaShop" />
+            PrestaShop
+          </a>
         </div>
       </section>
 
@@ -224,18 +196,17 @@ import ContactForm from '@/components/ContactForm.astro';
         <h2 class="text-3xl font-bold mb-4">Binance Pay</h2>
         <p class="mb-4">Binance Pay es una plataforma de pagos desarrollada por la reconocida casa de intercambio de criptomonedas Binance. Opera a través de la criptomoneda estable USDT (Tether), una moneda digital que replica el valor del dólar estadounidense, ofreciendo estabilidad y confiabilidad en las transacciones.</p>
 
-        <div class="bg-blue-50 p-4 rounded-lg mb-4">
-          <p class="font-semibold mb-2">Ver nuestra integración para:</p>
-          <div class="flex gap-4">
-            <a href="/plugins/all/woocommerce/pagos-offline-para-woocommerce-zelle-binance-p2p-transferencia-pago-movil-y-otros" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-              WooCommerce
-            </a>
-            <a href="/plugins/all/prestashop/binance-pay-para-prestashop" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-              PrestaShop
-            </a>
-          </div>
+        <div class="inline-flex items-center gap-2 text-sm text-blue-600">
+          <span class="font-medium text-black">Ver integración:</span>
+          <a href="/plugins/all/woocommerce/pagos-offline-para-woocommerce-zelle-binance-p2p-transferencia-pago-movil-y-otros" class="inline-flex items-center hover:text-blue-800">
+            <img src="/src/assets/woo-icon.svg" class="h-4 w-4 mr-1" alt="WooCommerce" />
+            WooCommerce
+          </a>
+          <span class="text-gray-400">|</span>
+          <a href="/plugins/all/prestashop/binance-pay-para-prestashop" class="inline-flex items-center hover:text-blue-800">
+            <img src="/src/assets/presta-icon.svg" class="h-4 w-4 mr-1" alt="PrestaShop" />
+            PrestaShop
+          </a>
         </div>
       </section>
 
