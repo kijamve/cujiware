@@ -164,17 +164,17 @@ export class CachicamoService {
           headers: this.getHeaders()
         }
       );
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const data: CustomerSearchResponse = await response.json();
-      
+
       if (data.rows.length > 0) {
         return data.rows[0];
       }
-      
+
       return null;
     } catch (error) {
       console.error('Error searching customer:', error);
@@ -227,6 +227,14 @@ export class CachicamoService {
         formattedPhone = '+58' + (formattedPhone.startsWith('0') ? formattedPhone.slice(1) : formattedPhone);
       }
 
+      // Filtrar DNI dejando solo números y letras, y convertir a mayúsculas
+      customerData.dni = customerData.dni.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+
+      // Validar y formatear el DNI
+      if (/^\d+$/.test(customerData.dni)) {
+        customerData.dni = 'V' + customerData.dni;
+      }
+
       // Actualizar el teléfono con el formato correcto
       customerData.phone = formattedPhone;
       const data = {
@@ -245,7 +253,7 @@ export class CachicamoService {
           console.error('Error updating customer:', error);
           throw error;
         });
-        return existingCustomer 
+        return existingCustomer
       }
 
       const response = await fetch(`${this.baseUrl}/customers`, {
@@ -272,12 +280,12 @@ export class CachicamoService {
       const requestReference = Math.random().toString(36).substring(2, 15);
 
       const taxRate = this.taxPercent / 100;
-      
+
       // Función para redondear correctamente
       const roundAmount = (amount: number): number => {
         const decimal = amount - Math.floor(amount);
         if (decimal >= 0.005) {
-          return Math.ceil(amount * 10000) / 10000; 
+          return Math.ceil(amount * 10000) / 10000;
         }
         return Math.floor(amount * 10000) / 10000;
       };
@@ -364,4 +372,4 @@ export class CachicamoService {
 
       return await response.json();
   }
-} 
+}
