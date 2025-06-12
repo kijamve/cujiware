@@ -26,15 +26,36 @@ export function getStaticPaths() {
               platform
             }
           });
+          paths.push({
+            params: {
+              slug: plugin.slug,
+              country,
+              platform: 'all'
+            }
+          });
+          paths.push({
+            params: {
+              slug: plugin.slug,
+              country: 'all',
+              platform
+            }
+          });
+          paths.push({
+            params: {
+              slug: plugin.slug,
+              country: 'all',
+              platform: 'all'
+            }
+          });
         }
       }
     }
   }
 
-  return paths;
+  return [...new Set(paths.map(path => JSON.stringify(path)))].map(path => JSON.parse(path));
 }
 
-const { slug, country, platform } = Astro.params;
+const { slug } = Astro.params;
 const plugin = plugins.find(p => p.slug === slug);
 
 if (!plugin) {
@@ -54,7 +75,7 @@ try {
 }
 
 // Meta tags para SEO
-const metaDescription = `${plugin.short_description} - Plugin premium para ${platform === 'woocommerce' ? 'WooCommerce' : 'PrestaShop'} disponible en Cujiware.`;
+const metaDescription = `${plugin.short_description} - Plugin premium para ${plugin.platform[0] === 'woocommerce' ? 'WooCommerce' : 'PrestaShop'} disponible en Cujiware.`;
 const canonicalUrl = `https://cujiware.com/plugins/${plugin.countries[0]}/${plugin.platform[0]}/${plugin.slug}`;
 const ogImage = screenshots.length > 0 ? `https://cujiware.com${screenshots[0].src}` : undefined;
 
@@ -67,7 +88,7 @@ const schemaData = {
   "applicationCategory": plugin.category === 'payment_method' ? 'FinancialApplication' :
                         plugin.category === 'shipping' ? 'LogisticsApplication' :
                         'SoftwareApplication',
-  "softwareRequirements": platform === 'woocommerce' ? 'WordPress' : 'PrestaShop',
+  "softwareRequirements": plugin.platform[0] === 'woocommerce' ? 'WordPress' : 'PrestaShop',
   "operatingSystem": "Linux",
   "author": {
     "@type": "Organization",
@@ -137,13 +158,13 @@ const schemaData = {
       "applicationCategory": relatedPlugin.category === 'payment_method' ? 'FinancialApplication' :
                           relatedPlugin.category === 'shipping' ? 'LogisticsApplication' :
                           'SoftwareApplication',
-      "softwareRequirements": platform === 'woocommerce' ? 'WordPress' : 'PrestaShop',
+      "softwareRequirements": plugin.platform[0] === 'woocommerce' ? 'WordPress' : 'PrestaShop',
       "operatingSystem": "Linux",
       "author": {
         "@type": "Organization",
         "name": "Cujiware"
       },
-      "url": `https://cujiware.com/plugins/${country}/${platform}/${relatedPlugin.slug}`,
+      "url": `https://cujiware.com/plugins/${plugin.countries[0]}/${plugin.platform[0]}/${relatedPlugin.slug}`,
       "offers": {
         "@type": "Offer",
         "name": "Membresía Mensual, Semestral o Anual",
@@ -200,8 +221,8 @@ const schemaData = {
   <PluginDetail
     client:load
     plugin={plugin}
-    country={country}
-    platform={platform}
+    country={plugin.countries[0]}
+    platform={plugin.platform[0]}
     content={content}
     screenshots={screenshots}
   />
