@@ -1,6 +1,8 @@
 import { PluginIcon } from './PluginIcon';
 import type { Plugin } from './types';
 import { Star, Sparkles } from 'lucide-react';
+import wooIcon from '../assets/woo-icon.svg?url';
+import prestaIcon from '../assets/presta-icon.svg?url';
 
 interface PluginCardProps {
   plugin: Plugin;
@@ -12,6 +14,19 @@ export function PluginCard({ plugin, country, platform }: PluginCardProps) {
   const handleClick = () => {
     window.location.href = `/plugins/${country}/${platform}/${plugin.slug}`;
   };
+
+  const getPlatformIcon = (platform: string): string | undefined => {
+    switch (platform) {
+      case 'woocommerce':
+        return wooIcon;
+      case 'prestashop':
+        return prestaIcon;
+      default:
+        return undefined;
+    }
+  };
+
+  const platformIcon = getPlatformIcon(plugin.platform[0]);
 
   return (
     <div className={`bg-white rounded-lg shadow-md overflow-hidden border ${plugin.featured ? 'border-cuji-green' : plugin.new_arrivals ? 'border-cuji-blue' : 'border-gray-200'} relative`}>
@@ -28,12 +43,27 @@ export function PluginCard({ plugin, country, platform }: PluginCardProps) {
         </div>
       )}
       <div className="p-6">
-        <div className="flex items-center justify-center w-12 h-12 bg-cuji-blue/10 rounded-lg mb-4">
-          <PluginIcon iconName={plugin.icon} />
+        <div className="flex items-center gap-3 mb-4">
+          <div className="flex items-center justify-center w-12 h-12 bg-cuji-blue/10 rounded-lg">
+            <PluginIcon iconName={plugin.icon} />
+          </div>
+          {platformIcon && (
+            <div className="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-lg">
+              <img
+                src={platformIcon}
+                alt={`${plugin.platform[0]} icon`}
+                className="w-6 h-6"
+                onError={(e) => {
+                  console.error('Error loading platform icon:', platformIcon);
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+            </div>
+          )}
         </div>
         <h3 className="text-xl font-semibold mb-2">{plugin.name}</h3>
         <p className="text-gray-600 mb-4">{plugin.short_description}</p>
-        <a 
+        <a
           href={`/plugins/${country}/${platform}/${plugin.slug}`}
           className="w-full flex items-center justify-center gap-2 bg-cuji-blue text-white px-4 py-2 rounded-lg hover:bg-cuji-dark-blue transition-colors"
         >

@@ -23,7 +23,8 @@ import ContactForm from '@/components/ContactForm.astro';
             <h3 class="text-2xl font-semibold mb-3">Pasarelas Bancarias:</h3>
             <ul class="list-disc pl-6">
               <li><a href="#pago-movil">Pago Móvil C2P</a></li>
-              <li><a href="#biopago">Biopago ex-Cle/IPG del Banco de Venezuela</a></li>
+              <li><a href="#bdv-pago-movil">Conciliación de Pago Móvil del Banco de Venezuela (BDV)</a></li>
+              <li><a href="#biopago">Biopago ex-Cle/IPG del Banco de Venezuela (BDV)</a></li>
               <li><a href="#mercantil">Banco Mercantil</a></li>
               <li><a href="#bvc">Banco Venezolano de Crédito (BVC)</a></li>
               <li><a href="#bnc">Banco Nacional de Crédito (BNC)</a></li>
@@ -50,10 +51,36 @@ import ContactForm from '@/components/ContactForm.astro';
 
       <section id="pago-movil" class="mb-12">
         <h2 class="text-3xl font-bold mb-4">Pago Móvil C2P</h2>
-        <p class="mb-4">En el contexto financiero de Venezuela, el Pago Móvil ha experimentado una evolución significativa, pasando de ser una herramienta centrada en las transacciones entre personas (P2C) a una modalidad más amplia conocida como Comercio a Persona (C2P).</p>
-        </div>
+        <p class="mb-4">El Pago Móvil C2P (Comercio a Persona) es un sistema de pago electrónico que permite a los comercios recibir pagos directamente desde las cuentas bancarias de sus clientes. A diferencia del Pago Móvil tradicional (P2P), el C2P está diseñado específicamente para transacciones comerciales, ofreciendo mayor seguridad y trazabilidad.</p>
 
-        <h3 class="text-2xl font-semibold mb-3">¿Cómo Obtener la Clave Dinámica?</h3>
+        <p class="mb-4">El proceso de pago es simple y seguro:</p>
+        <ol class="list-decimal pl-6 mb-4">
+          <li>El cliente selecciona Pago Móvil C2P como método de pago en tu sitio web</li>
+          <li>Ingresa su número de teléfono, cédula y banco asociado a su cuenta</li>
+          <li>Debe obtener el token o clave OTP por SMS o APP o Portal Web del banco</li>
+          <li>Ingresa esta clave en tu sitio web para autorizar el pago</li>
+          <li>El comercio recibe confirmación inmediata de la transacción</li>
+        </ol>
+
+        <p class="mb-4">Este sistema ofrece múltiples ventajas para comercios y clientes:</p>
+        <ul class="list-disc pl-6 mb-4">
+          <li>Transacciones instantáneas y seguras</li>
+          <li>No requiere tarjetas de crédito o débito</li>
+          <li>Validación en tiempo real mediante token OTP</li>
+          <li>Proceso simple y rápido para el cliente final</li>
+          <li>Reducción de fraudes gracias a la doble validación</li>
+        </ul>
+
+        <h3 class="text-2xl font-semibold mb-3">Bancos que soportan recibir pagos C2P:</h3>
+        <ul class="list-disc pl-6 mb-4">
+          <li><a href="#mercantil">Banco Mercantil</a></li>
+          <li><a href="#bvc">Banco Venezolano de Crédito (BVC)</a></li>
+          <li><a href="#bnc">Banco Nacional de Crédito (BNC)</a></li>
+          <li><a href="#tesoro">Banco del Tesoro (BT Pagos)</a></li>
+          <li><a href="#r4">Banco R4 (Mi Banco)</a></li>
+        </ul>
+
+        <h3 class="text-2xl font-semibold mb-3">¿Cómo Obtener la Clave Dinámica, OTP o Token?</h3>
         <ul class="list-disc pl-6 mb-4">
           <li>Banco de Venezuela: Enviar un SMS al 2662 con las palabras «CLAVE DE PAGO»</li>
           <li>Banesco: Enviar un SMS al 2846 con las palabras «clave dinámica»</li>
@@ -64,8 +91,35 @@ import ContactForm from '@/components/ContactForm.astro';
         </ul>
       </section>
 
+      <section id="bdv-pago-movil" class="mb-12">
+        <h2 class="text-3xl font-bold mb-4">Conciliación de Pago Móvil del Banco de Venezuela (BDV)</h2>
+        <p class="mb-4">El Pago Móvil del Banco de Venezuela es una solución de pago interbancario que permite a los comercios recibir pagos desde cualquier banco en Venezuela. Esta plataforma ofrece una integración directa con la API oficial del banco, permitiendo la validación automática de pagos.</p>
+        <p class="mb-4">Este método de pago permite recibir pagos desde cualquier banco en Venezuela, ofreciendo una solución versátil y accesible para tus clientes. El proceso es simple y seguro, requiriendo solo el número de referencia, teléfono, cédula y banco del cliente para procesar la transacción.</p>
+
+        <h3 class="text-2xl font-semibold mb-3">¿Cómo funciona la Conciliación Pago Móvil del Banco de Venezuela?</h3>
+        <ul class="list-disc pl-6 mb-4">
+          <li>El cliente ingresa su número de referencia, teléfono, cédula y banco en el formulario de pago</li>
+          <li>El sistema valida la información ingresada y envía un SMS con la clave dinámica al cliente</li>
+          <li>El cliente ingresa la clave dinámica en el formulario de pago y confirma el pago</li>
+          <li>El sistema valida el pago y confirma la transacción</li>
+        </ul>
+
+        <div class="inline-flex items-center gap-2 text-sm text-blue-600">
+          <span class="font-medium text-black">Ver integración:</span>
+          <a href="/plugins/all/woocommerce/boton-de-pago-movil-del-banco-de-venezuela-para-woocommerce" class="inline-flex items-center hover:text-blue-800">
+            <img src="/src/assets/woo-icon.svg" class="h-4 w-4 mr-1" alt="WooCommerce" />
+            WooCommerce
+          </a>
+          <span class="text-gray-400">|</span>
+          <a href="/plugins/all/prestashop/boton-de-integracion-de-pago-movil-del-banco-de-venezuela-con-prestashop" class="inline-flex items-center hover:text-blue-800">
+            <img src="/src/assets/presta-icon.svg" class="h-4 w-4 mr-1" alt="PrestaShop" />
+            PrestaShop
+          </a>
+        </div>
+      </section>
+
       <section id="biopago" class="mb-12">
-        <h2 class="text-3xl font-bold mb-4">Biopago ex-Cle/IPG del Banco de Venezuela</h2>
+        <h2 class="text-3xl font-bold mb-4">Biopago ex-Cle/IPG del Banco de Venezuela (BDV)</h2>
         <p class="mb-4">Biopago ex-Cle/IPG es una práctica solución de pago ofrecida por el Banco de Venezuela. Esta opción permite transacciones entre personas naturales y jurídicas del mismo banco.</p>
         <p class="mb-4">Este método de pago acepta exclusivamente tarjetas de crédito Visa y Mastercard emitidas en Venezuela y transferencias entre cuentas del mismo banco con solo una clave que se envía por SMS al momento de ejecutar el cobro.</p>
 

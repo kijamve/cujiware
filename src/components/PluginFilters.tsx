@@ -36,6 +36,17 @@ export function PluginFilters({
     window.location.href = `/plugins/${country}/${newPlatform}`;
   };
 
+  const getPlatformIcon = (platform: string) => {
+    switch (platform) {
+      case 'woocommerce':
+        return '/src/assets/woo-icon.svg';
+      case 'prestashop':
+        return '/src/assets/presta-icon.svg';
+      default:
+        return null;
+    }
+  };
+
   const FilterGroup = ({ title, options, selectedValue, onChange }: {
     title: string;
     options: { value: string; label: string }[];
@@ -45,19 +56,23 @@ export function PluginFilters({
     <div className="flex flex-col gap-1">
       <h3 className="text-xs font-bold px-2 py-1 rounded-full">{title}</h3>
       <div className="flex flex-wrap gap-1">
-        {options.map((option) => (
-          <button
-            key={option.value}
-            onClick={() => onChange(option.value)}
-            className={`px-2 py-1 rounded-full text-xs font-medium transition-colors
-              ${selectedValue === option.value
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
-          >
-            {option.label}
-          </button>
-        ))}
+        {options.map((option) => {
+          const icon = title === 'Plataforma' ? getPlatformIcon(option.value) : null;
+          return (
+            <button
+              key={option.value}
+              onClick={() => onChange(option.value)}
+              className={`px-2 py-1 rounded-full text-xs font-medium transition-colors flex items-center gap-1
+                ${selectedValue === option.value
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+            >
+              {icon && <img src={icon} alt={`${option.label} icon`} className="w-4 h-4" />}
+              {option.label}
+            </button>
+          );
+        })}
       </div>
     </div>
   );
