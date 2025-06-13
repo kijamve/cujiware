@@ -5,19 +5,31 @@ import { prisma } from '@/lib/prisma';
 import { requireSuperAdmin } from '@/middleware/auth';
 import Tabs from '@/components/dashboard/Tabs.astro';
 import type { Payment } from '@/types/auth';
+import { PAYMENT_METHOD } from '@/constants/status';
 
 // Validar que el usuario sea super admin
 await requireSuperAdmin(Astro);
 
 const ITEMS_PER_PAGE = 30;
 const currentPage = Number(Astro.url.searchParams.get('page')) || 1;
+const showAll = Astro.url.searchParams.get('showAll') === '1';
+
+// Construir el where para la consulta
+const where = showAll ? {} : {
+  payment_method: {
+    not: PAYMENT_METHOD.STRIPE
+  }
+};
 
 // Obtener el total de pagos para la paginación
-const totalPayments = await prisma.payment.count();
+const totalPayments = await prisma.payment.count({
+  where
+});
 const totalPages = Math.ceil(totalPayments / ITEMS_PER_PAGE);
 
 // Obtener los pagos con paginación
 const payments = await prisma.payment.findMany({
+  where,
   include: {
     membership: {
       include: {
@@ -61,6 +73,14 @@ const payments = await prisma.payment.findMany({
         <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
           Pagos
         </h2>
+      </div>
+      <div class="mt-4 flex md:ml-4 md:mt-0">
+        <a
+          href={showAll ? '/dashboard_master/payments' : '/dashboard_master/payments?showAll=1'}
+          class="ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+        >
+          {showAll ? 'Ocultar Stripe' : 'Mostrar Todo'}
+        </a>
       </div>
     </div>
 
