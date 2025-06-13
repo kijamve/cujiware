@@ -1,6 +1,7 @@
 ---
 import type { Membership, Payment, Plan } from '@/types/auth';
 import { MEMBERSHIP_STATUS, LICENSE_STATUS, PAYMENT_STATUS, PAYMENT_METHOD } from '@/constants/status';
+import { formatDate } from '@/utils/date';
 
 interface Props {
   membership: Omit<Membership, 'user_id' | 'plan_id'> & {
@@ -39,7 +40,9 @@ const canResetLicense = (lastReset: Date | null) => {
   <dl class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2">
     <div>
       <dt class="text-sm font-medium text-gray-500">Plan</dt>
-      <dd class="mt-1 text-sm text-gray-900">{membership.plan.name}</dd>
+      <dd class="mt-1 text-sm text-gray-900">
+        {membership.plan.name} - {membership.plan.price} {membership.plan.currency}
+      </dd>
     </div>
     <div>
       <dt class="text-sm font-medium text-gray-500">Estado</dt>
@@ -56,13 +59,13 @@ const canResetLicense = (lastReset: Date | null) => {
     <div>
       <dt class="text-sm font-medium text-gray-500">Fecha de inicio</dt>
       <dd class="mt-1 text-sm text-gray-900">
-        {new Date(membership.start_date).toLocaleDateString()}
+        {formatDate(membership.start_date)}
       </dd>
     </div>
     <div>
       <dt class="text-sm font-medium text-gray-500">Fecha de vencimiento</dt>
       <dd class="mt-1 text-sm text-gray-900">
-        {new Date(membership.end_date).toLocaleDateString()}
+        {formatDate(membership.end_date)}
       </dd>
     </div>
   </dl>
@@ -137,7 +140,7 @@ const canResetLicense = (lastReset: Date | null) => {
                   </button>
                 ) : license.status === LICENSE_STATUS.ACTIVE && license.last_reset ? (
                   <div class="text-xs text-gray-500">
-                    Podrás resetear nuevamente el {new Date(new Date(license.last_reset).getTime() + (15 * 24 * 60 * 60 * 1000)).toLocaleDateString()}
+                    Podrás resetear nuevamente el {formatDate(new Date(new Date(license.last_reset).getTime() + (15 * 24 * 60 * 60 * 1000)))}
                   </div>
                 ) : null}
               </div>
@@ -148,7 +151,7 @@ const canResetLicense = (lastReset: Date | null) => {
                     <div class="flex items-center justify-between bg-gray-50 p-2 rounded-md text-sm">
                       <span>{usage.domain}</span>
                       <span class="text-gray-500">
-                        Último uso: {new Date(usage.last_used_at).toLocaleDateString()}
+                        Último uso: {formatDate(usage.last_used_at)}
                       </span>
                     </div>
                   ))}
@@ -186,7 +189,7 @@ const canResetLicense = (lastReset: Date | null) => {
                     {payment.amount} {payment.currency}
                   </p>
                   <p class="text-sm text-gray-500">
-                    {new Date(payment.created_at).toLocaleDateString()}
+                    {formatDate(payment.created_at)}
                   </p>
                 </div>
                 <span class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${

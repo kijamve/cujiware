@@ -2,6 +2,7 @@
 import Layout from '@/layouts/Layout.astro';
 import { requireAuth } from '@/middleware/auth.ts';
 import { MEMBERSHIP_STATUS } from '@/constants/status';
+import { formatDate } from '@/utils/date';
 
 const user = await requireAuth(Astro);
 if (user instanceof Response) {
@@ -33,7 +34,7 @@ if (!membership) {
                 ¿Estás seguro de que deseas cancelar tu suscripción al plan {membership.plan.name}? Ten en cuenta que:
               </p>
               <ul class="list-disc pl-5 mt-2 space-y-1">
-                <li>Tu suscripción seguirá activa hasta el final del período actual ({new Date(membership.end_date).toLocaleDateString()})</li>
+                <li>Tu suscripción seguirá activa hasta el final del período actual ({formatDate(membership.end_date)})</li>
                 <li>No se realizarán más cargos después de la cancelación</li>
                 <li>Perderás acceso a las actualizaciones y soporte técnico al finalizar el período</li>
               </ul>
@@ -62,7 +63,7 @@ if (!membership) {
 
 <script>
   const confirmButton = document.getElementById('confirm-cancel');
-  
+
   confirmButton?.addEventListener('click', async () => {
     if (!confirm('¿Estás completamente seguro de que deseas cancelar esta suscripción?')) {
       return;
@@ -88,4 +89,4 @@ if (!membership) {
       alert(error instanceof Error ? error.message : 'Error al cancelar la suscripción');
     }
   });
-</script> 
+</script>

@@ -5,6 +5,7 @@ import type { Plugin } from './types';
 import { useState, useEffect } from 'react';
 import pluginsData from '../data/plugins.json';
 import { getRelatedPlugins } from '../utils/relatedPlugins';
+import { formatDate } from '@/utils/date';
 
 interface PluginVersion {
   id: string;
@@ -159,11 +160,6 @@ export function PluginDetail({ plugin, country, platform, content, screenshots, 
                   <h1 className="text-2xl md:text-3xl font-bold text-gray-900">{plugin.name}</h1>
                 </div>
                 <div className="flex flex-wrap gap-2 mb-6">
-                  {latestVersion && (
-                    <span className="inline-flex items-center px-3 md:px-4 py-1.5 rounded-full text-xs font-medium bg-gray-100 text-cuji-blue">
-                      Última versión: v{latestVersion.version}
-                    </span>
-                  )}
                   <span className="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 rounded-full text-xs font-medium bg-gray-100 text-cuji-blue">
                     {platformIcon && (
                       <img
@@ -186,6 +182,11 @@ export function PluginDetail({ plugin, country, platform, content, screenshots, 
                           country.charAt(0).toUpperCase() + country.slice(1)}
                       </span>
                     ))
+                  )}
+                  {latestVersion && (
+                    <span className="inline-flex items-center px-3 md:px-4 py-1.5 rounded-full text-xs font-medium bg-gray-100 text-cuji-blue">
+                      Última versión: v{latestVersion.version}
+                    </span>
                   )}
                 </div>
                 <p className="text-base md:text-lg text-gray-600 mb-6 md:mb-8">{plugin.short_description}</p>
@@ -284,7 +285,7 @@ export function PluginDetail({ plugin, country, platform, content, screenshots, 
                             <div key={version.id} className="flex flex-col gap-2 text-xs md:text-sm border-b border-gray-100 pb-2">
                               <div className="flex items-center justify-between">
                                 <span className="text-gray-600">
-                                  v{version.version} ({new Date(version.created_at).toLocaleDateString()})
+                                  v{version.version} ({formatDate(version.created_at)})
                                 </span>
                                 {version.download_token ? (
                                   <button

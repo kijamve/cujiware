@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { prisma } from '@/lib/prisma';
 import { requireSuperAdmin } from '@/middleware/auth';
+import { formatDate } from '@/utils/date';
 
 export const GET: APIRoute = async (context) => {
   try {
@@ -83,7 +84,7 @@ export const GET: APIRoute = async (context) => {
                       </span>
                     </p>
                     <p class="text-sm text-gray-500">
-                      Último reset: ${license.last_reset ? new Date(license.last_reset).toLocaleDateString() : 'Nunca'}
+                      Último reset: ${license.last_reset ? formatDate(license.last_reset) : 'Nunca'}
                     </p>
                   </div>
                   <div class="flex space-x-2">

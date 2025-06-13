@@ -1,5 +1,6 @@
 ---
 import type { Payment } from '@/types/auth';
+import { formatDate } from '@/utils/date';
 
 interface Props {
   payments: Payment[];
@@ -45,7 +46,7 @@ const { payments } = Astro.props;
           {payments.map((payment) => (
             <tr>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {new Date(payment.created_at).toLocaleDateString()}
+                {formatDate(payment.created_at)}
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                 ${payment.amount.toFixed(2)}

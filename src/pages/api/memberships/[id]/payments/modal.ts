@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { prisma } from '@/lib/prisma';
 import { requireSuperAdmin } from '@/middleware/auth.ts';
+import { formatDate } from '@/utils/date';
 
 export const GET: APIRoute = async (context) => {
   try {
@@ -62,7 +63,7 @@ export const GET: APIRoute = async (context) => {
                 ${payments.map((payment) => `
                   <tr>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      ${new Date(payment.created_at).toLocaleDateString()}
+                      ${formatDate(payment.created_at)}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       $${payment.amount.toFixed(2)}

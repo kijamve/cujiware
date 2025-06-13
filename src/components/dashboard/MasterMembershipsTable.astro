@@ -1,5 +1,6 @@
 ---
 import type { MembershipWithRelations } from '@/utils/types';
+import { formatDate } from '@/utils/date';
 
 interface Props {
   memberships: (MembershipWithRelations & {
@@ -81,7 +82,7 @@ const sortedMemberships = memberships;
             </span>
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            {new Date(membership.start_date).toLocaleDateString()}
+            {formatDate(membership.start_date)}
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
             <span class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
@@ -101,7 +102,7 @@ const sortedMemberships = memberships;
                 }
               })()
             }`}>
-              {new Date(membership.end_date).toLocaleDateString()}
+              {formatDate(membership.end_date)}
             </span>
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">

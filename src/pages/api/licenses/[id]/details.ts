@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { prisma } from '@/lib/prisma';
 import { requireSuperAdmin, requireAuth } from '@/middleware/auth';
+import { formatDate } from '@/utils/date';
 
 export const GET: APIRoute = async (context) => {
   try {
@@ -95,7 +96,7 @@ export const GET: APIRoute = async (context) => {
             <div>
               <h3 class="text-sm font-medium text-gray-500">Último Reset</h3>
               <p class="mt-1 text-sm text-gray-900">
-                ${license.last_reset ? new Date(license.last_reset).toLocaleDateString() : 'Nunca'}
+                ${license.last_reset ? formatDate(license.last_reset) : 'Nunca'}
               </p>
             </div>
 
@@ -107,7 +108,7 @@ export const GET: APIRoute = async (context) => {
                       <div class="flex justify-between items-center">
                         <p class="text-sm text-gray-900">${usage.domain}</p>
                         <p class="text-sm text-gray-500">
-                          Último uso: ${new Date(usage.last_used_at).toLocaleDateString()}
+                          Último uso: ${formatDate(usage.last_used_at)}
                         </p>
                       </div>
                     `).join('')}
@@ -124,7 +125,7 @@ export const GET: APIRoute = async (context) => {
                       <div class="flex justify-between items-center">
                         <p class="text-sm text-gray-900">${plugin.plugin_slug}</p>
                         <p class="text-sm text-gray-500">
-                          Último uso: ${plugin.last_usage ? new Date(plugin.last_usage).toLocaleDateString() : 'Nunca'}
+                          Último uso: ${plugin.last_usage ? formatDate(plugin.last_usage) : 'Nunca'}
                         </p>
                       </div>
                     `).join('')}

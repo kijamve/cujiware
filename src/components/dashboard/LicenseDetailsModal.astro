@@ -1,5 +1,6 @@
 ---
 import type { License } from '@/types/auth';
+import { formatDate } from '@/utils/date';
 
 interface Props {
   license: License & {
@@ -58,7 +59,7 @@ const { license } = Astro.props;
           <div>
             <h4 class="text-sm font-medium text-gray-900 mb-2">Último Reset</h4>
             <p class="text-sm text-gray-500">
-              {license.last_reset ? new Date(license.last_reset).toLocaleDateString() : 'Nunca'}
+              {license.last_reset ? formatDate(license.last_reset) : 'Nunca'}
             </p>
           </div>
         </div>
@@ -73,7 +74,7 @@ const { license } = Astro.props;
                 <div class="flex items-center justify-between bg-gray-50 p-2 rounded-md text-sm">
                   <span>{usage.domain}</span>
                   <span class="text-gray-500">
-                    Último uso: {new Date(usage.last_used_at).toLocaleDateString()}
+                    Último uso: {formatDate(usage.last_used_at)}
                   </span>
                 </div>
               ))}
@@ -91,7 +92,7 @@ const { license } = Astro.props;
                 <div class="flex items-center justify-between bg-gray-50 p-2 rounded-md text-sm">
                   <span>{plugin.plugin_slug}</span>
                   <span class="text-gray-500">
-                    Último uso: {plugin.last_usage ? new Date(plugin.last_usage).toLocaleDateString() : 'Nunca'}
+                    Último uso: {plugin.last_usage ? formatDate(plugin.last_usage) : 'Nunca'}
                   </span>
                 </div>
               ))}

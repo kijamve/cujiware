@@ -1,4 +1,6 @@
 ---
+import { formatDate } from '@/utils/date';
+
 type Plugin = {
   name: string;
   short_description: string;
@@ -43,7 +45,7 @@ const { plugins, versionsByPlugin } = Astro.props;
                   <div>
                     <span class="text-sm font-medium text-gray-900">v{version.version}</span>
                     <span class="text-sm text-gray-500 ml-2">
-                      {new Date(version.created_at).toLocaleDateString()}
+                      {formatDate(version.created_at)}
                     </span>
                   </div>
                   <div class="flex space-x-2">
