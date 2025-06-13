@@ -71,13 +71,13 @@ export class VenezolanoService {
     const jsonStr = JSON.stringify(data);
     const key = enc.Utf8.parse(this.key);
     const iv = enc.Utf8.parse(this.iv);
-    
+
     const encrypted = AES.encrypt(jsonStr, key, {
       iv: iv,
       mode: mode.CBC,
       padding: pad.Pkcs7
     });
-    
+
     // Convertir a base64 como lo hace PHP
     return Buffer.from(encrypted.ciphertext.toString(), 'hex').toString('base64');
   }
@@ -88,7 +88,7 @@ export class VenezolanoService {
       const hexData = Buffer.from(encryptedData, 'base64').toString('hex');
       const key = enc.Utf8.parse(this.key);
       const iv = enc.Utf8.parse(this.iv);
-      
+
       const decrypted = AES.decrypt(
         { ciphertext: enc.Hex.parse(hexData) } as pkg.lib.CipherParams,
         key,
@@ -98,14 +98,14 @@ export class VenezolanoService {
           padding: pad.Pkcs7
         }
       );
-      
+
       const decryptedStr = decrypted.toString(enc.Utf8);
       console.log('Decrypted data:', decryptedStr);
-      
+
       if (!decryptedStr) {
         throw new Error('Decryption resulted in empty string');
       }
-      
+
       return JSON.parse(decryptedStr);
     } catch (error) {
       console.error('Decryption error:', error);
@@ -204,4 +204,4 @@ export class VenezolanoService {
 
     return this.makeRequest('/verifyP2C', requestData);
   }
-} 
+}
