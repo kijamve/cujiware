@@ -1,0 +1,86 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import MasterPendingPaymentsTable from '@/components/dashboard/MasterPendingPaymentsTable.astro';
+import { prisma } from '@/lib/prisma';
+import { requireSuperAdmin } from '@/middleware/auth';
+import Tabs from '@/components/dashboard/Tabs.astro';
+import type { Payment } from '@/types/auth';
+
+// Validar que el usuario sea super admin
+await requireSuperAdmin(Astro);
+
+const ITEMS_PER_PAGE = 30;
+const currentPage = Number(Astro.url.searchParams.get('page')) || 1;
+
+// Obtener el total de pagos pendientes para la paginación
+const totalPayments = await prisma.payment.count({
+  where: {
+    status: 'PENDING'
+  }
+});
+const totalPages = Math.ceil(totalPayments / ITEMS_PER_PAGE);
+
+// Obtener los pagos pendientes con paginación
+const payments = await prisma.payment.findMany({
+  where: {
+    status: 'PENDING'
+  },
+  include: {
+    membership: {
+      include: {
+        user: {
+          select: {
+            name: true,
+            email: true,
+            billing_phone: true
+          }
+        },
+        plan: {
+          select: {
+            name: true
+          }
+        }
+      }
+    }
+  },
+  orderBy: {
+    created_at: 'desc'
+  },
+  skip: (currentPage - 1) * ITEMS_PER_PAGE,
+  take: ITEMS_PER_PAGE
+}) as unknown as Array<Payment & {
+  membership: {
+    user: {
+      name: string;
+      email: string;
+      billing_phone?: string;
+    };
+    plan: {
+      name: string;
+    };
+  };
+}>;
+---
+<Layout title="Pagos Pendientes - Dashboard Master">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="md:flex md:items-center md:justify-between">
+      <div class="flex-1 min-w-0">
+        <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+          Pagos Pendientes
+        </h2>
+      </div>
+    </div>
+
+    <div class="mt-8">
+      <Tabs activeTab="pending_payments" />
+    </div>
+
+    <div class="mt-8">
+      <MasterPendingPaymentsTable
+        payments={payments}
+        currentPage={currentPage}
+        totalPages={totalPages}
+      />
+    </div>
+  </div>
+</Layout>

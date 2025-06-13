@@ -1,0 +1,79 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import MasterPaymentsTable from '@/components/dashboard/MasterPaymentsTable.astro';
+import { prisma } from '@/lib/prisma';
+import { requireSuperAdmin } from '@/middleware/auth';
+import Tabs from '@/components/dashboard/Tabs.astro';
+import type { Payment } from '@/types/auth';
+
+// Validar que el usuario sea super admin
+await requireSuperAdmin(Astro);
+
+const ITEMS_PER_PAGE = 30;
+const currentPage = Number(Astro.url.searchParams.get('page')) || 1;
+
+// Obtener el total de pagos para la paginación
+const totalPayments = await prisma.payment.count();
+const totalPages = Math.ceil(totalPayments / ITEMS_PER_PAGE);
+
+// Obtener los pagos con paginación
+const payments = await prisma.payment.findMany({
+  include: {
+    membership: {
+      include: {
+        user: {
+          select: {
+            name: true,
+            email: true,
+            billing_phone: true
+          }
+        },
+        plan: {
+          select: {
+            name: true
+          }
+        }
+      }
+    }
+  },
+  orderBy: {
+    created_at: 'desc'
+  },
+  skip: (currentPage - 1) * ITEMS_PER_PAGE,
+  take: ITEMS_PER_PAGE
+}) as unknown as Array<Payment & {
+  membership: {
+    user: {
+      name: string;
+      email: string;
+      billing_phone?: string;
+    };
+    plan: {
+      name: string;
+    };
+  };
+}>;
+---
+<Layout title="Pagos - Dashboard Master">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="md:flex md:items-center md:justify-between">
+      <div class="flex-1 min-w-0">
+        <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+          Pagos
+        </h2>
+      </div>
+    </div>
+
+    <div class="mt-8">
+      <Tabs activeTab="payments" />
+    </div>
+
+    <div class="mt-8">
+      <MasterPaymentsTable
+        payments={payments}
+        currentPage={currentPage}
+        totalPages={totalPages}
+      />
+    </div>
+  </div>
+</Layout>

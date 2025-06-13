@@ -1,0 +1,198 @@
+---
+import type { Payment } from '@/types/auth';
+import { formatDate } from '@/utils/date';
+
+interface Props {
+  payments: Array<Payment & {
+    membership: {
+      user: {
+        name: string;
+        email: string;
+        billing_phone?: string;
+      };
+      plan: {
+        name: string;
+      };
+    };
+  }>;
+  currentPage?: number;
+  totalPages?: number;
+}
+
+const { payments, currentPage = 1, totalPages = 1 } = Astro.props;
+const ITEMS_PER_PAGE = 30;
+---
+
+<div class="overflow-x-auto">
+  <table class="min-w-full divide-y divide-gray-200">
+    <thead class="bg-gray-50">
+      <tr>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          Usuario
+        </th>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          Plan
+        </th>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          Monto
+        </th>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          Método
+        </th>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          Fecha
+        </th>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          Acciones
+        </th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+      {payments.map((payment) => (
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="flex items-center">
+              <div>
+                <div class="text-sm font-medium text-gray-900">
+                  {payment.membership.user.name}
+                </div>
+                <div class="text-sm text-gray-500">
+                  {payment.membership.user.email}
+                </div>
+                {payment.membership.user.billing_phone && (
+                  <div class="text-sm text-gray-500">
+                    {payment.membership.user.billing_phone}
+                  </div>
+                )}
+              </div>
+            </div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-900">{payment.membership.plan.name}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            {payment.amount.toFixed(2)} {payment.currency}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            {payment.payment_method}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            {formatDate(payment.created_at)}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+            <div class="flex space-x-3">
+              {payment.invoice_url && (
+                <a
+                  href={payment.invoice_url}
+                  target="_blank"
+                  class="text-indigo-600 hover:text-indigo-900"
+                  title="Ver factura"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                </a>
+              )}
+            </div>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+  <!-- Paginación -->
+  <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6 mt-4">
+    <div class="flex flex-1 justify-between sm:hidden">
+      <button
+        class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+        data-action="prev-page"
+        disabled={currentPage === 1}
+      >
+        Anterior
+      </button>
+      <button
+        class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+        data-action="next-page"
+        disabled={currentPage === totalPages}
+      >
+        Siguiente
+      </button>
+    </div>
+    <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+      <div>
+        <p class="text-sm text-gray-700">
+          Mostrando <span class="font-medium">{((currentPage - 1) * ITEMS_PER_PAGE) + 1}</span> a <span class="font-medium">{Math.min(currentPage * ITEMS_PER_PAGE, payments.length)}</span> de <span class="font-medium">{payments.length}</span> resultados
+        </p>
+      </div>
+      <div>
+        <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+          <button
+            class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+            data-action="prev-page"
+            disabled={currentPage === 1}
+          >
+            <span class="sr-only">Anterior</span>
+            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+            </svg>
+          </button>
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <button
+              class={`relative inline-flex items-center px-4 py-2 text-sm font-semibold ${
+                page === currentPage
+                  ? 'z-10 bg-indigo-600 text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+                  : 'text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0'
+              }`}
+              data-action="go-to-page"
+              data-page={page}
+            >
+              {page}
+            </button>
+          ))}
+          <button
+            class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+            data-action="next-page"
+            disabled={currentPage === totalPages}
+          >
+            <span class="sr-only">Siguiente</span>
+            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+            </svg>
+          </button>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Manejador para la paginación
+  document.querySelectorAll('[data-action="prev-page"]').forEach(button => {
+    button.addEventListener('click', () => {
+      const currentPage = parseInt(new URLSearchParams(window.location.search).get('page') || '1');
+      if (currentPage > 1) {
+        window.location.href = `?page=${currentPage - 1}`;
+      }
+    });
+  });
+
+  document.querySelectorAll('[data-action="next-page"]').forEach(button => {
+    button.addEventListener('click', () => {
+      const currentPage = parseInt(new URLSearchParams(window.location.search).get('page') || '1');
+      const totalPages = parseInt(document.querySelector('[data-total-pages]')?.getAttribute('data-total-pages') || '1');
+      if (currentPage < totalPages) {
+        window.location.href = `?page=${currentPage + 1}`;
+      }
+    });
+  });
+
+  document.querySelectorAll('[data-action="go-to-page"]').forEach(button => {
+    button.addEventListener('click', () => {
+      const page = button.getAttribute('data-page');
+      if (page) {
+        window.location.href = `?page=${page}`;
+      }
+    });
+  });
+</script>
