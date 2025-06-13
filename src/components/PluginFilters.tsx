@@ -1,4 +1,6 @@
 import React from 'react';
+import wooIcon from '../assets/woo-icon.svg?url';
+import prestaIcon from '../assets/presta-icon.svg?url';
 
 interface PluginFiltersProps {
   selectedCategory: string;
@@ -39,9 +41,9 @@ export function PluginFilters({
   const getPlatformIcon = (platform: string) => {
     switch (platform) {
       case 'woocommerce':
-        return '/src/assets/woo-icon.svg';
+        return wooIcon;
       case 'prestashop':
-        return '/src/assets/presta-icon.svg';
+        return prestaIcon;
       default:
         return null;
     }
