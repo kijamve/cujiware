@@ -6,7 +6,7 @@ export const onRequest: MiddlewareHandler = async (context, next) => {
 
     // Si la respuesta es 404, redirigir a la página principal
     if (response.status === 404) {
-      console.error('404: URL no encontrada ->', context.url);
+      // console.error('404: URL no encontrada ->', context.url);
       return context.redirect('/');
     }
 

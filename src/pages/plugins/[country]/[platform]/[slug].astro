@@ -4,6 +4,8 @@ import plugins from '@/data/plugins.json';
 import { PluginDetail } from '@/components/PluginDetail';
 import fs from 'fs';
 import path from 'path';
+import wooIcon from '@/assets/woo-icon.svg?url';
+import prestaIcon from '@/assets/presta-icon.svg?url';
 
 export const prerender = true;
 
@@ -209,6 +211,19 @@ const schemaData = {
       }
     }))
 };
+
+const getPlatformIcon = (platform: string): string | undefined => {
+  switch (platform) {
+    case 'woocommerce':
+      return wooIcon;
+    case 'prestashop':
+      return prestaIcon;
+    default:
+      return undefined;
+  }
+};
+
+const platformIcon = getPlatformIcon(plugin.platform[0]);
 ---
 
 <Layout
@@ -225,5 +240,6 @@ const schemaData = {
     platform={plugin.platform[0]}
     content={content}
     screenshots={screenshots}
+    platformIcon={platformIcon}
   />
 </Layout>

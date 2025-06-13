@@ -26,9 +26,10 @@ interface PluginDetailProps {
     alt: string;
     caption: string;
   }[];
+  platformIcon?: string;
 }
 
-export function PluginDetail({ plugin, country, platform, content, screenshots }: PluginDetailProps) {
+export function PluginDetail({ plugin, country, platform, content, screenshots, platformIcon }: PluginDetailProps) {
   const [versions, setVersions] = useState<PluginVersion[]>([]);
   const [showVersions, setShowVersions] = useState(false);
   const [showLatestChangelog, setShowLatestChangelog] = useState(false);
@@ -155,9 +156,6 @@ export function PluginDetail({ plugin, country, platform, content, screenshots }
             <div className="flex flex-col lg:flex-row lg:items-start gap-8">
               <div className="flex-1">
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="flex items-center justify-center w-12 h-12 bg-cuji-blue/10 rounded-lg">
-                    <PluginIcon iconName={plugin.icon} />
-                  </div>
                   <h1 className="text-2xl md:text-3xl font-bold text-gray-900">{plugin.name}</h1>
                 </div>
                 <div className="flex flex-wrap gap-2 mb-6">
@@ -166,7 +164,14 @@ export function PluginDetail({ plugin, country, platform, content, screenshots }
                       Última versión: v{latestVersion.version}
                     </span>
                   )}
-                  <span className="inline-flex items-center px-3 md:px-4 py-1.5 rounded-full text-xs font-medium bg-gray-100 text-cuji-blue">
+                  <span className="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 rounded-full text-xs font-medium bg-gray-100 text-cuji-blue">
+                    {platformIcon && (
+                      <img
+                        src={platformIcon}
+                        alt={`${plugin.platform[0]} icon`}
+                        className="w-4 h-4"
+                      />
+                    )}
                     {plugin.platform[0] === 'prestashop' ? 'PrestaShop' : 'WooCommerce'}
                   </span>
                   {plugin.countries.includes('all') ? (
@@ -256,7 +261,7 @@ export function PluginDetail({ plugin, country, platform, content, screenshots }
                       {showLatestChangelog && (
                         <div className="mt-2 p-4 bg-gray-50 rounded-lg">
                           <div className="text-sm text-gray-600 whitespace-pre-line">
-                            {latestVersion.changelog}
+                          {latestVersion.changelog}
                           </div>
                         </div>
                       )}
