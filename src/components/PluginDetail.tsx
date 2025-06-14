@@ -218,6 +218,20 @@ export function PluginDetail({ plugin, country, platform, content, screenshots, 
                 </div>
 
                 <div className="bg-gray-50 p-4 md:p-6 rounded-lg">
+                  <h3 className="text-lg md:text-xl font-semibold mb-3 md:mb-4">Documentación Técnica</h3>
+                  <p className="text-sm md:text-base text-gray-600 mb-4 md:mb-6">
+                    Consulta la documentación completa de instalación, configuración y uso de este plugin.
+                  </p>
+                  <a
+                    href={`https://docs.cujiware.com/plugins/${plugin.slug}`}
+                    target="_blank"
+                    className="w-full inline-flex items-center justify-center bg-white text-cuji-blue px-4 md:px-6 py-2 md:py-3 rounded-lg hover:bg-gray-50 transition-colors font-semibold text-sm md:text-base border border-cuji-blue"
+                  >
+                    Ver Documentación
+                  </a>
+                </div>
+
+                <div className="bg-gray-50 p-4 md:p-6 rounded-lg">
                   <h3 className="text-lg md:text-xl font-semibold mb-3 md:mb-4">
                     Descargar Plugin
                     {latestVersion && (
