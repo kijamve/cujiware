@@ -6,6 +6,7 @@ import { requireSuperAdmin } from '@/middleware/auth';
 import Tabs from '@/components/dashboard/Tabs.astro';
 import type { Payment } from '@/types/auth';
 import { PAYMENT_METHOD } from '@/constants/status';
+import { Prisma } from '@prisma/client';
 
 // Validar que el usuario sea super admin
 await requireSuperAdmin(Astro);
@@ -13,12 +14,43 @@ await requireSuperAdmin(Astro);
 const ITEMS_PER_PAGE = 30;
 const currentPage = Number(Astro.url.searchParams.get('page')) || 1;
 const showAll = Astro.url.searchParams.get('showAll') === '1';
+const searchEmail = Astro.url.searchParams.get('email') || '';
+const searchLicense = Astro.url.searchParams.get('license') || '';
 
 // Construir el where para la consulta
-const where = showAll ? {} : {
-  payment_method: {
-    not: PAYMENT_METHOD.STRIPE
-  }
+const where: Prisma.PaymentWhereInput = {
+  AND: [
+    // Filtro de Stripe
+    showAll ? {} : {
+      payment_method: {
+        not: PAYMENT_METHOD.STRIPE
+      }
+    },
+    // Filtro de búsqueda
+    searchEmail || searchLicense ? {
+      OR: [
+        searchEmail ? {
+          membership: {
+            user: {
+              email: {
+                contains: searchEmail,
+                mode: 'insensitive',
+              },
+            },
+          },
+        } : {},
+        searchLicense ? {
+          membership: {
+            licenses: {
+              some: {
+                id: searchLicense,
+              },
+            },
+          },
+        } : {},
+      ],
+    } : {},
+  ],
 };
 
 // Obtener el total de pagos para la paginación
@@ -93,6 +125,8 @@ const payments = await prisma.payment.findMany({
         payments={payments}
         currentPage={currentPage}
         totalPages={totalPages}
+        searchEmail={searchEmail}
+        searchLicense={searchLicense}
       />
     </div>
   </div>

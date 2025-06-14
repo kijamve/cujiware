@@ -18,9 +18,11 @@ interface Props {
   }>;
   currentPage?: number;
   totalPages?: number;
+  searchEmail?: string;
+  searchLicense?: string;
 }
 
-const { payments, currentPage = 1, totalPages = 1 } = Astro.props;
+const { payments, currentPage = 1, totalPages = 1, searchEmail = '', searchLicense = '' } = Astro.props;
 const ITEMS_PER_PAGE = 30;
 
 const getStatusColor = (status: string) => {
@@ -51,6 +53,42 @@ const getStatusText = (status: string) => {
 ---
 
 <div class="overflow-x-auto">
+  <!-- Barra de búsqueda -->
+  <div class="mb-4 flex gap-4">
+    <form class="flex gap-4" method="GET">
+      <div class="flex-1">
+        <label for="email" class="sr-only">Buscar por email</label>
+        <input
+          type="text"
+          name="email"
+          id="email"
+          value={searchEmail}
+          class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          placeholder="Buscar por email"
+        />
+      </div>
+      <div class="flex-1">
+        <label for="license" class="sr-only">Buscar por ID de licencia</label>
+        <input
+          type="text"
+          name="license"
+          id="license"
+          value={searchLicense}
+          class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          placeholder="Buscar por ID de licencia"
+        />
+      </div>
+      <div class="flex items-end">
+        <button
+          type="submit"
+          class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          Buscar
+        </button>
+      </div>
+    </form>
+  </div>
+
   <table class="min-w-full divide-y divide-gray-200">
     <thead class="bg-gray-50">
       <tr>
@@ -202,12 +240,19 @@ const getStatusText = (status: string) => {
 </div>
 
 <script>
+  // Función para construir la URL con los parámetros actuales
+  function buildUrl(page: number) {
+    const params = new URLSearchParams(window.location.search);
+    params.set('page', page.toString());
+    return `?${params.toString()}`;
+  }
+
   // Manejador para la paginación
   document.querySelectorAll('[data-action="prev-page"]').forEach(button => {
     button.addEventListener('click', () => {
       const currentPage = parseInt(new URLSearchParams(window.location.search).get('page') || '1');
       if (currentPage > 1) {
-        window.location.href = `?page=${currentPage - 1}`;
+        window.location.href = buildUrl(currentPage - 1);
       }
     });
   });
@@ -217,7 +262,7 @@ const getStatusText = (status: string) => {
       const currentPage = parseInt(new URLSearchParams(window.location.search).get('page') || '1');
       const totalPages = parseInt(document.querySelector('[data-total-pages]')?.getAttribute('data-total-pages') || '1');
       if (currentPage < totalPages) {
-        window.location.href = `?page=${currentPage + 1}`;
+        window.location.href = buildUrl(currentPage + 1);
       }
     });
   });
@@ -226,7 +271,7 @@ const getStatusText = (status: string) => {
     button.addEventListener('click', () => {
       const page = button.getAttribute('data-page');
       if (page) {
-        window.location.href = `?page=${page}`;
+        window.location.href = buildUrl(parseInt(page));
       }
     });
   });

@@ -3,16 +3,44 @@ import Layout from '@/layouts/Layout.astro';
 import MasterMembershipsTable from '@/components/dashboard/MasterMembershipsTable.astro';
 import { prisma } from '@/lib/prisma';
 import type { MembershipWithRelations } from '@/utils/types';
+import { Prisma } from '@prisma/client';
+import Tabs from '@/components/dashboard/Tabs.astro';
 
 const ITEMS_PER_PAGE = 30;
 const currentPage = Number(Astro.url.searchParams.get('page')) || 1;
+const searchEmail = Astro.url.searchParams.get('email') || '';
+const searchLicense = Astro.url.searchParams.get('license') || '';
+
+// Construir el where para la búsqueda
+const where: Prisma.MembershipWhereInput = searchEmail || searchLicense ? {
+  OR: [
+    searchEmail ? {
+      user: {
+        email: {
+          contains: searchEmail,
+          mode: 'insensitive',
+        },
+      },
+    } : {},
+    searchLicense ? {
+      licenses: {
+        some: {
+          id: searchLicense,
+        },
+      },
+    } : {},
+  ],
+} : {};
 
 // Obtener el total de membresías para la paginación
-const totalMemberships = await prisma.membership.count();
+const totalMemberships = await prisma.membership.count({
+  where,
+});
 const totalPages = Math.ceil(totalMemberships / ITEMS_PER_PAGE);
 
-// Obtener las membresías con paginación
+// Obtener las membresías con paginación y filtros
 const memberships = await prisma.membership.findMany({
+  where,
   include: {
     plan: true,
     user: {
@@ -54,10 +82,16 @@ const memberships = await prisma.membership.findMany({
     </div>
 
     <div class="mt-8">
+      <Tabs activeTab="memberships" />
+    </div>
+
+    <div class="mt-8">
       <MasterMembershipsTable
         memberships={memberships as unknown as MembershipWithRelations[]}
         currentPage={currentPage}
         totalPages={totalPages}
+        searchEmail={searchEmail}
+        searchLicense={searchLicense}
       />
     </div>
   </div>
