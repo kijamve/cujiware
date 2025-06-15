@@ -11,29 +11,29 @@
     "platform": ["gravityforms"],
     "screenshots": [
       {
-        "src": "/images/plugins/mercadopago-gravity-forms/captura1.png",
-        "alt": "Configuración del plugin",
-        "caption": "Panel de configuración del plugin"
+        "src": "/images/plugins/mercadopago-gravity-forms/Captura de pantalla 2023-10-23 170015.png",
+        "alt": "Captura de pantalla 2023-10-23 170015",
+        "caption": "Captura de pantalla 2023-10-23 170015"
       },
       {
-        "src": "/images/plugins/mercadopago-gravity-forms/captura2.png",
-        "alt": "Configuración del plugin",
-        "caption": "Panel de configuración del plugin"
+        "src": "/images/plugins/mercadopago-gravity-forms/Captura de pantalla 2023-10-23 165531.png",
+        "alt": "Captura de pantalla 2023-10-23 165531",
+        "caption": "Captura de pantalla 2023-10-23 165531"
       },
       {
-        "src": "/images/plugins/mercadopago-gravity-forms/captura3.png",
-        "alt": "Configuración del plugin",
-        "caption": "Panel de configuración del plugin"
+        "src": "/images/plugins/mercadopago-gravity-forms/Captura de pantalla 2023-10-23 165244.png",
+        "alt": "Captura de pantalla 2023-10-23 165244",
+        "caption": "Captura de pantalla 2023-10-23 165244"
       },
       {
-        "src": "/images/plugins/mercadopago-gravity-forms/captura4.png",
-        "alt": "Configuración del plugin",
-        "caption": "Panel de configuración del plugin"
+        "src": "/images/plugins/mercadopago-gravity-forms/Captura de pantalla 2023-10-23 165043.png",
+        "alt": "Captura de pantalla 2023-10-23 165043",
+        "caption": "Captura de pantalla 2023-10-23 165043"
       },
       {
-        "src": "/images/plugins/mercadopago-gravity-forms/captura5.png",
-        "alt": "Configuración del plugin",
-        "caption": "Panel de configuración del plugin"
+        "src": "/images/plugins/mercadopago-gravity-forms/Captura de pantalla 2023-10-23 160800.png",
+        "alt": "Captura de pantalla 2023-10-23 160800",
+        "caption": "Captura de pantalla 2023-10-23 160800"
       },
       {
         "src": "/images/plugins/mercadopago-gravity-forms/captura6.png",
@@ -55,7 +55,34 @@
     "icon": "CreditCard",
     "category": "payment_method",
     "countries": ["venezuela"],
-    "platform": ["prestashop"]
+    "platform": ["prestashop"],
+    "screenshots": [
+      {
+        "src": "/images/plugins/boton-de-integracion-de-megasoft-con-prestashop/Captura de pantalla 2023-10-23 170015.png",
+        "alt": "Captura de pantalla 2023-10-23 170015",
+        "caption": "Captura de pantalla 2023-10-23 170015"
+      },
+      {
+        "src": "/images/plugins/boton-de-integracion-de-megasoft-con-prestashop/Captura de pantalla 2023-10-23 165531.png",
+        "alt": "Captura de pantalla 2023-10-23 165531",
+        "caption": "Captura de pantalla 2023-10-23 165531"
+      },
+      {
+        "src": "/images/plugins/boton-de-integracion-de-megasoft-con-prestashop/Captura de pantalla 2023-10-23 165244.png",
+        "alt": "Captura de pantalla 2023-10-23 165244",
+        "caption": "Captura de pantalla 2023-10-23 165244"
+      },
+      {
+        "src": "/images/plugins/boton-de-integracion-de-megasoft-con-prestashop/Captura de pantalla 2023-10-23 165043.png",
+        "alt": "Captura de pantalla 2023-10-23 165043",
+        "caption": "Captura de pantalla 2023-10-23 165043"
+      },
+      {
+        "src": "/images/plugins/boton-de-integracion-de-megasoft-con-prestashop/Captura de pantalla 2023-10-23 160800.png",
+        "alt": "Captura de pantalla 2023-10-23 160800",
+        "caption": "Captura de pantalla 2023-10-23 160800"
+      }
+    ]
   },
   {
     "name": "Zoom para PrestaShop - Transportista de Envíos - Cálculo Automático de Tarifas",
@@ -127,7 +154,34 @@
     "icon": "CreditCard",
     "category": "payment_method",
     "countries": ["venezuela"],
-    "platform": ["woocommerce"]
+    "platform": ["woocommerce"],
+    "screenshots": [
+      {
+        "src": "/images/plugins/boton-de-integracion-de-megasoft-con-woocommerce/Captura de pantalla 2023-10-23 165717.png",
+        "alt": "Captura de pantalla 2023-10-23 165717",
+        "caption": "Captura de pantalla 2023-10-23 165717"
+      },
+      {
+        "src": "/images/plugins/boton-de-integracion-de-megasoft-con-woocommerce/Captura de pantalla 2023-10-23 165608.png",
+        "alt": "Captura de pantalla 2023-10-23 165608",
+        "caption": "Captura de pantalla 2023-10-23 165608"
+      },
+      {
+        "src": "/images/plugins/boton-de-integracion-de-megasoft-con-woocommerce/Captura de pantalla 2023-10-23 161946.png",
+        "alt": "Captura de pantalla 2023-10-23 161946",
+        "caption": "Captura de pantalla 2023-10-23 161946"
+      },
+      {
+        "src": "/images/plugins/boton-de-integracion-de-megasoft-con-woocommerce/Captura de pantalla 2023-10-23 161747.png",
+        "alt": "Captura de pantalla 2023-10-23 161747",
+        "caption": "Captura de pantalla 2023-10-23 161747"
+      },
+      {
+        "src": "/images/plugins/boton-de-integracion-de-megasoft-con-woocommerce/Captura de pantalla 2023-10-23 160800.png",
+        "alt": "Captura de pantalla 2023-10-23 160800",
+        "caption": "Captura de pantalla 2023-10-23 160800"
+      }
+    ]
   },
   {
     "name": "BCV para WooCommerce - Actualizador de Tasa - Compatible con Curcy, WOOCS y Fox",
@@ -167,7 +221,104 @@
     "icon": "Truck",
     "category": "shipping",
     "countries": ["argentina"],
-    "platform": ["woocommerce"]
+    "platform": ["woocommerce"],
+    "screenshots": [
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-2.png",
+        "alt": "screenshot-2",
+        "caption": "screenshot-2"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-3.png",
+        "alt": "screenshot-3",
+        "caption": "screenshot-3"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-4.png",
+        "alt": "screenshot-4",
+        "caption": "screenshot-4"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-5.png",
+        "alt": "screenshot-5",
+        "caption": "screenshot-5"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-6.png",
+        "alt": "screenshot-6",
+        "caption": "screenshot-6"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-7.png",
+        "alt": "screenshot-7",
+        "caption": "screenshot-7"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-8.png",
+        "alt": "screenshot-8",
+        "caption": "screenshot-8"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-9.png",
+        "alt": "screenshot-9",
+        "caption": "screenshot-9"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-10.png",
+        "alt": "screenshot-10",
+        "caption": "screenshot-10"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-11.png",
+        "alt": "screenshot-11",
+        "caption": "screenshot-11"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-12.png",
+        "alt": "screenshot-12",
+        "caption": "screenshot-12"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-13.png",
+        "alt": "screenshot-13",
+        "caption": "screenshot-13"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-14.png",
+        "alt": "screenshot-14",
+        "caption": "screenshot-14"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-15.png",
+        "alt": "screenshot-15",
+        "caption": "screenshot-15"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-16.png",
+        "alt": "screenshot-16",
+        "caption": "screenshot-16"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-17.png",
+        "alt": "screenshot-17",
+        "caption": "screenshot-17"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-18.png",
+        "alt": "screenshot-18",
+        "caption": "screenshot-18"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-19.png",
+        "alt": "screenshot-19",
+        "caption": "screenshot-19"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-20.png",
+        "alt": "screenshot-20",
+        "caption": "screenshot-20"
+      }
+    ]
   },
   {
     "name": "Andreani para WooCommerce - Transportista de Envíos - Cálculo y Guías",
@@ -177,7 +328,104 @@
     "icon": "Truck",
     "category": "shipping",
     "countries": ["argentina"],
-    "platform": ["woocommerce"]
+    "platform": ["woocommerce"],
+    "screenshots": [
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-2.png",
+        "alt": "screenshot-2",
+        "caption": "screenshot-2"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-3.png",
+        "alt": "screenshot-3",
+        "caption": "screenshot-3"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-4.png",
+        "alt": "screenshot-4",
+        "caption": "screenshot-4"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-5.png",
+        "alt": "screenshot-5",
+        "caption": "screenshot-5"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-6.png",
+        "alt": "screenshot-6",
+        "caption": "screenshot-6"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-7.png",
+        "alt": "screenshot-7",
+        "caption": "screenshot-7"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-8.png",
+        "alt": "screenshot-8",
+        "caption": "screenshot-8"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-9.png",
+        "alt": "screenshot-9",
+        "caption": "screenshot-9"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-10.png",
+        "alt": "screenshot-10",
+        "caption": "screenshot-10"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-11.png",
+        "alt": "screenshot-11",
+        "caption": "screenshot-11"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-12.png",
+        "alt": "screenshot-12",
+        "caption": "screenshot-12"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-13.png",
+        "alt": "screenshot-13",
+        "caption": "screenshot-13"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-14.png",
+        "alt": "screenshot-14",
+        "caption": "screenshot-14"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-15.png",
+        "alt": "screenshot-15",
+        "caption": "screenshot-15"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-16.png",
+        "alt": "screenshot-16",
+        "caption": "screenshot-16"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-17.png",
+        "alt": "screenshot-17",
+        "caption": "screenshot-17"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-18.png",
+        "alt": "screenshot-18",
+        "caption": "screenshot-18"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-19.png",
+        "alt": "screenshot-19",
+        "caption": "screenshot-19"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-20.png",
+        "alt": "screenshot-20",
+        "caption": "screenshot-20"
+      }
+    ]
   },
   {
     "name": "Correo Argentino para WooCommerce - Transportista de Envíos - Cálculo y Guías",
@@ -188,7 +436,104 @@
     "category": "shipping",
     "featured": true,
     "countries": ["argentina"],
-    "platform": ["woocommerce"]
+    "platform": ["woocommerce"],
+    "screenshots": [
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-2.png",
+        "alt": "screenshot-2",
+        "caption": "screenshot-2"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-3.png",
+        "alt": "screenshot-3",
+        "caption": "screenshot-3"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-4.png",
+        "alt": "screenshot-4",
+        "caption": "screenshot-4"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-5.png",
+        "alt": "screenshot-5",
+        "caption": "screenshot-5"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-6.png",
+        "alt": "screenshot-6",
+        "caption": "screenshot-6"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-7.png",
+        "alt": "screenshot-7",
+        "caption": "screenshot-7"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-8.png",
+        "alt": "screenshot-8",
+        "caption": "screenshot-8"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-9.png",
+        "alt": "screenshot-9",
+        "caption": "screenshot-9"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-10.png",
+        "alt": "screenshot-10",
+        "caption": "screenshot-10"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-11.png",
+        "alt": "screenshot-11",
+        "caption": "screenshot-11"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-12.png",
+        "alt": "screenshot-12",
+        "caption": "screenshot-12"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-13.png",
+        "alt": "screenshot-13",
+        "caption": "screenshot-13"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-14.png",
+        "alt": "screenshot-14",
+        "caption": "screenshot-14"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-15.png",
+        "alt": "screenshot-15",
+        "caption": "screenshot-15"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-16.png",
+        "alt": "screenshot-16",
+        "caption": "screenshot-16"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-17.png",
+        "alt": "screenshot-17",
+        "caption": "screenshot-17"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-18.png",
+        "alt": "screenshot-18",
+        "caption": "screenshot-18"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-19.png",
+        "alt": "screenshot-19",
+        "caption": "screenshot-19"
+      },
+      {
+        "src": "/images/plugins/correo-andreani-oca-para-woocommerce/screenshot-20.png",
+        "alt": "screenshot-20",
+        "caption": "screenshot-20"
+      }
+    ]
   },
   {
     "name": "Banco de Venezuela para PrestaShop - Integración directa entre tu tienda y el banco - Pago Móvil",
@@ -248,7 +593,39 @@
     "icon": "MessageCircle",
     "category": "utils",
     "countries": ["all"],
-    "platform": ["woocommerce"]
+    "platform": ["woocommerce"],
+    "screenshots": [
+      {
+        "src": "/images/plugins/contactar-clientes-por-whatsapp-desde-el-administrador-de-woocommerce/c1.jpg",
+        "alt": "c1",
+        "caption": "c1"
+      },
+      {
+        "src": "/images/plugins/contactar-clientes-por-whatsapp-desde-el-administrador-de-woocommerce/c2.jpg",
+        "alt": "c2",
+        "caption": "c2"
+      },
+      {
+        "src": "/images/plugins/contactar-clientes-por-whatsapp-desde-el-administrador-de-woocommerce/c3.jpg",
+        "alt": "c3",
+        "caption": "c3"
+      },
+      {
+        "src": "/images/plugins/contactar-clientes-por-whatsapp-desde-el-administrador-de-woocommerce/C4.jpg",
+        "alt": "C4",
+        "caption": "C4"
+      },
+      {
+        "src": "/images/plugins/contactar-clientes-por-whatsapp-desde-el-administrador-de-woocommerce/C5.jpg",
+        "alt": "C5",
+        "caption": "C5"
+      },
+      {
+        "src": "/images/plugins/contactar-clientes-por-whatsapp-desde-el-administrador-de-woocommerce/C6.jpg",
+        "alt": "C6",
+        "caption": "C6"
+      }
+    ]
   },
   {
     "name": "Banco Mercantil para WooCommerce - Integración directa entre tu tienda y el banco - Visa, Mastercard, C2P y Pago Móvil",
@@ -258,7 +635,44 @@
     "icon": "CreditCard",
     "category": "payment_method",
     "countries": ["venezuela"],
-    "platform": ["woocommerce"]
+    "platform": ["woocommerce"],
+    "screenshots": [
+      {
+        "src": "/images/plugins/mercantil-banco-venezuela-para-woocommerce/C1.JPG",
+        "alt": "C1",
+        "caption": "C1"
+      },
+      {
+        "src": "/images/plugins/mercantil-banco-venezuela-para-woocommerce/C2.JPG",
+        "alt": "C2",
+        "caption": "C2"
+      },
+      {
+        "src": "/images/plugins/mercantil-banco-venezuela-para-woocommerce/C3.JPG",
+        "alt": "C3",
+        "caption": "C3"
+      },
+      {
+        "src": "/images/plugins/mercantil-banco-venezuela-para-woocommerce/C4.JPG",
+        "alt": "C4",
+        "caption": "C4"
+      },
+      {
+        "src": "/images/plugins/mercantil-banco-venezuela-para-woocommerce/C5.JPG",
+        "alt": "C5",
+        "caption": "C5"
+      },
+      {
+        "src": "/images/plugins/mercantil-banco-venezuela-para-woocommerce/C6.JPG",
+        "alt": "C6",
+        "caption": "C6"
+      },
+      {
+        "src": "/images/plugins/mercantil-banco-venezuela-para-woocommerce/captura.png",
+        "alt": "captura",
+        "caption": "captura"
+      }
+    ]
   },
   {
     "name": "MRW y Menssajero para WooCommerce - Transportistas de Envíos - Venezuela",
@@ -268,7 +682,54 @@
     "icon": "Truck",
     "category": "shipping",
     "countries": ["venezuela"],
-    "platform": ["woocommerce"]
+    "platform": ["woocommerce"],
+    "screenshots": [
+      {
+        "src": "/images/plugins/mrw-y-menssajero-venezuela-para-woocommerce/C1.png",
+        "alt": "C1",
+        "caption": "C1"
+      },
+      {
+        "src": "/images/plugins/mrw-y-menssajero-venezuela-para-woocommerce/C2.png",
+        "alt": "C2",
+        "caption": "C2"
+      },
+      {
+        "src": "/images/plugins/mrw-y-menssajero-venezuela-para-woocommerce/C3.png",
+        "alt": "C3",
+        "caption": "C3"
+      },
+      {
+        "src": "/images/plugins/mrw-y-menssajero-venezuela-para-woocommerce/C4.png",
+        "alt": "C4",
+        "caption": "C4"
+      },
+      {
+        "src": "/images/plugins/mrw-y-menssajero-venezuela-para-woocommerce/C5.png",
+        "alt": "C5",
+        "caption": "C5"
+      },
+      {
+        "src": "/images/plugins/mrw-y-menssajero-venezuela-para-woocommerce/C6.png",
+        "alt": "C6",
+        "caption": "C6"
+      },
+      {
+        "src": "/images/plugins/mrw-y-menssajero-venezuela-para-woocommerce/C7.png",
+        "alt": "C7",
+        "caption": "C7"
+      },
+      {
+        "src": "/images/plugins/mrw-y-menssajero-venezuela-para-woocommerce/C8.png",
+        "alt": "C8",
+        "caption": "C8"
+      },
+      {
+        "src": "/images/plugins/mrw-y-menssajero-venezuela-para-woocommerce/C9.png",
+        "alt": "C9",
+        "caption": "C9"
+      }
+    ]
   },
   {
     "name": "Zoom para WooCommerce - Transportista de Envíos - Generación de guías y rastreo de paquetes",
@@ -278,7 +739,94 @@
     "icon": "Truck",
     "category": "shipping",
     "countries": ["venezuela"],
-    "platform": ["woocommerce"]
+    "platform": ["woocommerce"],
+    "screenshots": [
+      {
+        "src": "/images/plugins/zoom-transportista-de-envios-en-venezuela-para-woocommerce/C1.png",
+        "alt": "C1",
+        "caption": "C1"
+      },
+      {
+        "src": "/images/plugins/zoom-transportista-de-envios-en-venezuela-para-woocommerce/C2.png",
+        "alt": "C2",
+        "caption": "C2"
+      },
+      {
+        "src": "/images/plugins/zoom-transportista-de-envios-en-venezuela-para-woocommerce/C3.png",
+        "alt": "C3",
+        "caption": "C3"
+      },
+      {
+        "src": "/images/plugins/zoom-transportista-de-envios-en-venezuela-para-woocommerce/C4.png",
+        "alt": "C4",
+        "caption": "C4"
+      },
+      {
+        "src": "/images/plugins/zoom-transportista-de-envios-en-venezuela-para-woocommerce/C5.png",
+        "alt": "C5",
+        "caption": "C5"
+      },
+      {
+        "src": "/images/plugins/zoom-transportista-de-envios-en-venezuela-para-woocommerce/C6.png",
+        "alt": "C6",
+        "caption": "C6"
+      },
+      {
+        "src": "/images/plugins/zoom-transportista-de-envios-en-venezuela-para-woocommerce/C7.png",
+        "alt": "C7",
+        "caption": "C7"
+      },
+      {
+        "src": "/images/plugins/zoom-transportista-de-envios-en-venezuela-para-woocommerce/C8.png",
+        "alt": "C8",
+        "caption": "C8"
+      },
+      {
+        "src": "/images/plugins/zoom-transportista-de-envios-en-venezuela-para-woocommerce/C9.png",
+        "alt": "C9",
+        "caption": "C9"
+      },
+      {
+        "src": "/images/plugins/zoom-transportista-de-envios-en-venezuela-para-woocommerce/C10.png",
+        "alt": "C10",
+        "caption": "C10"
+      },
+      {
+        "src": "/images/plugins/zoom-transportista-de-envios-en-venezuela-para-woocommerce/C11.png",
+        "alt": "C11",
+        "caption": "C11"
+      },
+      {
+        "src": "/images/plugins/zoom-transportista-de-envios-en-venezuela-para-woocommerce/C12.png",
+        "alt": "C12",
+        "caption": "C12"
+      },
+      {
+        "src": "/images/plugins/zoom-transportista-de-envios-en-venezuela-para-woocommerce/C13.png",
+        "alt": "C13",
+        "caption": "C13"
+      },
+      {
+        "src": "/images/plugins/zoom-transportista-de-envios-en-venezuela-para-woocommerce/C14.png",
+        "alt": "C14",
+        "caption": "C14"
+      },
+      {
+        "src": "/images/plugins/zoom-transportista-de-envios-en-venezuela-para-woocommerce/C15.png",
+        "alt": "C15",
+        "caption": "C15"
+      },
+      {
+        "src": "/images/plugins/zoom-transportista-de-envios-en-venezuela-para-woocommerce/C16.png",
+        "alt": "C16",
+        "caption": "C16"
+      },
+      {
+        "src": "/images/plugins/zoom-transportista-de-envios-en-venezuela-para-woocommerce/C17.png",
+        "alt": "C17",
+        "caption": "C17"
+      }
+    ]
   },
   {
     "name": "Pagos Offline para WooCommerce - Pasarela de Pago - Múltiples Métodos",
@@ -289,7 +837,59 @@
     "category": "payment_method",
     "countries": ["all", "venezuela"],
     "featured": true,
-    "platform": ["woocommerce"]
+    "platform": ["woocommerce"],
+    "screenshots": [
+      {
+        "src": "/images/plugins/pagos-offline-para-woocommerce-zelle-binance-p2p-transferencia-pago-movil-y-otros/C1 - Creacion de las pasarelas de pago.png",
+        "alt": "Creacion de las pasarelas de pago",
+        "caption": "Creacion de las pasarelas de pago"
+      },
+      {
+        "src": "/images/plugins/pagos-offline-para-woocommerce-zelle-binance-p2p-transferencia-pago-movil-y-otros/C2 - Creacion de las pasarelas de pago.png",
+        "alt": "Creacion de las pasarelas de pago",
+        "caption": "Creacion de las pasarelas de pago"
+      },
+      {
+        "src": "/images/plugins/pagos-offline-para-woocommerce-zelle-binance-p2p-transferencia-pago-movil-y-otros/C3 - Configuracion de las pasarelas de pago.png",
+        "alt": "Configuracion de las pasarelas de pago",
+        "caption": "Configuracion de las pasarelas de pago"
+      },
+      {
+        "src": "/images/plugins/pagos-offline-para-woocommerce-zelle-binance-p2p-transferencia-pago-movil-y-otros/C4 - Configuracion de las pasarelas de pago.png",
+        "alt": "Configuracion de las pasarelas de pago",
+        "caption": "Configuracion de las pasarelas de pago"
+      },
+      {
+        "src": "/images/plugins/pagos-offline-para-woocommerce-zelle-binance-p2p-transferencia-pago-movil-y-otros/C5 - Configuracion de las pasarelas de pago.png",
+        "alt": "Configuracion de las pasarelas de pago",
+        "caption": "Configuracion de las pasarelas de pago"
+      },
+      {
+        "src": "/images/plugins/pagos-offline-para-woocommerce-zelle-binance-p2p-transferencia-pago-movil-y-otros/C5 - Configuracion de las pasarelas de pago Binance Pay para WooCommerce.png",
+        "alt": "Configuracion de las pasarelas de pago Binance Pay para WooCommerce",
+        "caption": "Configuracion de las pasarelas de pago Binance Pay para WooCommerce"
+      },
+      {
+        "src": "/images/plugins/pagos-offline-para-woocommerce-zelle-binance-p2p-transferencia-pago-movil-y-otros/C6 - Demo Binance Pay en el checkout.png",
+        "alt": "Demo Binance Pay en el checkout",
+        "caption": "Demo Binance Pay en el checkout"
+      },
+      {
+        "src": "/images/plugins/pagos-offline-para-woocommerce-zelle-binance-p2p-transferencia-pago-movil-y-otros/C6 - Demo Pago Offline en el checkout.png",
+        "alt": "Demo Pago Offline en el checkout",
+        "caption": "Demo Pago Offline en el checkout"
+      },
+      {
+        "src": "/images/plugins/pagos-offline-para-woocommerce-zelle-binance-p2p-transferencia-pago-movil-y-otros/C7 - Demo Pago Binance.png",
+        "alt": "Demo Pago Binance",
+        "caption": "Demo Pago Binance"
+      },
+      {
+        "src": "/images/plugins/pagos-offline-para-woocommerce-zelle-binance-p2p-transferencia-pago-movil-y-otros/C7 - Demo Pago offline.png",
+        "alt": "Demo Pago offline",
+        "caption": "Demo Pago offline"
+      }
+    ]
   },
   {
     "name": "Banco de Venezuela para WooCommerce - Integración directa entre tu tienda y el banco - Pago Móvil",
@@ -321,7 +921,39 @@
     "category": "payment_method",
     "countries": ["venezuela"],
     "platform": ["woocommerce"],
-    "new_arrivals": true
+    "new_arrivals": true,
+    "screenshots": [
+      {
+        "src": "/images/plugins/boton-de-pago-movil-y-kr4-pagos-del-banco-kr4-para-woocommerce/C1 - Configuracion de P2C.png",
+        "alt": "Configuracion de P2C",
+        "caption": "Configuracion de P2C"
+      },
+      {
+        "src": "/images/plugins/boton-de-pago-movil-y-kr4-pagos-del-banco-kr4-para-woocommerce/C2 - Configuracion de C2P.png",
+        "alt": "Configuracion de C2P",
+        "caption": "Configuracion de C2P"
+      },
+      {
+        "src": "/images/plugins/boton-de-pago-movil-y-kr4-pagos-del-banco-kr4-para-woocommerce/C3 - Configuracion de tasas.png",
+        "alt": "Configuracion de tasas",
+        "caption": "Configuracion de tasas"
+      },
+      {
+        "src": "/images/plugins/boton-de-pago-movil-y-kr4-pagos-del-banco-kr4-para-woocommerce/C4 - Carrito de compras.png",
+        "alt": "Carrito de compras",
+        "caption": "Carrito de compras"
+      },
+      {
+        "src": "/images/plugins/boton-de-pago-movil-y-kr4-pagos-del-banco-kr4-para-woocommerce/C5 - Cargar datos de Pago Movil P2C.png",
+        "alt": "Cargar datos de Pago Movil P2C",
+        "caption": "Cargar datos de Pago Movil P2C"
+      },
+      {
+        "src": "/images/plugins/boton-de-pago-movil-y-kr4-pagos-del-banco-kr4-para-woocommerce/C6 - Formulario de pago por C2P.png",
+        "alt": "Formulario de pago por C2P",
+        "caption": "Formulario de pago por C2P"
+      }
+    ]
   },
   {
     "name": "Cashea para WooCommerce - Financiamiento a Meses Sin Intereses - Venezuela",
@@ -332,7 +964,39 @@
     "category": "payment_method",
     "countries": ["venezuela"],
     "platform": ["woocommerce"],
-    "new_arrivals": true
+    "new_arrivals": true,
+    "screenshots": [
+      {
+        "src": "/images/plugins/cashea-venezuela-financiamiento-a-meses-sin-intereses-para-woocommerce/C1 - Solicitar financiamiento.png",
+        "alt": "Solicitar financiamiento",
+        "caption": "Solicitar financiamiento"
+      },
+      {
+        "src": "/images/plugins/cashea-venezuela-financiamiento-a-meses-sin-intereses-para-woocommerce/C2 - Cedula vinculada a Cashea.png",
+        "alt": "Cedula vinculada a Cashea",
+        "caption": "Cedula vinculada a Cashea"
+      },
+      {
+        "src": "/images/plugins/cashea-venezuela-financiamiento-a-meses-sin-intereses-para-woocommerce/C3 - Validacion de cedula y monto minimo de pago.png",
+        "alt": "Validacion de cedula y monto minimo de pago",
+        "caption": "Validacion de cedula y monto minimo de pago"
+      },
+      {
+        "src": "/images/plugins/cashea-venezuela-financiamiento-a-meses-sin-intereses-para-woocommerce/C4 - Validacion de financiamiento y autorizacion en portal de Cashea.png",
+        "alt": "Validacion de financiamiento y autorizacion en portal de Cashea",
+        "caption": "Validacion de financiamiento y autorizacion en portal de Cashea"
+      },
+      {
+        "src": "/images/plugins/cashea-venezuela-financiamiento-a-meses-sin-intereses-para-woocommerce/C5 - Cashea autorizado - se procede a pagar la inicial.png",
+        "alt": "Cashea autorizado - se procede a pagar la inicial",
+        "caption": "Cashea autorizado - se procede a pagar la inicial"
+      },
+      {
+        "src": "/images/plugins/cashea-venezuela-financiamiento-a-meses-sin-intereses-para-woocommerce/C6 - Orden de compra con financimiento.png",
+        "alt": "Orden de compra con financimiento",
+        "caption": "Orden de compra con financimiento"
+      }
+    ]
   },
   {
     "name": "MercadoPago para WooCommerce - Pasarela de Pago - Soporte para Suscripciones y Marketplace",
@@ -344,7 +1008,99 @@
     "countries": ["all", "argentina"],
     "countrie_exclude": ["venezuela"],
     "featured": true,
-    "platform": ["woocommerce"]
+    "platform": ["woocommerce"],
+    "screenshots": [
+      {
+        "src": "/images/plugins/mercadopago-para-woocommerce/C0.0 - Manejador MercadoPago Tools Pro para WooCommerce.png",
+        "alt": "Manejador MercadoPago Tools Pro para WooCommerce",
+        "caption": "Manejador MercadoPago Tools Pro para WooCommerce"
+      },
+      {
+        "src": "/images/plugins/mercadopago-para-woocommerce/C0.1- Manejador MercadoPago Tools Pro para WooCommerce.png",
+        "alt": "Manejador MercadoPago Tools Pro para WooCommerce",
+        "caption": "Manejador MercadoPago Tools Pro para WooCommerce"
+      },
+      {
+        "src": "/images/plugins/mercadopago-para-woocommerce/C0.2- Manejador MercadoPago Tools Pro para WooCommerce.png",
+        "alt": "Manejador MercadoPago Tools Pro para WooCommerce",
+        "caption": "Manejador MercadoPago Tools Pro para WooCommerce"
+      },
+      {
+        "src": "/images/plugins/mercadopago-para-woocommerce/C1.0- Opciones de Pago de MercadoPago Tools Pro para WooCommerce.png",
+        "alt": "Opciones de Pago de MercadoPago Tools Pro para WooCommerce",
+        "caption": "Opciones de Pago de MercadoPago Tools Pro para WooCommerce"
+      },
+      {
+        "src": "/images/plugins/mercadopago-para-woocommerce/C1.1- Checkout Basico de MercadoPago Tools Pro para WooCommerce.png",
+        "alt": "Checkout Basico de MercadoPago Tools Pro para WooCommerce",
+        "caption": "Checkout Basico de MercadoPago Tools Pro para WooCommerce"
+      },
+      {
+        "src": "/images/plugins/mercadopago-para-woocommerce/C1.2- Checkout Basico de MercadoPago Tools Pro para WooCommerce.png",
+        "alt": "Checkout Basico de MercadoPago Tools Pro para WooCommerce",
+        "caption": "Checkout Basico de MercadoPago Tools Pro para WooCommerce"
+      },
+      {
+        "src": "/images/plugins/mercadopago-para-woocommerce/C1.3- Checkout Basico de MercadoPago Tools Pro para WooCommerce.png",
+        "alt": "Checkout Basico de MercadoPago Tools Pro para WooCommerce",
+        "caption": "Checkout Basico de MercadoPago Tools Pro para WooCommerce"
+      },
+      {
+        "src": "/images/plugins/mercadopago-para-woocommerce/C2.0- Checkout Tokenize de MercadoPago Tools Pro para WooCommerce.png",
+        "alt": "Checkout Tokenize de MercadoPago Tools Pro para WooCommerce",
+        "caption": "Checkout Tokenize de MercadoPago Tools Pro para WooCommerce"
+      },
+      {
+        "src": "/images/plugins/mercadopago-para-woocommerce/C2.1- Checkout Tokenize de MercadoPago Tools Pro para WooCommerce.png",
+        "alt": "Checkout Tokenize de MercadoPago Tools Pro para WooCommerce",
+        "caption": "Checkout Tokenize de MercadoPago Tools Pro para WooCommerce"
+      },
+      {
+        "src": "/images/plugins/mercadopago-para-woocommerce/C3.0- Checkout por QR de MercadoPago Tools Pro para WooCommerce.png",
+        "alt": "Checkout por QR de MercadoPago Tools Pro para WooCommerce",
+        "caption": "Checkout por QR de MercadoPago Tools Pro para WooCommerce"
+      },
+      {
+        "src": "/images/plugins/mercadopago-para-woocommerce/C3.1- Checkout por QR de MercadoPago Tools Pro para WooCommerce.png",
+        "alt": "Checkout por QR de MercadoPago Tools Pro para WooCommerce",
+        "caption": "Checkout por QR de MercadoPago Tools Pro para WooCommerce"
+      },
+      {
+        "src": "/images/plugins/mercadopago-para-woocommerce/C4.0- Checkout Basico de MercadoPago Tools Pro para WooCommerce.png",
+        "alt": "Checkout Basico de MercadoPago Tools Pro para WooCommerce",
+        "caption": "Checkout Basico de MercadoPago Tools Pro para WooCommerce"
+      },
+      {
+        "src": "/images/plugins/mercadopago-para-woocommerce/C4.0.1- Checkout Basico de MercadoPago Tools Pro para WooCommerce.png",
+        "alt": "Checkout Basico de MercadoPago Tools Pro para WooCommerce",
+        "caption": "Checkout Basico de MercadoPago Tools Pro para WooCommerce"
+      },
+      {
+        "src": "/images/plugins/mercadopago-para-woocommerce/C4.0.2- Checkout Basico de MercadoPago Tools Pro para WooCommerce.png",
+        "alt": "Checkout Basico de MercadoPago Tools Pro para WooCommerce",
+        "caption": "Checkout Basico de MercadoPago Tools Pro para WooCommerce"
+      },
+      {
+        "src": "/images/plugins/mercadopago-para-woocommerce/C4.1- Checkout por Tokenize de MercadoPago Tools Pro para WooCommerce.png",
+        "alt": "Checkout por Tokenize de MercadoPago Tools Pro para WooCommerce",
+        "caption": "Checkout por Tokenize de MercadoPago Tools Pro para WooCommerce"
+      },
+      {
+        "src": "/images/plugins/mercadopago-para-woocommerce/C4.1.2- Checkout por Tokenize de MercadoPago Tools Pro para WooCommerce.png",
+        "alt": "Checkout por Tokenize de MercadoPago Tools Pro para WooCommerce",
+        "caption": "Checkout por Tokenize de MercadoPago Tools Pro para WooCommerce"
+      },
+      {
+        "src": "/images/plugins/mercadopago-para-woocommerce/C4.2- Checkout por QR de MercadoPago Tools Pro para WooCommerce.png",
+        "alt": "Checkout por QR de MercadoPago Tools Pro para WooCommerce",
+        "caption": "Checkout por QR de MercadoPago Tools Pro para WooCommerce"
+      },
+      {
+        "src": "/images/plugins/mercadopago-para-woocommerce/C5- Reumen del pago en el Pedido de MercadoPago Tools Pro para WooCommerce.png",
+        "alt": "Reumen del pago en el Pedido de MercadoPago Tools Pro para WooCommerce",
+        "caption": "Reumen del pago en el Pedido de MercadoPago Tools Pro para WooCommerce"
+      }
+    ]
   },
   {
     "name": "Andreani para PrestaShop - Transportista de Envíos - Cotización y Rastreo",
@@ -366,7 +1122,99 @@
     "countries": ["all", "argentina"],
     "countrie_exclude": ["venezuela"],
     "featured": true,
-    "platform": ["prestashop"]
+    "platform": ["prestashop"],
+    "screenshots": [
+      {
+        "src": "/images/plugins/mercadopago-tools-pro-para-prestashop/ES1.PNG",
+        "alt": "ES1",
+        "caption": "ES1"
+      },
+      {
+        "src": "/images/plugins/mercadopago-tools-pro-para-prestashop/ES2.PNG",
+        "alt": "ES2",
+        "caption": "ES2"
+      },
+      {
+        "src": "/images/plugins/mercadopago-tools-pro-para-prestashop/ES3.PNG",
+        "alt": "ES3",
+        "caption": "ES3"
+      },
+      {
+        "src": "/images/plugins/mercadopago-tools-pro-para-prestashop/ES4.PNG",
+        "alt": "ES4",
+        "caption": "ES4"
+      },
+      {
+        "src": "/images/plugins/mercadopago-tools-pro-para-prestashop/ES5.PNG",
+        "alt": "ES5",
+        "caption": "ES5"
+      },
+      {
+        "src": "/images/plugins/mercadopago-tools-pro-para-prestashop/ES6.PNG",
+        "alt": "ES6",
+        "caption": "ES6"
+      },
+      {
+        "src": "/images/plugins/mercadopago-tools-pro-para-prestashop/ES7.PNG",
+        "alt": "ES7",
+        "caption": "ES7"
+      },
+      {
+        "src": "/images/plugins/mercadopago-tools-pro-para-prestashop/ES8.PNG",
+        "alt": "ES8",
+        "caption": "ES8"
+      },
+      {
+        "src": "/images/plugins/mercadopago-tools-pro-para-prestashop/ES9.PNG",
+        "alt": "ES9",
+        "caption": "ES9"
+      },
+      {
+        "src": "/images/plugins/mercadopago-tools-pro-para-prestashop/ES10.PNG",
+        "alt": "ES10",
+        "caption": "ES10"
+      },
+      {
+        "src": "/images/plugins/mercadopago-tools-pro-para-prestashop/ES11.PNG",
+        "alt": "ES11",
+        "caption": "ES11"
+      },
+      {
+        "src": "/images/plugins/mercadopago-tools-pro-para-prestashop/ES12.PNG",
+        "alt": "ES12",
+        "caption": "ES12"
+      },
+      {
+        "src": "/images/plugins/mercadopago-tools-pro-para-prestashop/ES13.PNG",
+        "alt": "ES13",
+        "caption": "ES13"
+      },
+      {
+        "src": "/images/plugins/mercadopago-tools-pro-para-prestashop/ES14.PNG",
+        "alt": "ES14",
+        "caption": "ES14"
+      },
+      {
+        "src": "/images/plugins/mercadopago-tools-pro-para-prestashop/ES15.PNG",
+        "alt": "ES15",
+        "caption": "ES15"
+      },
+      {
+        "src": "/images/plugins/mercadopago-tools-pro-para-prestashop/ES16.PNG",
+        "alt": "ES16",
+        "caption": "ES16"
+      },
+      {
+        "src": "/images/plugins/mercadopago-tools-pro-para-prestashop/jamarketplace1.jpg",
+        "alt": "jamarketplace1",
+        "caption": "jamarketplace1"
+      },
+      {
+        "src": "/images/plugins/mercadopago-tools-pro-para-prestashop/jamarketplace2.jpg",
+        "alt": "jamarketplace2",
+        "caption": "jamarketplace2"
+      }
+    ]
   },
   {
     "name": "Banco BNC para WooCommerce - Integración directa entre tu tienda y el banco - Botón de Pago",
