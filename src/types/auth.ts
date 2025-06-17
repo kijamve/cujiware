@@ -130,4 +130,6 @@ export interface UserWithMemberships extends Omit<User, 'memberships'> {
     }[];
     payments: Payment[];
   }>;
+  impersonated?: boolean;
+  impersonatedBy?: string;
 }

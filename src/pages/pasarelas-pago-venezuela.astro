@@ -1,6 +1,8 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import ContactForm from '@/components/ContactForm.astro';
+import wooIcon from '@/assets/woo-icon.svg?url';
+import prestaIcon from '@/assets/presta-icon.svg?url';
 
 // @ts-ignore
 ---
@@ -42,6 +44,7 @@ import ContactForm from '@/components/ContactForm.astro';
               <li><a href="#zelle">Zelle</a></li>
               <li><a href="#binance-pay">Binance Pay</a></li>
               <li><a href="#paypal">PayPal</a></li>
+              <li><a href="#dlocal-go">dLocal Go</a></li>
               <li><a href="#airtm">AirTM</a></li>
               <li><a href="#zinli">Zinli</a></li>
             </ul>
@@ -99,20 +102,18 @@ import ContactForm from '@/components/ContactForm.astro';
         <h3 class="text-2xl font-semibold mb-3">¿Cómo funciona la Conciliación Pago Móvil del Banco de Venezuela?</h3>
         <ul class="list-disc pl-6 mb-4">
           <li>El cliente ingresa su número de referencia, teléfono, cédula y banco en el formulario de pago</li>
-          <li>El sistema valida la información ingresada y envía un SMS con la clave dinámica al cliente</li>
-          <li>El cliente ingresa la clave dinámica en el formulario de pago y confirma el pago</li>
           <li>El sistema valida el pago y confirma la transacción</li>
         </ul>
 
         <div class="inline-flex items-center gap-2 text-sm text-blue-600">
           <span class="font-medium text-black">Ver integración:</span>
           <a href="/plugins/all/woocommerce/boton-de-pago-movil-del-banco-de-venezuela-para-woocommerce" class="inline-flex items-center hover:text-blue-800">
-            <img src="/src/assets/woo-icon.svg" class="h-4 w-4 mr-1" alt="WooCommerce" />
+            <img src={wooIcon} class="h-4 w-4 mr-1" alt="WooCommerce" />
             WooCommerce
           </a>
           <span class="text-gray-400">|</span>
           <a href="/plugins/all/prestashop/boton-de-integracion-de-pago-movil-del-banco-de-venezuela-con-prestashop" class="inline-flex items-center hover:text-blue-800">
-            <img src="/src/assets/presta-icon.svg" class="h-4 w-4 mr-1" alt="PrestaShop" />
+            <img src={prestaIcon} class="h-4 w-4 mr-1" alt="PrestaShop" />
             PrestaShop
           </a>
         </div>
@@ -126,12 +127,12 @@ import ContactForm from '@/components/ContactForm.astro';
         <div class="inline-flex items-center gap-2 text-sm text-blue-600">
           <span class="font-medium text-black">Ver integración:</span>
           <a href="/plugins/all/woocommerce/biopago-y-tarjetas-de-debito-del-banco-de-venezuela-para-woocommerce" class="inline-flex items-center hover:text-blue-800">
-            <img src="/src/assets/woo-icon.svg" class="h-4 w-4 mr-1" alt="WooCommerce" />
+            <img src={wooIcon} class="h-4 w-4 mr-1" alt="WooCommerce" />
             WooCommerce
           </a>
           <span class="text-gray-400">|</span>
           <a href="/plugins/all/prestashop/biopago-y-tarjetas-de-debito-del-banco-de-venezuela-para-prestashop" class="inline-flex items-center hover:text-blue-800">
-            <img src="/src/assets/presta-icon.svg" class="h-4 w-4 mr-1" alt="PrestaShop" />
+            <img src={prestaIcon} class="h-4 w-4 mr-1" alt="PrestaShop" />
             PrestaShop
           </a>
         </div>
@@ -145,12 +146,12 @@ import ContactForm from '@/components/ContactForm.astro';
         <div class="inline-flex items-center gap-2 text-sm text-blue-600">
           <span class="font-medium text-black">Ver integración:</span>
           <a href="/plugins/all/woocommerce/mercantil-banco-venezuela-para-woocommerce" class="inline-flex items-center hover:text-blue-800">
-            <img src="/src/assets/woo-icon.svg" class="h-4 w-4 mr-1" alt="WooCommerce" />
+            <img src={wooIcon} class="h-4 w-4 mr-1" alt="WooCommerce" />
             WooCommerce
           </a>
           <span class="text-gray-400">|</span>
           <a href="/plugins/all/prestashop/pasarela-de-pago-banco-mercantil-para-prestashop-acepta-tarjetas-de-debito" class="inline-flex items-center hover:text-blue-800">
-            <img src="/src/assets/presta-icon.svg" class="h-4 w-4 mr-1" alt="PrestaShop" />
+            <img src={prestaIcon} class="h-4 w-4 mr-1" alt="PrestaShop" />
             PrestaShop
           </a>
         </div>
@@ -163,7 +164,7 @@ import ContactForm from '@/components/ContactForm.astro';
         <div class="inline-flex items-center gap-2 text-sm text-blue-600">
           <span class="font-medium text-black">Ver integración:</span>
           <a href="/plugins/all/woocommerce/venezolano-de-credito-para-woocommerce-con-c2p-y-pago-movil" class="inline-flex items-center hover:text-blue-800">
-            <img src="/src/assets/woo-icon.svg" class="h-4 w-4 mr-1" alt="WooCommerce" />
+            <img src={wooIcon} class="h-4 w-4 mr-1" alt="WooCommerce" />
             WooCommerce
           </a>
         </div>
@@ -176,7 +177,7 @@ import ContactForm from '@/components/ContactForm.astro';
         <div class="inline-flex items-center gap-2 text-sm text-blue-600">
           <span class="font-medium text-black">Ver integración:</span>
           <a href="/plugins/all/woocommerce/boton-de-pago-del-banco-bnc-para-plugin-woocommerce-wordpress" class="inline-flex items-center hover:text-blue-800">
-            <img src="/src/assets/woo-icon.svg" class="h-4 w-4 mr-1" alt="WooCommerce" />
+            <img src={wooIcon} class="h-4 w-4 mr-1" alt="WooCommerce" />
             WooCommerce
           </a>
         </div>
@@ -194,7 +195,7 @@ import ContactForm from '@/components/ContactForm.astro';
         <div class="inline-flex items-center gap-2 text-sm text-blue-600">
           <span class="font-medium text-black">Ver integración:</span>
           <a href="/plugins/all/woocommerce/boton-de-pago-movil-y-bt-pagos-del-banco-del-tesoro-para-woocommerce" class="inline-flex items-center hover:text-blue-800">
-            <img src="/src/assets/woo-icon.svg" class="h-4 w-4 mr-1" alt="WooCommerce" />
+            <img src={wooIcon} class="h-4 w-4 mr-1" alt="WooCommerce" />
             WooCommerce
           </a>
         </div>
@@ -207,7 +208,7 @@ import ContactForm from '@/components/ContactForm.astro';
         <div class="inline-flex items-center gap-2 text-sm text-blue-600">
           <span class="font-medium text-black">Ver integración:</span>
           <a href="/plugins/all/woocommerce/boton-de-pago-movil-y-kr4-pagos-del-banco-kr4-para-woocommerce" class="inline-flex items-center hover:text-blue-800">
-            <img src="/src/assets/woo-icon.svg" class="h-4 w-4 mr-1" alt="WooCommerce" />
+            <img src={wooIcon} class="h-4 w-4 mr-1" alt="WooCommerce" />
             WooCommerce
           </a>
         </div>
@@ -220,12 +221,12 @@ import ContactForm from '@/components/ContactForm.astro';
         <div class="inline-flex items-center gap-2 text-sm text-blue-600">
           <span class="font-medium text-black">Ver integración:</span>
           <a href="/plugins/all/woocommerce/boton-de-integracion-de-megasoft-con-woocommerce" class="inline-flex items-center hover:text-blue-800">
-            <img src="/src/assets/woo-icon.svg" class="h-4 w-4 mr-1" alt="WooCommerce" />
+            <img src={wooIcon} class="h-4 w-4 mr-1" alt="WooCommerce" />
             WooCommerce
           </a>
           <span class="text-gray-400">|</span>
           <a href="/plugins/all/prestashop/boton-de-integracion-de-megasoft-con-prestashop" class="inline-flex items-center hover:text-blue-800">
-            <img src="/src/assets/presta-icon.svg" class="h-4 w-4 mr-1" alt="PrestaShop" />
+            <img src={prestaIcon} class="h-4 w-4 mr-1" alt="PrestaShop" />
             PrestaShop
           </a>
         </div>
@@ -244,6 +245,14 @@ import ContactForm from '@/components/ContactForm.astro';
       <section id="zelle" class="mb-12">
         <h2 class="text-3xl font-bold mb-4">Zelle</h2>
         <p class="mb-4">Zelle es una opción de transferencia electrónica popular que permite realizar pagos de persona a persona de manera rápida y sencilla. Aunque no se trata de una pasarela de pago en sentido tradicional, su uso extendido y su integración con diversas plataformas lo convierten en una alternativa confiable para transferencias directas entre individuos y comercios con cuenta bancaria en los Estados Unidos.</p>
+
+        <div class="inline-flex items-center gap-2 text-sm text-blue-600">
+          <span class="font-medium text-black">Ver integración:</span>
+          <a href="/plugins/all/woocommerce/pagos-offline-para-woocommerce-zelle-binance-p2p-transferencia-pago-movil-y-otros" class="inline-flex items-center hover:text-blue-800">
+            <img src={wooIcon} class="h-4 w-4 mr-1" alt="WooCommerce" />
+            WooCommerce
+          </a>
+        </div>
       </section>
 
       <section id="binance-pay" class="mb-12">
@@ -253,20 +262,24 @@ import ContactForm from '@/components/ContactForm.astro';
         <div class="inline-flex items-center gap-2 text-sm text-blue-600">
           <span class="font-medium text-black">Ver integración:</span>
           <a href="/plugins/all/woocommerce/pagos-offline-para-woocommerce-zelle-binance-p2p-transferencia-pago-movil-y-otros" class="inline-flex items-center hover:text-blue-800">
-            <img src="/src/assets/woo-icon.svg" class="h-4 w-4 mr-1" alt="WooCommerce" />
+            <img src={wooIcon} class="h-4 w-4 mr-1" alt="WooCommerce" />
             WooCommerce
           </a>
           <span class="text-gray-400">|</span>
           <a href="/plugins/all/prestashop/binance-pay-para-prestashop" class="inline-flex items-center hover:text-blue-800">
-            <img src="/src/assets/presta-icon.svg" class="h-4 w-4 mr-1" alt="PrestaShop" />
+            <img src={prestaIcon} class="h-4 w-4 mr-1" alt="PrestaShop" />
             PrestaShop
           </a>
         </div>
       </section>
-
       <section id="paypal" class="mb-12">
         <h2 class="text-3xl font-bold mb-4">PayPal</h2>
         <p class="mb-4">PayPal es una plataforma global de pagos en línea que, aunque es aceptada en Venezuela, ha generado cierta preocupación en los usuarios debido a los bloqueos de cuentas y fondos. A pesar de ser una opción popular y utilizada ampliamente, algunos usuarios han experimentado dificultades con el servicio en términos de retiros de fondos, ya que requiere una cuenta bancaria en los Estados Unidos para realizar dichas transacciones.</p>
+      </section>
+
+      <section id="dlocal-go" class="mb-12">
+        <h2 class="text-3xl font-bold mb-4">dLocal Go</h2>
+        <p class="mb-4">dLocal Go es una plataforma de pagos integral que permite a los comercios aceptar pagos en línea a través de múltiples métodos, incluyendo tarjetas de crédito y débito, transferencias bancarias, billeteras digitales y pagos en efectivo. Esta solución está diseñada para facilitar las transacciones internacionales y locales, ofreciendo una integración sencilla y segura para los comercios que buscan expandir sus operaciones. Además, proporciona herramientas de análisis y reportes detallados para el seguimiento de las transacciones.</p>
       </section>
 
       <section id="airtm" class="mb-12">

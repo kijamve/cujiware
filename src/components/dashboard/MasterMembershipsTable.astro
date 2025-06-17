@@ -176,6 +176,17 @@ const sortedMemberships = memberships;
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                 </svg>
               </button>
+              <button
+                class="text-green-600 hover:text-green-900"
+                data-action="impersonate"
+                data-user-id={membership.user.id}
+                data-user-email={membership.user.email}
+                title="Personificar Usuario"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                </svg>
+              </button>
             </div>
           </td>
         </tr>
@@ -465,6 +476,37 @@ const sortedMemberships = memberships;
       modal.querySelector('[data-action="close"]')?.addEventListener('click', () => {
         closeModal(modal);
       });
+    });
+  });
+
+  // Manejador para personificar usuario
+  document.querySelectorAll('[data-action="impersonate"]').forEach(button => {
+    button.addEventListener('click', async () => {
+      const userId = button.getAttribute('data-user-id');
+      const userEmail = button.getAttribute('data-user-email');
+
+      if (confirm(`¿Estás seguro de que deseas personificar al usuario ${userEmail}?`)) {
+        try {
+          const response = await fetch('/api/admin/impersonate', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ userId }),
+          });
+
+          if (response.ok) {
+            // Redirigir al dashboard del usuario personificado
+            window.location.href = '/dashboard';
+          } else {
+            const { error } = await response.json();
+            alert(error || 'Error al personificar usuario');
+          }
+        } catch (error) {
+          console.error('Error al personificar usuario:', error);
+          alert('Error al personificar usuario');
+        }
+      }
     });
   });
 

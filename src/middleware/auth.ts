@@ -78,6 +78,8 @@ export async function requireAuth(context: APIContext) {
       email: string;
       name: string;
       country: string;
+      impersonated?: boolean;
+      impersonatedBy?: string;
     };
 
     const user = await prisma.user.findUnique({
@@ -107,7 +109,12 @@ export async function requireAuth(context: APIContext) {
       return context.redirect('/mi-cuenta');
     }
 
-    return user;
+    // Agregar información de personificación al objeto user
+    return {
+      ...user,
+      impersonated: decoded.impersonated || false,
+      impersonatedBy: decoded.impersonatedBy || null
+    };
   } catch (error) {
     if (context.request.headers.get('accept')?.includes('application/json')) {
       return new Response(

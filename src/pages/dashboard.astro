@@ -14,7 +14,7 @@ if (user instanceof Response) {
 }
 
 // Obtener el usuario con sus membresías y planes
-const userWithMemberships = await prisma.user.findUnique({
+const userData = await prisma.user.findUnique({
   where: { id: user.id },
   include: {
     memberships: {
@@ -56,7 +56,14 @@ const userWithMemberships = await prisma.user.findUnique({
       }
     }
   }
-}) as UserWithMemberships;
+});
+
+// Combinar los datos del usuario con la información de personificación
+const userWithMemberships = {
+  ...userData!,
+  impersonated: user.impersonated,
+  impersonatedBy: user.impersonatedBy
+} as any;
 
 if (!userWithMemberships) {
   return Astro.redirect('/mi-cuenta');
@@ -72,6 +79,35 @@ const success = Astro.url.searchParams.get('success');
 <Layout title="Dashboard - Cujiware" description="Gestiona tu cuenta y membresía de Cujiware">
   <div class="min-h-screen bg-gray-50 py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      {userWithMemberships?.impersonated && (
+        <div class="mb-4 rounded-md bg-yellow-50 border border-yellow-200 p-4">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div class="ml-3">
+              <h3 class="text-sm font-medium text-yellow-800">
+                🎭 Modo Personificación Activo
+              </h3>
+              <div class="mt-2 text-sm text-yellow-700">
+                <p>Estás viendo la cuenta de <strong>{userWithMemberships.name}</strong> ({userWithMemberships.email})</p>
+                {userWithMemberships.impersonatedBy && (
+                  <p>Personificado por: <strong>{userWithMemberships.impersonatedBy}</strong></p>
+                )}
+                <button
+                  id="exit-impersonation-btn"
+                  class="mt-2 inline-flex items-center text-sm font-medium text-yellow-800 hover:text-yellow-900 underline"
+                >
+                  Salir del modo personificación
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       {error && (
         <div class="mb-4 rounded-md bg-red-50 p-4">
           <div class="flex">
@@ -147,4 +183,24 @@ const success = Astro.url.searchParams.get('success');
     url.searchParams.delete('success');
     window.history.replaceState({}, '', url);
   }
-</script> 
+
+  // Manejar el botón de salir del modo personificación
+  const exitImpersonationBtn = document.getElementById('exit-impersonation-btn');
+  exitImpersonationBtn?.addEventListener('click', async () => {
+    if (confirm('¿Estás seguro de que deseas salir del modo personificación?')) {
+      try {
+        const response = await fetch('/api/admin/exit-impersonation', {
+          method: 'POST'
+        });
+        if (response.ok) {
+          window.location.href = '/dashboard_master';
+        } else {
+          alert('Error al salir del modo personificación');
+        }
+      } catch (error) {
+        console.error('Error al salir del modo personificación:', error);
+        alert('Error al salir del modo personificación');
+      }
+    }
+  });
+</script>
