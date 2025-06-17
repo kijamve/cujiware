@@ -101,18 +101,17 @@ function closeVenezuelaModal() {
         `;
 
         try {
-          // Obtener el token de las cookies
-          const cookies = document.cookie.split(';').reduce((acc, cookie) => {
-            const [key, value] = cookie.trim().split('=');
-            acc[key] = value;
-            return acc;
-          }, {} as Record<string, string>);
+          // Verificar autenticación usando el endpoint
+          const authResponse = await fetch('/api/auth/check', {
+            method: 'GET',
+            credentials: 'include' // Incluir cookies automáticamente
+          });
 
-          const token = cookies['token'];
-          console.log('Token encontrado:', token ? 'Sí' : 'No');
+          const authData = await authResponse.json();
+          console.log('Estado de autenticación:', authData);
 
-          if (!token) {
-            console.log('No hay token, abriendo modal de autenticación');
+          if (!authData.authenticated) {
+            console.log('Usuario no autenticado, abriendo modal de autenticación');
             window.openAuthModal(planId);
             return;
           }
@@ -121,9 +120,9 @@ function closeVenezuelaModal() {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`,
               'Accept': 'application/json'
             },
+            credentials: 'include', // Incluir cookies automáticamente
             body: JSON.stringify({ plan: planId })
           });
 

@@ -31,7 +31,7 @@ export class VenezuelaPaymentModal extends HTMLElement {
   connectedCallback() {
     // Observar cambios en el atributo data
     this.observer.observe(this, { attributes: true });
-    
+
     // Verificar si ya tenemos el atributo data
     const dataStr = this.getAttribute('data');
     if (dataStr) {
@@ -64,7 +64,7 @@ export class VenezuelaPaymentModal extends HTMLElement {
     // Bloquear scroll del body
     document.body.style.overflow = 'hidden';
     document.body.style.paddingRight = 'var(--scrollbar-compensation)';
-    
+
     this.render();
     this.setupEventListeners();
   }
@@ -298,7 +298,7 @@ export class VenezuelaPaymentModal extends HTMLElement {
           <h3 class="text-xl font-bold mb-4">Pago Móvil</h3>
           <div class="venezuela-modal-header">
             <div class="venezuela-modal-billing">
-              <p class="venezuela-modal-billing-title"><b>Datos de facturación:</b> 
+              <p class="venezuela-modal-billing-title"><b>Datos de facturación:</b>
               ${this.data.billing_full_name || this.data.name} ${this.data.billing_tax_id || ''} - ${this.data.billing_address || ''}
               <a href="/dashboard#show-form-billing" class="venezuela-modal-billing-link">Editar datos de facturación</a></p>
             </div>
@@ -308,7 +308,7 @@ export class VenezuelaPaymentModal extends HTMLElement {
             <p class="mb-1 text-sm">RIF: <span class="font-mono">J-50392719-4</span></p>
             <p class="mb-1 text-sm">Teléfono: <span class="font-mono">04144741641</span></p>
             <p class="mb-4 text-sm"></p>
-              Monto a pagar: 
+              Monto a pagar:
               ${this.data.discounted_price_bs ? (`
                 <span>
                   <span class="line-through text-gray-500">Bs. ${this.data.price_bs}</span>
@@ -336,7 +336,7 @@ export class VenezuelaPaymentModal extends HTMLElement {
                 <select name="bank_origin" required class="venezuela-modal-input">
                   <option value="">Selecciona tu banco</option>
                   <option value="0102">BANCO DE VENEZUELA</option>
-                  <option value="0134">BANESCO</option>  
+                  <option value="0134">BANESCO</option>
                   <option value="0105">BANCO MERCANTIL</option>
                   <option value="0108">BANCO PROVINCIAL BBVA</option>
                   <option value="0172">BANCAMIGA</option>
@@ -401,7 +401,7 @@ export class VenezuelaPaymentModal extends HTMLElement {
 
   private setupEventListeners() {
     const shadowRoot = this.shadowRoot!;
-    
+
     // QR dinámico
     const bankDest = shadowRoot.querySelector('#bank-dest') as HTMLSelectElement;
     const qrContainer = shadowRoot.querySelector('#qr-container') as HTMLDivElement;
@@ -436,24 +436,24 @@ export class VenezuelaPaymentModal extends HTMLElement {
       submitButton.disabled = true;
       submitButton.textContent = 'Enviando...';
 
-      // Obtener el token de las cookies
-      const cookies = document.cookie.split(';');
-      const tokenCookie = cookies.find(cookie => cookie.trim().startsWith('token='));
-      const token = tokenCookie ? tokenCookie.split('=')[1] : null;
+      // Verificar autenticación usando el endpoint
+      const authResponse = await fetch('/api/auth/check', {
+        method: 'GET',
+        credentials: 'include'
+      });
 
-      if (!token) {
-        alert('No hay sesión activa. Por favor, inicia sesión nuevamente.');
-        window.location.href = '/mi-cuenta';
-        return;
+      const authData = await authResponse.json();
+      if (!authData.authenticated) {
+        throw new Error('Usuario no autenticado');
       }
 
       try {
         const response = await fetch('/api/subscription/venezuela-payment', {
           method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+          headers: {
+            'Content-Type': 'application/json'
           },
+          credentials: 'include', // Incluir cookies automáticamente
           body: JSON.stringify({
             plan_id: form.dataset.planId,
             bank_origin: formData.get('bank_origin'),
@@ -515,4 +515,4 @@ export class VenezuelaPaymentModal extends HTMLElement {
   }
 }
 
-customElements.define('venezuela-payment-modal', VenezuelaPaymentModal); 
+customElements.define('venezuela-payment-modal', VenezuelaPaymentModal);

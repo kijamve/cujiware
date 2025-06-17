@@ -302,11 +302,11 @@ export class CachicamoService {
           payment_method_uuid: data.payment_method_uuid,
           ...(data.async_payment_uuid ? { async_payment_uuid: data.async_payment_uuid } : {}),
           payment_reference: ''+data.payment_reference,
-          total_payment: parseInt((data.price_bs*10000).toString())
+          total_payment: parseInt((Math.round(data.price_bs*10000)).toString())
         }],
         products: [{
           custom_product_name: 'Cujiware - Plan '+data.plan_name,
-          custom_unit_price: parseInt((amountWithoutTax*10000).toString()),
+          custom_unit_price: parseInt((Math.round(amountWithoutTax*10000)).toString()),
           custom_currency_uuid: "00000000-0000-0000-0000-000000000002", // Bolívares
           qty: 1,
           taxes_uuid: [this.taxUuid],

@@ -28,7 +28,7 @@ export const POST: APIRoute = async (context) => {
     const { plan_id, bank_origin, bank_dest, phone, tax_id: originalTaxId, reference, membership_id } = body;
 
     if (!plan_id || !bank_origin || !bank_dest || !phone || !originalTaxId || !reference) {
-      return new Response(JSON.stringify({ 
+      return new Response(JSON.stringify({
         error: 'Faltan datos requeridos',
         details: 'Se requieren: plan_id, bank_origin, bank_dest, tax_id y reference'
       }), {
@@ -45,7 +45,7 @@ export const POST: APIRoute = async (context) => {
 
     // Validar formato de la cédula
     if (!/^[VEP]\d{6,8}$/.test(cleanTaxId)) {
-      return new Response(JSON.stringify({ 
+      return new Response(JSON.stringify({
         error: 'Formato de cédula inválido',
         details: 'La cédula debe tener el formato V1234567, V12345678 o P12345678'
       }), {
@@ -59,7 +59,7 @@ export const POST: APIRoute = async (context) => {
 
     // Validar formato de la referencia
     if (!/^\d{6}$/.test(reference)) {
-      return new Response(JSON.stringify({ 
+      return new Response(JSON.stringify({
         error: 'Formato de referencia inválido',
         details: 'La referencia debe tener 6 dígitos'
       }), {
@@ -102,7 +102,7 @@ export const POST: APIRoute = async (context) => {
         address: user.billing_address || 'No se proporcionó dirección'
       });
       if (!customer || !customer.uuid) {
-        return new Response(JSON.stringify({ 
+        return new Response(JSON.stringify({
           error: 'Error al crear o actualizar el cliente',
           details: 'El cliente no fue creado o actualizado correctamente'
         }), {
@@ -112,11 +112,11 @@ export const POST: APIRoute = async (context) => {
       }
       customerUuid = customer.uuid;
     } catch (error) {
-      return new Response(JSON.stringify({ 
+      return new Response(JSON.stringify({
         error: 'Error al crear o actualizar el cliente',
         details: error instanceof Error ? error.message : 'Error desconocido'
       }), {
-        status: 500, 
+        status: 500,
         headers: { 'Content-Type': 'application/json' }
       });
     }
@@ -128,7 +128,7 @@ export const POST: APIRoute = async (context) => {
         payment_method_uuid: bank_dest === 'BDV' ? cachicamoService.mobileBDVPaymentUuid : cachicamoService.mobileBVCPaymentUuid,
         payment_reference: reference,
         async_payment_uuid: crypto.randomUUID(),
-        origin_total_payment: amountInBs*10000,
+        origin_total_payment: Math.round(amountInBs*10000),
         extra_fields: {
           nationality: tax_id.charAt(0),
           dni: tax_id.substring(1),
@@ -141,7 +141,7 @@ export const POST: APIRoute = async (context) => {
 
       // Verificar el estado del pago
       if (!asyncPayment || !asyncPayment.uuid) {
-        return new Response(JSON.stringify({ 
+        return new Response(JSON.stringify({
           error: 'El pago móvil no ha sido verificado. Por favor, asegúrese de que el pago se haya realizado correctamente y que haya ingresado datos correctos en el formulario.'
         }), {
           status: 400,
@@ -150,7 +150,7 @@ export const POST: APIRoute = async (context) => {
       }
       asyncPaymentUuid = asyncPayment.uuid;
     } catch (error) {
-      return new Response(JSON.stringify({ 
+      return new Response(JSON.stringify({
         error: 'El pago móvil no ha sido verificado. Por favor, asegúrese de que el pago se haya realizado correctamente y que haya ingresado datos correctos en el formulario.'
       }), {
         status: 400,
@@ -169,7 +169,7 @@ export const POST: APIRoute = async (context) => {
     );
 
     // Crear o renovar membresía
-    const membership = membership_id 
+    const membership = membership_id
       ? await handleMembershipRenewal(membership_id, user.id, plan, amountInBs, bcvRate, bank_dest, reference, invoiceUrl)
       : await handleMembershipCreation(user.id, plan, amountInBs, bcvRate, bank_dest, reference, invoiceUrl);
 
@@ -177,7 +177,7 @@ export const POST: APIRoute = async (context) => {
       return membership;
     }
 
-    return new Response(JSON.stringify({ 
+    return new Response(JSON.stringify({
       success: true,
       message: membership_id ? 'Membresía renovada correctamente.' : 'Pago registrado correctamente.',
       membership_id: membership.id,
@@ -188,7 +188,7 @@ export const POST: APIRoute = async (context) => {
     });
   } catch (error) {
     console.error('Error al procesar pago móvil:', error);
-    return new Response(JSON.stringify({ 
+    return new Response(JSON.stringify({
       error: 'Error interno del servidor',
       details: error instanceof Error ? error.message : 'Error desconocido'
     }), {
@@ -196,4 +196,4 @@ export const POST: APIRoute = async (context) => {
       headers: { 'Content-Type': 'application/json' }
     });
   }
-}; 
+};
