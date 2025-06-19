@@ -181,7 +181,6 @@ export async function checkAndSendReminders() {
       });
 
       // Enviar notificación por WhatsApp si el usuario tiene teléfono
-      /*
       if (membership.user.billing_phone) {
         await sendWhatsAppNotification({
           phone: membership.user.billing_phone,
@@ -193,7 +192,6 @@ export async function checkAndSendReminders() {
           plan_cost: `${membership.plan.price} ${membership.plan.currency === 'USD' ? '$' : membership.plan.currency}`
         });
       }
-        */
 
       // Actualizar la fecha del último recordatorio
       await prisma.membership.update({
@@ -224,15 +222,15 @@ export function startReminderService() {
   });
 
   // Configurar para ejecutar cada hora (3600000 ms = 1 hora)
-/*  reminderInterval = setInterval(async () => {
+  reminderInterval = setInterval(async () => {
     console.log('⏰ Ejecutando recordatorios programados...');
     try {
       await checkAndSendReminders();
     } catch (error) {
       console.error('Error al ejecutar recordatorios programados:', error);
     }
-  },10000 /*3600000* /); // 1 hora
-*/
+  }, 3600000); // 1 hora
+
   console.log('✅ Servicio de recordatorios configurado para ejecutar cada hora');
 }
 
