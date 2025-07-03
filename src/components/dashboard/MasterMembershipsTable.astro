@@ -19,9 +19,10 @@ interface Props {
   totalPages?: number;
   searchEmail?: string;
   searchLicense?: string;
+  statusFilter?: string;
 }
 
-const { memberships, currentPage = 1, totalPages = 1, searchEmail = '', searchLicense = '' } = Astro.props;
+const { memberships, currentPage = 1, totalPages = 1, searchEmail = '', searchLicense = '', statusFilter = '' } = Astro.props;
 const ITEMS_PER_PAGE = 30;
 
 // Usar los datos ya ordenados de Prisma
@@ -39,7 +40,7 @@ const sortedMemberships = memberships;
           name="email"
           id="email"
           value={searchEmail}
-          class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          class="block w-full rounded-md border-0 px-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           placeholder="Buscar por email"
         />
       </div>
@@ -50,9 +51,22 @@ const sortedMemberships = memberships;
           name="license"
           id="license"
           value={searchLicense}
-          class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          class="block w-full rounded-md border-0 px-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           placeholder="Buscar por ID de licencia"
         />
+      </div>
+      <div class="flex-1">
+        <label for="status" class="sr-only">Filtrar por estado</label>
+        <select
+          name="status"
+          id="status"
+          class="block w-full rounded-md border-0 px-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+        >
+          <option value="">Todos los estados</option>
+          <option value="ACTIVE" selected={statusFilter === 'ACTIVE'}>Activo</option>
+          <option value="INACTIVE" selected={statusFilter === 'INACTIVE'}>Inactivo</option>
+          <option value="CANCELLED" selected={statusFilter === 'CANCELLED'}>Cancelado</option>
+        </select>
       </div>
       <div class="flex items-end">
         <button

@@ -32,6 +32,17 @@ const { activeTab } = Astro.props;
         Membresías
       </a>
       <a
+        href="/dashboard_master/users"
+        class:list={[
+          'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm',
+          activeTab === 'users'
+            ? ['border-cuji-blue', 'text-cuji-blue']
+            : ['border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300']
+        ]}
+      >
+        Usuarios
+      </a>
+      <a
         href="/dashboard_master/payments"
         class:list={[
           'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm',

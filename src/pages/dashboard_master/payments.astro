@@ -8,8 +8,10 @@ import type { Payment } from '@/types/auth';
 import { PAYMENT_METHOD } from '@/constants/status';
 import { Prisma } from '@prisma/client';
 
-// Validar que el usuario sea super admin
-await requireSuperAdmin(Astro);
+const user = await requireSuperAdmin(Astro);
+if (user instanceof Response) {
+  return user;
+}
 
 const ITEMS_PER_PAGE = 30;
 const currentPage = Number(Astro.url.searchParams.get('page')) || 1;

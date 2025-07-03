@@ -3,34 +3,50 @@ import Layout from '@/layouts/Layout.astro';
 import MasterMembershipsTable from '@/components/dashboard/MasterMembershipsTable.astro';
 import { prisma } from '@/lib/prisma';
 import type { MembershipWithRelations } from '@/utils/types';
-import { Prisma } from '@prisma/client';
+import { Prisma, MembershipStatus } from '@prisma/client';
 import Tabs from '@/components/dashboard/Tabs.astro';
+import { requireSuperAdmin } from '@/middleware/auth.ts';
+
+const user = await requireSuperAdmin(Astro);
+if (user instanceof Response) {
+  return user;
+}
 
 const ITEMS_PER_PAGE = 30;
 const currentPage = Number(Astro.url.searchParams.get('page')) || 1;
 const searchEmail = Astro.url.searchParams.get('email') || '';
 const searchLicense = Astro.url.searchParams.get('license') || '';
+const statusFilter = Astro.url.searchParams.get('status') || '';
 
 // Construir el where para la búsqueda
-const where: Prisma.MembershipWhereInput = searchEmail || searchLicense ? {
-  OR: [
-    searchEmail ? {
-      user: {
-        email: {
-          contains: searchEmail,
-          mode: 'insensitive',
-        },
-      },
+const where: Prisma.MembershipWhereInput = {
+  AND: [
+    // Filtros de búsqueda
+    searchEmail || searchLicense ? {
+      OR: [
+        searchEmail ? {
+          user: {
+            email: {
+              contains: searchEmail,
+              mode: 'insensitive',
+            },
+          },
+        } : {},
+        searchLicense ? {
+          licenses: {
+            some: {
+              id: searchLicense,
+            },
+          },
+        } : {},
+      ],
     } : {},
-    searchLicense ? {
-      licenses: {
-        some: {
-          id: searchLicense,
-        },
-      },
-    } : {},
-  ],
-} : {};
+    // Filtro por status
+    statusFilter ? {
+      status: statusFilter as MembershipStatus
+    } : {}
+  ]
+};
 
 // Obtener el total de membresías para la paginación
 const totalMemberships = await prisma.membership.count({
@@ -92,6 +108,7 @@ const memberships = await prisma.membership.findMany({
         totalPages={totalPages}
         searchEmail={searchEmail}
         searchLicense={searchLicense}
+        statusFilter={statusFilter}
       />
     </div>
   </div>
